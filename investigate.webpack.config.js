@@ -4,12 +4,12 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const TerserPlugin = require("terser-webpack-plugin");
 
 module.exports = {
-  entry: './Investigate/index.js',
+  entry: './app/Investigate/index.js',
   resolve: {extensions: ['*','.js','.jsx']},
   output: {
-    path:path.resolve(__dirname, "dist_investigate"),
+    path:path.resolve(__dirname, "dist/investigate"),
     filename: '[contenthash].js',
-    publicPath: '/dist/',
+    publicPath: '/',
     clean: true
   },
   module: {
@@ -36,15 +36,15 @@ module.exports = {
   },
   devServer:{
         static:{
-            directory: path.join(__dirname, 'dist_investigate/')
+            directory: path.join(__dirname, 'dist/Investigate/')
         },
         port:3000,
         devMiddleware:{
-            publicPath: 'http://localhost:3000/dist'
+            publicPath: 'http://localhost:3000'
         },
         hot: 'only'
   },
-  plugins: [new HtmlWebpackPlugin({title: "Investigate", template: path.join(__dirname, "Investigate", "index-template.html"),}),
+  plugins: [new HtmlWebpackPlugin({title: "Investigate", template: path.join(__dirname, "libs/pages/", "index-template.html"),}),
     new webpack.HotModuleReplacementPlugin()],
   optimization: {
     minimize:true,

@@ -1,5 +1,5 @@
 import React from "react";
-import Help from "../lib/Help/help";
+import Help from '../../libs/shared/Help/help'
 import { Dropdown, DropdownButton, FormLabel } from "react-bootstrap";
 
 const App = () => (
