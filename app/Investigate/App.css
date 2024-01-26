@@ -8,6 +8,8 @@
 
 .sage-investigate-header {
     padding: 6px 24px;
+    display: flex;
+    flex-direction: column;
 }
 
 .sage-investigate-body {
