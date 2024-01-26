@@ -1,0 +1,8 @@
+.sage-chat-history-placeholder {
+    text-align: center;
+    height: 100%;
+}
+
+.sage-chat-history-placeholder .card {
+    background-color: #eee;
+}

@@ -1,6 +1,7 @@
 import React from "react";
 import ChatHistoryItem from "./ChatHistoryItem";
 import ChatHistoryLoader from "./ChatHistoryLoader";
+import ChatHistoryPlaceholder from "./ChatHistoryPlaceholder";
 import sageClient from "../../../utils/web/HttpClient";
 import { useState, useEffect } from "react";
 
@@ -22,7 +23,7 @@ const ChatHistory = (query) => {
 
     if (!chatHistory || chatHistory.length <= 0) {
         // No history yet
-        return <p>Placeholder for no history. To do: implement this.</p>
+        return <ChatHistoryPlaceholder />
     }
     else {
         return (
