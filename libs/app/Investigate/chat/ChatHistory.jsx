@@ -1,5 +1,6 @@
 import React from "react";
-import ChatItem from "./ChatItem"
+import ChatItem from "./ChatItem";
+import ChatHistoryLoader from "./ChatHistoryLoader";
 import sageClient from "../../../utils/web/HttpClient";
 import { useState, useEffect } from "react";
 
@@ -16,7 +17,7 @@ const ChatHistory = (query) => {
 
     if (loadingHistory) {
         // Loading history from API
-        return <p>Loading...</p>
+        return <ChatHistoryLoader />
     }
 
     if (!chatHistory || chatHistory.length <= 0) {
