@@ -5,7 +5,7 @@ import React from "react";
 import ChatPrompt from "../../libs/shared/chat/ChatPrompt"
 import ChatItem from "../../libs/shared/chat/ChatItem"
 import HttpClient from "../../libs/utils/web/HttpClient"
-import Header from './header'
+import Header from '../../libs/app/Investigate/header'
 import { useState, useEffect } from "react"
 
 const sageClient = new HttpClient();
