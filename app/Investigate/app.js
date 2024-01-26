@@ -5,7 +5,7 @@ import React from "react";
 import { useState } from "react";
 import ChatPrompt from "../../libs/shared/chat/ChatPrompt"
 import ChatHistory from "../../libs/shared/chat/ChatHistory"
-import Header from "./Header"
+import Header from '../../libs/app/Investigate/header'
 
 const App = () => {
     const [query, setQuery] = useState("");
