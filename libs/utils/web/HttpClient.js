@@ -22,11 +22,15 @@ class HttpClient {
         });
 
         let mockAsyncTask = new Promise(function (resolve, reject) {
-            setTimeout(() => { addToChatHistory; resolve; }, 3000);
+            setTimeout(() => { 
+                addToChatHistory(); 
+                resolve(); 
+                return;
+            }, 3000);
         });
 
         return mockAsyncTask;
     }
 }
 
-export default HttpClient;
+export default HttpClient = new HttpClient();

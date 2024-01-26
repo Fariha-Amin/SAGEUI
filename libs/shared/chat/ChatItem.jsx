@@ -33,7 +33,7 @@ function ContextAwareToggle({ children, eventKey, callback }) {
     );
 }
 
-export default function ChatItem() {
+export default function ChatItem({ model }) {
     const promptType = "Default Prompt";
     return (
         <Accordion defaultActiveKey="0" className='sage-chat-item'>
@@ -60,10 +60,10 @@ export default function ChatItem() {
                                 <Form>
                                     <Row>
                                         <Col xs="auto">
-                                            <Badge bg="warning" text="dark">Qn</Badge>
+                                            <Badge bg="warning" text="dark">Q{model.id}</Badge>
                                         </Col>
                                         <Col>
-                                            The question posed goes here.
+                                            {model.question}
                                         </Col>
                                         <Col xs="auto">
                                             {promptType}
@@ -81,10 +81,10 @@ export default function ChatItem() {
                                 <Form>
                                     <Row>
                                         <Col xs="auto">
-                                            <Badge bg="warning" text="dark">An</Badge>
+                                            <Badge bg="warning" text="dark">A{model.id}</Badge>
                                         </Col>
                                         <Col>
-                                            The response goes here.
+                                            {model.answer}
                                         </Col>
                                     </Row>
                                 </Form>
@@ -93,7 +93,7 @@ export default function ChatItem() {
                         <Form className='sage-chat-item-timestamp'>
                             <Row>
                                 <Col>
-                                    Timestamp goes here
+                                    {`${model.datetime}`}
                                 </Col>
                             </Row>
                         </Form>
