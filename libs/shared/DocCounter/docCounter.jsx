@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import './docCounter.css'
 import { useSelector, useDispatch } from 'react-redux'
 import { setCount } from "./docCounterSlice";
+import HttpClient, { getDocumentCount } from "../../utils/web/HttpClient"
 
-const DocCounter = (props) => {
-    const docLabel = props.label;
+const client = new HttpClient();
+
+const DocCounter = ({label}) => {
+    useEffect(() => {
+        client.getDocumentCountAsync().then(data => dispatch(setCount(data)));
+    }, [])
+    const docLabel = label;
     const docCount = useSelector((state) => state.docCounter.value);
     const dispatch = useDispatch();
 
@@ -13,5 +19,6 @@ const DocCounter = (props) => {
     
     return (docCount > 0) ? defaultLabel : zeroDocLabel;
 };
+
 
 export default DocCounter;

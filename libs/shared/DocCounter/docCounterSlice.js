@@ -3,11 +3,11 @@ import { createSlice } from '@reduxjs/toolkit'
 export const docCounterSlice = createSlice({
     name: 'docCounter',
     initialState: {
-        value: 2000,
+        value: 0,
     },
     reducers: {
         setCount: (state, action) => {
-            state.value += action.payload
+            state.value = action.payload
         }
     }
 })

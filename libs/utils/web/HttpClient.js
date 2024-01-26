@@ -27,6 +27,14 @@ class HttpClient {
 
         return mockAsyncTask;
     }
+
+    getDocumentCountAsync() {
+        let mockAsyncTask = new Promise(function (resolve, reject) {
+            setTimeout(() => resolve(100000), 4000);
+        });
+
+        return mockAsyncTask;
+    }
 }
 
 export default HttpClient;
