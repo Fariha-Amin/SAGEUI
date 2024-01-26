@@ -1,5 +1,5 @@
 import React from "react";
-import ChatItem from "./ChatItem";
+import ChatHistoryItem from "./ChatHistoryItem";
 import ChatHistoryLoader from "./ChatHistoryLoader";
 import sageClient from "../../../utils/web/HttpClient";
 import { useState, useEffect } from "react";
@@ -27,7 +27,7 @@ const ChatHistory = (query) => {
     else {
         return (
             <>
-                {chatHistory.map((chatItem) => <ChatItem key={chatItem.id} model={chatItem} /> )}
+                {chatHistory.map((chatItem) => <ChatHistoryItem key={chatItem.id} model={chatItem} /> )}
             </>);
     }
 }

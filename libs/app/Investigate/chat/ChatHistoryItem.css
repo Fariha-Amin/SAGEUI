@@ -1,17 +1,17 @@
-.sage-chat-item {
+.sage-chat-history-item {
     margin: 3px 0px 6px 0px;
 }
 
-.sage-chat-item-question {
+.sage-chat-history-item-question {
     background-color: #eee;
     margin-bottom: 6px;
 }
 
-.sage-chat-item-answer {
+.sage-chat-history-item-answer {
     background-color: #eee;
     margin-bottom: 6px;
 }
 
-.sage-chat-item-timestamp {
+.sage-chat-history-item-timestamp {
     color: #bbb;
 }

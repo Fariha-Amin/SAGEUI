@@ -1,4 +1,4 @@
-import './ChatItem.css';
+import './ChatHistoryItem.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
 import Accordion from 'react-bootstrap/Accordion';
@@ -33,12 +33,12 @@ function ContextAwareToggle({ children, eventKey, callback }) {
     );
 }
 
-export default function ChatItem({ model }) {
+export default function ChatHistoryItem({ model }) {
     const promptType = "Default Prompt";
     return (
-        <Accordion defaultActiveKey="0" className='sage-chat-item'>
+        <Accordion defaultActiveKey="0" className='sage-chat-history-item'>
             <Card>
-                <Card.Header className='sage-chat-item-header'>
+                <Card.Header className='sage-chat-history-item-header'>
                     <Row>
                         <Col>
                         </Col>
@@ -54,8 +54,8 @@ export default function ChatItem({ model }) {
                     </Row>
                 </Card.Header>
                 <Accordion.Collapse eventKey="0">
-                    <Card.Body className='sage-chat-item-body'>
-                        <Card className='sage-chat-item-question'>
+                    <Card.Body className='sage-chat-history-item-body'>
+                        <Card className='sage-chat-history-item-question'>
                             <Card.Body>
                                 <Form>
                                     <Row>
@@ -76,7 +76,7 @@ export default function ChatItem({ model }) {
                                 </Form>
                             </Card.Body>
                         </Card>
-                        <Card className='sage-chat-item-answer'>
+                        <Card className='sage-chat-history-item-answer'>
                             <Card.Body>
                                 <Form>
                                     <Row>
@@ -90,7 +90,7 @@ export default function ChatItem({ model }) {
                                 </Form>
                             </Card.Body>
                         </Card>
-                        <Form className='sage-chat-item-timestamp'>
+                        <Form className='sage-chat-history-item-timestamp'>
                             <Row>
                                 <Col>
                                     {`${model.datetime}`}
