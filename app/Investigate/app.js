@@ -3,8 +3,8 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import { Row } from 'react-bootstrap'
 import React from "react";
 import { useState } from "react";
-import ChatPrompt from "../../libs/shared/chat/ChatPrompt"
-import ChatHistory from "../../libs/shared/chat/ChatHistory"
+import ChatPrompt from "../../libs/app/Investigate/chat/ChatPrompt"
+import ChatHistory from "../../libs/app/Investigate/chat/ChatHistory"
 import Header from '../../libs/app/Investigate/header'
 
 const App = () => {

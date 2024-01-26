@@ -7,7 +7,7 @@ import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import IconButton from '../icon-button/IconButton';
+import IconButton from '../../../shared/icon-button/IconButton';
 
 import { useContext } from 'react';
 import AccordionContext from 'react-bootstrap/AccordionContext';

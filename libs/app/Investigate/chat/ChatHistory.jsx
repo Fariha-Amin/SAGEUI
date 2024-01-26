@@ -1,6 +1,6 @@
 import React from "react";
 import ChatItem from "./ChatItem"
-import sageClient from "../../utils/web/HttpClient";
+import sageClient from "../../../utils/web/HttpClient";
 import { useState, useEffect } from "react";
 
 const ChatHistory = (query) => {
