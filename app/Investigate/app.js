@@ -1,12 +1,12 @@
 import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css'
 import { Row } from 'react-bootstrap'
 import React from "react";
 import ChatPrompt from "../../libs/shared/chat/ChatPrompt"
 import ChatItem from "../../libs/shared/chat/ChatItem"
-import Header from "./Header"
-import HttpClient from "../../libs/utils/web/HttpClient";
-import { useState, useEffect } from "react";
+import HttpClient from "../../libs/utils/web/HttpClient"
+import Header from './header'
+import { useState, useEffect } from "react"
 
 const sageClient = new HttpClient();
 
