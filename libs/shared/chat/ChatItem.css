@@ -1,0 +1,17 @@
+.sage-chat-item {
+    margin: 3px 0px 6px 0px;
+}
+
+.sage-chat-item-question {
+    background-color: #eee;
+    margin-bottom: 6px;
+}
+
+.sage-chat-item-answer {
+    background-color: #eee;
+    margin-bottom: 6px;
+}
+
+.sage-chat-item-timestamp {
+    color: #bbb;
+}
