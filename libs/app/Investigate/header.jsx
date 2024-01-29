@@ -1,6 +1,6 @@
 import React from 'react'
 import { Col, Navbar, Button, Row, FormLabel } from 'react-bootstrap';
-import DocCounter from '../../shared/DocCounter/docCounter';
+import DocCounter from '../../shared/doc-counter/DocCounter';
 import IconButton from '../../shared/icon-button/IconButton';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styled from 'styled-components';

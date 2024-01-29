@@ -6,7 +6,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const devMode = process.env.NODE_ENV !== "production";
 
 module.exports = {
-  entry: './app/Investigate/index.js',
+  entry: './app/investigate/index.js',
   resolve: {extensions: ['*','.js','.jsx']},
   output: {
     path:path.resolve(__dirname, "dist/investigate"),
@@ -43,7 +43,7 @@ module.exports = {
   },
   devServer:{
         static:{
-            directory: path.join(__dirname, 'dist/Investigate/')
+            directory: path.join(__dirname, 'dist/investigate/')
         },
         port:3000,
         devMiddleware:{
@@ -52,7 +52,7 @@ module.exports = {
         hot: 'only'
   },
   plugins: [
-    new HtmlWebpackPlugin({title: "Investigate", template: path.join(__dirname, "libs/pages/", "index-template.html"),}),
+    new HtmlWebpackPlugin({title: "Investigate", template: path.join(__dirname, "index.html"),}),
     new webpack.HotModuleReplacementPlugin()
   ].concat(devMode ? [] : [new MiniCssExtractPlugin()]),
   optimization: {

@@ -3,9 +3,9 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import { Row } from 'react-bootstrap'
 import React from "react";
 import { useState } from "react";
-import ChatPrompt from "../../libs/app/Investigate/chat/ChatPrompt"
-import ChatHistory from "../../libs/app/Investigate/chat/ChatHistory"
-import Header from '../../libs/app/Investigate/header'
+import ChatPrompt from "../../libs/app/investigate/chat/ChatPrompt"
+import ChatHistory from "../../libs/app/investigate/chat/ChatHistory"
+import Header from '../../libs/app/investigate/Header'
 
 const App = () => {
     const [query, setQuery] = useState("");

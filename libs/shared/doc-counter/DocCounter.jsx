@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import './docCounter.css'
 import { useSelector, useDispatch } from 'react-redux'
 import { setCount } from "./docCounterSlice";
-import client, { getDocumentCount } from "../../app/Investigate/httpClient"
+import client, { getDocumentCount } from "../../app/investigate/httpClient"
 
 const DocCounter = ({label}) => {
     useEffect(() => {
