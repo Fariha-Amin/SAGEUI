@@ -1,4 +1,4 @@
-import './ChatHistoryItem.css';
+import './ChatHistoryItem.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
 import Accordion from 'react-bootstrap/Accordion';

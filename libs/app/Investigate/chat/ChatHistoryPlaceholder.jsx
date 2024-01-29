@@ -1,4 +1,4 @@
-import './ChatHistoryPlaceholder.css';
+import './ChatHistoryPlaceholder.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
 import Col from 'react-bootstrap/Col';

@@ -1,8 +1,10 @@
+@use "../../../shared/sage";
+
 .sage-chat-history__placeholder {
     text-align: center;
     height: 100%;
 }
 
 .sage-chat-history__placeholder .card {
-    background-color: #eee;
+    background-color: sage.$sage-bg-color-light-grey;
 }

@@ -1,6 +1,8 @@
+@use "../../../shared/sage";
+
 .sage-chat-history__loader {
     text-align: center;
-    color: #ccc;
+    color: sage.$sage-color-dark-grey;
     height: 100%;
     padding-top: 24vh;
 }

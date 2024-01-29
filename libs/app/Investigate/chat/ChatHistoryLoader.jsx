@@ -1,4 +1,4 @@
-import './ChatHistoryLoader.css';
+import './ChatHistoryLoader.scss';
 import React from "react";
 import Spinner from 'react-bootstrap/Spinner';
 
