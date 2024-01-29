@@ -2,7 +2,7 @@ import React from "react";
 import ChatHistoryItem from "./ChatHistoryItem";
 import ChatHistoryLoader from "./ChatHistoryLoader";
 import ChatHistoryPlaceholder from "./ChatHistoryPlaceholder";
-import sageClient from "../../../utils/web/HttpClient";
+import sageClient from "../httpClient";
 import { useState, useEffect } from "react";
 
 const ChatHistory = (query) => {
