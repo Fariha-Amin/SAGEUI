@@ -13,7 +13,7 @@ export default function ChatPrompt({ query, onQuery }) {
     const [textLength, setTextLength] = useState(query ? query.length : 0);
     const [canSubmitQuery, setCanSubmitQuery] = useState(false);
 
-    const maxQueyrLength = 2000;
+    const maxQueryLength = 2000;
     const placeholderText = `Ask your question here, such as "How did Enron manipulate its financial statements, and what were the consequences?"`;
 
     const onClickDelegate = (e) => {
@@ -31,19 +31,15 @@ export default function ChatPrompt({ query, onQuery }) {
 
     useEffect(() => {
         if (loading) {
-            console.log("loading is true: disabled");
             setCanSubmitQuery(false);
         }
         else if (textLength === 0) {
-            console.log("text = 0: disabled");
             setCanSubmitQuery(false);
         }
-        else if (textLength > maxQueyrLength) {
-            console.log("text > max length: disabled");
+        else if (textLength > maxQueryLength) {
             setCanSubmitQuery(false);
         }
 		else {
-            console.log("all good: enabled");
             setCanSubmitQuery(true);
         }
 	}, [ loading, textLength ]);
@@ -54,7 +50,7 @@ export default function ChatPrompt({ query, onQuery }) {
                 <Col>
                     <Form.Group>
                         <Form.Control as="textarea" placeholder={placeholderText} rows={3} ref={text} onInput={onInputDelegate} />
-                        <Form.Text muted>{textLength} / {maxQueyrLength}</Form.Text>
+                        <Form.Text muted>{textLength} / {maxQueryLength}</Form.Text>
                     </Form.Group>
                 </Col>
                 <Col xs="auto">
