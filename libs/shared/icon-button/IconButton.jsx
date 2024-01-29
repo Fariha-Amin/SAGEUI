@@ -16,7 +16,7 @@ export default function IconButton({ icon, onClick }) {
     
     return (
         <button type="button" className='sage-icon-button' onClick={onClick}>
-            <FontAwesomeIcon icon={icon} className='sage-icon-button-icon' />
+            <FontAwesomeIcon icon={icon} className='sage-icon-button__icon' />
         </button>
     );
 }

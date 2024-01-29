@@ -1,8 +1,8 @@
-.sage-chat-history-placeholder {
+.sage-chat-history__placeholder {
     text-align: center;
     height: 100%;
 }
 
-.sage-chat-history-placeholder .card {
+.sage-chat-history__placeholder .card {
     background-color: #eee;
 }

@@ -36,9 +36,9 @@ function ContextAwareToggle({ children, eventKey, callback }) {
 export default function ChatHistoryItem({ model }) {
     const promptType = "Default Prompt";
     return (
-        <Accordion defaultActiveKey="0" className='sage-chat-history-item'>
+        <Accordion defaultActiveKey="0" className='sage-chat-history__item'>
             <Card>
-                <Card.Header className='sage-chat-history-item-header'>
+                <Card.Header className='sage-chat-history__item-header'>
                     <Row>
                         <Col>
                         </Col>
@@ -54,8 +54,8 @@ export default function ChatHistoryItem({ model }) {
                     </Row>
                 </Card.Header>
                 <Accordion.Collapse eventKey="0">
-                    <Card.Body className='sage-chat-history-item-body'>
-                        <Card className='sage-chat-history-item-question'>
+                    <Card.Body className='sage-chat-history__item-body'>
+                        <Card className='sage-chat-history__item-question'>
                             <Card.Body>
                                 <Form>
                                     <Row>
@@ -76,7 +76,7 @@ export default function ChatHistoryItem({ model }) {
                                 </Form>
                             </Card.Body>
                         </Card>
-                        <Card className='sage-chat-history-item-answer'>
+                        <Card className='sage-chat-history__item-answer'>
                             <Card.Body>
                                 <Form>
                                     <Row>
@@ -90,7 +90,7 @@ export default function ChatHistoryItem({ model }) {
                                 </Form>
                             </Card.Body>
                         </Card>
-                        <Form className='sage-chat-history-item-timestamp'>
+                        <Form className='sage-chat-history__item-timestamp'>
                             <Row>
                                 <Col>
                                     {`${model.datetime}`}
