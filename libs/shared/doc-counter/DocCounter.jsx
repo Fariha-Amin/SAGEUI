@@ -16,8 +16,8 @@ const DocCounter = ({label}) => {
     const docCount = useSelector((state) => state.docCounter.value);
     const dispatch = useDispatch();
 
-    const defaultLabel = <div className='doc-counter'>{docLabel} {formatCount(docCount)}</div>;
-    const zeroDocLabel = <div className='doc-counter zero-doc-counter'>{docLabel} {formatCount(docCount)}</div>;
+    const defaultLabel = <span className='doc-counter'>{docLabel} {formatCount(docCount)}</span>;
+    const zeroDocLabel = <span className='doc-counter zero-doc-counter'>{docLabel} {formatCount(docCount)}</span>;
     
     return (docCount > 0) ? defaultLabel : zeroDocLabel;
 };

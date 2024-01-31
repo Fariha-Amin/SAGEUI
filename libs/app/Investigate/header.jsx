@@ -1,9 +1,10 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
-import { Col, Navbar, Button, Row, FormLabel } from 'react-bootstrap';
+import { Button, Row, FormLabel } from 'react-bootstrap';
+import Stack from 'react-bootstrap/Stack';
 import Links from "../../shared/links";
 import DocCounter from '../../shared/doc-counter/DocCounter';
 import IconButton from '../../shared/icon-button/IconButton';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import styled from 'styled-components';
 
 const Bold = styled.div`
@@ -13,22 +14,18 @@ const Bold = styled.div`
 const Header = () => (
     <>
         <Row>
-            <Col>
-                <Col>
+            <Stack direction="horizontal" gap={3}>
+                <div>
                     <FormLabel><Bold>neXgenAI Investigate </Bold></FormLabel>
                     <IconButton icon="circle-question" />
-                </Col>
-            </Col>
-            <Col>
-                <Row>
-                    <Col>
-                        <DocCounter label='Total Documents ' />
-                    </Col>
-                    <Col>
-                        <Button>Manage Document Population</Button>
-                    </Col>
-                </Row>
-            </Col>
+                </div>
+                <div className="ms-auto">
+                    <DocCounter label='Total Documents ' />
+                </div>
+                <div>
+                    <Button>Manage Document Population</Button>
+                </div>
+            </Stack>
         </Row>
         <Row>
             <p>

@@ -48,8 +48,7 @@ module.exports = {
         port:3000,
         devMiddleware:{
             publicPath: 'http://localhost:3000'
-        },
-        hot: 'only'
+        }
   },
   plugins: [
     new HtmlWebpackPlugin({title: "Investigate", template: path.join(__dirname, "index.html"),}),
