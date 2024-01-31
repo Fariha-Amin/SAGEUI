@@ -20,7 +20,7 @@ const Header = () => (
         <Col>
             <Row>
                 <Col>
-                    <DocCounter label='Total Documents: '/>
+                    <DocCounter label='Total Documents '/>
                 </Col>
                 <Col>
                     <Button>Manage Document Population</Button>
