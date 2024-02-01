@@ -1,10 +1,78 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
+import '@testing-library/jest-dom'
+import { fireEvent, render } from "@testing-library/react";
 import IconButton from './IconButton';
 
-test('IconButton renders with correct icon', () => {
-  const element = renderer
-    .create(<IconButton icon="circle-question" />)
-    .toJSON();
-  expect(JSON.stringify(element)).toMatch('circle-question');
+describe("IconButton renders", () => {
+    test('requested icon', () => {
+        // Arrange
+        const faIcon = "circle-question";
+
+        // Act
+        const element = renderer
+            .create(<IconButton icon={faIcon} />)
+            .toJSON();
+
+        // Assert
+        expect(JSON.stringify(element)).toMatch('"data-icon":"circle-question"');
+    });
+
+    // Solid is the expected default
+    test('SOLID icon type by default', () => {
+        // Arrange
+        const faIcon = "circle-question";
+
+        // Act
+        const element = renderer
+            .create(<IconButton icon={faIcon} />)
+            .toJSON();
+
+        // Assert
+        expect(JSON.stringify(element)).toMatch('"data-prefix":"fas"');
+    });
+
+    // Regular is the expected output when specified
+    test('REGULAR icon type when specified as string', () => {
+        // Arrange
+        const faIcon = "fa-regular fa-circle-question";
+
+        // Act
+        const element = renderer
+            .create(<IconButton icon={faIcon} />)
+            .toJSON();
+
+        // Assert
+        expect(JSON.stringify(element)).toMatch('"data-prefix":"far"');
+    });
+
+    // Regular is the expected output when specified
+    test('REGULAR icon when specified as array', () => {
+        // Arrange
+        const faIcon = ["far", "circle-question"];
+
+        // Act
+        const element = renderer
+            .create(<IconButton icon={faIcon} />)
+            .toJSON();
+
+        // Assert
+        expect(JSON.stringify(element)).toMatch('"data-prefix":"far"');
+    });
+});
+
+describe("IconButton onClick", () => {
+    test('fires click event', () => {
+        // Arrange        
+        const handleOnClick = jest.fn();
+        render(<IconButton onClick={handleOnClick} />);
+        const element = document.querySelector("button");
+
+        // Act
+        fireEvent.click(element);
+
+        // Assert
+        expect(handleOnClick).toHaveBeenCalled();
+        expect(handleOnClick).toHaveBeenCalledTimes(1);
+    });
 });

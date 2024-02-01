@@ -9,12 +9,6 @@ export default function ChatHistoryPlaceholder() {
     return (
         <div className='sage-chat-history__placeholder'>
             <Row>
-                <p>
-                    Enter a question to start your investigation process. For guidance on using the neXgenAI features in Sightline, please refer to the <a href="#">FAQ</a>.
-                </p>
-            </Row>
-            <br />
-            <Row>
                 <Col></Col>
                 <Col>
                     <Card>

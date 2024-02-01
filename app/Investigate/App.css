@@ -7,13 +7,13 @@
 }
 
 .sage-investigate-header {
-    padding: 6px 24px;
+    padding: 6px;
     display: flex;
     flex-direction: column;
 }
 
 .sage-investigate-body {
-    padding: 6px 24px;
+    padding: 6px;
     overflow-y: auto;
     flex: 1;
     align-content: flex-start;

@@ -1,8 +1,9 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { Row } from 'react-bootstrap'
 import React from "react";
 import { useState } from "react";
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
 import ChatPrompt from "../../libs/app/investigate/chat/ChatPrompt"
 import ChatHistory from "../../libs/app/investigate/chat/ChatHistory"
 import Header from '../../libs/app/investigate/Header'
@@ -13,13 +14,19 @@ const App = () => {
     return (
         <div className="sage-investigate">
             <Row className='sage-investigate-header'>
-                <Header />
+                <Col>
+                    <Header />
+                </Col>
             </Row>
             <Row className='sage-investigate-body'>
-                <ChatHistory query={query} />
+                <Col>
+                    <ChatHistory query={query} />
+                </Col>
             </Row>
             <Row className='sage-investigate-footer'>
-                <ChatPrompt query={query} onQuery={(e) => setQuery(e.value)} />
+                <Col>
+                    <ChatPrompt query={query} onQuery={(e) => setQuery(e.value)} />
+                </Col>
             </Row>
         </div>
     );
