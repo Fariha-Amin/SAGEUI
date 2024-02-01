@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
+import './ChatPrompt.scss'
 
 export default function ChatPrompt({ query, onQuery }) {
     const text = useRef(query);
@@ -49,12 +50,12 @@ export default function ChatPrompt({ query, onQuery }) {
             <Row>
                 <Col>
                     <Form.Group>
-                        <Form.Control as="textarea" placeholder={placeholderText} rows={3} ref={text} onInput={onInputDelegate} />
-                        <Form.Text muted>{textLength} / {maxQueryLength}</Form.Text>
+                        <Form.Control maxLength={maxQueryLength} bsPrefix="chat-prompt-text-area form-control" as="textarea" placeholder={placeholderText} rows={3} ref={text} onInput={onInputDelegate} />
+                        <Form.Text bsPrefix="chat-prompt-text-counter form-text" muted>{textLength} / {maxQueryLength}</Form.Text>
                     </Form.Group>
                 </Col>
                 <Col xs="auto">
-                    <Button variant="secondary" onClick={onClickDelegate} disabled={!canSubmitQuery}>{loading ? "Loading..." : "Run"}</Button>
+                    <Button variant={canSubmitQuery ? "primary" : "secondary"} onClick={onClickDelegate} disabled={!canSubmitQuery}>{loading ? "Loading..." : "Run"}</Button>
                 </Col>
             </Row>
         </Form>
