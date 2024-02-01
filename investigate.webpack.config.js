@@ -9,7 +9,7 @@ module.exports = {
   entry: './app/investigate/index.js',
   resolve: {extensions: ['*','.js','.jsx']},
   output: {
-    path:path.resolve(__dirname, "dist/investigate"),
+    path:path.resolve(__dirname, "dist/SAGEUI/Investigate"),
     filename: '[contenthash].js',
     publicPath: '/',
     clean: true
@@ -43,7 +43,7 @@ module.exports = {
   },
   devServer:{
         static:{
-            directory: path.join(__dirname, 'dist/investigate/')
+            directory: path.join(__dirname, 'dist/SAGEUI/Investigate/')
         },
         port:3000,
         devMiddleware:{
