@@ -1,0 +1,20 @@
+@import 'sage';
+
+.chat-prompt-text-area{
+    resize:none;
+    box-shadow:1px 5px 5px $sage-grey;
+}
+
+.chat-prompt-text-counter{
+    display:block;
+    text-align:right;
+}
+
+.chat-prompt-run-button{
+    padding: .5rem 1.5rem;
+    font-size:20px;
+}
+
+.chat-prompt-run-col{
+    padding-left:0;
+}
