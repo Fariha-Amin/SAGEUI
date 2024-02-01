@@ -17,7 +17,7 @@ const Header = () => (
             <Stack direction="horizontal" gap={3}>
                 <div>
                     <FormLabel><Bold>neXgenAI Investigate </Bold></FormLabel>
-                    <IconButton cssClass="sage-icon-superscript" icon="circle-question" />
+                    <IconButton className="sage-icon-superscript" icon="circle-question" />
                 </div>
                 <div className="ms-auto">
                     <DocCounter label='Total Documents ' />

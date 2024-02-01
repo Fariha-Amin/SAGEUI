@@ -1,6 +1,11 @@
 @use "./colors";
 @use "./fonts";
 
+html, body {
+    font-family: fonts.$sage-font-family;
+    color: fonts.$sage-font-color;
+}
+
 .sage-icon-button {
     border-width: 0px;
     border-style: none;

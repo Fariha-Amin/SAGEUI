@@ -1,6 +1,6 @@
-import './App.css';
-import "../../sage.scss";
 import 'bootstrap/dist/css/bootstrap.min.css'
+import "../../sage.scss";
+import './App.css';
 import React from "react";
 import { useState } from "react";
 import Col from 'react-bootstrap/Col';
