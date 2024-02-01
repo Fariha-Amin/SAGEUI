@@ -48,14 +48,14 @@ export default function ChatPrompt({ query, onQuery }) {
     return (
         <Form>
             <Row>
-                <Col>
+                <Col xs="11">
                     <Form.Group>
                         <Form.Control maxLength={maxQueryLength} bsPrefix="chat-prompt-text-area form-control" as="textarea" placeholder={placeholderText} rows={3} ref={text} onInput={onInputDelegate} />
                         <Form.Text bsPrefix="chat-prompt-text-counter form-text" muted>{textLength} / {maxQueryLength}</Form.Text>
                     </Form.Group>
                 </Col>
-                <Col xs="auto">
-                    <Button variant={canSubmitQuery ? "primary" : "secondary"} onClick={onClickDelegate} disabled={!canSubmitQuery}>{loading ? "Loading..." : "Run"}</Button>
+                <Col bsPrefix="chat-prompt-run-col col-1">
+                    <Button bsPrefix="chat-prompt-run-button btn" variant={canSubmitQuery ? "primary" : "secondary"} onClick={onClickDelegate} disabled={!canSubmitQuery}>{loading ? "Loading..." : "Run"}</Button>
                 </Col>
             </Row>
         </Form>
