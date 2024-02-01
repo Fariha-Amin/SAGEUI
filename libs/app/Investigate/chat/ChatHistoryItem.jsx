@@ -4,7 +4,6 @@ import React from 'react';
 import Accordion from 'react-bootstrap/Accordion';
 import Badge from 'react-bootstrap/Badge';
 import Card from 'react-bootstrap/Card';
-import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Icon from '../../../shared/icon/Icon';
@@ -63,46 +62,42 @@ export default function ChatHistoryItem({ model }) {
                     <Card.Body className='sage-chat-history__item-body'>
                         <Card className='sage-chat-history__item-question'>
                             <Card.Body>
-                                <Form>
-                                    <Row>
-                                        <Col xs="auto">
-                                            <Badge bg="warning" text="dark">Q{model.id}</Badge>
-                                        </Col>
-                                        <Col>
-                                            {model.question}
-                                        </Col>
-                                        <Col xs="auto">
-                                            {promptType}
-                                            {" "}
-                                            <a href="#">25 Relevant Docs</a>
-                                            {" "}
-                                            <IconButton icon="circle-question" />
-                                        </Col>
-                                    </Row>
-                                </Form>
+                                <Row>
+                                    <Col xs="auto">
+                                        <Badge bg="warning" text="dark">Q{model.id}</Badge>
+                                    </Col>
+                                    <Col>
+                                        {model.question}
+                                    </Col>
+                                    <Col xs="auto">
+                                        {promptType}
+                                        {" "}
+                                        <a href="#">25 Relevant Docs</a>
+                                        {" "}
+                                        <IconButton icon="circle-question" />
+                                    </Col>
+                                </Row>
                             </Card.Body>
                         </Card>
                         <Card className='sage-chat-history__item-answer'>
                             <Card.Body>
-                                <Form>
-                                    <Row>
-                                        <Col xs="auto">
-                                            <Badge bg="warning" text="dark">A{model.id}</Badge>
-                                        </Col>
-                                        <Col>
-                                            {model.answer}
-                                        </Col>
-                                    </Row>
-                                </Form>
+                                <Row>
+                                    <Col xs="auto">
+                                        <Badge bg="warning" text="dark">A{model.id}</Badge>
+                                    </Col>
+                                    <Col>
+                                        {model.answer}
+                                    </Col>
+                                </Row>
                             </Card.Body>
                         </Card>
-                        <Form className='sage-chat-history__item-timestamp'>
+                        <div className='sage-chat-history__item-timestamp'>
                             <Row>
                                 <Col>
                                     {`${model.datetime}`}
                                 </Col>
                             </Row>
-                        </Form>
+                        </div>
                     </Card.Body>
                 </Accordion.Collapse>
             </Card>
