@@ -47,7 +47,7 @@ describe("IconButton renders", () => {
     });
 
     // Regular is the expected output when specified
-    test('REGULAR icon when specified as array', () => {
+    test('REGULAR icon type when specified as array', () => {
         // Arrange
         const faIcon = ["far", "circle-question"];
 
@@ -63,9 +63,10 @@ describe("IconButton renders", () => {
 
 describe("IconButton onClick", () => {
     test('fires click event', () => {
-        // Arrange        
+        // Arrange
+        const faIcon = "circle-question";
         const handleOnClick = jest.fn();
-        render(<IconButton onClick={handleOnClick} />);
+        render(<IconButton icon={faIcon} onClick={handleOnClick} />);
         const element = document.querySelector("button");
 
         // Act

@@ -7,7 +7,9 @@ import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
+import Icon from '../../../shared/icon/Icon';
 import IconButton from '../../../shared/icon-button/IconButton';
+import LayeredIconButton from '../../../shared/layered-icon-button/LayeredIconButton';
 
 import { useContext } from 'react';
 import AccordionContext from 'react-bootstrap/AccordionContext';
@@ -43,12 +45,16 @@ export default function ChatHistoryItem({ model }) {
                         <Col>
                         </Col>
                         <Col xs="auto">
-                            <IconButton icon="star" />
+                            <IconButton icon="fa-regular fa-star" />
                             <IconButton icon="magnifying-glass" />
                             <IconButton icon="wand-magic-sparkles" />
-                            <IconButton icon="file-circle-plus" />
-                            <IconButton icon="comments" />
-                            <IconButton icon="trash-can" />
+                            <LayeredIconButton>
+                                <Icon icon="fa-regular fa-file-lines" />
+                                <Icon icon="circle" transform="shrink-6 down-5 right-5" />
+                                <Icon icon="plus" transform="shrink-7 down-5 right-5" inverse />
+                            </LayeredIconButton>
+                            <IconButton icon="fa-regular fa-comments" />
+                            <IconButton icon="fa-regular fa-trash-can" />
                             <ContextAwareToggle eventKey="0" />
                         </Col>
                     </Row>
