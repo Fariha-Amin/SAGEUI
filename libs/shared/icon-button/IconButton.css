@@ -15,3 +15,20 @@
 .sage-icon-button:hover {
     background-image: linear-gradient(rgb(0 0 0/10%) 0 0);
 }
+
+.sage-icon-superscript {
+    border-width: 0px;
+    border-style: none;
+    border-radius: 4px;
+    background-color: initial;
+    
+    font-size: 0.8rem;
+    top: -0.25rem;
+    left: -0.25rem;
+    font-weight: 400;
+    line-height: 1.5;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: super;
+    position: relative;
+}

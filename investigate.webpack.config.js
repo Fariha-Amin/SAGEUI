@@ -43,7 +43,7 @@ module.exports = {
   },
   devServer:{
         static:{
-            directory: path.join(__dirname, 'dist/SAGEUI/Investigate/')
+            directory: path.join(__dirname, 'dist/Investigate/')
         },
         port:3000,
         devMiddleware:{
