@@ -1,23 +1,23 @@
-@use "../../../../sage";
+@use "../../../../colors";
 
 .sage-chat-history__item {
     margin: 3px 0px 6px 0px;
 }
 
 .sage-chat-history__item-header {
-    background-color: sage.$sage-bg-color-light-grey;
+    background-color: colors.$sage-bg-color-light-grey;
 }
 
 .sage-chat-history__item-question {
-    background-color: sage.$sage-bg-color-light-grey;
+    background-color: colors.$sage-bg-color-light-grey;
     margin-bottom: 6px;
 }
 
 .sage-chat-history__item-answer {
-    background-color: sage.$sage-bg-color-light-grey;
+    background-color: colors.$sage-bg-color-light-grey;
     margin-bottom: 6px;
 }
 
 .sage-chat-history__item-timestamp {
-    color: sage.$sage-color-dark-grey;
+    color: colors.$sage-color-dark-grey;
 }

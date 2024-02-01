@@ -1,4 +1,3 @@
-import './LayeredIconButton.css';
 import React from 'react';
 
 export default function LayeredIconButton({ onClick, children }) {

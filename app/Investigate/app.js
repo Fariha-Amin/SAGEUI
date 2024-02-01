@@ -1,12 +1,13 @@
 import './App.css';
+import "../../sage.scss";
 import 'bootstrap/dist/css/bootstrap.min.css'
 import React from "react";
 import { useState } from "react";
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import ChatPrompt from "../../libs/app/investigate/chat/ChatPrompt"
-import ChatHistory from "../../libs/app/investigate/chat/ChatHistory"
-import Header from '../../libs/app/investigate/Header'
+import ChatPrompt from "../../libs/app/investigate/chat/ChatPrompt";
+import ChatHistory from "../../libs/app/investigate/chat/ChatHistory";
+import Header from '../../libs/app/investigate/Header';
 
 const App = () => {
     const [query, setQuery] = useState("");

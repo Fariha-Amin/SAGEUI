@@ -1,4 +1,3 @@
-import './IconButton.css';
 import React from 'react';
 import Icon from '../icon/Icon';
 
