@@ -1,8 +1,8 @@
-@import 'sage';
+@use "../../../../colors";
 
 .chat-prompt-text-area{
     resize:none;
-    box-shadow:1px 5px 5px $sage-grey;
+    box-shadow:1px 5px 5px colors.$sage-grey;
 }
 
 .chat-prompt-text-counter{
