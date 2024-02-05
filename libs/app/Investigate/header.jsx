@@ -3,7 +3,7 @@ import React from 'react';
 import { Button, Row, FormLabel } from 'react-bootstrap';
 import Stack from 'react-bootstrap/Stack';
 import Links from "../../shared/links";
-import DocCounter from '../../shared/doc-counter/DocCounter';
+import Counter from '../../shared/doc-counter/Counter';
 import IconButton from '../../shared/icon-button/IconButton';
 import styled from 'styled-components';
 
@@ -11,7 +11,8 @@ const Bold = styled.div`
     font-weight:bold;
 `;
 
-const Header = () => (
+const Header = () => {
+    return(
     <>
         <Row>
             <Stack direction="horizontal" gap={3}>
@@ -20,7 +21,7 @@ const Header = () => (
                     <IconButton className="sage-icon-superscript" icon="circle-question" />
                 </div>
                 <div className="ms-auto">
-                    <DocCounter label='Total Documents ' />
+                    <Counter label='Total Documents ' count={1000} />
                 </div>
                 <div>
                     <Button>Manage Document Population</Button>
@@ -33,7 +34,8 @@ const Header = () => (
             </p>
         </Row>
     </>
-)
+    )
+}
 
 export default Header;
 
