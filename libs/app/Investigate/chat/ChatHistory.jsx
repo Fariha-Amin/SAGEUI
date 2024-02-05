@@ -12,7 +12,7 @@ function scrollToNewInvestigation(id) {
     // 2. Scroll to it
     // 3. Stop watching for it
     const scroll = () => {
-        const investigation = document.querySelector(`[data-id="${id}"]`);
+        const investigation = document.querySelector(`[data-id="${id}"].sage-chat-history__item`);
         if (investigation) {
             investigation.scrollIntoView({ block: "end", inline: "nearest", behavior: "smooth" });
             clearInterval(intervalId);

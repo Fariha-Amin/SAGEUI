@@ -10,7 +10,7 @@ import Row from 'react-bootstrap/Row';
 import Icon from '../../../shared/icon/Icon';
 import IconButton from '../../../shared/icon-button/IconButton';
 import LayeredIconButton from '../../../shared/layered-icon-button/LayeredIconButton';
-
+import parse from 'html-react-parser';
 import { useContext } from 'react';
 import AccordionContext from 'react-bootstrap/AccordionContext';
 import { useAccordionButton } from 'react-bootstrap/AccordionButton';
@@ -74,7 +74,12 @@ export default function ChatHistoryItem({ model }) {
             return model.response.result.failureReason;
         }
         else {
-            return model.response.answer;
+            // Format the output to include links
+            let answer = model.response.answer;
+            for (let docId of model.response.documentIds) {
+                answer = answer.replaceAll(docId, `<a href="#">${docId}</a>`);
+            }
+            return parse(answer);
         }
     };
 
