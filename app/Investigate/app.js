@@ -11,6 +11,28 @@ import Header from '../../libs/app/investigate/Header';
 
 const App = () => {
     const [queryId, setQueryId] = useState(0);
+    const [loading, setLoading] = useState(false);
+
+    function onQueryDelegate(e) {
+        setQueryId(e.id);
+        setLoading(true);
+    };
+
+    function onHistoryLoadingDelegate(e) {
+        setLoading(true);
+    };
+
+    function onHistoryLoadedDelegate(e) {
+        setLoading(false);
+    };
+
+    function onInvestigationLoadingDelegate(e) {
+        setLoading(true);
+    };
+
+    function onAnswerLoadedDelegate(e) {
+        setLoading(false);
+    };
 
     return (
         <div className="sage-investigate">
@@ -21,12 +43,18 @@ const App = () => {
             </Row>
             <Row className='sage-investigate-body'>
                 <Col>
-                    <ChatHistory queryId={queryId} />
+                    <ChatHistory 
+                        queryId={queryId} 
+                        onHistoryLoading={onHistoryLoadingDelegate} 
+                        onHistoryLoaded={onHistoryLoadedDelegate}
+                        onInvestigationLoading={onInvestigationLoadingDelegate}
+                        onAnswerLoaded={onAnswerLoadedDelegate}
+                        />
                 </Col>
             </Row>
             <Row className='sage-investigate-footer'>
                 <Col>
-                    <ChatPrompt onQuery={(e) => setQueryId(e.id)} />
+                    <ChatPrompt loading={loading} onQuery={onQueryDelegate} />
                 </Col>
             </Row>
         </div>

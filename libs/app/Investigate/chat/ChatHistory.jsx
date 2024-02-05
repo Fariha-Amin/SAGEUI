@@ -5,18 +5,27 @@ import ChatHistoryPlaceholder from "./ChatHistoryPlaceholder";
 import sageClient from "../httpClient";
 import { useState, useEffect } from "react";
 
-const ChatHistory = ({ queryId }) => {
+const ChatHistory = ({ 
+    queryId, 
+    onHistoryLoading, 
+    onHistoryLoaded, 
+    onInvestigationLoading, 
+    onInvestigationLoaded, 
+    onAnswerLoading, 
+    onAnswerLoaded }) => {
     const [isInitialLoad, setIsInitialLoad] = useState(true);
     const [chatHistory, setChatHistory] = useState([]);
     const [loadingHistory, setLoadingHistory] = useState(false);
 
     // Get chat history on load
     useEffect(() => {
+        onHistoryLoading && onHistoryLoading();
         setLoadingHistory(true);
         sageClient.getInvestigationsAsync()
             .then(data => setChatHistory(data))
             .then(() => setLoadingHistory(false))
-            .then(() => setIsInitialLoad(false));
+            .then(() => setIsInitialLoad(false))
+            .then(() => onHistoryLoaded && onHistoryLoaded());
     }, []);
 
     // Ask question and get answer on query
@@ -25,13 +34,17 @@ const ChatHistory = ({ queryId }) => {
 
         async function foo() {
             // Get the investigation object for this question
+            onInvestigationLoading && onInvestigationLoading({ queryId });
             let investigation = await sageClient.getInvestigationByQuestionAsync(queryId);
             setChatHistory(oldArray => [...oldArray, investigation]);
+            onInvestigationLoaded && onInvestigationLoaded({ investigation });
 
             // Get the answer for this question and update the model
+            onAnswerLoading && onAnswerLoading({ queryId });
             let response = await sageClient.getAnswerByQuestionAsync(queryId);
             investigation.response = response;
             setChatHistory(oldArray => [...oldArray]);
+            onAnswerLoaded && onAnswerLoaded({ response });
         };
         foo();
 

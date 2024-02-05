@@ -8,9 +8,9 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import './ChatPrompt.scss'
 
-export default function ChatPrompt({ onQuery }) {
+export default function ChatPrompt({ loading, onQuery }) {
     const text = useRef("");
-    const [loading, setLoading] = useState(false);
+    const [querying, setQuerying] = useState(false);
     const [textLength, setTextLength] = useState(0);
     const [canSubmitQuery, setCanSubmitQuery] = useState(false);
 
@@ -18,10 +18,10 @@ export default function ChatPrompt({ onQuery }) {
     const placeholderText = `Ask your question here, such as "How did Enron manipulate its financial statements, and what were the consequences?"`;
 
     const onClickDelegate = async (e) => {
-        setLoading(true);
+        setQuerying(true);
         const currentText = text.current.value;
         let queryId = await sageClient.poseQuestionAsync(currentText);
-        setLoading(false);
+        setQuerying(false);
         onQuery && onQuery({ id: queryId, value: currentText });
     }
 
@@ -34,6 +34,9 @@ export default function ChatPrompt({ onQuery }) {
         if (loading) {
             setCanSubmitQuery(false);
         }
+        else if (querying) {
+            setCanSubmitQuery(false);
+        }
         else if (textLength === 0) {
             setCanSubmitQuery(false);
         }
@@ -43,7 +46,7 @@ export default function ChatPrompt({ onQuery }) {
 		else {
             setCanSubmitQuery(true);
         }
-	}, [ loading, textLength ]);
+	}, [ loading, querying, textLength ]);
 
     return (
         <Form>
@@ -55,7 +58,7 @@ export default function ChatPrompt({ onQuery }) {
                     </Form.Group>
                 </Col>
                 <Col bsPrefix="chat-prompt-run-col col-1">
-                    <Button bsPrefix="chat-prompt-run-button btn" variant={canSubmitQuery ? "primary" : "secondary"} onClick={onClickDelegate} disabled={!canSubmitQuery}>{loading ? "Loading..." : "Run"}</Button>
+                    <Button bsPrefix="chat-prompt-run-button btn" variant={canSubmitQuery ? "primary" : "secondary"} onClick={onClickDelegate} disabled={!canSubmitQuery}>{querying ? "Loading..." : "Run"}</Button>
                 </Col>
             </Row>
         </Form>
