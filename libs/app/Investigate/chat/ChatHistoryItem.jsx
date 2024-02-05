@@ -35,6 +35,22 @@ function ContextAwareToggle({ children, eventKey, callback }) {
     );
 }
 
+function formatDate(datetime) {
+    const d = new Date(datetime);
+    const locale = "en-us";
+
+    // Produces the format: 12 February 2024
+    const dOptions = { month: 'long' };
+    const month = d.toLocaleDateString(locale, dOptions);
+    const date = `${d.getDay()} ${month} ${d.getFullYear()}`;
+
+    // Produces the format: 09:54 AM
+    const tOptions = { hour: "2-digit", minute: "2-digit" };
+    const time = d.toLocaleTimeString(locale, tOptions)
+
+    return `${date} - ${time}`;
+}
+
 export default function ChatHistoryItem({ model }) {
     let renderAnswer = () => {
         if(model.response.isInProgress){
@@ -117,7 +133,7 @@ export default function ChatHistoryItem({ model }) {
                         <div className='sage-chat-history__item-timestamp'>
                             <Row>
                                 <Col>
-                                    {`${model.response.datetime}`}
+                                    {formatDate(model.datetime)}
                                 </Col>
                             </Row>
                         </div>
