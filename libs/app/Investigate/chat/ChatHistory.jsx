@@ -5,16 +5,37 @@ import ChatHistoryPlaceholder from "./ChatHistoryPlaceholder";
 import sageClient from "../httpClient";
 import { useState, useEffect } from "react";
 
-const ChatHistory = (query) => {
+const ChatHistory = ({ queryId }) => {
+    const [isInitialLoad, setIsInitialLoad] = useState(true);
     const [chatHistory, setChatHistory] = useState([]);
     const [loadingHistory, setLoadingHistory] = useState(false);
 
+    // Get chat history on load
     useEffect(() => {
         setLoadingHistory(true);
-        sageClient.getChatHistoryAsync()
+        sageClient.getInvestigationsAsync()
             .then(data => setChatHistory(data))
-            .then(() => setLoadingHistory(false));
-    }, [query]);
+            .then(() => setLoadingHistory(false))
+            .then(() => setIsInitialLoad(false));
+    }, []);
+
+    // Ask question and get answer on query
+    useEffect(() => {
+        if (isInitialLoad) { return; }
+
+        async function foo() {
+            // Get the investigation object for this question
+            let investigation = await sageClient.getInvestigationByQuestionAsync(queryId);
+            setChatHistory(oldArray => [...oldArray, investigation]);
+
+            // Get the answer for this question and update the model
+            let response = await sageClient.getAnswerByQuestionAsync(queryId);
+            investigation.response = response;
+            setChatHistory(oldArray => [...oldArray]);
+        };
+        foo();
+
+    }, [queryId]);
 
     if (loadingHistory) {
         // Loading history from API
@@ -28,7 +49,7 @@ const ChatHistory = (query) => {
     else {
         return (
             <>
-                {chatHistory.map((chatItem) => <ChatHistoryItem key={chatItem.id} model={chatItem} /> )}
+                {chatHistory.map((chatItem) => <ChatHistoryItem key={chatItem.id} model={chatItem} />)}
             </>);
     }
 }

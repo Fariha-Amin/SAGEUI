@@ -1,6 +1,7 @@
 import './ChatHistoryItem.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
+import Placeholder from 'react-bootstrap/Placeholder';
 import Accordion from 'react-bootstrap/Accordion';
 import Badge from 'react-bootstrap/Badge';
 import Card from 'react-bootstrap/Card';
@@ -35,7 +36,29 @@ function ContextAwareToggle({ children, eventKey, callback }) {
 }
 
 export default function ChatHistoryItem({ model }) {
-    const promptType = "Default Prompt";
+    let renderAnswer = () => {
+        if(model.response.isInProgress){
+            return (
+                <>
+                    <Placeholder animation="glow" as="div">
+                        <Placeholder xs={6} />
+                    </Placeholder>
+                    <Placeholder animation="glow" as="div">
+                        <Placeholder xs={3} /> <Placeholder xs={3} /> <Placeholder xs={3} />
+                    </Placeholder>
+                    <Placeholder animation="glow" as="div">
+                        <Placeholder xs={4} /> <Placeholder xs={4} />
+                    </Placeholder>
+                    <Placeholder animation="glow" as="div">
+                        <Placeholder xs={7} />
+                    </Placeholder>
+                </>);
+            }
+        else {
+            return model.response.answer
+        }
+    };
+
     return (
         <Accordion defaultActiveKey="0" className='sage-chat-history__item'>
             <Card>
@@ -67,10 +90,10 @@ export default function ChatHistoryItem({ model }) {
                                         <Badge bg="warning" text="dark">Q{model.id}</Badge>
                                     </Col>
                                     <Col>
-                                        {model.question}
+                                        {model.query.question}
                                     </Col>
                                     <Col xs="auto">
-                                        {promptType}
+                                        {`${model.query.prompt.type} Prompt`}
                                         {" "}
                                         <a href="#">25 Relevant Docs</a>
                                         {" "}
@@ -86,7 +109,7 @@ export default function ChatHistoryItem({ model }) {
                                         <Badge bg="warning" text="dark">A{model.id}</Badge>
                                     </Col>
                                     <Col>
-                                        {model.answer}
+                                        {renderAnswer()}
                                     </Col>
                                 </Row>
                             </Card.Body>
@@ -94,7 +117,7 @@ export default function ChatHistoryItem({ model }) {
                         <div className='sage-chat-history__item-timestamp'>
                             <Row>
                                 <Col>
-                                    {`${model.datetime}`}
+                                    {`${model.response.datetime}`}
                                 </Col>
                             </Row>
                         </div>

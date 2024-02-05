@@ -8,26 +8,26 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import './ChatPrompt.scss'
 
-export default function ChatPrompt({ query, onQuery }) {
-    const text = useRef(query);
+export default function ChatPrompt({ onQuery }) {
+    const text = useRef("");
     const [loading, setLoading] = useState(false);
-    const [textLength, setTextLength] = useState(query ? query.length : 0);
+    const [textLength, setTextLength] = useState(0);
     const [canSubmitQuery, setCanSubmitQuery] = useState(false);
 
     const maxQueryLength = 2000;
     const placeholderText = `Ask your question here, such as "How did Enron manipulate its financial statements, and what were the consequences?"`;
 
-    const onClickDelegate = (e) => {
+    const onClickDelegate = async (e) => {
         setLoading(true);
-        const queryText = text.current.value;
-        sageClient.poseQuestionAsync(queryText)
-            .then(() => setLoading(false))
-            .then(() => onQuery && onQuery({ value: queryText }));
+        const currentText = text.current.value;
+        let queryId = await sageClient.poseQuestionAsync(currentText);
+        setLoading(false);
+        onQuery && onQuery({ id: queryId, value: currentText });
     }
 
     const onInputDelegate = (e) => {
-        const queryText = text.current.value;
-        setTextLength(queryText.length);
+        const currentText = text.current.value;
+        setTextLength(currentText.length);
     }
 
     useEffect(() => {

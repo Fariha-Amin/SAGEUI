@@ -10,7 +10,7 @@ import ChatHistory from "../../libs/app/investigate/chat/ChatHistory";
 import Header from '../../libs/app/investigate/Header';
 
 const App = () => {
-    const [query, setQuery] = useState("");
+    const [queryId, setQueryId] = useState(0);
 
     return (
         <div className="sage-investigate">
@@ -21,12 +21,12 @@ const App = () => {
             </Row>
             <Row className='sage-investigate-body'>
                 <Col>
-                    <ChatHistory query={query} />
+                    <ChatHistory queryId={queryId} />
                 </Col>
             </Row>
             <Row className='sage-investigate-footer'>
                 <Col>
-                    <ChatPrompt query={query} onQuery={(e) => setQuery(e.value)} />
+                    <ChatPrompt onQuery={(e) => setQueryId(e.id)} />
                 </Col>
             </Row>
         </div>
