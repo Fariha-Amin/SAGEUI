@@ -5,13 +5,30 @@ import ChatHistoryPlaceholder from "./ChatHistoryPlaceholder";
 import sageClient from "../httpClient";
 import { useState, useEffect } from "react";
 
-const ChatHistory = ({ 
-    queryId, 
-    onHistoryLoading, 
-    onHistoryLoaded, 
-    onInvestigationLoading, 
-    onInvestigationLoaded, 
-    onAnswerLoading, 
+function scrollToNewInvestigation(id) {
+    let intervalId;
+
+    // 1. Watch for the new investigation to be visible
+    // 2. Scroll to it
+    // 3. Stop watching for it
+    const scroll = () => {
+        const investigation = document.querySelector(`[data-id="${id}"]`);
+        if (investigation) {
+            investigation.scrollIntoView({ block: "end", inline: "nearest", behavior: "smooth" });
+            clearInterval(intervalId);
+        }
+    }
+
+    intervalId = setInterval(scroll, 500);
+}
+
+const ChatHistory = ({
+    queryId,
+    onHistoryLoading,
+    onHistoryLoaded,
+    onInvestigationLoading,
+    onInvestigationLoaded,
+    onAnswerLoading,
     onAnswerLoaded }) => {
     const [isInitialLoad, setIsInitialLoad] = useState(true);
     const [chatHistory, setChatHistory] = useState([]);
@@ -38,6 +55,8 @@ const ChatHistory = ({
             let investigation = await sageClient.getInvestigationByQuestionAsync(queryId);
             setChatHistory(oldArray => [...oldArray, investigation]);
             onInvestigationLoaded && onInvestigationLoaded({ investigation });
+
+            scrollToNewInvestigation(investigation.id);
 
             // Get the answer for this question and update the model
             onAnswerLoading && onAnswerLoading({ queryId });

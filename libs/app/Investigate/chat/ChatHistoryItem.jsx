@@ -79,7 +79,7 @@ export default function ChatHistoryItem({ model }) {
     };
 
     return (
-        <Accordion defaultActiveKey="0" className='sage-chat-history__item'>
+        <Accordion defaultActiveKey="0" className='sage-chat-history__item' data-id={model.id}>
             <Card>
                 <Card.Header className='sage-chat-history__item-header'>
                     <Row>
