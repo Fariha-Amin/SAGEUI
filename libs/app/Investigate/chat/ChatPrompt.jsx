@@ -49,8 +49,8 @@ export default function ChatPrompt({ query, onQuery }) {
         <Form>
             <Row>
                 <Col xs="11">
-                    <Form.Group>
-                        <Form.Control maxLength={maxQueryLength} bsPrefix="chat-prompt-text-area form-control" as="textarea" placeholder={placeholderText} rows={3} ref={text} onInput={onInputDelegate} />
+                    <Form.Group className="chat-prompt-div form-control">
+                        <Form.Control maxLength={maxQueryLength} bsPrefix="chat-prompt-text-area" as="textarea" placeholder={placeholderText} rows={2} ref={text} onInput={onInputDelegate} />
                         <Form.Text bsPrefix="chat-prompt-text-counter form-text" muted>{textLength} / {maxQueryLength}</Form.Text>
                     </Form.Group>
                 </Col>

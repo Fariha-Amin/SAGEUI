@@ -2,12 +2,19 @@
 
 .chat-prompt-text-area{
     resize:none;
-    box-shadow:1px 5px 5px colors.$sage-grey;
+    border:0;
+    width:100%;
+}
+
+.chat-prompt-text-area:focus{
+    outline:none !important;
 }
 
 .chat-prompt-text-counter{
     display:block;
     text-align:right;
+    padding-right:0.75rem;
+    padding-bottom: 0.5rem;
 }
 
 .chat-prompt-run-button{
@@ -17,4 +24,10 @@
 
 .chat-prompt-run-col{
     padding-left:0;
+}
+
+.chat-prompt-div{
+    box-shadow:1px 5px 5px colors.$sage-grey;
+    border: 1px solid colors.$sage-grey;
+    border-radius: .375rem;
 }
