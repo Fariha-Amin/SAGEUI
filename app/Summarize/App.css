@@ -1,0 +1,65 @@
+body{
+    margin: 3rem 1.5rem;
+    color: #000000;
+    background-color: #f2f3f9;
+}
+
+.flex {
+    display: flex;
+}
+.flex-column {
+    flex-direction: column;
+}
+
+.justify-content-between {
+    justify-content: space-between;
+}
+
+.gap-10{
+    gap: 10px;
+}
+
+/* button  */
+.btn-diable-color{
+    background-color: #DDDDDD;
+    color: white; 
+}
+
+.btn-color{
+    background-color: #066FDE;
+    color: white; 
+}
+
+.btn-padding{
+    padding: 8px 16px;
+    border: none;
+}
+
+.btn-height{
+    height:35px; 
+}
+
+/* Font  */
+.font-family{
+    font-family:'Open Sans'
+}
+
+.font-size{
+    font-size:28px
+}
+
+.margin-zero{
+    margin:0
+}
+
+.margin-height{
+    margin:15px 0
+}
+
+.font-weight{
+    font-weight: bold
+}
+
+.font-color{
+    color:#1E1E1E
+}
