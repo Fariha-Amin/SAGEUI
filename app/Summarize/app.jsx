@@ -8,8 +8,6 @@ export default function App(){
     <div className="App">
         <SummaryHeader/>
     </div>
-    <div></div>
-    
     )
     
 }
