@@ -267,8 +267,21 @@ class HttpClient {
             setTimeout(() => {
                 let response = queryLookup();
                 response.isInProgress = false;
-                response.answer = "Lorem ipsum ID000001 dolor sit amet ID000024";
-                response.documentIds = [ "ID000001", "ID000024" ]
+
+                // Random integer between 0 and 9 (both included)
+                let rndNumber = Math.floor(Math.random() * 10);
+                if (rndNumber > 5) {
+                    response.answer = "";
+                    response.documentIds = [];
+                    response.result.isSuccess = false;
+                    response.result.failureReason = "I do not have enough information in the provided sources to answer your question";
+                }
+                else {
+                    response.answer = "Lorem ipsum ID000001 dolor sit amet ID000024";
+                    response.documentIds = [ "ID000001", "ID000024" ];
+                    response.result.isSuccess = true;
+                    response.result.failureReason = "";
+                }
                 resolve(response);
             }, 3000);
         });

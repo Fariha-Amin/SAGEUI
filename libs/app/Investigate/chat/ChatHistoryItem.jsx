@@ -53,7 +53,7 @@ function formatDate(datetime) {
 
 export default function ChatHistoryItem({ model }) {
     let renderAnswer = () => {
-        if(model.response.isInProgress){
+        if (model.response.isInProgress) {
             return (
                 <>
                     <Placeholder animation="glow" as="div">
@@ -69,9 +69,12 @@ export default function ChatHistoryItem({ model }) {
                         <Placeholder xs={7} />
                     </Placeholder>
                 </>);
-            }
+        }
+        else if (!model.response.result.isSuccess) {
+            return model.response.result.failureReason;
+        }
         else {
-            return model.response.answer
+            return model.response.answer;
         }
     };
 
