@@ -45,9 +45,15 @@ class HttpClient {
         // header - userId
         // header - projectId
         // body - array of Investigation class from above
+        this.loadMockData(25);
+
+        let maxItemCount = 25;
+        let startIndex = this._investigations.length - maxItemCount;
+        startIndex = startIndex < 0 ? 0 : startIndex;
+        let endIndex = startIndex + maxItemCount;
         let localInvestigations = this._investigations
             .toSorted((a, b) => a.datetime - b.datetime)
-            .slice(0, 25);
+            .slice(startIndex, endIndex);
 
         let mockAsyncTask = new Promise(function (resolve, reject) {
             setTimeout(() => resolve(localInvestigations), 3000);
@@ -277,8 +283,21 @@ class HttpClient {
                     response.result.failureReason = "I do not have enough information in the provided sources to answer your question";
                 }
                 else {
-                    response.answer = "Lorem ipsum ID000001 dolor sit amet ID000024";
-                    response.documentIds = [ "ID000001", "ID000024" ];
+                    response.answer = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                        Integer non congue ipsum, ut euismod nulla. 
+                        Sed sed lorem ID000001 nec odio pharetra volutpat vel sit amet orci. 
+                        Maecenas sit amet tristique eros. 
+                        Maecenas sagittis augue ac ID000024 condimentum malesuada. 
+                        In rhoncus fermentum malesuada. 
+                        Quisque scelerisque nibh ipsum, non dignissim augue euismod mattis. 
+                        Quisque accumsan suscipit scelerisque. 
+                        Phasellus et vehicula justo. 
+                        Nulla dictum ex nec sem tristique eleifend. 
+                        Etiam a ID000001 leo ultricies, gravida nibh sit amet, dignissim odio. 
+                        In hac habitasse platea dictumst. 
+                        Donec lectus odio, aliquam a nulla a, ullamcorper ID000024 luctus massa. 
+                        Aliquam sem neque, consectetur sit amet sem nec, sodales feugiat lacus.`;
+                    response.documentIds = ["ID000001", "ID000024"];
                     response.result.isSuccess = true;
                     response.result.failureReason = "";
                 }
@@ -330,6 +349,31 @@ class HttpClient {
 
     getResponseById(id) {
         return this._responses.find(i => i.id === id);
+    }
+
+    loadMockData(amountToAdd) {
+        let index = this._investigations.length + 1;
+        for (let i = index; i <= amountToAdd; i++) {
+            // Set up the investigation
+            let investigation = new Investigation();
+            investigation.id = i;
+            this._investigations.push(investigation);
+
+            // Set up the query
+            let query = investigation.query;
+            query.id = i;
+            query.question = `Question Number ${i}`;
+            query.prompt.value = "Lorem ipsum";
+            query.prompt.type = "Default";
+            this._querries.push(query);
+
+            // Set up the reponse
+            let response = investigation.response;
+            response.id = i;
+            response.isInProgress = false;
+            response.answer = `Answer Number ${i}`;
+            this._responses.push(response);
+        }
     }
 }
 
