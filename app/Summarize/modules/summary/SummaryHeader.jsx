@@ -10,7 +10,7 @@ const SummaryHeader=()=>{
     return (
         <div>
           <div className='flex justify-content-between'>
-            <p className='font-family font-size margin-zero font-weight font-color'>
+            <p className='font-family font-size-header margin-zero font-weight-bold font-color'>
               neXgenAI Summarize
               <a>
                 <img src={helpIcon} width="18" alter='helpIcon'/>
@@ -26,8 +26,8 @@ const SummaryHeader=()=>{
   
           <div className='flex justify-content-between gap-10'>
             <Button className='btn-height' label="View all summaries" severity="info" outlined />
-            <img src= {icon} alt="filter" style={{ height: '30px' }} />
-            <img src= {download}  alt="download" style={{ height: '30px' }} />
+            <img className='img-height' src= {icon} alt="filter"/>
+            <img className='img-height' src= {download}  alt="download"/>
             <SplitButton className='btn-height' severity="secondary" label='Action'></SplitButton>
            </div>
           </div>

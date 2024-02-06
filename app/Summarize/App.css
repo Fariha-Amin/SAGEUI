@@ -39,12 +39,16 @@ body{
     height:35px; 
 }
 
+.img-height{
+    height:30px; 
+}
+
 /* Font  */
 .font-family{
     font-family:'Open Sans'
 }
 
-.font-size{
+.font-size-header{
     font-size:28px
 }
 
@@ -56,7 +60,7 @@ body{
     margin:15px 0
 }
 
-.font-weight{
+.font-weight-bold{
     font-weight: bold
 }
 
