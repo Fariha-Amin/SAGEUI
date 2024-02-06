@@ -24,10 +24,10 @@ export default function PrimeReactDatatable() {
         <div className="card">
             <DataTable value={products} resizableColumns showGridlines stripedRows paginator rows={10}
                 filterDisplay="row" tableStyle={{ minWidth: '50rem' }}>
-                <Column field="code" header="Code" sortable filter></Column>
-                <Column field="name" header="Name" sortable filter></Column>
-                <Column field="category" header="Category" sortable filter></Column>
-                <Column field="quantity" header="Quantity" sortable filter></Column>
+                <Column field="code" header="Code" sortable filter showFilterMenu={false}></Column>
+                <Column field="name" header="Name" sortable filter showFilterMenu={false}></Column>
+                <Column field="category" header="Category" sortable filter showFilterMenu={false}></Column>
+                <Column field="quantity" header="Quantity" sortable filter showFilterMenu={false}></Column>
             </DataTable>
         </div>
     );
