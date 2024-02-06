@@ -3,16 +3,6 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { ProductService } from './service/ProductService';
 
-
-function customHeader(row) {
-    debugger;
-    return (
-        <>
-
-        </>
-    )
-}
-
 export default function PrimeReactDatatable() {
     const [products, setProducts] = useState([]);
 
