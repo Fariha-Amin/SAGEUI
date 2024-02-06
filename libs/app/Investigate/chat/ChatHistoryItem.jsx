@@ -1,6 +1,7 @@
 import './ChatHistoryItem.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
+import Placeholder from 'react-bootstrap/Placeholder';
 import Accordion from 'react-bootstrap/Accordion';
 import Badge from 'react-bootstrap/Badge';
 import Card from 'react-bootstrap/Card';
@@ -9,7 +10,7 @@ import Row from 'react-bootstrap/Row';
 import Icon from '../../../shared/icon/Icon';
 import IconButton from '../../../shared/icon-button/IconButton';
 import LayeredIconButton from '../../../shared/layered-icon-button/LayeredIconButton';
-
+import parse from 'html-react-parser';
 import { useContext } from 'react';
 import AccordionContext from 'react-bootstrap/AccordionContext';
 import { useAccordionButton } from 'react-bootstrap/AccordionButton';
@@ -34,10 +35,56 @@ function ContextAwareToggle({ children, eventKey, callback }) {
     );
 }
 
+function formatDate(datetime) {
+    const d = new Date(datetime);
+    const locale = "en-us";
+
+    // Produces the format: 12 February 2024
+    const dOptions = { month: 'long' };
+    const month = d.toLocaleDateString(locale, dOptions);
+    const date = `${d.getDay()} ${month} ${d.getFullYear()}`;
+
+    // Produces the format: 09:54 AM
+    const tOptions = { hour: "2-digit", minute: "2-digit" };
+    const time = d.toLocaleTimeString(locale, tOptions)
+
+    return `${date} - ${time}`;
+}
+
 export default function ChatHistoryItem({ model }) {
-    const promptType = "Default Prompt";
+    let renderAnswer = () => {
+        if (model.response.isInProgress) {
+            return (
+                <>
+                    <Placeholder animation="glow" as="div">
+                        <Placeholder xs={6} />
+                    </Placeholder>
+                    <Placeholder animation="glow" as="div">
+                        <Placeholder xs={3} /> <Placeholder xs={3} /> <Placeholder xs={3} />
+                    </Placeholder>
+                    <Placeholder animation="glow" as="div">
+                        <Placeholder xs={4} /> <Placeholder xs={4} />
+                    </Placeholder>
+                    <Placeholder animation="glow" as="div">
+                        <Placeholder xs={7} />
+                    </Placeholder>
+                </>);
+        }
+        else if (!model.response.result.isSuccess) {
+            return model.response.result.failureReason;
+        }
+        else {
+            // Format the output to include links
+            let answer = model.response.answer;
+            for (let docId of model.response.documentIds) {
+                answer = answer.replaceAll(docId, `<a href="#">${docId}</a>`);
+            }
+            return parse(answer);
+        }
+    };
+
     return (
-        <Accordion defaultActiveKey="0" className='sage-chat-history__item'>
+        <Accordion defaultActiveKey="0" className='sage-chat-history__item' data-id={model.id}>
             <Card>
                 <Card.Header className='sage-chat-history__item-header'>
                     <Row>
@@ -67,10 +114,10 @@ export default function ChatHistoryItem({ model }) {
                                         <Badge bg="warning" text="dark">Q{model.id}</Badge>
                                     </Col>
                                     <Col>
-                                        {model.question}
+                                        {model.query.question}
                                     </Col>
                                     <Col xs="auto">
-                                        {promptType}
+                                        {`${model.query.prompt.type} Prompt`}
                                         {" "}
                                         <a href="#">25 Relevant Docs</a>
                                         {" "}
@@ -86,7 +133,7 @@ export default function ChatHistoryItem({ model }) {
                                         <Badge bg="warning" text="dark">A{model.id}</Badge>
                                     </Col>
                                     <Col>
-                                        {model.answer}
+                                        {renderAnswer()}
                                     </Col>
                                 </Row>
                             </Card.Body>
@@ -94,7 +141,7 @@ export default function ChatHistoryItem({ model }) {
                         <div className='sage-chat-history__item-timestamp'>
                             <Row>
                                 <Col>
-                                    {`${model.datetime}`}
+                                    {formatDate(model.datetime)}
                                 </Col>
                             </Row>
                         </div>
