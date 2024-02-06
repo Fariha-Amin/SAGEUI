@@ -3,7 +3,7 @@ import React from 'react';
 import { Button, Row, FormLabel } from 'react-bootstrap';
 import Stack from 'react-bootstrap/Stack';
 import Links from "../../shared/links";
-import Counter from '../../shared/doc-counter/Counter';
+import Counter from '../../shared/counter/Counter';
 import IconButton from '../../shared/icon-button/IconButton';
 import styled from 'styled-components';
 
