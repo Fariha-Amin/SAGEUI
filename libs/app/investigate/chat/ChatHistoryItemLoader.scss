@@ -1,0 +1,7 @@
+@use "../../../../colors";
+
+.sage-chat-history__item-loader {
+    text-align: center;
+    color: colors.$sage-color-dark-grey;
+    padding: 24px;
+}

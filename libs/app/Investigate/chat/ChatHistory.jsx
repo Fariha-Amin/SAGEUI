@@ -1,20 +1,18 @@
 import React from "react";
 import ChatHistoryItem from "./ChatHistoryItem";
 import ChatHistoryLoader from "./ChatHistoryLoader";
+import ChatHistoryItemLoader from "./ChatHistoryItemLoader";
 import ChatHistoryPlaceholder from "./ChatHistoryPlaceholder";
 import sageClient from "../httpClient";
 import { useState, useEffect } from "react";
 
-function scrollToNewInvestigation(id) {
+function scrollToBottomOfChat() {
     let intervalId;
 
-    // 1. Watch for the new investigation to be visible
-    // 2. Scroll to it
-    // 3. Stop watching for it
     const scroll = () => {
-        const investigation = document.querySelector(`[data-id="${id}"].sage-chat-history__item`);
-        if (investigation) {
-            investigation.scrollIntoView({ block: "end", inline: "nearest", behavior: "smooth" });
+        const element = document.getElementById("sage-chat-history__bottom");
+        if (element) {
+            element.scrollIntoView({ block: "start", inline: "nearest", behavior: "smooth" });
             clearInterval(intervalId);
         }
     }
@@ -33,6 +31,7 @@ const ChatHistory = ({
     const [isInitialLoad, setIsInitialLoad] = useState(true);
     const [chatHistory, setChatHistory] = useState([]);
     const [loadingHistory, setLoadingHistory] = useState(false);
+    const [loadingItem, setLoadingItem] = useState(false);
 
     // Get chat history on load
     useEffect(() => {
@@ -49,14 +48,20 @@ const ChatHistory = ({
     useEffect(() => {
         if (isInitialLoad) { return; }
 
-        async function foo() {
-            // Get the investigation object for this question
+        async function getInvestigation() {
+            // Let the user know we are loading the investigation
+            setLoadingItem(true);
+            scrollToBottomOfChat();
+
+            // Get the investigation
             onInvestigationLoading && onInvestigationLoading({ queryId });
             let investigation = await sageClient.getInvestigationByQuestionAsync(queryId);
+
+            // Show the investigation
+            setLoadingItem(false);
             setChatHistory(oldArray => [...oldArray, investigation]);
             onInvestigationLoaded && onInvestigationLoaded({ investigation });
-
-            scrollToNewInvestigation(investigation.id);
+            scrollToBottomOfChat();
 
             // Get the answer for this question and update the model
             onAnswerLoading && onAnswerLoading({ queryId });
@@ -65,7 +70,7 @@ const ChatHistory = ({
             setChatHistory(oldArray => [...oldArray]);
             onAnswerLoaded && onAnswerLoaded({ response });
         };
-        foo();
+        getInvestigation();
 
     }, [queryId]);
 
@@ -82,6 +87,8 @@ const ChatHistory = ({
         return (
             <>
                 {chatHistory.map((chatItem) => <ChatHistoryItem key={chatItem.id} model={chatItem} />)}
+                {loadingItem ? <ChatHistoryItemLoader /> : null}
+                <div id="sage-chat-history__bottom"></div>
             </>);
     }
 }
