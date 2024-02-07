@@ -9,8 +9,8 @@ describe("ChatHistoryItemLoader renders", () => {
         const loadingText = "Loading...";
 
         // Act
-        const dom = render(<ChatHistoryItemLoader />);
-        const element = dom.container.querySelector("h2");
+        render(<ChatHistoryItemLoader />);
+        const element = document.querySelector("h2");
 
         // Assert
         expect(element).toBeDefined();
@@ -22,8 +22,8 @@ describe("ChatHistoryItemLoader renders", () => {
         // n/a
 
         // Act
-        const dom = render(<ChatHistoryItemLoader />);
-        const element = dom.container.querySelector("div[className='spinner-border']");
+        render(<ChatHistoryItemLoader />);
+        const element = document.querySelector("div[className='spinner-border']");
 
         // Assert
         expect(element).toBeDefined();
@@ -34,8 +34,8 @@ describe("ChatHistoryItemLoader renders", () => {
         // n/a
 
         // Act
-        const dom = render(<ChatHistoryItemLoader />);
-        const element = dom.container.querySelector(".sage-chat-history__item");
+        render(<ChatHistoryItemLoader />);
+        const element = document.querySelector(".sage-chat-history__item");
 
         // Assert
         expect(element).toBeDefined();
@@ -46,8 +46,8 @@ describe("ChatHistoryItemLoader renders", () => {
         // n/a
 
         // Act
-        const dom = render(<ChatHistoryItemLoader />);
-        const element = dom.container.querySelector(".sage-chat-history__item-header");
+        render(<ChatHistoryItemLoader />);
+        const element = document.querySelector(".sage-chat-history__item-header");
 
         // Assert
         expect(element).toBeDefined();
@@ -58,8 +58,8 @@ describe("ChatHistoryItemLoader renders", () => {
         // n/a
 
         // Act
-        const dom = render(<ChatHistoryItemLoader />);
-        const element = dom.container.querySelector(".sage-chat-history__item-body");
+        render(<ChatHistoryItemLoader />);
+        const element = document.querySelector(".sage-chat-history__item-body");
 
         // Assert
         expect(element).toBeDefined();
@@ -70,8 +70,8 @@ describe("ChatHistoryItemLoader renders", () => {
         // n/a
 
         // Act
-        const dom = render(<ChatHistoryItemLoader />);
-        const element = dom.container.querySelector(".sage-chat-history__item-loader");
+        render(<ChatHistoryItemLoader />);
+        const element = document.querySelector(".sage-chat-history__item-loader");
 
         // Assert
         expect(element).toBeDefined();
