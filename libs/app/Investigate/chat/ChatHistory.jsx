@@ -6,6 +6,16 @@ import ChatHistoryPlaceholder from "./ChatHistoryPlaceholder";
 import sageClient from "../httpClient";
 import { useState, useEffect } from "react";
 
+function reduceArray(array, maxItemCount) {
+    if (array.length > maxItemCount) {
+        let startIndex = array.length - maxItemCount;
+        startIndex = startIndex < 0 ? 0 : startIndex;
+        let endIndex = startIndex + maxItemCount;
+        array = array.slice(startIndex, endIndex);
+    }
+    return array;
+}
+
 function scrollToBottomOfChat() {
     let intervalId;
 
@@ -59,15 +69,18 @@ const ChatHistory = ({
 
             // Show the investigation
             setLoadingItem(false);
-            setChatHistory(oldArray => [...oldArray, investigation]);
-            onInvestigationLoaded && onInvestigationLoaded({ investigation });
+            setChatHistory(oldArray => {
+                let newArray = [...oldArray, investigation];
+                return reduceArray(newArray, 25);
+            });
             scrollToBottomOfChat();
+            onInvestigationLoaded && onInvestigationLoaded({ investigation });
 
             // Get the answer for this question and update the model
             onAnswerLoading && onAnswerLoading({ queryId });
             let response = await sageClient.getAnswerByQuestionAsync(queryId);
             investigation.response = response;
-            setChatHistory(oldArray => [...oldArray]);
+            setChatHistory(oldArray => oldArray);
             onAnswerLoaded && onAnswerLoaded({ response });
         };
         getInvestigation();
