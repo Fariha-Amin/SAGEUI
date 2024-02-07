@@ -1,15 +1,17 @@
 import React from "react";
-import PrimeReactDatatable from "./PrimeReactDatatable";
 import SummaryHeader from "./modules/summary/SummaryHeader";
+import SageDataTable from './components/SageDataTable';
 
 import './App.css';
 
 export default function App() {
 
+    const showSkeleton = true;
+
     return (
         <div className="App">
             <SummaryHeader />
-            <PrimeReactDatatable />
+            <SageDataTable showSkeleton={showSkeleton} />
         </div>
     );
 }
