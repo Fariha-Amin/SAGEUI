@@ -8,30 +8,33 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import './ChatPrompt.scss'
 
-export default function ChatPrompt({ query, onQuery }) {
-    const text = useRef(query);
-    const [loading, setLoading] = useState(false);
-    const [textLength, setTextLength] = useState(query ? query.length : 0);
+export default function ChatPrompt({ loading, onQuery }) {
+    const text = useRef("");
+    const [querying, setQuerying] = useState(false);
+    const [textLength, setTextLength] = useState(0);
     const [canSubmitQuery, setCanSubmitQuery] = useState(false);
 
     const maxQueryLength = 2000;
     const placeholderText = `Ask your question here, such as "How did Enron manipulate its financial statements, and what were the consequences?"`;
 
-    const onClickDelegate = (e) => {
-        setLoading(true);
-        const queryText = text.current.value;
-        sageClient.poseQuestionAsync(queryText)
-            .then(() => setLoading(false))
-            .then(() => onQuery && onQuery({ value: queryText }));
+    const onClickDelegate = async (e) => {
+        setQuerying(true);
+        const currentText = text.current.value;
+        let queryId = await sageClient.poseQuestionAsync(currentText);
+        setQuerying(false);
+        onQuery && onQuery({ id: queryId, value: currentText });
     }
 
     const onInputDelegate = (e) => {
-        const queryText = text.current.value;
-        setTextLength(queryText.length);
+        const currentText = text.current.value;
+        setTextLength(currentText.length);
     }
 
     useEffect(() => {
         if (loading) {
+            setCanSubmitQuery(false);
+        }
+        else if (querying) {
             setCanSubmitQuery(false);
         }
         else if (textLength === 0) {
@@ -43,7 +46,7 @@ export default function ChatPrompt({ query, onQuery }) {
 		else {
             setCanSubmitQuery(true);
         }
-	}, [ loading, textLength ]);
+	}, [ loading, querying, textLength ]);
 
     return (
         <Form>
@@ -55,7 +58,7 @@ export default function ChatPrompt({ query, onQuery }) {
                     </Form.Group>
                 </Col>
                 <Col bsPrefix="chat-prompt-run-col col-1">
-                    <Button bsPrefix="chat-prompt-run-button btn" variant={canSubmitQuery ? "primary" : "secondary"} onClick={onClickDelegate} disabled={!canSubmitQuery}>{loading ? "Loading..." : "Run"}</Button>
+                    <Button bsPrefix="chat-prompt-run-button btn" variant={canSubmitQuery ? "primary" : "secondary"} onClick={onClickDelegate} disabled={!canSubmitQuery}>{querying ? "Loading..." : "Run"}</Button>
                 </Col>
             </Row>
         </Form>
