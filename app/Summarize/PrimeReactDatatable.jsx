@@ -12,8 +12,8 @@ export default function PrimeReactDatatable() {
 
     return (
         <div className="card">
-            <DataTable value={products} resizableColumns showGridlines stripedRows paginator rows={10}
-                filterDisplay="row" tableStyle={{ minWidth: '50rem' }}>
+            <DataTable  value={products} resizableColumns showGridlines stripedRows paginator paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink  RowsPerPageDropdown" currentPageReportTemplate="Total: {totalRecords} entries" rows={10}
+                filterDisplay="row" tableStyle={{ minWidth: '50rem' }} paginatorLeft={true}>
                 <Column field="code" header="Code" sortable filter showFilterMenu={false}></Column>
                 <Column field="name" header="Name" sortable filter showFilterMenu={false}></Column>
                 <Column field="category" header="Category" sortable filter showFilterMenu={false}></Column>

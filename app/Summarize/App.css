@@ -67,3 +67,41 @@ body{
 .font-color{
     color:#1E1E1E
 }
+
+
+/* Prime React Table header */
+.black-header-table th {
+    background-color: #595D67;
+    color: #FFFFFF;
+}
+
+.seleted-header-table th {
+    background-color: #5C6A84;
+    color: #FFFFFF;
+}
+
+.black-header-table .p-column-filter input {
+    padding: 4px;
+    margin: 0; 
+}
+
+.black-header-table .p-column-filter-clear-button button {
+    padding: 4px;
+    margin: 0; 
+}
+
+/* Prime React Paginator */
+/* .p-paginator {
+    margin-top: 1rem;
+    padding: 0px;
+    display: flex;
+    justify-content: flex-end;
+    background-color: #f2f3f9;
+}
+
+.p-paginator button {
+    background-color: #FFFFFF;
+    border-color : #DDDDDD;
+    height: 21px;
+} */
+

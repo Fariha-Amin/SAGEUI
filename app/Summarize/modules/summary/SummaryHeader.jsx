@@ -1,6 +1,4 @@
 import React from 'react';
-import icon from '../../assets/images/icon.png'
-import download from '../../assets/images/download.png'
 import helpIcon from '../../assets/images/vector.png'
 import 'primereact/resources/themes/lara-light-cyan/theme.css';
 import { Button } from 'primereact/button';
@@ -13,17 +11,15 @@ const SummaryHeader=()=>{
           <div className='flex justify-content-between'>
             <p className='font-family font-size-header margin-zero font-weight-bold'>
               neXgenAI Summarize
-              <a>
-                <img src={helpIcon} width="18" alter='helpIcon'/>
-              </a>
+              <i className="pi pi-question-circle"></i>
               </p>
             <Button className='btn-color btn-padding'>New Summary</Button>
           </div>
   
           <div className='flex justify-content-between margin-height'>
            <p className='margin-zero'>List of Summaries 
-                      <img src={helpIcon} width="18" alter='HelpIcon'/>
-          </p>
+                  <i className="pi pi-question-circle"></i>
+          </p> 
   
           <div className='flex justify-content-between gap-10'>
             <Button className='btn-height' label="View all summaries" severity="info" outlined />
