@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { docCounterSlice } from '../../libs/app/Investigate/Reducers/docCounterSlice'
+import { docCounterSlice } from '../../libs/app/investigate/Reducers/docCounterSlice'
 
 export default configureStore({
     reducer: {
