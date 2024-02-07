@@ -42,6 +42,7 @@ export default function PrimeReactDatatable(props) {
                 filterDisplay="row"
                 tableStyle={{ minWidth: '50rem' }}
                 cellSelection={true}
+                paginatorLeft
                 >
                 
                 <Column selectionMode="multiple" headerStyle={{ width: '3rem' }} />
@@ -63,7 +64,7 @@ export default function PrimeReactDatatable(props) {
                 filterDisplay="row"
                 tableStyle={{ minWidth: '50rem' }}
                 cellSelection={true}
-                
+                paginatorLeft
                 >
                 
                 <Column body={<Skeleton />} headerStyle={{ width: '3rem' }} />
