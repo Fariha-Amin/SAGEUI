@@ -7,7 +7,7 @@ import Spinner from 'react-bootstrap/Spinner';
 
 export default function ChatHistoryItemLoader() {
     return (
-        <Card>
+        <Card className='sage-chat-history__item'>
             <Card.Header className='sage-chat-history__item-header'>
 
             </Card.Header>
