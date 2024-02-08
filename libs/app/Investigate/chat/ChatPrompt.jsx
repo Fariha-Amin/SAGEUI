@@ -2,20 +2,23 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
 import { useRef, useState, useEffect } from "react";
 import sageClient from "../httpClient";
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
+import { Stack, Row, Col, Button, Form, FormLabel } from 'react-bootstrap';
 import './ChatPrompt.scss'
+import IconButton from '../../../shared/icon-button/IconButton';
+import AdvancedSettingsModal from '../advancedSettingsModal';
+
+const advancedOptionsHelpText = "This is also a help text";
 
 export default function ChatPrompt({ loading, onQuery }) {
     const text = useRef("");
     const [querying, setQuerying] = useState(false);
     const [textLength, setTextLength] = useState(0);
     const [canSubmitQuery, setCanSubmitQuery] = useState(false);
+    const [showAdvOptModal, setShowAdvOptModal] = useState(false);
 
     const maxQueryLength = 2000;
     const placeholderText = `Ask your question here, such as "How did Enron manipulate its financial statements, and what were the consequences?"`;
+    const advancedOptionsHelpText = "This is help text too";
 
     const onClickDelegate = async (e) => {
         setQuerying(true);
@@ -50,6 +53,14 @@ export default function ChatPrompt({ loading, onQuery }) {
 
     return (
         <Form>
+            <Row>
+                <Col bsPrefix="chat-prompt-header-col col-11">
+                    <Stack direction="horizontal" gap={0}>
+                        <FormLabel bsPrefix="chat-prompt-advanced-options form-label">Advanced Options</FormLabel>
+                        <IconButton className="sage-icon-superscript" icon="circle-question" tooltip={advancedOptionsHelpText} tooltipId="advanced-optiond-title-help" />
+                    </Stack>
+                </Col>
+            </Row>
             <Row>
                 <Col xs="11">
                     <Form.Group className="chat-prompt-div form-control">

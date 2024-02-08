@@ -1,0 +1,9 @@
+@use "../../../colors";
+
+.counter{
+    font-weight:bold;
+}
+
+.counter--zero{
+    color:$sage-counter-zero;
+}

@@ -31,3 +31,15 @@
     border: 1px solid colors.$sage-grey;
     border-radius: .375rem;
 }
+
+.chat-prompt-advanced-options{
+    margin:0;
+    font-weight:bold;
+    text-decoration:none;
+    color:colors.$sage-font-color-blue;
+}
+
+.chat-prompt-header-col{
+    display:flex;
+    justify-content:flex-end;
+}

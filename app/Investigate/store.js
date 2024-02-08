@@ -3,6 +3,6 @@ import { docCounterSlice } from '../../libs/app/investigate/Reducers/docCounterS
 
 export default configureStore({
     reducer: {
-        docCounter: docCounterSlice.reducer
+        docCounter: docCounterSlice.reducer,
     },
 })

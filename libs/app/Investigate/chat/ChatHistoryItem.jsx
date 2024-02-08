@@ -15,6 +15,8 @@ import { useContext } from 'react';
 import AccordionContext from 'react-bootstrap/AccordionContext';
 import { useAccordionButton } from 'react-bootstrap/AccordionButton';
 
+const cardHelpText = "Card help text goes here...";
+
 function ContextAwareToggle({ children, eventKey, callback }) {
     // https://react-bootstrap.github.io/docs/components/accordion#custom-toggle-with-expansion-awareness
     const { activeEventKey } = useContext(AccordionContext);
@@ -121,7 +123,7 @@ export default function ChatHistoryItem({ model }) {
                                         {" "}
                                         <a href="#">25 Relevant Docs</a>
                                         {" "}
-                                        <IconButton icon="circle-question" />
+                                        <IconButton icon="circle-question" tooltipId={'card-help-'+model.id} tooltip={cardHelpText} />
                                     </Col>
                                 </Row>
                             </Card.Body>
