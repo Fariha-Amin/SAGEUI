@@ -9,8 +9,8 @@ describe("ChatHistoryLoader renders", () => {
         const loadingText = "Loading...";
 
         // Act
-        const dom = render(<ChatHistoryLoader />);
-        const element = dom.container.querySelector("h2");
+        render(<ChatHistoryLoader />);
+        const element = document.querySelector("h2");
 
         // Assert
         expect(element).toBeDefined();
@@ -22,8 +22,8 @@ describe("ChatHistoryLoader renders", () => {
         // n/a
 
         // Act
-        const dom = render(<ChatHistoryLoader />);
-        const element = dom.container.querySelector("div[className='spinner-border']");
+        render(<ChatHistoryLoader />);
+        const element = document.querySelector("div[className='spinner-border']");
 
         // Assert
         expect(element).toBeDefined();
@@ -34,8 +34,8 @@ describe("ChatHistoryLoader renders", () => {
         // n/a
 
         // Act
-        const dom = render(<ChatHistoryLoader />);
-        const element = dom.container.querySelector(".sage-chat-history__loader");
+        render(<ChatHistoryLoader />);
+        const element = document.querySelector(".sage-chat-history__loader");
 
         // Assert
         expect(element).toBeDefined();

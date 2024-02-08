@@ -1,7 +1,7 @@
-.doc-counter{
+.counter{
     font-weight:bold;
 }
 
-.zero-doc-counter{
+.counter--zero{
     color:red;
 }

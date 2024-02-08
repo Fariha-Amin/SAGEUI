@@ -1,17 +1,28 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button, Row, FormLabel } from 'react-bootstrap';
 import Stack from 'react-bootstrap/Stack';
+import { useSelector, useDispatch } from 'react-redux'
+import { setCount } from "./Reducers/docCounterSlice";
 import Links from "../../shared/links";
-import DocCounter from '../../shared/doc-counter/DocCounter';
+import Counter from '../../shared/counter/Counter';
 import IconButton from '../../shared/icon-button/IconButton';
 import styled from 'styled-components';
+import client from './httpClient'
+
 
 const Bold = styled.div`
     font-weight:bold;
 `;
 
-const Header = () => (
+const Header = () => {
+    useEffect(() => {
+        client.getDocumentCountAsync().then(data => dispatch(setCount(data)));
+    }, [])
+    const docCount = useSelector((state) => state.docCounter.value);
+    const dispatch = useDispatch();
+
+    return(
     <>
         <Row>
             <Stack direction="horizontal" gap={3}>
@@ -20,7 +31,7 @@ const Header = () => (
                     <IconButton className="sage-icon-superscript" icon="circle-question" />
                 </div>
                 <div className="ms-auto">
-                    <DocCounter label='Total Documents ' />
+                    <Counter label='Total Documents ' count={docCount} />
                 </div>
                 <div>
                     <Button>Manage Document Population</Button>
@@ -33,7 +44,8 @@ const Header = () => (
             </p>
         </Row>
     </>
-)
+    )
+}
 
 export default Header;
 
