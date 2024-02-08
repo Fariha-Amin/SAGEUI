@@ -42,7 +42,7 @@ function formatDate(datetime) {
     // Produces the format: 12 February 2024
     const dOptions = { month: 'long' };
     const month = d.toLocaleDateString(locale, dOptions);
-    const date = `${d.getDay()} ${month} ${d.getFullYear()}`;
+    const date = `${d.getDate()} ${month} ${d.getFullYear()}`;
 
     // Produces the format: 09:54 AM
     const tOptions = { hour: "2-digit", minute: "2-digit" };
