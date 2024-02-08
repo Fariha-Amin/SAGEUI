@@ -39,6 +39,7 @@ body{
     height:35px; 
 }
 
+
 .icon-font-size{
     font-size:30px; 
 }
@@ -90,18 +91,9 @@ body{
     margin: 0; 
 }
 
-/* Prime React Paginator */
-/* .p-paginator {
-    margin-top: 1rem;
-    padding: 0px;
-    display: flex;
-    justify-content: flex-end;
-    background-color: #f2f3f9;
+.p-datatable tr td {
+    white-space: nowrap; /* Prevent text from wrapping */
+    overflow: hidden; /* Hide overflow text */
+    text-overflow: ellipsis; /* Show ellipsis for overflow text */
 }
-
-.p-paginator button {
-    background-color: #FFFFFF;
-    border-color : #DDDDDD;
-    height: 21px;
-} */
-
+  
