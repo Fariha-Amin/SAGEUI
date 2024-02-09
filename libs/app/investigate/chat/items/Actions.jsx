@@ -2,9 +2,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './Actions.scss';
 import React from 'react';
 import Stack from 'react-bootstrap/Stack';
-import Icon from '../../../../shared/icon/Icon';
-import IconButton from '../../../../shared/icon-button/IconButton';
-import LayeredIconButton from '../../../../shared/layered-icon-button/LayeredIconButton';
+import Icon from '_shared/icon/Icon';
+import IconButton from '_shared/icon-button/IconButton';
+import LayeredIconButton from '_shared/layered-icon-button/LayeredIconButton';
 
 export default function Actions({ model, onFavorite, onSearch, onMagic, onDocument, onComment, onDelete }) {
     return (

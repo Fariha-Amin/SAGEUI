@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
-import IconButton from '../icon-button/IconButton';
+import IconButton from '_shared/icon-button/IconButton';
 import { useContext } from 'react';
 import AccordionContext from 'react-bootstrap/AccordionContext';
 import { useAccordionButton } from 'react-bootstrap/AccordionButton';

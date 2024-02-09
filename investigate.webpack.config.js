@@ -7,7 +7,13 @@ const devMode = process.env.NODE_ENV !== "production";
 
 module.exports = {
   entry: './app/investigate/index.js',
-  resolve: {extensions: ['*','.js','.jsx']},
+  resolve: {
+    alias: {
+      _shared: path.resolve(__dirname, "libs/shared"),
+      _investigate: path.resolve(__dirname, "libs/app/investigate")
+    },
+    extensions: ['*','.js','.jsx']
+  },
   output: {
     path:path.resolve(__dirname, "dist/SAGEUI/Investigate"),
     filename: '[contenthash].js',

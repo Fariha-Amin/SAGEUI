@@ -5,9 +5,9 @@ import React from "react";
 import { useState } from "react";
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import ChatPrompt from "../../libs/app/investigate/chat/ChatPrompt";
-import ChatHistory from "../../libs/app/investigate/chat/ChatHistory";
-import Header from '../../libs/app/investigate/Header';
+import ChatPrompt from "_investigate/chat/ChatPrompt";
+import ChatHistory from "_investigate/chat/ChatHistory";
+import Header from '_investigate/Header';
 
 const App = () => {
     const [queryId, setQueryId] = useState(0);

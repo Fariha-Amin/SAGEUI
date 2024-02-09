@@ -5,7 +5,7 @@ import Badge from 'react-bootstrap/Badge';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import IconButton from '../../../../shared/icon-button/IconButton';
+import IconButton from '_shared/icon-button/IconButton';
 
 export default function Question({ model }) {
     return (

@@ -6,7 +6,7 @@ import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Stack from 'react-bootstrap/Stack';
-import AccordionButton from '../../../../shared/accordion-button/AccordionButton'
+import AccordionButton from '_shared/accordion-button/AccordionButton'
 import Actions from './Actions';
 import Answer from './Answer';
 import Question from './Question';

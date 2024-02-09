@@ -1,5 +1,5 @@
 import React from 'react';
-import Icon from '../icon/Icon';
+import Icon from '_shared/icon/Icon';
 
 export default function IconButton({ icon, onClick, className }) {
   const css = className ? `sage-icon-button ${className}` : "sage-icon-button";

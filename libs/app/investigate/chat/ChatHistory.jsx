@@ -3,7 +3,7 @@ import ChatItem from "./items/Item";
 import ChatItemLoading from "./items/ItemLoading";
 import ChatHistoryLoading from "./ChatHistoryLoading";
 import ChatHistoryPlaceholder from "./ChatHistoryPlaceholder";
-import sageClient from "../httpClient";
+import sageClient from "_investigate/httpClient";
 import { useState, useEffect } from "react";
 
 function reduceArray(array, maxItemCount) {
