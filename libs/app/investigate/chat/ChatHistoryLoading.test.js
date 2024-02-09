@@ -1,15 +1,15 @@
 import React from 'react';
 import '@testing-library/jest-dom'
 import { render } from "@testing-library/react";
-import ChatHistoryLoader from './ChatHistoryLoader';
+import ChatHistoryLoading from './ChatHistoryLoading';
 
-describe("ChatHistoryLoader renders", () => {
+describe("ChatHistoryLoading renders", () => {
     test("text that says 'Loading...'", () => {
         // Arrange
         const loadingText = "Loading...";
 
         // Act
-        render(<ChatHistoryLoader />);
+        render(<ChatHistoryLoading />);
         const element = document.querySelector("h2");
 
         // Assert
@@ -22,7 +22,7 @@ describe("ChatHistoryLoader renders", () => {
         // n/a
 
         // Act
-        render(<ChatHistoryLoader />);
+        render(<ChatHistoryLoading />);
         const element = document.querySelector("div[className='spinner-border']");
 
         // Assert
@@ -34,7 +34,7 @@ describe("ChatHistoryLoader renders", () => {
         // n/a
 
         // Act
-        render(<ChatHistoryLoader />);
+        render(<ChatHistoryLoading />);
         const element = document.querySelector(".sage-chat-history__loader");
 
         // Assert

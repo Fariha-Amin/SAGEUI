@@ -1,7 +1,7 @@
 import React from "react";
-import ChatHistoryItem from "./ChatHistoryItem";
-import ChatHistoryLoader from "./ChatHistoryLoader";
-import ChatHistoryItemLoader from "./ChatHistoryItemLoader";
+import ChatItem from "./items/Item";
+import ChatItemLoading from "./items/ItemLoading";
+import ChatHistoryLoading from "./ChatHistoryLoading";
 import ChatHistoryPlaceholder from "./ChatHistoryPlaceholder";
 import sageClient from "../httpClient";
 import { useState, useEffect } from "react";
@@ -89,7 +89,7 @@ const ChatHistory = ({
 
     if (loadingHistory) {
         // Loading history from API
-        return <ChatHistoryLoader />
+        return <ChatHistoryLoading />
     }
 
     if (!chatHistory || chatHistory.length <= 0) {
@@ -99,8 +99,8 @@ const ChatHistory = ({
     else {
         return (
             <>
-                {chatHistory.map((chatItem) => <ChatHistoryItem key={chatItem.id} model={chatItem} />)}
-                {loadingItem ? <ChatHistoryItemLoader /> : null}
+                {chatHistory.map((chatItem) => <ChatItem key={chatItem.id} model={chatItem} />)}
+                {loadingItem ? <ChatItemLoading /> : null}
                 <div id="sage-chat-history__bottom"></div>
             </>);
     }

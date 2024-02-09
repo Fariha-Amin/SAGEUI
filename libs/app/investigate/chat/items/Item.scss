@@ -1,0 +1,14 @@
+@use "../../../../../colors";
+
+.sage-chat-history__item {
+    margin: 3px 0px 6px 0px;
+}
+
+.sage-chat-history__item-header {
+    background-color: colors.$sage-bg-color-light-grey;
+    min-height: 42px;
+}
+
+.sage-chat-history__item-timestamp {
+    color: colors.$sage-color-dark-grey;
+}

@@ -1,7 +1,7 @@
 import React from 'react';
 import '@testing-library/jest-dom'
 import { render } from "@testing-library/react";
-import ChatHistoryItemLoader from './ChatHistoryItemLoader';
+import ChatItemLoading from './ItemLoading';
 
 describe("ChatHistoryItemLoader renders", () => {
     test("text that says 'Loading...'", () => {
@@ -9,7 +9,7 @@ describe("ChatHistoryItemLoader renders", () => {
         const loadingText = "Loading...";
 
         // Act
-        render(<ChatHistoryItemLoader />);
+        render(<ChatItemLoading />);
         const element = document.querySelector("h2");
 
         // Assert
@@ -22,7 +22,7 @@ describe("ChatHistoryItemLoader renders", () => {
         // n/a
 
         // Act
-        render(<ChatHistoryItemLoader />);
+        render(<ChatItemLoading />);
         const element = document.querySelector("div[className='spinner-border']");
 
         // Assert
@@ -34,7 +34,7 @@ describe("ChatHistoryItemLoader renders", () => {
         // n/a
 
         // Act
-        render(<ChatHistoryItemLoader />);
+        render(<ChatItemLoading />);
         const element = document.querySelector(".sage-chat-history__item");
 
         // Assert
@@ -46,7 +46,7 @@ describe("ChatHistoryItemLoader renders", () => {
         // n/a
 
         // Act
-        render(<ChatHistoryItemLoader />);
+        render(<ChatItemLoading />);
         const element = document.querySelector(".sage-chat-history__item-header");
 
         // Assert
@@ -58,7 +58,7 @@ describe("ChatHistoryItemLoader renders", () => {
         // n/a
 
         // Act
-        render(<ChatHistoryItemLoader />);
+        render(<ChatItemLoading />);
         const element = document.querySelector(".sage-chat-history__item-body");
 
         // Assert
@@ -70,7 +70,7 @@ describe("ChatHistoryItemLoader renders", () => {
         // n/a
 
         // Act
-        render(<ChatHistoryItemLoader />);
+        render(<ChatItemLoading />);
         const element = document.querySelector(".sage-chat-history__item-loader");
 
         // Assert

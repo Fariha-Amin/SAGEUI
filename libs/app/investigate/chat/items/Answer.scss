@@ -1,0 +1,6 @@
+@use "../../../../../colors";
+
+.sage-chat-history__item-answer {
+    background-color: colors.$sage-bg-color-light-grey;
+    margin-bottom: 6px;
+}
