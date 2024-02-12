@@ -30,4 +30,47 @@
     box-shadow:1px 5px 5px colors.$sage-grey;
     border: 1px solid colors.$sage-grey;
     border-radius: .375rem;
+<<<<<<< Updated upstream:libs/app/investigate/chat/ChatPrompt.scss
+=======
+}
+
+.chat-prompt-advanced-options{
+    margin:0;
+    font-weight:bold;
+    text-decoration:none;
+    color:colors.$sage-font-color-blue;
+}
+
+.chat-prompt-header-col{
+    display:flex;
+    justify-content:flex-end;
+}
+
+.advOptmodal{
+    width:40%;
+    height:90%;
+    max-height:none !important;
+    max-width:none !important;
+    position: fixed;
+    right:0;
+    top:0;
+    bottom:0;
+}
+
+.advOptContent{
+    border-radius:0px;
+}
+
+.advOptContentRow{
+    padding-bottom:0.5rem;
+}
+
+.advOptOption{
+    margin-left:1.5rem;
+    margin-top:.5rem;
+}
+
+.advOptHeader{
+    border-bottom:0;
+>>>>>>> Stashed changes:libs/app/Investigate/chat/ChatPrompt.scss
 }
