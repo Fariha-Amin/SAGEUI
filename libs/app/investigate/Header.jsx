@@ -6,14 +6,16 @@ import { useSelector, useDispatch } from 'react-redux'
 import { setCount } from "./Reducers/docCounterSlice";
 import Links from "../../shared/links";
 import Counter from '../../shared/counter/Counter';
-import IconButton from '../../shared/icon-button/IconButton';
 import styled from 'styled-components';
 import client from './httpClient'
+import IconButton from '../../shared/icon-button/IconButton'
 
 
 const Bold = styled.div`
     font-weight:bold;
 `;
+
+const helpText = "This is help text";
 
 const Header = () => {
     useEffect(() => {
@@ -28,7 +30,7 @@ const Header = () => {
             <Stack direction="horizontal" gap={3}>
                 <div>
                     <FormLabel><Bold>neXgenAI Investigate </Bold></FormLabel>
-                    <IconButton className="sage-icon-superscript" icon="circle-question" />
+                    <IconButton className="sage-icon-superscript" icon="circle-question" tooltip={helpText} tooltipId="header-title-help" />
                 </div>
                 <div className="ms-auto">
                     <Counter label='Total Documents ' count={docCount} />

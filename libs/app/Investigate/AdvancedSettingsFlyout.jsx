@@ -13,13 +13,15 @@ const AdvancedSettingsFlyout = (props) => {
     const advOptTitle = "Advanced Options";
     const advOptHeader = "This default investigative prompt will be used to provide instructions to the LLM on how to answer questions about the documents in your population.";
     const advOptDefaultPrompt = "Default Prompt";
+    const helpTextTitle="This is help text";
+    const helpTextDefaultPrompt="This is also help text";
     
     return (
         <Offcanvas show={props.shouldShow} onHide={props.onClose} placement="end" backdrop="false">
             <Offcanvas.Header bsPrefix="offcanvas-header advOptHeader">
                 <Stack direction="horizontal">
                     <Offcanvas.Title><b>{advOptTitle}</b></Offcanvas.Title>
-                    <IconButton className="sage-icon-superscript" icon="circle-question" />
+                    <IconButton className="sage-icon-superscript" icon="circle-question" tooltip={helpTextTitle} tooltipId="advopts-title-help" />
                 </Stack>
             </Offcanvas.Header>
             <Offcanvas.Body>
@@ -36,7 +38,7 @@ const AdvancedSettingsFlyout = (props) => {
                                     <Form.Check.Input type={'radio'} defaultChecked/>
                                     <Form.Check.Label>
                                         <b>{advOptDefaultPrompt}</b>
-                                        <IconButton className="sage-icon-superscript" icon="circle-question" />
+                                        <IconButton className="sage-icon-superscript" icon="circle-question" tooltip={helpTextDefaultPrompt} tooltipId="advopts-default-prompt-help" />
                                     </Form.Check.Label>
                                     <div className="advOptOption">
                                         {advOptDefaultText}

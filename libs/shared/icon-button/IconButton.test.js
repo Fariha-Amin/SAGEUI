@@ -59,6 +59,21 @@ describe("IconButton renders", () => {
         expect(element).not.toBeNull();
         expect(element).toBeDefined();
     });
+
+    test('Tooltip Renders if added', () => {
+        // Arrange
+        const tooltipId = "tooltipTest";
+        const tooltip = "This is only a test";
+        const faIcon = ["far", "circle-question"];
+
+        // Act
+        const element = renderer
+            .create(<IconButton icon={faIcon} tooltipId={tooltipId} tooltip={tooltip} />)
+            .toJSON();
+
+        // Assert
+        expect(JSON.stringify(element)).toContain('tooltipTest');
+    });
 });
 
 describe("IconButton onClick", () => {
