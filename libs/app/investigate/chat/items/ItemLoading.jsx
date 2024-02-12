@@ -1,6 +1,6 @@
-import './ChatHistoryItem.scss';
-import './ChatHistoryItemLoader.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './Item.scss';
+import './ItemLoading.scss';
 import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Spinner from 'react-bootstrap/Spinner';

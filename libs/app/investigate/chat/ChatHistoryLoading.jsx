@@ -1,8 +1,8 @@
-import './ChatHistoryLoader.scss';
+import './ChatHistoryLoading.scss';
 import React from "react";
 import Spinner from 'react-bootstrap/Spinner';
 
-const ChatHistoryLoader = () => {
+const ChatHistoryLoading = () => {
     return (
         <div className="sage-chat-history__loader">
             <h2>Loading...</h2>
@@ -13,4 +13,4 @@ const ChatHistoryLoader = () => {
     );
 }
 
-export default ChatHistoryLoader;
+export default ChatHistoryLoading;

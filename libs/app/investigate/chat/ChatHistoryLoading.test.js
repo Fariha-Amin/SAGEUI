@@ -1,16 +1,16 @@
 import React from 'react';
 import '@testing-library/jest-dom'
 import { render } from "@testing-library/react";
-import ChatHistoryLoader from './ChatHistoryLoader';
+import ChatHistoryLoading from './ChatHistoryLoading';
 
-describe("ChatHistoryLoader renders", () => {
+describe("ChatHistoryLoading renders", () => {
     test("text that says 'Loading...'", () => {
         // Arrange
         const loadingText = "Loading...";
 
         // Act
-        const dom = render(<ChatHistoryLoader />);
-        const element = dom.container.querySelector("h2");
+        render(<ChatHistoryLoading />);
+        const element = document.querySelector("h2");
 
         // Assert
         expect(element).toBeDefined();
@@ -22,8 +22,8 @@ describe("ChatHistoryLoader renders", () => {
         // n/a
 
         // Act
-        const dom = render(<ChatHistoryLoader />);
-        const element = dom.container.querySelector("div[className='spinner-border']");
+        render(<ChatHistoryLoading />);
+        const element = document.querySelector("div[className='spinner-border']");
 
         // Assert
         expect(element).toBeDefined();
@@ -34,8 +34,8 @@ describe("ChatHistoryLoader renders", () => {
         // n/a
 
         // Act
-        const dom = render(<ChatHistoryLoader />);
-        const element = dom.container.querySelector(".sage-chat-history__loader");
+        render(<ChatHistoryLoading />);
+        const element = document.querySelector(".sage-chat-history__loader");
 
         // Assert
         expect(element).toBeDefined();

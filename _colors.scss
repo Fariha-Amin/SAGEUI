@@ -3,18 +3,15 @@ $sage-grey-light: #eee;
 $sage-grey: #ddd;
 $sage-grey-dark: #ccc;
 $sage-blue: #0d6efd;
-
-$sage-counter-zero: red;
+$sage-red: #F00;
 
 // "color" attributes
 $sage-color-light-grey: $sage-grey-light;
 $sage-color-grey: $sage-grey;
 $sage-color-dark-grey: $sage-grey-dark;
+$sage-counter-zero:$sage-red;
 
 // "background-color" attributes
 $sage-bg-color-light-grey: $sage-grey-light;
 $sage-bg-color-grey: $sage-grey;
 $sage-bg-color-dark-grey: $sage-grey-dark;
-
-//font color attributes
-$sage-font-color-blue: $sage-blue;

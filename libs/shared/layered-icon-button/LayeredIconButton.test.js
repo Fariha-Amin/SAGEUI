@@ -12,19 +12,20 @@ describe("LayeredIconButton renders", () => {
         const secondaryIcon = "square";
 
         // Act
-        const element = renderer
-            .create(
-                <LayeredIconButton>
-                    <Icon icon={primaryIcon} />
-                    <Icon icon={secondaryIcon} />
-                </LayeredIconButton>
-            )
-            .toJSON();
-        const strElement = JSON.stringify(element);
+        render(
+            <LayeredIconButton>
+                <Icon icon={primaryIcon} />
+                <Icon icon={secondaryIcon} />
+            </LayeredIconButton>
+        );
+        const circleIcon = document.querySelector('[data-icon="circle"]');
+        const squareIcon = document.querySelector('[data-icon="square"]');
 
         // Assert
-        expect(strElement).toMatch('"data-icon":"circle"');
-        expect(strElement).toMatch('"data-icon":"square"');
+        expect(circleIcon).not.toBeNull();
+        expect(circleIcon).toBeDefined();
+        expect(squareIcon).not.toBeNull();
+        expect(squareIcon).toBeDefined();
     });
 
     // Solid is the expected default
@@ -34,18 +35,17 @@ describe("LayeredIconButton renders", () => {
         const secondaryIcon = "square";
 
         // Act
-        const element = renderer
-            .create(
-                <LayeredIconButton>
-                    <Icon icon={primaryIcon} />
-                    <Icon icon={secondaryIcon} />
-                </LayeredIconButton>
-            )
-            .toJSON();
-        const strElement = JSON.stringify(element);
+        render(
+            <LayeredIconButton>
+                <Icon icon={primaryIcon} />
+                <Icon icon={secondaryIcon} />
+            </LayeredIconButton>
+        );
+        const element = document.querySelector('[data-prefix="fas"]');
 
         // Assert
-        expect(strElement).toMatch('"data-prefix":"fas"');
+        expect(element).not.toBeNull();
+        expect(element).toBeDefined();
     });
 
     // Regular is the expected output when specified
@@ -55,18 +55,17 @@ describe("LayeredIconButton renders", () => {
         const secondaryIcon = "fa-regular fa-square";
 
         // Act
-        const element = renderer
-            .create(
-                <LayeredIconButton>
-                    <Icon icon={primaryIcon} />
-                    <Icon icon={secondaryIcon} />
-                </LayeredIconButton>
-            )
-            .toJSON();
-        const strElement = JSON.stringify(element);
+        render(
+            <LayeredIconButton>
+                <Icon icon={primaryIcon} />
+                <Icon icon={secondaryIcon} />
+            </LayeredIconButton>
+        );
+        const element = document.querySelector('[data-prefix="far"]');
 
         // Assert
-        expect(strElement).toMatch('"data-prefix":"far"');
+        expect(element).not.toBeNull();
+        expect(element).toBeDefined();
     });
 
     // Regular is the expected output when specified
@@ -76,18 +75,17 @@ describe("LayeredIconButton renders", () => {
         const secondaryIcon = ["far", "square"];
 
         // Act
-        const element = renderer
-            .create(
-                <LayeredIconButton>
-                    <Icon icon={primaryIcon} />
-                    <Icon icon={secondaryIcon} />
-                </LayeredIconButton>
-            )
-            .toJSON();
-        const strElement = JSON.stringify(element);
+        render(
+            <LayeredIconButton>
+                <Icon icon={primaryIcon} />
+                <Icon icon={secondaryIcon} />
+            </LayeredIconButton>
+        );
+        const element = document.querySelector('[data-prefix="far"]');
 
         // Assert
-        expect(strElement).toMatch('"data-prefix":"far"');
+        expect(element).not.toBeNull();
+        expect(element).toBeDefined();
     });
 });
 

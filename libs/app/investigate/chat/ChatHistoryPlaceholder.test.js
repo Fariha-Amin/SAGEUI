@@ -9,8 +9,8 @@ describe("ChatHistoryPlaceholder renders", () => {
         // n/a
 
         // Act
-        const dom = render(<ChatHistoryPlaceholder />);
-        const element = dom.container.querySelector(".card");
+        render(<ChatHistoryPlaceholder />);
+        const element = document.querySelector(".card");
 
         // Assert
         expect(element).toBeDefined();
@@ -21,8 +21,8 @@ describe("ChatHistoryPlaceholder renders", () => {
         const headerText = "Your results will appear in this space.";
 
         // Act
-        const dom = render(<ChatHistoryPlaceholder />);
-        const element = dom.container.querySelector(".card .card-body .card-title");
+        render(<ChatHistoryPlaceholder />);
+        const element = document.querySelector(".card .card-body .card-title");
 
         // Assert
         expect(element).toBeDefined();
@@ -34,8 +34,8 @@ describe("ChatHistoryPlaceholder renders", () => {
         const bodyText = "You can then investigate into the questions and answers generated from documents in population.";
 
         // Act
-        const dom = render(<ChatHistoryPlaceholder />);
-        const element = dom.container.querySelector(".card .card-body .card-text");
+        render(<ChatHistoryPlaceholder />);
+        const element = document.querySelector(".card .card-body .card-text");
 
         // Assert
         expect(element).toBeDefined();
@@ -47,8 +47,8 @@ describe("ChatHistoryPlaceholder renders", () => {
         // n/a
 
         // Act
-        const dom = render(<ChatHistoryPlaceholder />);
-        const element = dom.container.querySelector(".sage-chat-history__placeholder");
+        render(<ChatHistoryPlaceholder />);
+        const element = document.querySelector(".sage-chat-history__placeholder");
 
         // Assert
         expect(element).toBeDefined();

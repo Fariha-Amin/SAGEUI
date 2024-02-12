@@ -1,3 +1,4 @@
+@use "../../../../fonts";
 @use "../../../../colors";
 
 .chat-prompt-text-area{
@@ -36,7 +37,7 @@
     margin:0;
     font-weight:bold;
     text-decoration:none;
-    color:colors.$sage-font-color-blue;
+    color:colors.$sage-blue;
 }
 
 .chat-prompt-header-col{

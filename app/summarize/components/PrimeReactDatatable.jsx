@@ -43,6 +43,8 @@ export default function PrimeReactDatatable(props) {
                 tableStyle={{ minWidth: '50rem' }}
                 cellSelection={true}
                 paginatorLeft
+                tableClassName="table table-striped table-hover table-bordered align-middle dataTable no-footer"
+                paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink  RowsPerPageDropdown" currentPageReportTemplate="Total: {totalRecords} entries"
                 >
                 
                 <Column selectionMode="multiple" headerStyle={{ width: '3rem' }} />

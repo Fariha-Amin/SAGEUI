@@ -10,12 +10,12 @@ describe("IconButton renders", () => {
         const faIcon = "circle-question";
 
         // Act
-        const element = renderer
-            .create(<IconButton icon={faIcon} />)
-            .toJSON();
+        render(<IconButton icon={faIcon} />);
+        const element = document.querySelector('[data-icon="circle-question"]');
 
         // Assert
-        expect(JSON.stringify(element)).toMatch('"data-icon":"circle-question"');
+        expect(element).not.toBeNull();
+        expect(element).toBeDefined();
     });
 
     // Solid is the expected default
@@ -24,12 +24,12 @@ describe("IconButton renders", () => {
         const faIcon = "circle-question";
 
         // Act
-        const element = renderer
-            .create(<IconButton icon={faIcon} />)
-            .toJSON();
+        render(<IconButton icon={faIcon} />);
+        const element = document.querySelector('[data-prefix="fas"]');
 
         // Assert
-        expect(JSON.stringify(element)).toMatch('"data-prefix":"fas"');
+        expect(element).not.toBeNull();
+        expect(element).toBeDefined();
     });
 
     // Regular is the expected output when specified
@@ -38,12 +38,12 @@ describe("IconButton renders", () => {
         const faIcon = "fa-regular fa-circle-question";
 
         // Act
-        const element = renderer
-            .create(<IconButton icon={faIcon} />)
-            .toJSON();
+        render(<IconButton icon={faIcon} />);
+        const element = document.querySelector('[data-prefix="far"]');
 
         // Assert
-        expect(JSON.stringify(element)).toMatch('"data-prefix":"far"');
+        expect(element).not.toBeNull();
+        expect(element).toBeDefined();
     });
 
     // Regular is the expected output when specified
@@ -52,12 +52,12 @@ describe("IconButton renders", () => {
         const faIcon = ["far", "circle-question"];
 
         // Act
-        const element = renderer
-            .create(<IconButton icon={faIcon} />)
-            .toJSON();
+        render(<IconButton icon={faIcon} />);
+        const element = document.querySelector('[data-prefix="far"]');
 
         // Assert
-        expect(JSON.stringify(element)).toMatch('"data-prefix":"far"');
+        expect(element).not.toBeNull();
+        expect(element).toBeDefined();
     });
 
     test('Tooltip Renders if added', () => {
