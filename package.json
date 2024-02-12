@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --json --outputFile=jest.txt",
     "build": "set NODE_ENV=development && babel src -d lib",
     "dev-investigate": "webpack serve --config investigate.webpack.config.js --mode development",
     "build-investigate": "webpack --config investigate.webpack.config.js --mode development",

@@ -1,7 +1,8 @@
 import React from 'react';
-import { Row, Col, Form, Modal, Container } from 'react-bootstrap';
+import { Row, Col, Form, Offcanvas, Container } from 'react-bootstrap';
+import './AdvancedSettingsFlyout.scss'
 
-const AdvancedSettingsModal = (props) => {
+const AdvancedSettingsFlyout = (props) => {
     const advOptTitle = "Advanced Options";
     const advOptHeader = "This default investigative prompt will be used to provide instructions to the LLM on how to answer questions about the documents in your population.";
     const advOptDefaultPrompt = "Default Prompt";
@@ -23,12 +24,11 @@ const AdvancedSettingsModal = (props) => {
     "Use square brackets to reference the source document, e.g. [ID12345678]\n"
 
     return (
-    <>
-        <Modal show={props.shouldShow} onHide={props.onClose} backdrop="false" dialogClassName="advOptmodal" contentClassName="advOptContent">
-            <Modal.Header closeButton bsPrefix="modal-header advOptHeader">
-                <Modal.Title>{advOptTitle}</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
+        <Offcanvas show={props.shouldShow} onHide={props.onClose} placement="end" backdrop="false">
+            <Offcanvas.Header closeButton bsPrefix="offcanvas-header advOptHeader">
+                <Offcanvas.Title>{advOptTitle}</Offcanvas.Title>
+            </Offcanvas.Header>
+            <Offcanvas.Body>
                 <Container>
                     <Row bsPrefix="row advOptContentRow">
                         <Col>
@@ -51,10 +51,9 @@ const AdvancedSettingsModal = (props) => {
                         </Col>
                     </Row>
                 </Container>
-            </Modal.Body>
-        </Modal>
-    </>
+            </Offcanvas.Body>
+        </Offcanvas>
   );
 }
 
-export default AdvancedSettingsModal;
+export default AdvancedSettingsFlyout;
