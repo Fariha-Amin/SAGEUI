@@ -1,5 +1,5 @@
 import React from "react";
-import './counter.css'
+import './counter.scss'
 
 const formatCount = (count) => {
     return count.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
