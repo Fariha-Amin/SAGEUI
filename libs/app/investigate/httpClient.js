@@ -357,7 +357,7 @@ class HttpClient {
         "Use square brackets to reference the source document, e.g. [ID12345678]\n";
 
         let mockAsyncTask = new Promise(function (resolve, reject) {
-            setTimeout(() => resolve(defaultPrompt), 100);
+            setTimeout(() => resolve("Mock text"), 1000);
         });
 
         return mockAsyncTask;

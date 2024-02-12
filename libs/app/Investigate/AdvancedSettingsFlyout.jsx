@@ -5,15 +5,15 @@ import IconButton from '../../shared/icon-button/IconButton';
 import client from './httpClient';
 
 const AdvancedSettingsFlyout = (props) => {
-    useEffect(() => { 
-        client.getDefaultPromptText().then(data => { 
-                setAdvOptDefaultText(data);
-                return data.json;
-            });
-    }, [])
+    const [advOptDefaultText, setAdvOptDefaultText] = useState("");
 
-    const[advOptDefaultText, setAdvOptDefaultText] = useState(null);
-    
+    useEffect(() => { 
+        async function foo() {
+            let prompt = await client.getDefaultPromptText();
+            setAdvOptDefaultText(prompt);
+        }
+        foo();
+    }, []);
 
     const advOptTitle = "Advanced Options";
     const advOptHeader = "This default investigative prompt will be used to provide instructions to the LLM on how to answer questions about the documents in your population.";
