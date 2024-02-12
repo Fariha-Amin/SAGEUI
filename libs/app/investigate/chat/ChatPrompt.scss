@@ -44,31 +44,3 @@
     display:flex;
     justify-content:flex-end;
 }
-
-.advOptmodal{
-    width:40%;
-    height:90%;
-    max-height:none !important;
-    max-width:none !important;
-    position: fixed;
-    right:0;
-    top:0;
-    bottom:0;
-}
-
-.advOptContent{
-    border-radius:0px;
-}
-
-.advOptContentRow{
-    padding-bottom:0.5rem;
-}
-
-.advOptOption{
-    margin-left:1.5rem;
-    margin-top:.5rem;
-}
-
-.advOptHeader{
-    border-bottom:0;
-}
