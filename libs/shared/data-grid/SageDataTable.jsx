@@ -1,0 +1,86 @@
+import React, { useState, useEffect } from 'react';
+import { DataTable } from 'primereact/datatable';
+import { Column } from 'primereact/column';
+import { ProductService } from '../../../app/summarize/service/ProductService';
+import {Summary} from '../../../app/summarize/components/Summary';
+import { Skeleton } from 'primereact/skeleton';
+
+const renderSummary = (row)=>{
+    return(<Summary row={row} />);
+}
+function createColumnDefination(columnDef, skeleton = false){
+    if(skeleton){
+        return [
+            <Column body={<Skeleton />} headerStyle={{ width: '3rem' }} />,
+            <Column body={<Skeleton />} field="DateTime" header="Date/Time" sortable filter showFilterMenu={false}/>,
+            <Column body={<Skeleton />} field="User" header="User" sortable filter showFilterMenu={false}/>,
+            <Column body={<Skeleton />} field="DocumentId" header="DocId (Fed to AI)" sortable filter showFilterMenu={false}/>,
+            <Column body={<Skeleton />} field="Summary" header="Summary" sortable filter showFilterMenu={false}/>,
+            <Column body={<Skeleton />} field="Notes" header="Notes" sortable filter showFilterMenu={false}/>
+        ];
+    }else{
+        return [
+            <Column selectionMode="multiple" headerStyle={{ width: '3rem' }} />,
+            <Column field="DateTime" header="Date/Time" sortable filter showFilterMenu={false} showClearButton={false} align="center" />,
+            <Column field="User" header="User" sortable filter showFilterMenu={false} showClearButton={false} align="center" />,
+            <Column field="DocumentId" header="DocId (Fed to AI)" sortable filter showFilterMenu={false} showClearButton={false} align="center"/>,
+            <Column field="Summary" header="Summary" body={renderSummary}  filter showFilterMenu={false} showClearButton={false} align="center" />,
+            <Column field="Notes" header="Notes" sortable filter showFilterMenu={false} showClearButton={false} align="center" />
+        ]
+    }
+    // columnDef.forEach(column => {
+    //     columnDefinations.push(
+    //         <Column field="User" header="User" sortable filter showFilterMenu={false} showClearButton={false} align="center" />,
+    //     );
+    // });
+    //return columnDefinations;
+}
+
+
+export default function SageDataTable(props) {
+    const {showSkeleton} = props;
+
+    const [summmaryData, setSummmaryData] = useState([]);
+    const [columnDefinations, setColumnDefinations] = useState([]);
+
+    const {tableConfig} = props;
+    const {columnDef} = props;
+
+    const defaultTableConfig = {
+        value:summmaryData,
+        resizableColumns:true,
+        showGridlines:true,
+        stripedRows:true,
+        paginator:true,
+        rows:25,
+        filterDisplay:"row",
+        tableStyle:{ minWidth: '50rem' },
+        cellSelection:true,
+        paginatorLeft:true,
+        tableClassName:"table table-striped table-hover table-bordered align-middle dataTable no-footer",
+        paginatorTemplate:"CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink  RowsPerPageDropdown",
+        currentPageReportTemplate:"Total: {totalRecords} entries"
+    };
+
+    
+
+    const loadData = ()=>{
+        ProductService.getSummaryData().then(data =>{
+            setColumnDefinations(createColumnDefination(columnDef, false));
+            setSummmaryData(data)
+        } );
+    }
+
+    useEffect(() => {
+        setColumnDefinations(createColumnDefination(columnDef, true));
+        ProductService.getSummaryData().then(data => setSummmaryData(data));
+        setTimeout(loadData, 3000);
+    }, []);
+
+    
+    return(
+        <DataTable {...{...defaultTableConfig, ...tableConfig}} >
+            {[...columnDefinations]}
+        </DataTable>
+    );
+}
