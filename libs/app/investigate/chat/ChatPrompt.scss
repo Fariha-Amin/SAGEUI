@@ -1,3 +1,4 @@
+@use "../../../../fonts";
 @use "../../../../colors";
 
 .chat-prompt-text-area{
@@ -30,15 +31,13 @@
     box-shadow:1px 5px 5px colors.$sage-grey;
     border: 1px solid colors.$sage-grey;
     border-radius: .375rem;
-<<<<<<< Updated upstream:libs/app/investigate/chat/ChatPrompt.scss
-=======
 }
 
 .chat-prompt-advanced-options{
     margin:0;
     font-weight:bold;
     text-decoration:none;
-    color:colors.$sage-font-color-blue;
+    color:colors.$sage-blue;
 }
 
 .chat-prompt-header-col{
@@ -72,5 +71,4 @@
 
 .advOptHeader{
     border-bottom:0;
->>>>>>> Stashed changes:libs/app/Investigate/chat/ChatPrompt.scss
 }
