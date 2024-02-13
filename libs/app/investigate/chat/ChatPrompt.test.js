@@ -8,15 +8,10 @@ import sageClient from "../httpClient";
 jest.mock("../httpClient");
 
 describe("ChatPrompt default state", () => {
-    beforeEach(() => {
-        fetch.resetMocks()
-    })
-
     test("renders empty textarea", () => {
         // Arrange
         mockWindowFunctions();
         const handleOnQuery = jest.fn();
-        fetch.mockResponseOnce(JSON.stringify({ data: 'Placeholder' }));
 
         // Act
         render(<ChatPrompt loading={false} onQuery={handleOnQuery} />);
@@ -31,7 +26,6 @@ describe("ChatPrompt default state", () => {
         mockWindowFunctions();
         const handleOnQuery = jest.fn();
         const placeholderText = `Ask your question here, such as "How did Enron manipulate its financial statements, and what were the consequences?"`;
-        fetch.mockResponseOnce(JSON.stringify({ data: 'Placeholder' }));
 
         // Act
         render(<ChatPrompt loading={false} onQuery={handleOnQuery} />);
@@ -44,8 +38,6 @@ describe("ChatPrompt default state", () => {
     test("renders correct text count", () => {
         // Arrange
         mockWindowFunctions();
-        fetch.mockResponseOnce(JSON.stringify({ data: 'Placeholder' }));
-
         const handleOnQuery = jest.fn();
         const countValue = "0 / 2000";
 
@@ -60,8 +52,6 @@ describe("ChatPrompt default state", () => {
     test("renders disabled button", () => {
         // Arrange
         mockWindowFunctions();
-        fetch.mockResponseOnce(JSON.stringify({ data: 'Placeholder' }));
-
         const handleOnQuery = jest.fn();
 
         // Act
@@ -75,8 +65,6 @@ describe("ChatPrompt default state", () => {
     test("renders button with correct text", () => {
         // Arrange
         mockWindowFunctions();
-        fetch.mockResponseOnce(JSON.stringify({ data: 'Placeholder' }));
-
         const handleOnQuery = jest.fn();
         const buttonText = "Run";
 
@@ -93,8 +81,6 @@ describe("ChatPrompt input state", () => {
     test("updates textarea text", async () => {
         // Arrange
         mockWindowFunctions();
-        fetch.mockResponseOnce(JSON.stringify({ data: 'Placeholder' }));
-
         const handleOnQuery = jest.fn();
         const inputValue = "Lorem ipsum";
 
@@ -114,8 +100,6 @@ describe("ChatPrompt input state", () => {
     test("updates text count", async () => {
         // Arrange
         mockWindowFunctions();
-        fetch.mockResponseOnce(JSON.stringify({ data: 'Placeholder' }));
-
         const handleOnQuery = jest.fn();
         const inputValue = "Lorem ipsum";
         const countValue = "11 / 2000";
@@ -160,8 +144,6 @@ describe("ChatPrompt input state", () => {
     test("updates button state", async () => {
         // Arrange
         mockWindowFunctions();
-        fetch.mockResponseOnce(JSON.stringify({ data: 'Placeholder' }));
-
         const handleOnQuery = jest.fn();
         const inputValue = "Lorem ipsum";
 
@@ -183,8 +165,6 @@ describe("ChatPrompt onQuery", () => {
     test("fires event", async () => {
         // Arrange
         mockWindowFunctions();
-        fetch.mockResponseOnce(JSON.stringify({ data: 'Placeholder' }));
-
         sageClient.poseQuestionAsync.mockResolvedValue(123);
         const handleOnQuery = jest.fn();
         const inputValue = "Lorem ipsum";
@@ -213,14 +193,12 @@ describe("ChatPrompt onQuery", () => {
     test("updates button text", async () => {
         // Arrange
         mockWindowFunctions();
-        fetch.mockResponseOnce(JSON.stringify({ data: 'Placeholder' }));
         const mockTimeout = async () => {
             // Set a timeout so we can see the button text change
             await new Promise(function (resolve, reject) {
                 setTimeout(resolve(), 3000);
             });
         };
-
         sageClient.poseQuestionAsync.mockImplementation(mockTimeout);
         const handleOnQuery = jest.fn();
         const inputValue = "Lorem ipsum";
