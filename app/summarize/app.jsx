@@ -11,10 +11,21 @@ export default function App() {
 
     const showSkeleton = true;
 
+    let collDef =[
+        {
+            body: (row)=>{return(<span>{row.DateTime}</span>);},
+            field:"DateTime",
+            header:"Date/Time",
+            isSortable:true,
+            isFilterable:true,
+            width:"10rem",
+        }
+    ];
+
     return (
         <div className="App">
             <SummaryHeader />
-            <SageDataTable showSkeleton={showSkeleton} />
+            <SageDataTable columnDef={collDef} />
         </div>
     );
 }

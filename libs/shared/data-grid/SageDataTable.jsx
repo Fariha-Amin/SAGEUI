@@ -42,7 +42,7 @@ function createColumnDefination(columnDef, skeleton = false){
 export default function SageDataTable(props) {
 
     const [summmaryData, setSummmaryData] = useState([]);
-    const [columnDefinations, setColumnDefinations] = useState([]);
+    const [columnDefinations, setColumnDefinations] = useState(createColumnDefination(null, false));
     const [expandedRows, setExpandedRows] = useState(null);
 
     const {tableConfig} = props;
@@ -93,8 +93,8 @@ export default function SageDataTable(props) {
 
     const loadData = ()=>{
         ProductService.getSummaryData().then(data =>{
-            setColumnDefinations(createColumnDefination(columnDef, false));
             setSummmaryData(data)
+            setColumnDefinations(createColumnDefination(columnDef, false));
         } );
     }
 
@@ -106,7 +106,8 @@ export default function SageDataTable(props) {
     
     return(
         <DataTable {...{...defaultTableConfig, ...tableConfig}} >
-            {[...columnDefinations]}
+            {columnDefinations}
+            
         </DataTable>
     );
 }
