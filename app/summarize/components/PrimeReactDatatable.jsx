@@ -30,6 +30,14 @@ export default function PrimeReactDatatable(props) {
     const renderSummary = (row)=>{
         return(<Summary row={row} />);
     }
+    const cc = [
+                <Column selectionMode="multiple" headerStyle={{ width: '3rem' }} />,
+                <Column field="DateTime" header="Date/Time" sortable filter showFilterMenu={false} showClearButton={false} align="center" />,
+                <Column field="User" header="User" sortable filter showFilterMenu={false} showClearButton={false} align="center" />,
+                <Column field="DocumentId" header="DocId (Fed to AI)" sortable filter showFilterMenu={false} showClearButton={false} align="center"/>,
+                <Column field="Summary" header="Summary" body={renderSummary}  filter showFilterMenu={false} showClearButton={false} align="center" />,
+                <Column field="Notes" header="Notes" sortable filter showFilterMenu={false} showClearButton={false} align="center" />
+    ]
 
     if(isDataLoaded){
         return(
@@ -47,12 +55,7 @@ export default function PrimeReactDatatable(props) {
                 paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink  RowsPerPageDropdown" currentPageReportTemplate="Total: {totalRecords} entries"
                 >
                 
-                <Column selectionMode="multiple" headerStyle={{ width: '3rem' }} />
-                <Column field="DateTime" header="Date/Time" sortable filter showFilterMenu={false} showClearButton={false} align="center" />
-                <Column field="User" header="User" sortable filter showFilterMenu={false} showClearButton={false} align="center" />
-                <Column field="DocumentId" header="DocId (Fed to AI)" sortable filter showFilterMenu={false} showClearButton={false} align="center"/>
-                <Column field="Summary" header="Summary" body={renderSummary}  filter showFilterMenu={false} showClearButton={false} align="center" />
-                <Column field="Notes" header="Notes" sortable filter showFilterMenu={false} showClearButton={false} align="center" />
+                {[...cc]}
             </DataTable>
         );
     }else{
