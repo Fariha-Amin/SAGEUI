@@ -50,4 +50,17 @@ describe("Main Page Header Tests", () => {
         // Assert
         expect(JSON.stringify(element)).toContain('circle-question');
     });
+
+    test("RPMXCON-84594 renders FAQ link", async () => {
+        // Arrange
+        const url = "https://www.sightlinecentral.com/doc/faq/gen-ai-faq/";
+        
+        // Act
+        render(<Provider store={store}><Header /></Provider>);
+        const anchor = document.querySelector(`[href="${url}"]`);
+        
+        // Assert
+        expect(anchor).not.toBeNull();
+        expect(anchor).toBeDefined();
+    });
 });
