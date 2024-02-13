@@ -4,6 +4,7 @@ import { Column } from 'primereact/column';
 import { ProductService } from '../../../app/summarize/service/ProductService';
 import {Summary} from '../../../app/summarize/components/Summary';
 import { Skeleton } from 'primereact/skeleton';
+import customPaginatorTemplate from './CustomPaginatorTemplate';
 
 const renderSummary = (row)=>{
     return(<Summary row={row} />);
@@ -37,7 +38,6 @@ function createColumnDefination(columnDef, skeleton = false){
     // });
     //return columnDefinations;
 }
-
 
 export default function SageDataTable(props) {
 
@@ -82,8 +82,8 @@ export default function SageDataTable(props) {
         cellSelection:true,
         paginatorLeft:true,
         tableClassName:"table table-striped table-hover table-bordered align-middle dataTable no-footer",
-        paginatorTemplate:"CurrentPageReport PrevPageLink PageLinks NextPageLink RowsPerPageDropdown",
-        currentPageReportTemplate:"Total: {totalRecords} entries",
+        //paginatorTemplate:"CurrentPageReport PrevPageLink PageLinks NextPageLink",
+        //currentPageReportTemplate:"Total: {totalRecords} entries",
         onRowClick:onRowClick,
         expandedRows:expandedRows,
         rowExpansionTemplate:rowExpansionTemplate
@@ -105,8 +105,9 @@ export default function SageDataTable(props) {
     }, []);
     
     return(
-        <DataTable {...{...defaultTableConfig, ...tableConfig}} >
+        <DataTable {...{...defaultTableConfig, ...tableConfig}}  paginatorTemplate={customPaginatorTemplate}>
             {[...columnDefinations]}
         </DataTable>
     );
-}
+};
+
