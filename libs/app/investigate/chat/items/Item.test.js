@@ -4,7 +4,7 @@ import { render, screen } from "@testing-library/react";
 import ChatItem from './Item';
 
 describe("ChatItem UI", () => {
-    test("renders timestamp correctly", async () => {
+    test("RPMXCON-84290 renders timestamp correctly", async () => {
         // Arrange
         const year = 1234;
         const march = 2;
