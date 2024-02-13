@@ -47,11 +47,15 @@ const ChatHistory = ({
     useEffect(() => {
         onHistoryLoading && onHistoryLoading();
         setLoadingHistory(true);
-        sageClient.getInvestigationsAsync()
-            .then(data => setChatHistory(data))
-            .then(() => setLoadingHistory(false))
-            .then(() => setIsInitialLoad(false))
-            .then(() => onHistoryLoaded && onHistoryLoaded());
+        
+        async function loadInitialInvestigations() {
+            let investigations = await sageClient.getInvestigationsAsync();
+            setChatHistory(reduceArray(investigations, 25));
+            setLoadingHistory(false);
+            setIsInitialLoad(false);
+            onHistoryLoaded && onHistoryLoaded();
+        }
+        loadInitialInvestigations();
     }, []);
 
     // Ask question and get answer on query
