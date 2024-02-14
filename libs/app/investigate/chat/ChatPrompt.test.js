@@ -35,7 +35,7 @@ describe("ChatPrompt default state", () => {
         expect(textarea).toHaveProperty("placeholder", placeholderText);
     });
 
-    test("renders correct text count", () => {
+    test("RPMXCON-84272 renders correct text count", () => {
         // Arrange
         mockWindowFunctions();
         const handleOnQuery = jest.fn();
