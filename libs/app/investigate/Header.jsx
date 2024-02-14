@@ -7,8 +7,8 @@ import Links from "_shared/links";
 import Counter from '_shared/counter/Counter';
 import IconButton from '_shared/icon-button/IconButton'
 
-const Bold = styled.div`
-    font-weight:bold;
+const H3 = styled.h3`
+    display: inline-block
 `;
 
 const helpText = "This is help text";
@@ -19,7 +19,7 @@ const Header = (docCount) => {
         <Row>
             <Stack direction="horizontal" gap={3}>
                 <div>
-                    <FormLabel><Bold>neXgenAI Investigate </Bold></FormLabel>
+                    <H3>neXgenAI Investigate</H3>
                     <IconButton className="sage-icon-superscript" icon="circle-question" title={helpText} titlePlacement="bottom" />
                 </div>
                 <div className="ms-auto">

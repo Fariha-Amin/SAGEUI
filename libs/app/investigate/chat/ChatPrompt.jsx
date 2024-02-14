@@ -15,12 +15,12 @@ export default function ChatPrompt({ loading, onQuery, docCount }) {
     const [textLength, setTextLength] = useState(0);
     const [canSubmitQuery, setCanSubmitQuery] = useState(false);
     const [showAdvOptModal, setShowAdvOptModal] = useState(false);
-    
+
     const maxQueryLength = 2000;
     const placeholderText = `Ask your question here, such as "How did Enron manipulate its financial statements, and what were the consequences?"`;
 
-    const handleAdvOptShow = () => {setShowAdvOptModal(true)};
-    const handleAdvOptClose = () => {setShowAdvOptModal(false)};
+    const handleAdvOptShow = () => { setShowAdvOptModal(true) };
+    const handleAdvOptClose = () => { setShowAdvOptModal(false) };
 
     const onClickDelegate = async (e) => {
         setQuerying(true);
@@ -36,8 +36,7 @@ export default function ChatPrompt({ loading, onQuery, docCount }) {
     }
 
     useEffect(() => {
-        if(docCount === 0)
-        {
+        if (docCount === 0) {
             setCanSubmitQuery(false);
         }
         else if (loading) {
@@ -52,17 +51,17 @@ export default function ChatPrompt({ loading, onQuery, docCount }) {
         else if (textLength > maxQueryLength) {
             setCanSubmitQuery(false);
         }
-		else {
+        else {
             setCanSubmitQuery(true);
         }
-	}, [ loading, querying, textLength ]);
+    }, [loading, querying, textLength]);
 
     return (
         <Form>
             <Row>
                 <Col bsPrefix="chat-prompt-header-col col-11">
                     <Stack direction="horizontal" gap={0}>
-                        <FormLabel bsPrefix="chat-prompt-advanced-options form-label" onClick={handleAdvOptShow}>Advanced Options</FormLabel>
+                        <Button className="chat-prompt-advanced-options" variant="link" onClick={handleAdvOptShow}>Advanced Options</Button>
                         <AdvancedSettingsFlyout shouldShow={showAdvOptModal} onClose={handleAdvOptClose} />
                         <IconButton className="sage-icon-superscript" icon="circle-question" title={advOptHelpText} />
                     </Stack>
