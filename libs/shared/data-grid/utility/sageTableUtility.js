@@ -3,10 +3,11 @@ import { Column } from 'primereact/column';
 import { Skeleton } from 'primereact/skeleton';
 
 const SageTableUtility = {
-    createColumnDefination: (columnData, isSkeleton = false) => {
+    createColumnDefinition: (columnData, isSkeleton = false) => {
         return columnData.map(column => {
             return (
                 <Column
+                    key={column.field}
                     body={isSkeleton ? <Skeleton /> : column.body}
                     filterMatchMode="contains"
                     field={column.field}

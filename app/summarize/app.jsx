@@ -9,8 +9,6 @@ import './App.css';
 
 export default function App() {
 
-    const showSkeleton = true;
-
     let collDef = [
         {
             body: <input type="checkbox" />,
@@ -65,7 +63,10 @@ export default function App() {
     return (
         <div className="App">
             <SummaryHeader />
-            <SageDataTable columnDef={collDef} />
+            <SageDataTable columnDef={collDef} >
+
+            </ SageDataTable>
+            
         </div>
     );
 }
