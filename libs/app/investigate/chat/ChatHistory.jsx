@@ -5,6 +5,8 @@ import ChatHistoryLoading from "./ChatHistoryLoading";
 import ChatHistoryPlaceholder from "./ChatHistoryPlaceholder";
 import sageClient from "_investigate/httpClient";
 import { useState, useEffect } from "react";
+import { useSelector } from 'react-redux';
+import docCounterSlice from "../Reducers/docCounterSlice";
 
 function reduceArray(array, maxItemCount) {
     if (array.length > maxItemCount) {
@@ -42,6 +44,7 @@ const ChatHistory = ({
     const [chatHistory, setChatHistory] = useState([]);
     const [loadingHistory, setLoadingHistory] = useState(false);
     const [loadingItem, setLoadingItem] = useState(false);
+    const docCount = useSelector((state) => state.docCounter.value);
 
     // Get chat history on load
     useEffect(() => {
@@ -98,7 +101,7 @@ const ChatHistory = ({
 
     if (!chatHistory || chatHistory.length <= 0) {
         // No history yet
-        return <ChatHistoryPlaceholder />
+        return <ChatHistoryPlaceholder docCount={docCount}/>
     }
     else {
         return (

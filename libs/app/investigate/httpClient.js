@@ -45,7 +45,7 @@ class HttpClient {
         // header - userId
         // header - projectId
         // body - array of Investigation class from above
-        this.loadMockData(25);
+        //this.loadMockData(25);
 
         let maxItemCount = 25;
         let startIndex = this._investigations.length - maxItemCount;
@@ -332,7 +332,7 @@ class HttpClient {
 
     getDocumentCountAsync() {
         let mockAsyncTask = new Promise(function (resolve, reject) {
-            setTimeout(() => resolve(10000000000), 4000);
+            setTimeout(() => resolve(0), 1000);
         });
 
         return mockAsyncTask;

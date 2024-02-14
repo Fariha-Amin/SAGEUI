@@ -3,6 +3,8 @@ import '@testing-library/jest-dom'
 import { render, waitFor } from "@testing-library/react";
 import ChatHistory from './ChatHistory';
 import sageClient from "_investigate/httpClient";
+import { Provider } from 'react-redux';
+import store from '../../../../app/Investigate/store';
 
 jest.mock("_investigate/httpClient");
 
@@ -32,7 +34,7 @@ describe("ChatHistory UI", () => {
         sageClient.getInvestigationsAsync.mockImplementation(mockGetInvestigationsAsync);
 
         // Act
-        render(<ChatHistory
+        render(<Provider store={store}><ChatHistory
             queryId={queryId}
             onHistoryLoading={onHistoryLoading}
             onHistoryLoaded={onHistoryLoaded}
@@ -40,7 +42,7 @@ describe("ChatHistory UI", () => {
             onInvestigationLoaded={onInvestigationLoaded}
             onAnswerLoading={onAnswerLoading}
             onAnswerLoaded={onAnswerLoaded}
-        />);
+        /></Provider>);
         await waitFor(() => expect(sageClient.getInvestigationsAsync).toHaveBeenCalled());
         const elements = document.querySelectorAll(".sage-chat-history__item");
 
@@ -90,7 +92,7 @@ describe("ChatHistory UI", () => {
         sageClient.getAnswerByQuestionAsync.mockImplementation(mockGetAnswerByQuestionAsync);
 
         // Act
-        const {rerender} = render(<ChatHistory
+        const {rerender} = render(<Provider store={store}><ChatHistory
             queryId={0}
             onHistoryLoading={onHistoryLoading}
             onHistoryLoaded={onHistoryLoaded}
@@ -98,13 +100,13 @@ describe("ChatHistory UI", () => {
             onInvestigationLoaded={onInvestigationLoaded}
             onAnswerLoading={onAnswerLoading}
             onAnswerLoaded={onAnswerLoaded}
-        />);
+        /></Provider>);
 
         // Wait for the initial load to complete
         await waitFor(() => expect(sageClient.getInvestigationsAsync).toHaveBeenCalled());
 
         // Re-render with a new query ID (this adds a 26th question to the component)
-        rerender(<ChatHistory
+        rerender(<Provider store={store}><ChatHistory
             queryId={26}
             onHistoryLoading={onHistoryLoading}
             onHistoryLoaded={onHistoryLoaded}
@@ -112,7 +114,7 @@ describe("ChatHistory UI", () => {
             onInvestigationLoaded={onInvestigationLoaded}
             onAnswerLoading={onAnswerLoading}
             onAnswerLoaded={onAnswerLoaded}
-        />);
+        /></Provider>);
 
         // Wait for the new question to finish loading
         await waitFor(() => expect(sageClient.getInvestigationByQuestionAsync).toHaveBeenCalled());
