@@ -21,7 +21,7 @@ describe("ChatPrompt default state", () => {
         expect(textarea).toHaveValue("");
     });
 
-    test("renders textarea with correct placeholder text", () => {
+    test("RPMXCON-84270 - AI Investigate : Verify the presence of input box with place holder in AI Investigate page.", () => {
         // Arrange
         mockWindowFunctions();
         const handleOnQuery = jest.fn();
@@ -62,7 +62,7 @@ describe("ChatPrompt default state", () => {
         expect(button).toBeDisabled();
     });
 
-    test("renders button with correct text", () => {
+    test(`RPMXCON-84274 AI Investigate : Verify the presence of "Run" button in the home page of AI Investigate`, () => {
         // Arrange
         mockWindowFunctions();
         const handleOnQuery = jest.fn();
