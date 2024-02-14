@@ -62,6 +62,19 @@ describe("ChatPrompt default state", () => {
         expect(button).toBeDisabled();
     });
 
+    test("RPMXCON-84314 renders disabled button with zero docs", () => {
+        // Arrange
+        mockWindowFunctions();
+        const handleOnQuery = jest.fn();
+
+        // Act
+        render(<ChatPrompt loading={false} onQuery={handleOnQuery} docCount = {0} />);
+        const button = getButtonElement();
+
+        // Assert
+        expect(button).toBeDisabled();
+    });
+
     test(`RPMXCON-84274 AI Investigate : Verify the presence of "Run" button in the home page of AI Investigate`, () => {
         // Arrange
         mockWindowFunctions();
@@ -157,6 +170,25 @@ describe("ChatPrompt input state", () => {
         await waitFor(() => {
             const button = getButtonElement();
             expect(button).not.toBeDisabled();
+        });
+    });
+
+    test("RPMXCON-84314 - Does not update button state if doc count is zero", async () => {
+        // Arrange
+        mockWindowFunctions();
+        const handleOnQuery = jest.fn();
+        const inputValue = "Lorem ipsum";
+
+        // Act
+        render(<ChatPrompt loading={false} onQuery={handleOnQuery} docCount={0} />);
+
+        const textarea = getTextAreaElement();
+        userEvent.type(textarea, inputValue);
+
+        // Assert
+        await waitFor(() => {
+            const button = getButtonElement();
+            expect(button).toBeDisabled();
         });
     });
 });

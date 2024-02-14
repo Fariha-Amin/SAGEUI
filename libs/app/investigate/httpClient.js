@@ -332,7 +332,7 @@ class HttpClient {
 
     getDocumentCountAsync() {
         let mockAsyncTask = new Promise(function (resolve, reject) {
-            setTimeout(() => resolve(0), 1000);
+            setTimeout(() => resolve(1000), 1000);
         });
 
         return mockAsyncTask;

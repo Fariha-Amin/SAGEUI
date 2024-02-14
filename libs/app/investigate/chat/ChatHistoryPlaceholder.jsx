@@ -6,7 +6,6 @@ import Row from 'react-bootstrap/Row';
 import Card from 'react-bootstrap/Card';
 
 export default function ChatHistoryPlaceholder(docCount) {
-    const documents = docCount.docCount;
     const defaultPlaceholder = 
         <div className='sage-chat-history__placeholder'>
             <Row>
@@ -51,5 +50,5 @@ export default function ChatHistoryPlaceholder(docCount) {
         </div>
     ;
 
-    return (documents > 0 ? defaultPlaceholder: zeroDocsPlaceholder);
+    return (docCount.docCount > 0 ? defaultPlaceholder: zeroDocsPlaceholder);
 }

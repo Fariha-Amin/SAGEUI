@@ -12,13 +12,13 @@ describe("Main Page Header Tests", () => {
         fetch.resetMocks()
     })
 
-    it('Counter renders', () => {
+    it('RPMXCON-84244 Counter renders', () => {
         // Arrange
         fetch.mockResponseOnce(JSON.stringify({data:'10000'}));
 
         // Act
         const element = renderer
-            .create(<Provider store={store}><Header /></Provider>);
+            .create(<Header docCount={100} />);
             
 
         // Assert
@@ -31,7 +31,7 @@ describe("Main Page Header Tests", () => {
 
         // Act
         const element = renderer
-            .create(<Provider store={store}><Header /></Provider>);
+            .create(<Header docCount={100} />);
             
 
         // Assert
@@ -44,7 +44,7 @@ describe("Main Page Header Tests", () => {
 
         // Act
         const element = renderer
-            .create(<Provider store={store}><Header /></Provider>);
+            .create(<Header docCount={100} />);
          
 
         // Assert
@@ -56,7 +56,7 @@ describe("Main Page Header Tests", () => {
         const url = "https://www.sightlinecentral.com/doc/faq/gen-ai-faq/";
         
         // Act
-        render(<Provider store={store}><Header /></Provider>);
+        render(<Header docCount={100} />);
         const anchor = document.querySelector(`[href="${url}"]`);
         
         // Assert
@@ -71,7 +71,7 @@ describe("Main Page Header Tests", () => {
         const btnLabel = "Manage Document Population";
         // Act
         const element = renderer
-            .create(<Provider store={store}><Header /></Provider>);
+            .create(<Header docCount={100} />);
         // Assert
         expect(JSON.stringify(element)).toContain(totalDocCountLabel);
         expect(JSON.stringify(element)).toContain("0");
@@ -87,7 +87,7 @@ describe("Main Page Header Tests", () => {
         const faqLabel = "FAQ";
         // Act
         const element = renderer
-            .create(<Provider store={store}><Header /></Provider>);
+            .create(<Header docCount={100} />);
         // Assert
         expect(JSON.stringify(element)).toContain(appMainLabel);
         expect(JSON.stringify(element)).toContain(faqLabel);

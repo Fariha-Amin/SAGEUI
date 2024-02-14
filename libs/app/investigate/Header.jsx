@@ -2,14 +2,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useEffect } from 'react';
 import { Button, Row, FormLabel } from 'react-bootstrap';
 import Stack from 'react-bootstrap/Stack';
-import { useSelector, useDispatch } from 'react-redux'
-import { setCount } from "./Reducers/docCounterSlice";
 import Links from "../../shared/links";
 import Counter from '../../shared/counter/Counter';
 import styled from 'styled-components';
-import client from './httpClient'
 import IconButton from '../../shared/icon-button/IconButton'
-
 
 const Bold = styled.div`
     font-weight:bold;
@@ -17,13 +13,7 @@ const Bold = styled.div`
 
 const helpText = "This is help text";
 
-const Header = () => {
-    useEffect(() => {
-        client.getDocumentCountAsync().then(data => dispatch(setCount(data)));
-    }, [])
-    const docCount = useSelector((state) => state.docCounter.value);
-    const dispatch = useDispatch();
-
+const Header = (docCount) => {
     return(
     <>
         <Row>
@@ -33,7 +23,7 @@ const Header = () => {
                     <IconButton className="sage-icon-superscript" icon="circle-question" tooltip={helpText} tooltipId="header-title-help" />
                 </div>
                 <div className="ms-auto">
-                    <Counter label='Total Documents ' count={docCount} />
+                    <Counter label='Total Documents ' count={docCount.docCount} />
                 </div>
                 <div>
                     <Button>Manage Document Population</Button>

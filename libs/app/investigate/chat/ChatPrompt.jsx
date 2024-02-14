@@ -9,13 +9,13 @@ import AdvancedSettingsFlyout from '../AdvancedSettingsFlyout';
 
 const advOptHelpText = "This is also a help text";
 
-export default function ChatPrompt({ loading, onQuery }) {
+export default function ChatPrompt({ loading, onQuery, docCount }) {
     const text = useRef("");
     const [querying, setQuerying] = useState(false);
     const [textLength, setTextLength] = useState(0);
     const [canSubmitQuery, setCanSubmitQuery] = useState(false);
     const [showAdvOptModal, setShowAdvOptModal] = useState(false);
-
+    
     const maxQueryLength = 2000;
     const placeholderText = `Ask your question here, such as "How did Enron manipulate its financial statements, and what were the consequences?"`;
 
@@ -36,7 +36,11 @@ export default function ChatPrompt({ loading, onQuery }) {
     }
 
     useEffect(() => {
-        if (loading) {
+        if(docCount === 0)
+        {
+            setCanSubmitQuery(false);
+        }
+        else if (loading) {
             setCanSubmitQuery(false);
         }
         else if (querying) {
