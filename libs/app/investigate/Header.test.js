@@ -63,4 +63,33 @@ describe("Main Page Header Tests", () => {
         expect(anchor).not.toBeNull();
         expect(anchor).toBeDefined();
     });
+
+    test('RPMXCON-84255 - AI Investigate: Verify the "Manage document population" button in AI Investigate page for newly created project.', ()=>{
+        // Arrange
+        fetch.mockResponseOnce(JSON.stringify({data:'0'}));
+        const totalDocCountLabel = "Total Documents";
+        const btnLabel = "Manage Document Population";
+        // Act
+        const element = renderer
+            .create(<Provider store={store}><Header /></Provider>);
+        // Assert
+        expect(JSON.stringify(element)).toContain(totalDocCountLabel);
+        expect(JSON.stringify(element)).toContain("0");
+        expect(JSON.stringify(element)).toMatch(btnLabel);
+        expect(JSON.stringify(element)).toMatch("This is help text");
+
+    });
+
+    test('RPMXCON-84231 - AI Investigate: Verify the composition of the header subtext in the AI Investigate home page.', ()=>{
+        // Arrange
+        fetch.mockResponseOnce(JSON.stringify({data:'0'}));
+        const appMainLabel = "Enter a question to start your investigation process. For guidance on using the neXgenAI features in Sightline, please refer to the";
+        const faqLabel = "FAQ";
+        // Act
+        const element = renderer
+            .create(<Provider store={store}><Header /></Provider>);
+        // Assert
+        expect(JSON.stringify(element)).toContain(appMainLabel);
+        expect(JSON.stringify(element)).toContain(faqLabel);
+    });
 });

@@ -60,7 +60,7 @@ describe("IconButton renders", () => {
         expect(element).toBeDefined();
     });
 
-    test('Tooltip Renders if added', () => {
+    test('RPMXCON-84230 - AI Investigate: Verify the Header and its tooltip icon in AI Investigate home page.', () => {
         // Arrange
         const tooltipId = "tooltipTest";
         const tooltip = "This is only a test";
@@ -70,9 +70,9 @@ describe("IconButton renders", () => {
         const element = renderer
             .create(<IconButton icon={faIcon} tooltipId={tooltipId} tooltip={tooltip} />)
             .toJSON();
-
         // Assert
         expect(JSON.stringify(element)).toContain('tooltipTest');
+        expect(JSON.stringify(element)).toContain('top');
     });
 });
 
