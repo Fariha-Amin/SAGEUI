@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Row, Col, Form, Offcanvas, Container, Stack, Button } from 'react-bootstrap';
 import './AdvancedSettingsFlyout.scss'
-import IconButton from '../../shared/icon-button/IconButton';
+import IconButton from '_shared/icon-button/IconButton';
 import client from './httpClient';
 
 const AdvancedSettingsFlyout = (props) => {
@@ -26,7 +26,7 @@ const AdvancedSettingsFlyout = (props) => {
             <Offcanvas.Header bsPrefix="offcanvas-header advopt-header">
                 <Stack direction="horizontal">
                     <Offcanvas.Title><b>{advOptTitle}</b></Offcanvas.Title>
-                    <IconButton className="sage-icon-superscript" icon="circle-question" tooltip={helpTextTitle} tooltipId="advopts-title-help" />
+                    <IconButton className="sage-icon-superscript" icon="circle-question" title={helpTextTitle} titlePlacement="bottom" />
                 </Stack>
             </Offcanvas.Header>
             <Offcanvas.Body>
@@ -43,7 +43,7 @@ const AdvancedSettingsFlyout = (props) => {
                                     <Form.Check.Input type={'radio'} defaultChecked/>
                                     <Form.Check.Label>
                                         <b>{advOptDefaultPrompt}</b>
-                                        <IconButton className="sage-icon-superscript" icon="circle-question" tooltip={helpTextDefaultPrompt} tooltipId="advopts-default-prompt-help" />
+                                        <IconButton className="sage-icon-superscript" icon="circle-question" title={helpTextDefaultPrompt} />
                                     </Form.Check.Label>
                                     <div className="advopt-option">
                                         {advOptDefaultText}

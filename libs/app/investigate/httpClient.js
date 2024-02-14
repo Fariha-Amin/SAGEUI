@@ -3,6 +3,7 @@ class Investigation {
     query = new Query();
     response = new Response();
     datetime = new Date();
+    isFavorite = false;
 }
 
 class Result {
@@ -106,6 +107,19 @@ class HttpClient {
         let that = this;
         let mockAsyncTask = new Promise(function (resolve, reject) {
             setTimeout(() => resolve(responseLookup()), 3000);
+        });
+
+        return mockAsyncTask;
+    }
+
+    updateInvestigation(model) {
+        // Update the model with new values for this user and project
+        // PUT - api/investigations/<id>
+        // header - userId
+        // header - projectId
+        // body - see Investigation class above
+        let mockAsyncTask = new Promise(function (resolve, reject) {
+            setTimeout(() => resolve(), 3000);
         });
 
         return mockAsyncTask;

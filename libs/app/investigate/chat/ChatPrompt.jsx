@@ -1,11 +1,11 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './ChatPrompt.scss'
 import React from 'react';
 import { useRef, useState, useEffect } from "react";
-import sageClient from "../httpClient";
-import { Stack, Row, Col, Button, Form, FormLabel, Modal, Container } from 'react-bootstrap';
-import './ChatPrompt.scss'
-import IconButton from '../../../shared/icon-button/IconButton';
-import AdvancedSettingsFlyout from '../AdvancedSettingsFlyout';
+import { Stack, Row, Col, Button, Form, FormLabel } from 'react-bootstrap';
+import IconButton from '_shared/icon-button/IconButton';
+import sageClient from "_investigate/httpClient";
+import AdvancedSettingsFlyout from '_investigate/AdvancedSettingsFlyout';
 
 const advOptHelpText = "This is also a help text";
 
@@ -64,7 +64,7 @@ export default function ChatPrompt({ loading, onQuery, docCount }) {
                     <Stack direction="horizontal" gap={0}>
                         <FormLabel bsPrefix="chat-prompt-advanced-options form-label" onClick={handleAdvOptShow}>Advanced Options</FormLabel>
                         <AdvancedSettingsFlyout shouldShow={showAdvOptModal} onClose={handleAdvOptClose} />
-                        <IconButton className="sage-icon-superscript" icon="circle-question" tooltip={advOptHelpText} tooltipId="advanced-optiond-title-help" />
+                        <IconButton className="sage-icon-superscript" icon="circle-question" title={advOptHelpText} />
                     </Stack>
                 </Col>
             </Row>

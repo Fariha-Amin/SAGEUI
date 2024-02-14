@@ -4,6 +4,7 @@
 html, body {
     font-family: fonts.$sage-font-family;
     color: fonts.$sage-font-color;
+    overflow: hidden;
 }
 
 .sage-icon-button {
