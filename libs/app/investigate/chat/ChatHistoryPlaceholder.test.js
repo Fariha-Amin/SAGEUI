@@ -16,7 +16,7 @@ describe("ChatHistoryPlaceholder renders", () => {
         expect(element).toBeDefined();
     });
 
-    test("as a card with specific header text", () => {
+    test("RPMXCON-84256-B as a card with specific header text", () => {
         // Arrange
         const headerText = "Your results will appear in this space.";
 
@@ -29,7 +29,7 @@ describe("ChatHistoryPlaceholder renders", () => {
         expect(element.textContent).toMatch(headerText);
     });
 
-    test("as a card with specific body text", () => {
+    test("RPMXCON-84256-B as a card with specific body text", () => {
         // Arrange
         const bodyText = "You can then investigate into the questions and answers generated from documents in population.";
 
