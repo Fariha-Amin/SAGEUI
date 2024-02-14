@@ -16,7 +16,7 @@ describe("ChatHistoryPlaceholder renders", () => {
         expect(element).toBeDefined();
     });
 
-    test("RPMXCON-84256-B as a card with specific header text", () => {
+    test("RPMXCON-84256-A as a card with specific header text", () => {
         // Arrange
         const headerText = "Your results will appear in this space.";
 
