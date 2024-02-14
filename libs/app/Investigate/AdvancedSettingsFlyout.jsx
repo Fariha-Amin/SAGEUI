@@ -23,15 +23,15 @@ const AdvancedSettingsFlyout = (props) => {
     
     return (
         <Offcanvas show={props.shouldShow} onHide={props.onClose} placement="end" backdrop="false">
-            <Offcanvas.Header bsPrefix="offcanvas-header advOptHeader">
+            <Offcanvas.Header bsPrefix="offcanvas-header advopt-header">
                 <Stack direction="horizontal">
                     <Offcanvas.Title><b>{advOptTitle}</b></Offcanvas.Title>
                     <IconButton className="sage-icon-superscript" icon="circle-question" tooltip={helpTextTitle} tooltipId="advopts-title-help" />
                 </Stack>
             </Offcanvas.Header>
             <Offcanvas.Body>
-                <Container bsPrefix="container advOptBody">
-                    <Row bsPrefix="row advOptContentRow">
+                <Container bsPrefix="container advopt-body">
+                    <Row bsPrefix="row advopt-content-row">
                         <Col>
                             {advOptHeader}
                         </Col>
@@ -45,7 +45,7 @@ const AdvancedSettingsFlyout = (props) => {
                                         <b>{advOptDefaultPrompt}</b>
                                         <IconButton className="sage-icon-superscript" icon="circle-question" tooltip={helpTextDefaultPrompt} tooltipId="advopts-default-prompt-help" />
                                     </Form.Check.Label>
-                                    <div className="advOptOption">
+                                    <div className="advopt-option">
                                         {advOptDefaultText}
                                     </div>
                                 </Form.Check>
@@ -53,7 +53,7 @@ const AdvancedSettingsFlyout = (props) => {
                         </Col>
                     </Row>
                 </Container>
-                <Button bsPrefix = "btn btn-primary close-button" onClick={props.onClose}>Close</Button>
+                <Button bsPrefix = "btn btn-primary advopt-close-button" onClick={props.onClose}>Close</Button>
             </Offcanvas.Body>
         </Offcanvas>
   );
