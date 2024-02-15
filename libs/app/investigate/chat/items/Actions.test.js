@@ -8,46 +8,38 @@ describe("'Favorite' action", () => {
     test("renders correct default icon", async () => {
         // Arrange
         const model = getDefaultModel();
-        const handleOnFavorite = jest.fn();
+        const faIcon = "star";
 
         // Act
-        render(<Actions model={model} onFavoriteClick={handleOnFavorite} />);
-        const icon = document.querySelector('[data-icon="star"]');
-        const type = document.querySelector('[data-prefix="far"]');
-        
+        render(<Actions model={model} />);
+        const element = document.querySelector("button.item-actions_favorite");
+
         // Assert
-        expect(icon).not.toBeNull();
-        expect(icon).toBeDefined();
-        expect(type).not.toBeNull();
-        expect(type).toBeDefined();
+        expect(element.outerHTML).toMatch(`data-icon="${faIcon}"`);
     });
 
     test("renders correct active icon", async () => {
         // Arrange
         const model = getDefaultModel();
         model.isFavorite = true; // <-- active
-        const handleOnFavorite = jest.fn();
 
         // Act
-        render(<Actions model={model} onFavoriteClick={handleOnFavorite} />);
-        const icon = document.querySelector('[data-icon="star"]');
-        const type = document.querySelector('[data-prefix="fas"]');
-        
+        render(<Actions model={model} />);
+        const element = document.querySelector("button.item-actions_favorite_active");
+
         // Assert
-        expect(icon).not.toBeNull();
-        expect(icon).toBeDefined();
-        expect(type).not.toBeNull();
-        expect(type).toBeDefined();
+        expect(element).not.toBeNull();
+        expect(element).toBeDefined();
     });
 
     test('fires click event', async () => {
         // Arrange
         const model = getDefaultModel();
         const handleOnFavorite = jest.fn();
-        render(<Actions model={model} onFavoriteClick={handleOnFavorite} />);
-        const element = document.querySelector("button.item-actions_favorite");
 
         // Act
+        render(<Actions model={model} onFavoriteClick={handleOnFavorite} />);
+        const element = document.querySelector("button.item-actions_favorite");
         await userEvent.click(element);
 
         // Assert
@@ -58,11 +50,10 @@ describe("'Favorite' action", () => {
     test('has tooltip that reads "Favorite"', async () => {
         // Arrange
         const model = getDefaultModel();
-        const handleOnFavorite = jest.fn();
-        const favoriteText = "Favorite";
+        const toolTipText = "Favorite";
 
         // Act
-        render(<Actions model={model} onFavoriteClick={handleOnFavorite} />);
+        render(<Actions model={model} />);
         const element = document.querySelector("button.item-actions_favorite");
         await userEvent.hover(element);
         const toolTip = document.querySelector('[role="tooltip"]');
@@ -70,21 +61,33 @@ describe("'Favorite' action", () => {
         // Assert
         expect(toolTip).not.toBeNull();
         expect(toolTip).toBeDefined();
-        expect(toolTip.outerHTML).toMatch(favoriteText);
+        expect(toolTip.outerHTML).toMatch(toolTipText);
     });
 });
 
-describe("'Comment' action", () => {
+describe("'Note' action", () => {
     test("renders correct icon", async () => {
         // Arrange
         const model = getDefaultModel();
-        const handleOnNote = jest.fn();
         const faIcon = "file-lines";
 
         // Act
-        render(<Actions model={model} onNoteClick={handleOnNote} />);
-        const element = document.querySelector(`[data-icon="${faIcon}"]`);
-        
+        render(<Actions model={model} />);
+        const element = document.querySelector("button.item-actions_notes");
+
+        // Assert
+        expect(element.outerHTML).toMatch(`data-icon="${faIcon}"`);
+    });
+
+    test("renders correct active icon", async () => {
+        // Arrange
+        const model = getDefaultModel();
+        model.hasNote = true; // <-- active
+
+        // Act
+        render(<Actions model={model} />);
+        const element = document.querySelector("button.item-actions_notes_active");
+
         // Assert
         expect(element).not.toBeNull();
         expect(element).toBeDefined();
@@ -94,15 +97,32 @@ describe("'Comment' action", () => {
         // Arrange
         const model = getDefaultModel();
         const handleOnNote = jest.fn();
-        render(<Actions model={model} onNoteClick={handleOnNote} />);
-        const element = document.querySelector("button.item-actions_document");
 
         // Act
+        render(<Actions model={model} onNoteClick={handleOnNote} />);
+        const element = document.querySelector("button.item-actions_notes");
         await userEvent.click(element);
 
         // Assert
         expect(handleOnNote).toHaveBeenCalled();
         expect(handleOnNote).toHaveBeenCalledTimes(1);
+    });
+
+    test('has tooltip that reads "Add notes"', async () => {
+        // Arrange
+        const model = getDefaultModel();
+        const toolTipText = "Add notes";
+
+        // Act
+        render(<Actions model={model} />);
+        const element = document.querySelector("button.item-actions_notes");
+        await userEvent.hover(element);
+        const toolTip = document.querySelector('[role="tooltip"]');
+
+        // Assert
+        expect(toolTip).not.toBeNull();
+        expect(toolTip).toBeDefined();
+        expect(toolTip.outerHTML).toMatch(toolTipText);
     });
 });
 
@@ -110,13 +130,25 @@ describe("'Bad Response' action", () => {
     test("renders correct icon", async () => {
         // Arrange
         const model = getDefaultModel();
-        const handleOnReportIssue = jest.fn();
         const faIcon = "comments";
 
         // Act
-        render(<Actions model={model} onReportIssueClick={handleOnReportIssue} />);
-        const element = document.querySelector(`[data-icon="${faIcon}"]`);
-        
+        render(<Actions model={model} />);
+        const element = document.querySelector("button.item-actions_feedback");
+
+        // Assert
+        expect(element.outerHTML).toMatch(`data-icon="${faIcon}"`);
+    });
+
+    test("renders correct active icon", async () => {
+        // Arrange
+        const model = getDefaultModel();
+        model.hasFeedback = true; // <-- active
+
+        // Act
+        render(<Actions model={model} />);
+        const element = document.querySelector("button.item-actions_feedback_active");
+
         // Assert
         expect(element).not.toBeNull();
         expect(element).toBeDefined();
@@ -125,16 +157,33 @@ describe("'Bad Response' action", () => {
     test('fires click event', async () => {
         // Arrange
         const model = getDefaultModel();
-        const handleOnReportIssue = jest.fn();
-        render(<Actions model={model} onReportIssueClick={handleOnReportIssue} />);
-        const element = document.querySelector("button.item-actions_comment");
+        const handleOnFeedback = jest.fn();
 
         // Act
+        render(<Actions model={model} onFeedbackClick={handleOnFeedback} />);
+        const element = document.querySelector("button.item-actions_feedback");
         await userEvent.click(element);
 
         // Assert
-        expect(handleOnReportIssue).toHaveBeenCalled();
-        expect(handleOnReportIssue).toHaveBeenCalledTimes(1);
+        expect(handleOnFeedback).toHaveBeenCalled();
+        expect(handleOnFeedback).toHaveBeenCalledTimes(1);
+    });
+
+    test('has tooltip that reads "Report a bad response"', async () => {
+        // Arrange
+        const model = getDefaultModel();
+        const toolTipText = "Report a bad response";
+
+        // Act
+        render(<Actions model={model} />);
+        const element = document.querySelector("button.item-actions_feedback");
+        await userEvent.hover(element);
+        const toolTip = document.querySelector('[role="tooltip"]');
+
+        // Assert
+        expect(toolTip).not.toBeNull();
+        expect(toolTip).toBeDefined();
+        expect(toolTip.outerHTML).toMatch(toolTipText);
     });
 });
 
@@ -142,31 +191,46 @@ describe("'Delete' action", () => {
     test("renders correct icon", async () => {
         // Arrange
         const model = getDefaultModel();
-        const handleOnDelete = jest.fn();
         const faIcon = "trash-can";
 
         // Act
-        render(<Actions model={model} onDeleteClick={handleOnDelete} />);
-        const element = document.querySelector(`[data-icon="${faIcon}"]`);
-        
+        render(<Actions model={model} />);
+        const element = document.querySelector("button.item-actions_delete");
+
         // Assert
-        expect(element).not.toBeNull();
-        expect(element).toBeDefined();
+        expect(element.outerHTML).toMatch(`data-icon="${faIcon}"`);
     });
 
     test('fires click event', async () => {
         // Arrange
         const model = getDefaultModel();
         const handleOnDelete = jest.fn();
-        render(<Actions model={model} onDeleteClick={handleOnDelete} />);
-        const element = document.querySelector("button.item-actions_delete");
 
         // Act
+        render(<Actions model={model} onDeleteClick={handleOnDelete} />);
+        const element = document.querySelector("button.item-actions_delete");
         await userEvent.click(element);
 
         // Assert
         expect(handleOnDelete).toHaveBeenCalled();
         expect(handleOnDelete).toHaveBeenCalledTimes(1);
+    });
+
+    test('has tooltip that reads "Delete from page"', async () => {
+        // Arrange
+        const model = getDefaultModel();
+        const toolTipText = "Delete from page";
+
+        // Act
+        render(<Actions model={model} />);
+        const element = document.querySelector("button.item-actions_delete");
+        await userEvent.hover(element);
+        const toolTip = document.querySelector('[role="tooltip"]');
+
+        // Assert
+        expect(toolTip).not.toBeNull();
+        expect(toolTip).toBeDefined();
+        expect(toolTip.outerHTML).toMatch(toolTipText);
     });
 });
 
@@ -175,6 +239,9 @@ function getDefaultModel() {
         id: 0,
         datetime: new Date(),
         isFavorite: false,
+        hasNote: false,
+        hasFeedback: false,
+        isDeleted: false,
         query: {
             id: 0,
             datetime: new Date(),

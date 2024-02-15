@@ -4,6 +4,9 @@ class Investigation {
     response = new Response();
     datetime = new Date();
     isFavorite = false;
+    hasNote = false;
+    hasFeedback = false;
+    isDeleted = false;
 }
 
 class Result {

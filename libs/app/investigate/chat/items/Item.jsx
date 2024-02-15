@@ -35,6 +35,25 @@ export default function Item({ model }) {
         await sageClient.updateInvestigation(model);
     }
 
+    const onNoteClickkDelegate = async (e) => {
+        // Show note UI
+        // To do
+        model.hasNote = !model.hasNote;
+        await sageClient.updateInvestigation(model);
+    }
+
+    const onFeedbackClickDelegate = async (e) => {
+        // Show feedback UI
+        // To do
+        model.hasFeedback = !model.hasFeedback;
+        await sageClient.updateInvestigation(model);
+    }
+
+    const onDeleteClickDelegate = async (e) => {
+        model.isDeleted = !model.isDeleted;
+        await sageClient.updateInvestigation(model);
+    }
+
     return (
         <Accordion defaultActiveKey="0" className='sage-chat-history__item' data-id={model.id}>
             <Card>
@@ -44,7 +63,13 @@ export default function Item({ model }) {
                         </Col>
                         <Col xs="auto">
                             <Stack direction="horizontal">
-                                <Actions model={model} onFavoriteClick={onFavoriteClickDelegate} />
+                                <Actions
+                                    model={model}
+                                    onFavoriteClick={onFavoriteClickDelegate}
+                                    onNoteClick={onNoteClickkDelegate}
+                                    onFeedbackClick={onFeedbackClickDelegate}
+                                    onDeleteClick={onDeleteClickDelegate}
+                                />
                                 <AccordionButton eventKey="0" />
                             </Stack>
                         </Col>
