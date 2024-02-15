@@ -10,7 +10,8 @@ module.exports = {
   resolve: {
     alias: {
       _shared: path.resolve(__dirname, "libs/shared"),
-      _investigate: path.resolve(__dirname, "libs/app/investigate")
+      _investigate: path.resolve(__dirname, "libs/app/investigate"),
+      _root: path.resolve(__dirname, "")
     },
     extensions: ['*','.js','.jsx']
   },
