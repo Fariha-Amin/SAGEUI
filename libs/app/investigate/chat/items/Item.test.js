@@ -4,7 +4,7 @@ import { render, screen } from "@testing-library/react";
 import ChatItem from './Item';
 
 describe("ChatItem UI", () => {
-    test("renders timestamp correctly", async () => {
+    test("RPMXCON-84290 renders timestamp correctly", async () => {
         // Arrange
         const year = 1234;
         const march = 2;
@@ -38,6 +38,68 @@ describe("ChatItem UI", () => {
         // Assert
         expect(element).not.toBeNull();
         expect(element).toBeDefined();
+    });
+
+    test("RPMXCON-84283-A renders question", async () => {
+        // Arrange
+        const question = "What is the answer?";
+        const model = getDefaultModel();
+        model.query.question = question;
+        
+        // Act
+        render(<ChatItem model={model} />);
+        const questionText = await screen.findByText(question);
+        const questionElement = await document.querySelector(".sage-chat-history__item-question");
+        
+        // Assert
+        expect(questionText).not.toBeNull();
+        expect(questionText).toBeDefined();
+        expect(questionElement).not.toBeNull();
+        expect(questionElement).toBeDefined();
+    });
+
+    test("RPMXCON-84283-B renders answer", async () => {
+        // Arrange
+        const answer = "42, according to Douglas Adams.";
+        const model = getDefaultModel();
+        model.response.answer = answer;
+        
+        // Act
+        render(<ChatItem model={model} />);
+        const answerText = await screen.findByText(answer);
+        const answerElement = await document.querySelector(".sage-chat-history__item-answer");
+        
+        // Assert
+        expect(answerText).not.toBeNull();
+        expect(answerText).toBeDefined();
+        expect(answerElement).not.toBeNull();
+        expect(answerElement).toBeDefined();
+    });
+
+    test("RPMXCON-84283-C renders both question and answer", async () => {
+        // Arrange
+        const question = "What is the answer?";
+        const answer = "42, according to Douglas Adams.";
+        const model = getDefaultModel();
+        model.query.question = question;
+        model.response.answer = answer;
+        
+        // Act
+        render(<ChatItem model={model} />);
+        const questionText = await screen.findByText(question);
+        const questionElement = await document.querySelector(".sage-chat-history__item-question");
+        const answerText = await screen.findByText(answer);
+        const answerElement = await document.querySelector(".sage-chat-history__item-answer");
+        
+        // Assert
+        expect(questionText).not.toBeNull();
+        expect(questionText).toBeDefined();
+        expect(questionElement).not.toBeNull();
+        expect(questionElement).toBeDefined();
+        expect(answerText).not.toBeNull();
+        expect(answerText).toBeDefined();
+        expect(answerElement).not.toBeNull();
+        expect(answerElement).toBeDefined();
     });
 });
 

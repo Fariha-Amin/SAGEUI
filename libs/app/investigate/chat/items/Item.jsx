@@ -10,6 +10,7 @@ import AccordionButton from '_shared/accordion-button/AccordionButton'
 import Actions from './Actions';
 import Answer from './Answer';
 import Question from './Question';
+import sageClient from "_investigate/httpClient";
 
 function formatDate(datetime) {
     const d = new Date(datetime);
@@ -28,6 +29,12 @@ function formatDate(datetime) {
 }
 
 export default function Item({ model }) {
+
+    const onFavoriteClickDelegate = async (e) => {
+        model.isFavorite = !model.isFavorite;
+        await sageClient.updateInvestigation(model);
+    }
+
     return (
         <Accordion defaultActiveKey="0" className='sage-chat-history__item' data-id={model.id}>
             <Card>
@@ -37,7 +44,7 @@ export default function Item({ model }) {
                         </Col>
                         <Col xs="auto">
                             <Stack direction="horizontal">
-                                <Actions model={model} />
+                                <Actions model={model} onFavoriteClick={onFavoriteClickDelegate} />
                                 <AccordionButton eventKey="0" />
                             </Stack>
                         </Col>
