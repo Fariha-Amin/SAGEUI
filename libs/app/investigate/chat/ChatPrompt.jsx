@@ -1,8 +1,8 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
 import './ChatPrompt.scss'
 import React from 'react';
 import { useRef, useState, useEffect } from "react";
-import { Stack, Row, Col, Button, Form, FormLabel } from 'react-bootstrap';
+import { Button } from 'primereact/button';
+import { InputTextarea } from 'primereact/inputtextarea';
 import IconButton from '_shared/icon-button/IconButton';
 import sageClient from "_investigate/httpClient";
 import AdvancedSettingsFlyout from '_investigate/AdvancedSettingsFlyout';
@@ -57,27 +57,48 @@ export default function ChatPrompt({ loading, onQuery, docCount }) {
     }, [loading, querying, textLength]);
 
     return (
-        <Form>
-            <Row>
-                <Col bsPrefix="chat-prompt-header-col col-11">
-                    <Stack direction="horizontal" gap={0}>
-                        <Button className="chat-prompt-advanced-options" variant="link" onClick={handleAdvOptShow}>Advanced Options</Button>
+        <>
+            <div className="grid">
+                <div className="col">
+                    <div class="flex justify-content-end flex-wrap">
+                        <Button className="chat-prompt-advanced-options" link onClick={handleAdvOptShow}>Advanced Options</Button>
                         <IconButton className="sage-icon-superscript" icon="circle-question" title={advOptHelpText} data-test-id="advance-options-link-help" />
-                        <AdvancedSettingsFlyout shouldShow={showAdvOptModal} onClose={handleAdvOptClose} />
-                    </Stack>
-                </Col>
-            </Row>
-            <Row>
-                <Col xs="11">
-                    <Form.Group className="chat-prompt-div form-control">
-                        <Form.Control maxLength={maxQueryLength} bsPrefix="chat-prompt-text-area" as="textarea" placeholder={placeholderText} rows={2} ref={text} onInput={onInputDelegate} />
-                        <Form.Text bsPrefix="chat-prompt-text-counter form-text" muted>{textLength} / {maxQueryLength}</Form.Text>
-                    </Form.Group>
-                </Col>
-                <Col bsPrefix="chat-prompt-run-col col-1">
-                    <Button bsPrefix="chat-prompt-run-button btn" variant={canSubmitQuery ? "primary" : "secondary"} onClick={onClickDelegate} disabled={!canSubmitQuery}>{querying ? "Loading..." : "Run"}</Button>
-                </Col>
-            </Row>
-        </Form>
+                    </div>
+                </div>
+                <div className="col-1">
+
+                </div>
+            </div>
+            <div className="grid">
+                <div className="col">
+                    <div className="chat-prompt-div">
+                        <InputTextarea
+                            maxLength={maxQueryLength}
+                            className="chat-prompt-text-area"
+                            placeholder={placeholderText}
+                            rows={2}
+                            ref={text}
+                            onInput={onInputDelegate}
+                        />
+                        <small className="chat-prompt-text-counter">
+                            {textLength} / {maxQueryLength}
+                        </small>
+                    </div>
+                </div>
+                <div className="col-1 chat-prompt-run-col">
+                    <Button
+                        className="chat-prompt-run-button"
+                        severity={canSubmitQuery ? "info" : "secondary"}
+                        onClick={onClickDelegate}
+                        disabled={!canSubmitQuery}
+                        loading={querying}
+                        label="Run">
+                        
+                    </Button>
+                </div>
+            </div>
+
+            <AdvancedSettingsFlyout shouldShow={showAdvOptModal} onClose={handleAdvOptClose} />
+        </>
     );
 }

@@ -1,4 +1,3 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
 import IconButton from '_shared/icon-button/IconButton';
 import { useContext } from 'react';

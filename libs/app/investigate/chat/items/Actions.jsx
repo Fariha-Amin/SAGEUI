@@ -1,4 +1,3 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
 import './Actions.scss';
 import React from 'react';
 import { useState } from "react";

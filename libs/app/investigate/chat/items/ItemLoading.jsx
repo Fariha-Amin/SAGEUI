@@ -1,4 +1,3 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
 import './Item.scss';
 import './ItemLoading.scss';
 import React from 'react';

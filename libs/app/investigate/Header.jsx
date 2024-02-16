@@ -1,4 +1,3 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
 import { Button, Row, FormLabel } from 'react-bootstrap';
 import Stack from 'react-bootstrap/Stack';

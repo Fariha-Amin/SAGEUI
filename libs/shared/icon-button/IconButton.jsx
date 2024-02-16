@@ -1,4 +1,3 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
 import Icon from '_shared/icon/Icon';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';

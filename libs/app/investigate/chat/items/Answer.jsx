@@ -1,4 +1,3 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
 import './Answer.scss';
 import React from 'react';
 import Placeholder from 'react-bootstrap/Placeholder';
