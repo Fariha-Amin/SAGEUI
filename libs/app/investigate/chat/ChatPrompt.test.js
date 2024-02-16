@@ -1,6 +1,6 @@
 import React from 'react';
 import '@testing-library/jest-dom'
-import { render, waitFor, act, screen } from "@testing-library/react";
+import { render, waitFor, act, screen, fireEvent } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import ChatPrompt from './ChatPrompt';
 import sageClient from "_investigate/httpClient";
@@ -137,12 +137,13 @@ describe("ChatPrompt input state", () => {
         const excessiveInputValue = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sit amet finibus urna, et condimentum nisl. Fusce quis tempus lacus. Fusce ut odio vitae turpis dignissim lobortis. Nullam ac risus id leo ornare laoreet. Suspendisse eu nulla in nisi cursus elementum eget ut libero. Etiam ultrices felis vitae neque scelerisque dapibus. Pellentesque ultrices consequat consequat. Duis pulvinar faucibus risus vel malesuada. Integer dapibus in nisl quis sollicitudin. Vivamus at efficitur erat. Aenean ut felis vulputate, tristique sapien nec, elementum dui. Aliquam sit amet facilisis nulla. Duis bibendum urna justo, vel semper diam porta id. Donec interdum, magna vel aliquet pellentesque, ipsum odio elementum sapien, vitae tincidunt augue nibh sed risus. Fusce sed magna in sapien tempus varius. Suspendisse potenti. Aliquam convallis enim in ornare lobortis. Vestibulum commodo nisi in auctor convallis. Nunc elementum, justo at congue porta, ipsum justo viverra tortor, sed pharetra lorem tortor finibus dui. Vivamus et euismod ipsum, lobortis imperdiet magna. Sed porta rutrum nibh quis consequat. Sed auctor aliquam commodo. Nunc vulputate justo nibh, vel congue enim mattis vitae. Phasellus cursus eros a ex vulputate rutrum. Donec sollicitudin finibus justo, non porttitor urna convallis ac. Cras et massa est. Etiam ut justo cursus, placerat urna ac, hendrerit nunc. Vivamus cursus mauris leo, vitae iaculis ligula elementum et. Phasellus eleifend vitae elit nec lacinia. Donec molestie molestie erat, ut sodales risus elementum at. Phasellus nec nisi eget mi egestas tincidunt. Ut at tortor sem. Sed dictum tempor purus, id ultricies tortor convallis euismod. Ut eu pulvinar sem. Nulla vehicula arcu ac erat fermentum, vel venenatis dolor sollicitudin. Etiam faucibus ex facilisis eros tincidunt, quis euismod ante convallis. Etiam luctus nisi mauris, feugiat elementum nulla dignissim non. Cras dictum, eros eu iaculis congue, tortor ante hendrerit ipsum, in tincidunt orci nulla vitae diam. Sed pharetra nunc sit amet aliquet tincidunt. Aliquam finibus turpis vitae lacinia posuere. Nulla ultrices congue tincidunt. Ut et eros sed velit dignissim posuere. Donec iaculis aliquam nibh, ac accumsan mauris rutrum fringilla. Ut dapibus hendrerit sodales. Morbi id fermentum dui. Duis turpis dui, rhoncus ut tortor ut, molestie aliquet sem. Fusce eleifend ac dolor nec ultricies. Proin commodo ligula sit amet mattis maximus. Maecenas imperdiet quis neque eget hendrerit. Etiam pulvinar hendrerit turpis, vel pellentesque leo lacinia sed. Curabitur quam lectus, ultricies fermentum enim eget, commodo posuere mi. In hac habitasse platea dictumst. Suspendisse potenti. Aenean tempus ac orci in ultrices.`;
         const maxInputValue = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sit amet finibus urna, et condimentum nisl. Fusce quis tempus lacus. Fusce ut odio vitae turpis dignissim lobortis. Nullam ac risus id leo ornare laoreet. Suspendisse eu nulla in nisi cursus elementum eget ut libero. Etiam ultrices felis vitae neque scelerisque dapibus. Pellentesque ultrices consequat consequat. Duis pulvinar faucibus risus vel malesuada. Integer dapibus in nisl quis sollicitudin. Vivamus at efficitur erat. Aenean ut felis vulputate, tristique sapien nec, elementum dui. Aliquam sit amet facilisis nulla. Duis bibendum urna justo, vel semper diam porta id. Donec interdum, magna vel aliquet pellentesque, ipsum odio elementum sapien, vitae tincidunt augue nibh sed risus. Fusce sed magna in sapien tempus varius. Suspendisse potenti. Aliquam convallis enim in ornare lobortis. Vestibulum commodo nisi in auctor convallis. Nunc elementum, justo at congue porta, ipsum justo viverra tortor, sed pharetra lorem tortor finibus dui. Vivamus et euismod ipsum, lobortis imperdiet magna. Sed porta rutrum nibh quis consequat. Sed auctor aliquam commodo. Nunc vulputate justo nibh, vel congue enim mattis vitae. Phasellus cursus eros a ex vulputate rutrum. Donec sollicitudin finibus justo, non porttitor urna convallis ac. Cras et massa est. Etiam ut justo cursus, placerat urna ac, hendrerit nunc. Vivamus cursus mauris leo, vitae iaculis ligula elementum et. Phasellus eleifend vitae elit nec lacinia. Donec molestie molestie erat, ut sodales risus elementum at. Phasellus nec nisi eget mi egestas tincidunt. Ut at tortor sem. Sed dictum tempor purus, id ultricies tortor convallis euismod. Ut eu pulvinar sem. Nulla vehicula arcu ac erat fermentum, vel venenatis dolor sollicitudin. Etiam faucibus ex facilisis eros tincidunt, quis euismod ante convallis. Etiam luctus nisi mauris, feugiat elementum nulla dignissim non. Cras dictum, eros eu iaculis congue, tortor ante hendrerit ipsum, in tincidunt orci nulla vitae di`;
         const countValue = "2000 / 2000";
+        const user = userEvent.setup({ delay: null });
 
         // Act
         act(() => render(<ChatPrompt loading={false} onQuery={handleOnQuery} />));
 
         const textarea = await waitFor(() => getTextAreaElement());
-        await userEvent.type(textarea, excessiveInputValue);
+        await user.type(textarea, excessiveInputValue);
 
         // Assert
         await waitFor(() => {
@@ -345,11 +346,11 @@ function getTextCountElement() {
 
 function getAdvOptsElement() {
     return document.querySelector(".chat-prompt-advanced-options");
-  }
-  
-  function getAdvOptsCloseButton() {
+}
+
+function getAdvOptsCloseButton() {
     return document.querySelector(".advopt-close-button");
-  }
+}
 
 function mockWindowFunctions() {
     Object.defineProperty(window, 'matchMedia', {
