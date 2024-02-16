@@ -5,6 +5,7 @@ import SageDataTable from '../../libs/shared/data-grid/SageDataTable';
 import SageTableColumn from '../../libs/shared/data-grid/column/SageTableColumn'
 
 import "bootstrap/dist/css/bootstrap.min.css";
+import favouriteIcon from "../summarize/icons/favourite.png"
 
 import './App.css';
 
@@ -70,6 +71,20 @@ export default function App() {
                     header="Notes"
                     isSortable={true}
                     isFilterable={true}
+                />
+                <SageTableColumn
+                    order={7}
+                    body={(row) => { return (
+                        <>
+                    <button className="btn  btn-link" ><img disabled src={favouriteIcon} alt="kljklds" /></button>
+                    <a className="btn  btn-link" ><img disabled src={favouriteIcon} alt="kljklds" /></a>
+                    <a className="btn  btn-link disabled" ><img disabled src={favouriteIcon} alt="kljklds" /></a>
+                        </>
+                    ); }}
+                    field="RecId_j"
+                    header=""
+                    isSortable={false}
+                    isFilterable={false}
                 />
 
             </ SageDataTable>
