@@ -37,21 +37,27 @@ const ChatHistory = ({
     onInvestigationLoading,
     onInvestigationLoaded,
     onAnswerLoading,
-    onAnswerLoaded }) => {
+    onAnswerLoaded,
+    docCount }) => {
     const [isInitialLoad, setIsInitialLoad] = useState(true);
     const [chatHistory, setChatHistory] = useState([]);
     const [loadingHistory, setLoadingHistory] = useState(false);
     const [loadingItem, setLoadingItem] = useState(false);
+    
 
     // Get chat history on load
     useEffect(() => {
         onHistoryLoading && onHistoryLoading();
         setLoadingHistory(true);
-        sageClient.getInvestigationsAsync()
-            .then(data => setChatHistory(data))
-            .then(() => setLoadingHistory(false))
-            .then(() => setIsInitialLoad(false))
-            .then(() => onHistoryLoaded && onHistoryLoaded());
+        
+        async function loadInitialInvestigations() {
+            let investigations = await sageClient.getInvestigationsAsync();
+            setChatHistory(reduceArray(investigations, 25));
+            setLoadingHistory(false);
+            setIsInitialLoad(false);
+            onHistoryLoaded && onHistoryLoaded();
+        }
+        loadInitialInvestigations();
     }, []);
 
     // Ask question and get answer on query
@@ -94,7 +100,7 @@ const ChatHistory = ({
 
     if (!chatHistory || chatHistory.length <= 0) {
         // No history yet
-        return <ChatHistoryPlaceholder />
+        return <ChatHistoryPlaceholder docCount={docCount}/>
     }
     else {
         return (

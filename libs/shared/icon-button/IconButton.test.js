@@ -1,5 +1,4 @@
 import React from 'react';
-import renderer from 'react-test-renderer';
 import '@testing-library/jest-dom'
 import { fireEvent, render } from "@testing-library/react";
 import IconButton from './IconButton';
@@ -58,21 +57,6 @@ describe("IconButton renders", () => {
         // Assert
         expect(element).not.toBeNull();
         expect(element).toBeDefined();
-    });
-
-    test('Tooltip Renders if added', () => {
-        // Arrange
-        const tooltipId = "tooltipTest";
-        const tooltip = "This is only a test";
-        const faIcon = ["far", "circle-question"];
-
-        // Act
-        const element = renderer
-            .create(<IconButton icon={faIcon} tooltipId={tooltipId} tooltip={tooltip} />)
-            .toJSON();
-
-        // Assert
-        expect(JSON.stringify(element)).toContain('tooltipTest');
     });
 });
 

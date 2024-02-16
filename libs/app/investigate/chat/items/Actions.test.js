@@ -5,16 +5,28 @@ import { userEvent } from "@testing-library/user-event";
 import Actions from './Actions';
 
 describe("'Favorite' action", () => {
-    test("renders correct icon", async () => {
+    test("renders correct default icon", async () => {
         // Arrange
         const model = getDefaultModel();
-        const handleOnFavorite = jest.fn();
         const faIcon = "star";
 
         // Act
-        render(<Actions model={model} onFavorite={handleOnFavorite} />);
-        const element = document.querySelector(`[data-icon="${faIcon}"]`);
-        
+        render(<Actions model={model} />);
+        const element = document.querySelector("button.item-actions_favorite");
+
+        // Assert
+        expect(element.outerHTML).toMatch(`data-icon="${faIcon}"`);
+    });
+
+    test("renders correct active icon", async () => {
+        // Arrange
+        const model = getDefaultModel();
+        model.isFavorite = true; // <-- active
+
+        // Act
+        render(<Actions model={model} />);
+        const element = document.querySelector("button.item-actions_favorite_active");
+
         // Assert
         expect(element).not.toBeNull();
         expect(element).toBeDefined();
@@ -24,93 +36,58 @@ describe("'Favorite' action", () => {
         // Arrange
         const model = getDefaultModel();
         const handleOnFavorite = jest.fn();
-        render(<Actions model={model} onFavorite={handleOnFavorite} />);
-        const element = document.querySelector("button.item-actions_favorite");
 
         // Act
+        render(<Actions model={model} onFavoriteClick={handleOnFavorite} />);
+        const element = document.querySelector("button.item-actions_favorite");
         await userEvent.click(element);
 
         // Assert
         expect(handleOnFavorite).toHaveBeenCalled();
         expect(handleOnFavorite).toHaveBeenCalledTimes(1);
     });
-});
 
-describe("'Search' action", () => {
-    test("renders correct icon", async () => {
+    test('has tooltip that reads "Favorite"', async () => {
         // Arrange
         const model = getDefaultModel();
-        const handleOnSearch = jest.fn();
-        const faIcon = "magnifying-glass";
+        const toolTipText = "Favorite";
 
         // Act
-        render(<Actions model={model} onSearch={handleOnSearch} />);
-        const element = document.querySelector(`[data-icon="${faIcon}"]`);
-        
-        // Assert
-        expect(element).not.toBeNull();
-        expect(element).toBeDefined();
-    });
-
-    test('fires click event', async () => {
-        // Arrange
-        const model = getDefaultModel();
-        const handleOnSearch = jest.fn();
-        render(<Actions model={model} onSearch={handleOnSearch} />);
-        const element = document.querySelector("button.item-actions_search");
-
-        // Act
-        await userEvent.click(element);
+        render(<Actions model={model} />);
+        const element = document.querySelector("button.item-actions_favorite");
+        await userEvent.hover(element);
+        const toolTip = document.querySelector('[role="tooltip"]');
 
         // Assert
-        expect(handleOnSearch).toHaveBeenCalled();
-        expect(handleOnSearch).toHaveBeenCalledTimes(1);
+        expect(toolTip).not.toBeNull();
+        expect(toolTip).toBeDefined();
+        expect(toolTip.outerHTML).toMatch(toolTipText);
     });
 });
 
-describe("'Magic' action", () => {
+describe("'Note' action", () => {
     test("renders correct icon", async () => {
         // Arrange
         const model = getDefaultModel();
-        const handleOnMagic = jest.fn();
-        const faIcon = "wand-magic-sparkles";
-
-        // Act
-        render(<Actions model={model} onMagic={handleOnMagic} />);
-        const element = document.querySelector(`[data-icon="${faIcon}"]`);
-        
-        // Assert
-        expect(element).not.toBeNull();
-        expect(element).toBeDefined();
-    });
-
-    test('fires click event', async () => {
-        // Arrange
-        const model = getDefaultModel();
-        const handleOnMagic = jest.fn();
-        render(<Actions model={model} onMagic={handleOnMagic} />);
-        const element = document.querySelector("button.item-actions_magic");
-
-        // Act
-        await userEvent.click(element);
-
-        // Assert
-        expect(handleOnMagic).toHaveBeenCalled();
-        expect(handleOnMagic).toHaveBeenCalledTimes(1);
-    });
-});
-
-describe("'Document' action", () => {
-    test("renders correct icon", async () => {
-        // Arrange
-        const model = getDefaultModel();
-        const handleOnDocument = jest.fn();
         const faIcon = "file-lines";
 
         // Act
-        render(<Actions model={model} onDocument={handleOnDocument} />);
-        const element = document.querySelector(`[data-icon="${faIcon}"]`);
-        
+        render(<Actions model={model} />);
+        const element = document.querySelector("button.item-actions_notes");
+
+        // Assert
+        expect(element.outerHTML).toMatch(`data-icon="${faIcon}"`);
+    });
+
+    test("renders correct active icon", async () => {
+        // Arrange
+        const model = getDefaultModel();
+        model.hasNote = true; // <-- active
+
+        // Act
+        render(<Actions model={model} />);
+        const element = document.querySelector("button.item-actions_notes_active");
+
         // Assert
         expect(element).not.toBeNull();
         expect(element).toBeDefined();
@@ -119,30 +96,59 @@ describe("'Document' action", () => {
     test('fires click event', async () => {
         // Arrange
         const model = getDefaultModel();
-        const handleOnDocument = jest.fn();
-        render(<Actions model={model} onDocument={handleOnDocument} />);
-        const element = document.querySelector("button.item-actions_document");
+        const handleOnNote = jest.fn();
 
         // Act
+        render(<Actions model={model} onNoteClick={handleOnNote} />);
+        const element = document.querySelector("button.item-actions_notes");
         await userEvent.click(element);
 
         // Assert
-        expect(handleOnDocument).toHaveBeenCalled();
-        expect(handleOnDocument).toHaveBeenCalledTimes(1);
+        expect(handleOnNote).toHaveBeenCalled();
+        expect(handleOnNote).toHaveBeenCalledTimes(1);
+    });
+
+    test('has tooltip that reads "Add notes"', async () => {
+        // Arrange
+        const model = getDefaultModel();
+        const toolTipText = "Add notes";
+
+        // Act
+        render(<Actions model={model} />);
+        const element = document.querySelector("button.item-actions_notes");
+        await userEvent.hover(element);
+        const toolTip = document.querySelector('[role="tooltip"]');
+
+        // Assert
+        expect(toolTip).not.toBeNull();
+        expect(toolTip).toBeDefined();
+        expect(toolTip.outerHTML).toMatch(toolTipText);
     });
 });
 
-describe("'Comment' action", () => {
+describe("'Bad Response' action", () => {
     test("renders correct icon", async () => {
         // Arrange
         const model = getDefaultModel();
-        const handleOnComment = jest.fn();
         const faIcon = "comments";
 
         // Act
-        render(<Actions model={model} onComment={handleOnComment} />);
-        const element = document.querySelector(`[data-icon="${faIcon}"]`);
-        
+        render(<Actions model={model} />);
+        const element = document.querySelector("button.item-actions_feedback");
+
+        // Assert
+        expect(element.outerHTML).toMatch(`data-icon="${faIcon}"`);
+    });
+
+    test("renders correct active icon", async () => {
+        // Arrange
+        const model = getDefaultModel();
+        model.hasFeedback = true; // <-- active
+
+        // Act
+        render(<Actions model={model} />);
+        const element = document.querySelector("button.item-actions_feedback_active");
+
         // Assert
         expect(element).not.toBeNull();
         expect(element).toBeDefined();
@@ -151,16 +157,33 @@ describe("'Comment' action", () => {
     test('fires click event', async () => {
         // Arrange
         const model = getDefaultModel();
-        const handleOnComment = jest.fn();
-        render(<Actions model={model} onComment={handleOnComment} />);
-        const element = document.querySelector("button.item-actions_comment");
+        const handleOnFeedback = jest.fn();
 
         // Act
+        render(<Actions model={model} onFeedbackClick={handleOnFeedback} />);
+        const element = document.querySelector("button.item-actions_feedback");
         await userEvent.click(element);
 
         // Assert
-        expect(handleOnComment).toHaveBeenCalled();
-        expect(handleOnComment).toHaveBeenCalledTimes(1);
+        expect(handleOnFeedback).toHaveBeenCalled();
+        expect(handleOnFeedback).toHaveBeenCalledTimes(1);
+    });
+
+    test('has tooltip that reads "Report a bad response"', async () => {
+        // Arrange
+        const model = getDefaultModel();
+        const toolTipText = "Report a bad response";
+
+        // Act
+        render(<Actions model={model} />);
+        const element = document.querySelector("button.item-actions_feedback");
+        await userEvent.hover(element);
+        const toolTip = document.querySelector('[role="tooltip"]');
+
+        // Assert
+        expect(toolTip).not.toBeNull();
+        expect(toolTip).toBeDefined();
+        expect(toolTip.outerHTML).toMatch(toolTipText);
     });
 });
 
@@ -168,31 +191,46 @@ describe("'Delete' action", () => {
     test("renders correct icon", async () => {
         // Arrange
         const model = getDefaultModel();
-        const handleOnDelete = jest.fn();
         const faIcon = "trash-can";
 
         // Act
-        render(<Actions model={model} onDelete={handleOnDelete} />);
-        const element = document.querySelector(`[data-icon="${faIcon}"]`);
-        
+        render(<Actions model={model} />);
+        const element = document.querySelector("button.item-actions_delete");
+
         // Assert
-        expect(element).not.toBeNull();
-        expect(element).toBeDefined();
+        expect(element.outerHTML).toMatch(`data-icon="${faIcon}"`);
     });
 
     test('fires click event', async () => {
         // Arrange
         const model = getDefaultModel();
         const handleOnDelete = jest.fn();
-        render(<Actions model={model} onDelete={handleOnDelete} />);
-        const element = document.querySelector("button.item-actions_delete");
 
         // Act
+        render(<Actions model={model} onDeleteClick={handleOnDelete} />);
+        const element = document.querySelector("button.item-actions_delete");
         await userEvent.click(element);
 
         // Assert
         expect(handleOnDelete).toHaveBeenCalled();
         expect(handleOnDelete).toHaveBeenCalledTimes(1);
+    });
+
+    test('has tooltip that reads "Delete from page"', async () => {
+        // Arrange
+        const model = getDefaultModel();
+        const toolTipText = "Delete from page";
+
+        // Act
+        render(<Actions model={model} />);
+        const element = document.querySelector("button.item-actions_delete");
+        await userEvent.hover(element);
+        const toolTip = document.querySelector('[role="tooltip"]');
+
+        // Assert
+        expect(toolTip).not.toBeNull();
+        expect(toolTip).toBeDefined();
+        expect(toolTip.outerHTML).toMatch(toolTipText);
     });
 });
 
@@ -200,6 +238,10 @@ function getDefaultModel() {
     return {
         id: 0,
         datetime: new Date(),
+        isFavorite: false,
+        hasNote: false,
+        hasFeedback: false,
+        isDeleted: false,
         query: {
             id: 0,
             datetime: new Date(),

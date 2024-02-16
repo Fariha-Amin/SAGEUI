@@ -165,6 +165,7 @@ table.table-bordered.dataTable td:last-child {
   border-right-width: 0px;
 }
 
+/* PrimeReact paginator */
 .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
   background: #eff1f3 !important;
   border-color: #ced4da !important;
@@ -177,7 +178,10 @@ table.table-bordered.dataTable td:last-child {
   border-radius: 1px !important;
   color: #2f3541 !important;
 }
-.p-paginator .p-paginator-pages .p-paginator-page {
+
+.p-paginator .p-paginator-pages .p-paginator-page,
+.p-paginator .p-paginator-prev.p-link,
+.p-paginator .p-paginator-next.p-link {
   border-color: #ced4da !important;
   border-radius: 1px !important;
   color: #2f3541 !important;
@@ -190,6 +194,7 @@ table.table-bordered.dataTable td:last-child {
   text-decoration: none !important;
   cursor: pointer;
   border: 1px solid transparent;
+  margin: 0px;
 }
 
 .p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
@@ -197,4 +202,23 @@ table.table-bordered.dataTable td:last-child {
   border-color: #0f4880 !important;
   border-radius: 1px !important;
   color: #ffffff !important;
+}
+.p-paginator .p-paginator-prev.p-link.p-disabled,
+.p-paginator .p-paginator-next.p-link.p-disabled {
+  background-color: #dddddd !important;
+  border-color: #dddddd !important;
+  border-radius: 1px !important;
+  color: #333333 !important;
+}
+
+.p-paginator-current {
+  font-weight: bold;
+  color: #333;
+}
+
+.p-paginator-bottom.p-paginator.p-component {
+  background-color: #f2f3f9;
+  font-size: 18px;
+  margin: 1rem 0px;
+  padding: 0px;
 }

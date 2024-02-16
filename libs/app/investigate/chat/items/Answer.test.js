@@ -21,6 +21,24 @@ describe("Answer UI", () => {
         expect(element).toBeDefined();
     });
 
+    test("RPMXCON-84291 renders correct 'I don't know' response", () => {
+        // Arrange
+        const response = "I do not have enough information in the provided sources to answer your question";
+        const model = getDefaultModel();
+        model.response.answer = "";
+        model.response.isInProgress = false;
+        model.response.result.isSuccess = false;
+        model.response.result.failureReason = response;
+
+        // Act
+        render(<Answer model={model} />);
+        const element = screen.queryByText(response);
+
+        // Assert
+        expect(element).not.toBeNull();
+        expect(element).toBeDefined();
+    });
+
     test("renders response number", () => {
         // Arrange
         const responseId = 456;
