@@ -1,89 +1,89 @@
 import React from 'react';
 import '@testing-library/jest-dom'
-import { render, waitFor } from "@testing-library/react";
+import { render, waitFor, act, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import ChatPrompt from './ChatPrompt';
-import sageClient from "../httpClient";
+import sageClient from "_investigate/httpClient";
 
-jest.mock("../httpClient");
+jest.mock("_investigate/httpClient");
 
 describe("ChatPrompt default state", () => {
-    test("renders empty textarea", () => {
+    test("renders empty textarea", async () => {
         // Arrange
         mockWindowFunctions();
         const handleOnQuery = jest.fn();
 
         // Act
-        render(<ChatPrompt loading={false} onQuery={handleOnQuery} />);
-        const textarea = getTextAreaElement();
+        act(() => render(<ChatPrompt loading={false} onQuery={handleOnQuery} />));
+        const textarea = await waitFor(() => getTextAreaElement());
 
         // Assert
         expect(textarea).toHaveValue("");
     });
 
-    test("RPMXCON-84270 - AI Investigate : Verify the presence of input box with place holder in AI Investigate page.", () => {
+    test("RPMXCON-84270 - AI Investigate : Verify the presence of input box with place holder in AI Investigate page.", async () => {
         // Arrange
         mockWindowFunctions();
         const handleOnQuery = jest.fn();
         const placeholderText = `Ask your question here, such as "How did Enron manipulate its financial statements, and what were the consequences?"`;
 
         // Act
-        render(<ChatPrompt loading={false} onQuery={handleOnQuery} />);
-        const textarea = getTextAreaElement();
+        act(() => render(<ChatPrompt loading={false} onQuery={handleOnQuery} />));
+        const textarea = await waitFor(() => getTextAreaElement());
 
         // Assert
         expect(textarea).toHaveProperty("placeholder", placeholderText);
     });
 
-    test("RPMXCON-84272 renders correct text count", () => {
+    test("RPMXCON-84272 renders correct text count", async () => {
         // Arrange
         mockWindowFunctions();
         const handleOnQuery = jest.fn();
         const countValue = "0 / 2000";
 
         // Act
-        render(<ChatPrompt loading={false} onQuery={handleOnQuery} />);
-        const textCounter = getTextCountElement();
+        act(() => render(<ChatPrompt loading={false} onQuery={handleOnQuery} />));
+        const textCounter = await waitFor(() => getTextCountElement());
 
         // Assert
         expect(textCounter.textContent).toMatch(countValue);
     });
 
-    test("renders disabled button", () => {
+    test("renders disabled button", async () => {
         // Arrange
         mockWindowFunctions();
         const handleOnQuery = jest.fn();
 
         // Act
-        render(<ChatPrompt loading={false} onQuery={handleOnQuery} />);
-        const button = getButtonElement();
+        act(() => render(<ChatPrompt loading={false} onQuery={handleOnQuery} />));
+        const button = await waitFor(() => getButtonElement());
 
         // Assert
         expect(button).toBeDisabled();
     });
 
-    test("RPMXCON-84314 renders disabled button with zero docs", () => {
+    test("RPMXCON-84314 renders disabled button with zero docs", async () => {
         // Arrange
         mockWindowFunctions();
         const handleOnQuery = jest.fn();
 
         // Act
-        render(<ChatPrompt loading={false} onQuery={handleOnQuery} docCount = {0} />);
-        const button = getButtonElement();
+        act(() => render(<ChatPrompt loading={false} onQuery={handleOnQuery} docCount={0} />));
+        const button = await waitFor(() => getButtonElement());
 
         // Assert
         expect(button).toBeDisabled();
     });
 
-    test(`RPMXCON-84274 AI Investigate : Verify the presence of "Run" button in the home page of AI Investigate`, () => {
+    test(`RPMXCON-84274 AI Investigate : Verify the presence of "Run" button in the home page of AI Investigate`, async () => {
         // Arrange
         mockWindowFunctions();
         const handleOnQuery = jest.fn();
         const buttonText = "Run";
 
         // Act
-        render(<ChatPrompt loading={false} onQuery={handleOnQuery} />);
-        const button = getButtonElement();
+        act(() => render(<ChatPrompt loading={false} onQuery={handleOnQuery} />));
+        const button = await waitFor(() => getButtonElement());
 
         // Assert
         expect(button.textContent).toMatch(buttonText);
@@ -98,9 +98,9 @@ describe("ChatPrompt input state", () => {
         const inputValue = "Lorem ipsum";
 
         // Act
-        render(<ChatPrompt loading={false} onQuery={handleOnQuery} />);
+        act(() => render(<ChatPrompt loading={false} onQuery={handleOnQuery} />));
 
-        const textarea = getTextAreaElement();
+        const textarea = await waitFor(() => getTextAreaElement());
         userEvent.type(textarea, inputValue);
 
         // Assert
@@ -118,9 +118,9 @@ describe("ChatPrompt input state", () => {
         const countValue = "11 / 2000";
 
         // Act
-        render(<ChatPrompt loading={false} onQuery={handleOnQuery} />);
+        act(() => render(<ChatPrompt loading={false} onQuery={handleOnQuery} />));
 
-        const textarea = getTextAreaElement();
+        const textarea = await waitFor(() => getTextAreaElement());
         userEvent.type(textarea, inputValue);
 
         // Assert
@@ -139,9 +139,9 @@ describe("ChatPrompt input state", () => {
         const countValue = "2000 / 2000";
 
         // Act
-        render(<ChatPrompt loading={false} onQuery={handleOnQuery} />);
+        act(() => render(<ChatPrompt loading={false} onQuery={handleOnQuery} />));
 
-        const textarea = getTextAreaElement();
+        const textarea = await waitFor(() => getTextAreaElement());
         await userEvent.type(textarea, excessiveInputValue);
 
         // Assert
@@ -161,9 +161,9 @@ describe("ChatPrompt input state", () => {
         const inputValue = "Lorem ipsum";
 
         // Act
-        render(<ChatPrompt loading={false} onQuery={handleOnQuery} />);
+        act(() => render(<ChatPrompt loading={false} onQuery={handleOnQuery} />));
 
-        const textarea = getTextAreaElement();
+        const textarea = await waitFor(() => getTextAreaElement());
         userEvent.type(textarea, inputValue);
 
         // Assert
@@ -180,9 +180,9 @@ describe("ChatPrompt input state", () => {
         const inputValue = "Lorem ipsum";
 
         // Act
-        render(<ChatPrompt loading={false} onQuery={handleOnQuery} docCount={0} />);
+        act(() => render(<ChatPrompt loading={false} onQuery={handleOnQuery} docCount={0} />));
 
-        const textarea = getTextAreaElement();
+        const textarea = await waitFor(() => getTextAreaElement());
         userEvent.type(textarea, inputValue);
 
         // Assert
@@ -202,9 +202,9 @@ describe("ChatPrompt onQuery", () => {
         const inputValue = "Lorem ipsum";
 
         // Act
-        render(<ChatPrompt loading={false} onQuery={handleOnQuery} />);
+        act(() => render(<ChatPrompt loading={false} onQuery={handleOnQuery} />));
 
-        const textarea = getTextAreaElement();
+        const textarea = await waitFor(() => getTextAreaElement());
         await userEvent.type(textarea, inputValue);
 
         await waitFor(() => {
@@ -237,9 +237,9 @@ describe("ChatPrompt onQuery", () => {
         const buttonText = "Loading...";
 
         // Act
-        render(<ChatPrompt loading={false} onQuery={handleOnQuery} />);
+        act(() => render(<ChatPrompt loading={false} onQuery={handleOnQuery} />));
 
-        const textarea = getTextAreaElement();
+        const textarea = await waitFor(() => getTextAreaElement());
         await userEvent.type(textarea, inputValue);
 
         await waitFor(() => {
@@ -258,6 +258,79 @@ describe("ChatPrompt onQuery", () => {
     });
 });
 
+describe('RPMXCON-79212 Advanced Settings Flyout', () => {
+    test(`RPMXCON-84430 Verify that clicking on the 'Advanced Options' link should open the advanced options popup window`, async () => {
+        // Arrange
+        mockWindowFunctions();
+        sageClient.getDefaultPromptText.mockResolvedValue("Lorem ipsum");
+        const handleOnQuery = jest.fn();
+
+        // Act
+        act(() => render(<ChatPrompt loading={false} onQuery={handleOnQuery} />));
+
+        const advanceOptionsLink = await waitFor(() => getAdvOptsElement());
+        await userEvent.click(advanceOptionsLink);
+        let element = document.querySelector(".sage-advanced-options__flyout");
+
+        // Assert
+        expect(element).not.toBeNull();
+        expect(element).toBeDefined();
+    });
+
+    test(`RPMXCON-84429 Verify 'Advanced Options' link present above question textbox on AI investigate home page`, async () => {
+        // Arrange
+        mockWindowFunctions();
+        sageClient.getDefaultPromptText.mockResolvedValue("Lorem ipsum");
+        const handleOnQuery = jest.fn();
+
+        // Act
+        act(() => render(<ChatPrompt loading={false} onQuery={handleOnQuery} />));
+        const advanceOptionsLink = await waitFor(() => getAdvOptsElement());
+
+        // Assert
+        expect(advanceOptionsLink).not.toBeNull();
+        expect(advanceOptionsLink).toBeDefined();
+    });
+
+    test(`RPMXCON-84433 Verify that clicking on the 'X' button should close the advanced settings window`, async () => {
+        // Arrange
+        mockWindowFunctions();
+        sageClient.getDefaultPromptText.mockResolvedValue("Lorem ipsum");
+        const handleOnQuery = jest.fn();
+
+        // Act
+        act(() => render(<ChatPrompt loading={false} onQuery={handleOnQuery} />));
+
+        // Click to open Flyout
+        const advanceOptionsLink = await waitFor(() => getAdvOptsElement());
+        await userEvent.click(advanceOptionsLink);
+
+        // Click to close flyout
+        const advanceOptionsClose = await waitFor(() => getAdvOptsCloseButton());
+        await userEvent.click(advanceOptionsClose);
+
+        let element = document.querySelector(".sage-advanced-options__flyout");
+
+        // Assert
+        expect(element).toBeNull();
+    });
+
+    test(`RPMXCON-84435 Verify that helptext icon should be present for advanced options link in AI investigate home page`, async () => {
+        // Arrange
+        mockWindowFunctions();
+        sageClient.getDefaultPromptText.mockResolvedValue("Lorem ipsum");
+        const handleOnQuery = jest.fn();
+
+        // Act
+        act(() => render(<ChatPrompt loading={false} onQuery={handleOnQuery} />));
+        let element = screen.findByTestId("advance-options-link-help");
+
+        // Assert
+        expect(element).not.toBeNull();
+        expect(element).toBeDefined();
+    });
+});
+
 function getButtonElement() {
     return document.querySelector(".chat-prompt-run-button");
 }
@@ -269,6 +342,14 @@ function getTextAreaElement() {
 function getTextCountElement() {
     return document.querySelector(".chat-prompt-text-counter");
 }
+
+function getAdvOptsElement() {
+    return document.querySelector(".chat-prompt-advanced-options");
+  }
+  
+  function getAdvOptsCloseButton() {
+    return document.querySelector(".advopt-close-button");
+  }
 
 function mockWindowFunctions() {
     Object.defineProperty(window, 'matchMedia', {
