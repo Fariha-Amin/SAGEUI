@@ -1,6 +1,5 @@
 import React from "react";
 import SummaryHeader from "./modules/summary/SummaryHeader";
-
 import SageDataTable from '../../libs/shared/data-grid/SageDataTable';
 import SageTableColumn from '../../libs/shared/data-grid/column/SageTableColumn'
 
@@ -15,7 +14,7 @@ export default function App() {
         <div className="App">
             <SummaryHeader />
 
-            <SageDataTable 
+            <SageDataTable
                 dataKey="RecId"
                 isColumnResizable={false}
                 showGridlines={true}
@@ -26,11 +25,8 @@ export default function App() {
             >
                 <SageTableColumn
                     order={1}
-                    body={<input type="checkbox" />}
+                    selectionMode="multiple"
                     field="RecId"
-                    header={<input type="checkbox" />}
-                    isSortable={false}
-                    isFilterable={false}
                 />
                 <SageTableColumn
                     order={2}
@@ -88,7 +84,7 @@ export default function App() {
                 />
 
             </ SageDataTable>
-            
+
         </div>
     );
 }

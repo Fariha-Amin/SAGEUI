@@ -6,11 +6,12 @@ import sageTableUtil from './utility/sageTableUtility'
 export default function SageDataTable(props) {
 
     const tableConfig = sageTableUtil.createTableConfig(props);
-    const columnDef  = props.children;
+    const columnDef = props.children;
 
     const [summmaryData, setSummmaryData] = useState([]);
     const [columnDefinations, setColumnDefinations] = useState(sageTableUtil.createColumnDefinition(columnDef, false));
     const [expandedRows, setExpandedRows] = useState(null);
+    const [selectedRows, setSelectedRows] = useState(null);
 
     // Expanding row logic
     const onCellClick = (e) => {
@@ -47,13 +48,21 @@ export default function SageDataTable(props) {
         setTimeout(loadData, 1000);
     }, []);
 
+
+
+    const onCheckboxClick = (e) => {
+        setSelectedRows(e.value);
+    };
+
     return (
-        <DataTable 
-        {...tableConfig}
-        value={summmaryData}
-        onCellClick={onCellClick} 
-        expandedRows={expandedRows}
-        rowExpansionTemplate={rowExpansionTemplate}
+        <DataTable
+            {...tableConfig}
+            value={summmaryData}
+            onCellClick={onCellClick}
+            expandedRows={expandedRows}
+            rowExpansionTemplate={rowExpansionTemplate}
+            selectionMode="checkbox"
+            selection={selectedRows} onSelectionChange={(e) => onCheckboxClick(e)}
         >
             {columnDefinations}
         </DataTable>
