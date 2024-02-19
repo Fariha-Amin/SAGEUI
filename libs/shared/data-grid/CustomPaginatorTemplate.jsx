@@ -3,10 +3,12 @@ import { classNames } from 'primereact/utils';
 
 const CustomPaginatorTemplate =()=>{
   const [totalPages, setTotalPages] = useState(0);
+  const [totalRecords, setTotalRecords] = useState(0);
   return {
   layout: 'CurrentPageReport  PrevPageLink FirstPageLink PageLinks LastPageLink NextPageLink RowsPerPageDropdown',
  
   CurrentPageReport : (options) => {
+      setTotalRecords(options.totalRecords)
       return (
         <span className={options.className} >Total: {options.totalRecords} Entries</span>
       );
@@ -17,7 +19,7 @@ const CustomPaginatorTemplate =()=>{
       );
   },
   FirstPageLink:(options)=>{
-    if (totalPages<=0) return;
+    if (totalRecords<=0) return;
       return (
           <button type="button" className={options.className} onClick={options.onClick}>{'1'}</button>
         );
