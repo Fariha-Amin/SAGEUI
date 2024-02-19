@@ -35,12 +35,13 @@ const SageTableUtility = {
                 || tableConfig.paginator == true ? true : false,
             rows: tableConfig.rows ?? 25,
             filterDisplay: "row",
-            tableStyle: tableConfig.style, //{ minWidth: '50rem' },
+            //tableStyle: tableConfig.style, //{ minWidth: '50rem' },
             cellSelection: tableConfig.cellSelection,
             paginatorLeft: true,
             tableClassName: "table table-border table-hover table-bordered align-middle dataTable no-footer table-striped",
             paginatorTemplate: "CurrentPageReport PrevPageLink PageLinks NextPageLink RowsPerPageDropdown",
             currentPageReportTemplate: "Total: {totalRecords} entries",
+            //size:10
             //onCellClick: onCellClick,
             //expandedRows: expandedRows,
             //rowExpansionTemplate: rowExpansionTemplate

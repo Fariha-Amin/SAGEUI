@@ -4,7 +4,8 @@ import SageDataTable from '../../libs/shared/data-grid/SageDataTable';
 import SageTableColumn from '../../libs/shared/data-grid/column/SageTableColumn'
 
 import "bootstrap/dist/css/bootstrap.min.css";
-import favouriteIcon from "../summarize/icons/favourite.png"
+// import favouriteIcon from "../summarize/icons/favourite.png"
+import TableActionButtons from "./components/TableActionButtons";
 
 import './App.css';
 
@@ -68,7 +69,7 @@ export default function App() {
                     isSortable={true}
                     isFilterable={true}
                 />
-                <SageTableColumn
+                {/* <SageTableColumn
                     order={7}
                     body={(row) => { return (
                         <>
@@ -76,6 +77,16 @@ export default function App() {
                     <a className="btn  btn-link" ><img disabled src={favouriteIcon} alt="kljklds" /></a>
                     <a className="btn  btn-link disabled" ><img disabled src={favouriteIcon} alt="kljklds" /></a>
                         </>
+                    ); }}
+                    field="RecId_j"
+                    header=""
+                    isSortable={false}
+                    isFilterable={false}
+                /> */}
+                <SageTableColumn
+                    order={7}
+                    body={(row) => { return (
+                        <TableActionButtons rowData={row} />
                     ); }}
                     field="RecId_j"
                     header=""

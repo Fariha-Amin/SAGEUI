@@ -63,6 +63,9 @@ export default function SageDataTable(props) {
             rowExpansionTemplate={rowExpansionTemplate}
             selectionMode="checkbox"
             selection={selectedRows} onSelectionChange={(e) => onCheckboxClick(e)}
+            //size={1}
+            //tableStyle={{ minWidth: '10rem' }}
+            style={{ width: '100%' }}
         >
             {columnDefinations}
         </DataTable>

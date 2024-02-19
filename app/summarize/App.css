@@ -226,3 +226,7 @@ table.dataTable thead tr th {
   margin: 1rem 0px;
   padding: 0px;
 }
+
+.btn.btn-link{
+  --bs-btn-padding-x: 0.35rem;
+}
