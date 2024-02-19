@@ -49,7 +49,6 @@ export default function SageDataTable(props) {
     }, []);
 
 
-
     const onCheckboxClick = (e) => {
         setSelectedRows(e.value);
     };
@@ -63,6 +62,7 @@ export default function SageDataTable(props) {
             rowExpansionTemplate={rowExpansionTemplate}
             selectionMode="checkbox"
             selection={selectedRows} onSelectionChange={(e) => onCheckboxClick(e)}
+            onAllRowsSelect={(e) => {console.log(e)}}
         >
             {columnDefinations}
         </DataTable>

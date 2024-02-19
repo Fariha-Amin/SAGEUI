@@ -25,6 +25,7 @@ export default function App() {
                     order={1}
                     selectionMode="multiple"
                     field="RecId"
+                    header={"Header"}
                 />
                 <SageTableColumn
                     order={2}
