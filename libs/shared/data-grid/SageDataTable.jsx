@@ -65,7 +65,7 @@ export default function SageDataTable(props) {
             selection={selectedRows} onSelectionChange={(e) => onCheckboxClick(e)}
             //size={1}
             //tableStyle={{ minWidth: '10rem' }}
-            style={{ width: '100%' }}
+            
         >
             {columnDefinations}
         </DataTable>

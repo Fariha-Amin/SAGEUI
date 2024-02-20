@@ -14,12 +14,14 @@ const SageTableUtility = {
                     body={isSkeleton ? <Skeleton /> : column.body}
                     sortable={column.isSortable}
                     filter={column.isFilterable}
-                    headerStyle={column.style}
+                    headerStyle={column.headerStyle ?? null}
+                    style={column.style}
                     filterMatchMode="contains"
                     showFilterMenu={false}
                     showClearButton={false}
                     align="center"
                     selectionMode={column.selectionMode}
+                    className = {column.className}
                 />
             );
         });
@@ -41,6 +43,7 @@ const SageTableUtility = {
             tableClassName: "table table-border table-hover table-bordered align-middle dataTable no-footer table-striped",
             paginatorTemplate: "CurrentPageReport PrevPageLink PageLinks NextPageLink RowsPerPageDropdown",
             currentPageReportTemplate: "Total: {totalRecords} entries",
+            style:tableConfig.style,
             //size:10
             //onCellClick: onCellClick,
             //expandedRows: expandedRows,

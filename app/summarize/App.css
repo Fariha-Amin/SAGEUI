@@ -144,13 +144,13 @@ table.dataTable thead tr th {
   
   /* data table border color with thickness */
   
-  .table-bordered > :not(caption) > * > * {
-    border-width: 0 0px;
-  }
+  /* .table-bordered > :not(caption) > * > * {
+    border-width: 1 1px;
+  } */
   
   table.table-bordered.dataTable thead tr th,
   table.table-bordered.dataTable thead tr td {
-    border-left-width: 1px;
+    border-width: 3px;
   }
   
   table.table-bordered.dataTable th:first-child,
