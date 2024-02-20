@@ -1,6 +1,6 @@
-import React from 'react';
-import { Column } from 'primereact/column';
-import { Skeleton } from 'primereact/skeleton';
+import React from "react";
+import { Column } from "primereact/column";
+import { Skeleton } from "primereact/skeleton";
 
 const SageTableUtility = {
     createColumnDefinition: (columns, isSkeleton = false) => {
@@ -44,6 +44,7 @@ const SageTableUtility = {
             //onCellClick: onCellClick,
             //expandedRows: expandedRows,
             //rowExpansionTemplate: rowExpansionTemplate
+            lazy: tableConfig.lazy
         };
     }
 }

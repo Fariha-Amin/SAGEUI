@@ -5,15 +5,87 @@ import sageTableUtil from './utility/sageTableUtility'
 import CustomPaginatorTemplate from './CustomPaginatorTemplate'
 
 export default function SageDataTable(props) {
-  const tableConfig = sageTableUtil.createTableConfig(props);
-  const columnDef = props.children;
+  
 
   const [summmaryData, setSummmaryData] = useState([]);
+
+  //const lazyLoadTableCofig=
+  const tableConfig = sageTableUtil.createTableConfig(props);
+  const { dataUrl, lazy } = props;
+  const columnDef = props.children;
+
+  const [data, setData] = useState([]);
   const [columnDefinations, setColumnDefinations] = useState(
     sageTableUtil.createColumnDefinition(columnDef, false)
   );
   const [expandedRows, setExpandedRows] = useState(null);
   const [selectedRows, setSelectedRows] = useState(null);
+
+  let filterStateInitial = {};
+
+  var filtered = columnDef.filter((col) => col.props.isFilterable == true);
+
+  filtered.forEach((col) => {
+    filterStateInitial[col.props.field] = {
+      value: "",
+      matchMode: "contains",
+    };
+  });
+
+  const [lazyState, setlazyState] = useState({
+    first: 0,
+    rows: 25,
+    page: 1,
+    sortField: null,
+    sortOrder: null,
+    filters: filterStateInitial,
+  });
+
+  let networkTimeout = null;
+
+  useEffect(() => {
+    loadLazyData();
+  }, [lazyState]);
+
+  const loadLazyData = () => {
+    //setLoading(true);
+
+    if (networkTimeout) {
+      clearTimeout(networkTimeout);
+    }
+
+    setColumnDefinations(sageTableUtil.createColumnDefinition(columnDef, true));
+
+    DataService.getTableData(dataUrl, {
+      dataTableRequest: JSON.stringify(lazyState),
+    }).then((apiResponse) => {
+      setTotalRecords(apiResponse.totalRecords);
+      setData(apiResponse.data);
+      setColumnDefinations(
+        sageTableUtil.createColumnDefinition(columnDef, false)
+      );
+    });
+  };
+
+  const onPage = (event) => {
+    setlazyState(event);
+  };
+
+  const onSort = (event) => {
+    setlazyState(event);
+  };
+
+  const onFilter = (event) => {
+    event["first"] = 0;
+    setlazyState(event);
+  };
+
+  const onSelectionChange = (event) => {
+    const value = event.value;
+
+    setSelectedCustomers(value);
+    setSelectAll(value.length === totalRecords);
+  };
 
   // Expanding row logic
   const onCellClick = (e) => {
@@ -35,20 +107,20 @@ export default function SageDataTable(props) {
     return <td colSpan={6}>{data.Summary}</td>;
   };
 
-  const loadData = () => {
-    ProductService.getSummaryData().then((data) => {
-      setSummmaryData(data);
-      setColumnDefinations(
-        sageTableUtil.createColumnDefinition(columnDef, false)
-      );
-    });
-  };
+  // const loadData = () => {
+  //   ProductService.getSummaryData().then((data) => {
+  //     setSummmaryData(data);
+  //     setColumnDefinations(
+  //       sageTableUtil.createColumnDefinition(columnDef, false)
+  //     );
+  //   });
+  // };
 
-  useEffect(() => {
-    setColumnDefinations(sageTableUtil.createColumnDefinition(columnDef, true));
-    ProductService.getSummaryData().then((data) => setSummmaryData(data));
-    setTimeout(loadData, 1000);
-  }, []);
+  // useEffect(() => {
+  //   setColumnDefinations(sageTableUtil.createColumnDefinition(columnDef, true));
+  //   ProductService.getSummaryData().then((data) => setSummmaryData(data));
+  //   setTimeout(loadData, 1000);
+  // }, []);
 
   const onCheckboxClick = (e) => {
     setSelectedRows(e.value);
@@ -62,6 +134,14 @@ export default function SageDataTable(props) {
       expandedRows={expandedRows}
       rowExpansionTemplate={rowExpansionTemplate}
       paginatorTemplate={CustomPaginatorTemplate()}
+      first={lazyState.first}      
+      totalRecords={totalRecords}
+      onPage={onPage}
+      onSort={onSort}
+      sortField={lazyState.sortField}
+      sortOrder={lazyState.sortOrder}
+      onFilter={onFilter}
+      filters={lazyState.filters}
     //   selectionMode="checkbox"
     //   selection={selectedRows}
     //   onSelectionChange={(e) => onCheckboxClick(e)}
