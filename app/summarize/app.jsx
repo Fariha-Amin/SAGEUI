@@ -5,7 +5,11 @@ import SageTableColumn from "../../libs/shared/data-grid/column/SageTableColumn"
 import { Checkbox } from "primereact/checkbox";
 
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./App.css";
+// import favouriteIcon from "../summarize/icons/favourite.png"
+import TableActionButtons from "./components/TableActionButtons";
+import ViewDocButton from "./components/ViewDocButton";
+
+import './App.css';
 
 export default function App() {
   const [selectedRows, setSelectedRows] = useState(null);
@@ -28,69 +32,84 @@ export default function App() {
         showGridlines={true}
         paginator={true}
         rows={10}
-        tableStyle={{ minWidth: "50rem" }}
+        style={{ width: '100%', minWidth: '50rem' }}
         cellSelection={true}           
         lazy={true}
         dataUrl="http://localhost:5000/api/getTableData"
       >
-        <SageTableColumn
+      <SageTableColumn
           order={1}
-          body={<input type="checkbox" />}
+          selectionMode="multiple"
           field="RecId"
-          header={<input type="checkbox" />}
+          style={{ width: '3.12%' }}
+
+      />
+      <SageTableColumn
+          order={2}
+          body={(row)=><ViewDocButton rowData={row} />}
+          field="ViewDoc"
+          header="View Doc"
           isSortable={false}
           isFilterable={false}
-        />
-        <SageTableColumn
-          order={2}
-          body={(row) => {
-            return <span>{row.DateTime}</span>;
-          }}
+          style={{ width: '8.67%' }}
+
+      />
+      <SageTableColumn
+          order={3}
+          body={(row) => { return (<span>{row.DateTime}</span>); }}
           field="DateTime"
           header="Date/Time"
           isSortable={true}
           isFilterable={true}
-        />
-        <SageTableColumn
-          order={3}
-          body={(row) => {
-            return <span>{row.User}</span>;
-          }}
+          style={{ width: '9.68%' }}
+      />
+      <SageTableColumn
+          order={4}
+          body={(row) => { return (<span>{row.User}</span>); }}
           field="User"
           header="User"
           isSortable={true}
           isFilterable={true}
-        />
-        <SageTableColumn
-          order={4}
-          body={(row) => {
-            return <span>{row.DocumentId}</span>;
-          }}
+          style={{ width: '10.16%' }}
+      />
+      <SageTableColumn
+          order={5}
+          body={(row) => { return (<span>{row.DocumentId}</span>); }}
           field="DocumentId"
           header="DocId (Fed to AI)"
           isSortable={true}
           isFilterable={true}
-        />
-        <SageTableColumn
-          order={5}
-          body={(row) => {
-            return <span>{row.Summary}</span>;
-          }}
+          style={{ width: '12.34%' }}
+      />
+      <SageTableColumn
+          order={6}
+          body={(row) => { return (<span>{row.Summary}</span>); }}
           field="Summary"
           header="Summary"
           isSortable={true}
           isFilterable={true}
-        />
-        <SageTableColumn
-          order={6}
-          body={(row) => {
-            return <span>{row.Notes}</span>;
-          }}
+          style={{ width: '30.86%' }}
+      />
+      <SageTableColumn
+          order={7}
+          body={(row) => { return (<span>{row.Notes}</span>); }}
           field="Notes"
           header="Notes"
           isSortable={true}
           isFilterable={true}
-        />
+          style={{ width: '12.57%' }}
+      />
+      <SageTableColumn
+          order={8}
+          body={(row) => { return (
+              <TableActionButtons rowData={row} />
+          ); }}
+          field="Actions"
+          header=""
+          isSortable={false}
+          isFilterable={false}
+          style={{ width: '12.57%' }}
+      />
       </SageDataTable>
     </div>
   );

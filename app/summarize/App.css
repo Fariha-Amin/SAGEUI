@@ -142,13 +142,13 @@ table.dataTable thead tr th {
   
   /* data table border color with thickness */
   
-  .table-bordered > :not(caption) > * > * {
-    border-width: 3px var(--bs-border-width);
-  }
+  /* .table-bordered > :not(caption) > * > * {
+    border-width: 1 1px;
+  } */
   
   table.table-bordered.dataTable thead tr th,
   table.table-bordered.dataTable thead tr td {
-    border-left-width: 3px;
+    border-width: 3px;
   }
   
   table.table-bordered.dataTable th:first-child,
@@ -245,4 +245,7 @@ table.dataTable thead tr th {
   margin: 1rem 0px;
   padding: 0px;
   float: right;
+}
+.btn.btn-link{
+  --bs-btn-padding-x: 0.35rem;
 }

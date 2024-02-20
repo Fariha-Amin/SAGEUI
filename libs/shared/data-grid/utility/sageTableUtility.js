@@ -14,12 +14,14 @@ const SageTableUtility = {
                     body={isSkeleton ? <Skeleton /> : column.body}
                     sortable={column.isSortable}
                     filter={column.isFilterable}
-                    headerStyle={column.style}
+                    headerStyle={column.headerStyle ?? null}
+                    style={column.style}
                     filterMatchMode="contains"
                     showFilterMenu={false}
                     showClearButton={false}
                     align="center"
                     selectionMode={column.selectionMode}
+                    className = {column.className}
                 />
             );
         });
@@ -35,7 +37,7 @@ const SageTableUtility = {
                 || tableConfig.paginator == true ? true : false,
             rows: tableConfig.rows ?? 25,
             filterDisplay: "row",
-            tableStyle: tableConfig.style, //{ minWidth: '50rem' },
+            //tableStyle: tableConfig.style, //{ minWidth: '50rem' },
             cellSelection: tableConfig.cellSelection,
            // paginatorLeft: true,
             tableClassName: "table table-border table-hover table-bordered align-middle dataTable no-footer table-striped",
@@ -44,7 +46,8 @@ const SageTableUtility = {
             //onCellClick: onCellClick,
             //expandedRows: expandedRows,
             //rowExpansionTemplate: rowExpansionTemplate
-            lazy: tableConfig.lazy
+            lazy: tableConfig.lazy,
+            style:tableConfig.style,
         };
     }
 }
