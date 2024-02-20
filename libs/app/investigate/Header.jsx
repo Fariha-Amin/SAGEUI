@@ -5,8 +5,9 @@ import Links from "_shared/links";
 import Counter from '_shared/counter/Counter';
 import IconButton from '_shared/icon-button/IconButton'
 
-const H3 = styled.h3`
-    display: inline-block
+const H2 = styled.h2`
+    display: inline-block;
+    margin: 0px;
 `;
 
 const helpText = "This is help text";
@@ -16,12 +17,12 @@ const Header = (docCount) => {
         <>
             <div className="grid">
                 <div className="col">
-                    <div class="flex flex-wrap justify-content-between">
-                        <div class="flex align-items-center">
-                            <H3>neXgenAI Investigate</H3>
+                    <div className="flex flex-wrap justify-content-between">
+                        <div className="flex align-items-center">
+                            <H2>neXgenAI Investigate</H2>
                             <IconButton className="sage-icon-superscript" icon="circle-question" title={helpText} titlePlacement="bottom" />
                         </div>
-                        <div class="flex align-items-center">
+                        <div className="flex align-items-center">
                             <Counter label='Total Documents ' count={docCount.docCount} />
                             &nbsp;
                             &nbsp;
