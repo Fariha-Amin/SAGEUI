@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
-import { Tooltip } from "primereact/tooltip";
+import { Tooltip } from 'react-tooltip'
+
 
 
 function MeasuredDisplay({ displayText,hideToolTip }) {
@@ -7,11 +8,7 @@ function MeasuredDisplay({ displayText,hideToolTip }) {
   const [charactersFit, setCharactersFit] = useState(0);
   const [showTooltip, setShowTooltip] = useState(false);
   const [truncatedText, setTruncatedText] = useState(null);
-  const customTooltipStyle = {
-    backgroundColor: '#555',
-    border: '1px solid #555',
-    borderRadius:'4px'
-  };
+
   useEffect(() => {
     const calculateCharactersFittingInContainer = () => {
       const containerWidth = containerRef.current.offsetWidth;
@@ -49,10 +46,10 @@ function MeasuredDisplay({ displayText,hideToolTip }) {
   if (!hideToolTip) {
     body = (
       <>
-        <Tooltip target={`.row-data`}  style={customTooltipStyle} mouseTrack mouseTrackLeft={10}/>
+        <Tooltip id="tooltip#" />
         <div
           className={`row-data`}
-          data-pr-tooltip={displayText} tooltipOptions={{ position: 'bottom', mouseTrack: true, mouseTrackTop: 15 }}
+          data-tooltip-id="tooltip#" data-tooltip-content={displayText}
           ref={containerRef}
         >
           {truncatedText?truncatedText:displayText}

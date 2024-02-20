@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import SummaryHeader from "./modules/summary/SummaryHeader";
 import SageDataTable from "../../libs/shared/data-grid/SageDataTable";
 import SageTableColumn from "../../libs/shared/data-grid/column/SageTableColumn";
+import MeasuredDisplay from '../../libs/shared/data-grid/MeasuredDisplay'
 import { Checkbox } from "primereact/checkbox";
 
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -56,7 +57,7 @@ export default function App() {
       />
       <SageTableColumn
           order={3}
-          body={(row) => { return (<span>{row.DateTime}</span>); }}
+          body={(row) => { return (<MeasuredDisplay displayText={row.DateTime}/>); }}
           field="DateTime"
           header="Date/Time"
           isSortable={true}
@@ -65,7 +66,7 @@ export default function App() {
       />
       <SageTableColumn
           order={4}
-          body={(row) => { return (<span>{row.User}</span>); }}
+          body={(row) => { return (<MeasuredDisplay displayText={row.User}/>); }}
           field="User"
           header="User"
           isSortable={true}
@@ -74,7 +75,7 @@ export default function App() {
       />
       <SageTableColumn
           order={5}
-          body={(row) => { return (<span>{row.DocumentId}</span>); }}
+          body={(row) => { return (<MeasuredDisplay displayText={row.DocumentId}/>); }}
           field="DocumentId"
           header="DocId (Fed to AI)"
           isSortable={true}
@@ -83,7 +84,7 @@ export default function App() {
       />
       <SageTableColumn
           order={6}
-          body={(row) => { return (<span>{row.Summary}</span>); }}
+          body={(row) => { return (<MeasuredDisplay displayText={row.Summary} hideToolTip={true}/>); }}
           field="Summary"
           header="Summary"
           isSortable={true}
@@ -92,7 +93,7 @@ export default function App() {
       />
       <SageTableColumn
           order={7}
-          body={(row) => { return (<span>{row.Notes}</span>); }}
+          body={(row) => { return (<MeasuredDisplay displayText={row.Notes}/>); }}
           field="Notes"
           header="Notes"
           isSortable={true}
