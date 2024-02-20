@@ -5,69 +5,72 @@ import sageTableUtil from './utility/sageTableUtility'
 import CustomPaginatorTemplate from './CustomPaginatorTemplate'
 
 export default function SageDataTable(props) {
+  const tableConfig = sageTableUtil.createTableConfig(props);
+  const columnDef = props.children;
 
-    const tableConfig = sageTableUtil.createTableConfig(props);
-    const columnDef = props.children;
+  const [summmaryData, setSummmaryData] = useState([]);
+  const [columnDefinations, setColumnDefinations] = useState(
+    sageTableUtil.createColumnDefinition(columnDef, false)
+  );
+  const [expandedRows, setExpandedRows] = useState(null);
+  const [selectedRows, setSelectedRows] = useState(null);
 
-    const [summmaryData, setSummmaryData] = useState([]);
-    const [columnDefinations, setColumnDefinations] = useState(sageTableUtil.createColumnDefinition(columnDef, false));
-    const [expandedRows, setExpandedRows] = useState(null);
-    const [selectedRows, setSelectedRows] = useState(null);
-
-    // Expanding row logic
-    const onCellClick = (e) => {
-        let data = e.rowData;
-        let newExpandData = null;
-        if (expandedRows == null) {
-            newExpandData = [data];
-        } else {
-            let filterData = expandedRows.filter(d => d.RecId != data.RecId);
-            if (filterData.length == expandedRows.length) {
-                filterData.push(data);
-            }
-            newExpandData = filterData.length ? [...filterData] : null;
-        }
-        setExpandedRows(newExpandData);
+  // Expanding row logic
+  const onCellClick = (e) => {
+    let data = e.rowData;
+    let newExpandData = null;
+    if (expandedRows == null) {
+      newExpandData = [data];
+    } else {
+      let filterData = expandedRows.filter((d) => d.RecId != data.RecId);
+      if (filterData.length == expandedRows.length) {
+        filterData.push(data);
+      }
+      newExpandData = filterData.length ? [...filterData] : null;
     }
-    // Expanding row template
-    const rowExpansionTemplate = (data) => {
-        return (
-            <td colSpan={6}>{data.Summary}</td>
-        );
-    }
+    setExpandedRows(newExpandData);
+  };
+  // Expanding row template
+  const rowExpansionTemplate = (data) => {
+    return <td colSpan={6}>{data.Summary}</td>;
+  };
 
-    const loadData = () => {
-        ProductService.getSummaryData().then(data => {
-            setSummmaryData(data)
-            setColumnDefinations(sageTableUtil.createColumnDefinition(columnDef, false));
-        });
-    }
+  const loadData = () => {
+    ProductService.getSummaryData().then((data) => {
+      setSummmaryData(data);
+      setColumnDefinations(
+        sageTableUtil.createColumnDefinition(columnDef, false)
+      );
+    });
+  };
 
-    useEffect(() => {
-        setColumnDefinations(sageTableUtil.createColumnDefinition(columnDef, true));
-        ProductService.getSummaryData().then(data => setSummmaryData(data));
-        setTimeout(loadData, 1000);
-    }, []);
+  useEffect(() => {
+    setColumnDefinations(sageTableUtil.createColumnDefinition(columnDef, true));
+    ProductService.getSummaryData().then((data) => setSummmaryData(data));
+    setTimeout(loadData, 1000);
+  }, []);
 
+  const onCheckboxClick = (e) => {
+    setSelectedRows(e.value);
+  };
 
-
-    const onCheckboxClick = (e) => {
-        setSelectedRows(e.value);
-    };
-
-    return (
-        <DataTable
-            {...tableConfig}
-            value={summmaryData}
-            onCellClick={onCellClick}
-            expandedRows={expandedRows}
-            rowExpansionTemplate={rowExpansionTemplate}
-            selectionMode="checkbox"
-            selection={selectedRows} onSelectionChange={(e) => onCheckboxClick(e)}
-            paginatorTemplate={CustomPaginatorTemplate()}
-        >
-            {columnDefinations}
-        </DataTable>
-    );
-};
-
+  return (
+    <DataTable
+      {...tableConfig}
+      value={summmaryData}
+      onCellClick={onCellClick}
+      expandedRows={expandedRows}
+      rowExpansionTemplate={rowExpansionTemplate}
+      paginatorTemplate={CustomPaginatorTemplate()}
+    //   selectionMode="checkbox"
+    //   selection={selectedRows}
+    //   onSelectionChange={(e) => onCheckboxClick(e)}
+    //   onAllRowsSelect={(e) => {
+    //     console.log(e);
+    //   }}
+    //   showSelectAll={false}
+    >
+      {columnDefinations}
+    </DataTable>
+  );
+}
