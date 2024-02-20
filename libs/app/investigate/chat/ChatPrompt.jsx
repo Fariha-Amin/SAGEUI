@@ -62,8 +62,8 @@ export default function ChatPrompt({ loading, onQuery, docCount }) {
                 <Col bsPrefix="chat-prompt-header-col col-11">
                     <Stack direction="horizontal" gap={0}>
                         <Button className="chat-prompt-advanced-options" variant="link" onClick={handleAdvOptShow}>Advanced Options</Button>
+                        <IconButton className="sage-icon-superscript" icon="circle-question" title={advOptHelpText} data-test-id="advance-options-link-help" />
                         <AdvancedSettingsFlyout shouldShow={showAdvOptModal} onClose={handleAdvOptClose} />
-                        <IconButton className="sage-icon-superscript" icon="circle-question" title={advOptHelpText} />
                     </Stack>
                 </Col>
             </Row>

@@ -184,7 +184,9 @@ table.dataTable thead tr th {
 
 .p-paginator .p-paginator-pages .p-paginator-page,
 .p-paginator .p-paginator-prev.p-link,
-.p-paginator .p-paginator-next.p-link {
+.p-paginator .p-paginator-next.p-link,
+.p-paginator-last.p-paginator-element.p-link,
+.p-paginator-first.p-paginator-element.p-link{
     border-color: #ced4da !important;
     border-radius: 1px !important;
     color: #2F3541 !important;
@@ -200,7 +202,10 @@ table.dataTable thead tr th {
     margin: 0px;
 }
   
-.p-paginator .p-paginator-pages .p-paginator-page.p-highlight{
+.p-paginator .p-paginator-pages .p-paginator-page.p-highlight,
+.p-paginator-first.p-paginator-element.p-link.p-disabled,
+.p-paginator-last.p-paginator-element.p-link.p-disabled
+{
   background-color: #0F4880 !important;
   border-color: #0F4880 !important;
   border-radius: 1px !important;
@@ -225,4 +230,5 @@ table.dataTable thead tr th {
   font-size: 18px;
   margin: 1rem 0px;
   padding: 0px;
+  float: right;
 }
