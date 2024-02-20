@@ -29,14 +29,17 @@ export default function App() {
         paginator={true}
         rows={10}
         tableStyle={{ minWidth: "50rem" }}
-        cellSelection={true}
+        cellSelection={true}           
+        lazy={true}
+        dataUrl="http://localhost:5000/api/getTableData"
       >
         <SageTableColumn
           order={1}
-        //   selectionMode="multiple"
+          body={<input type="checkbox" />}
           field="RecId"
-          header={<Checkbox onChange={(e) => onCheckboxClick(e)}/>}
-          body={(rowData) => (<Checkbox onChange={() => onCheckboxClick(rowData)} />)}
+          header={<input type="checkbox" />}
+          isSortable={false}
+          isFilterable={false}
         />
         <SageTableColumn
           order={2}
