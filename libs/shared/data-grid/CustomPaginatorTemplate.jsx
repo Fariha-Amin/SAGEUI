@@ -2,18 +2,19 @@ import React,{useState} from 'react';
 import { classNames } from 'primereact/utils';
 
 const CustomPaginatorTemplate =()=>{
-  const [totalPages, setTotalPages] = useState(0);
+  const [rows, setRows] = useState(0);
   const [totalRecords, setTotalRecords] = useState(0);
   return {
   layout: 'CurrentPageReport  PrevPageLink FirstPageLink PageLinks LastPageLink NextPageLink RowsPerPageDropdown',
- 
   CurrentPageReport : (options) => {
-      setTotalRecords(options.totalRecords)
+      setTotalRecords(options?.totalRecords??0)
+      setRows(options?.rows??0)
       return (
         <span className={options.className} >Total: {options.totalRecords} Entries</span>
       );
   },
   PrevPageLink: (options) => {
+    
       return (
         <button type="button" className={options.className} onClick={options.onClick}>{'Previous'}</button>
       );
@@ -21,17 +22,16 @@ const CustomPaginatorTemplate =()=>{
   FirstPageLink:(options)=>{
     if (totalRecords<=0) return;
       return (
-          <button type="button" className={options.className} onClick={options.onClick}>{'1'}</button>
+          <button type="button"className={options.disabled? 'p-paginator-first p-paginator-element p-link p-highlight': options.className} onClick={options.onClick}>{'1'}</button>
         );
   },
   LastPageLink:(options)=>{
-    if (totalPages<=1) return;
+    if (Math.ceil(totalRecords/rows)<=1) return;
       return (
-          <button type="button" className={options.className} onClick={options.onClick}>{totalPages}</button>
+          <button type="button" className={options.disabled? 'p-paginator-last p-paginator-element p-link p-highlight': options.className} onClick={options.onClick}>{Math.ceil(totalRecords/rows)}</button>
         );
   },
   PageLinks: (options) => {
-    setTotalPages(options.totalPages)
       if (options.page+1===options.totalPages || options.page===0)
           return;
       
