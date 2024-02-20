@@ -32,7 +32,7 @@ export default function App() {
         showGridlines={true}
         paginator={true}
         rows={10}
-        tableStyle={{ minWidth: "50rem" }}
+        style={{ width: '100%', minWidth: '50rem' }}
         cellSelection={true}           
         lazy={true}
         dataUrl="http://localhost:5000/api/getTableData"
