@@ -99,6 +99,7 @@ body {
 
 .p-datatable{
   font-size: 12px;
+  font-family: 'Helvetica';
 }
 
 .p-datatable tr td {
