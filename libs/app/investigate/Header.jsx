@@ -1,6 +1,5 @@
 import React from 'react';
-import { Button, Row, FormLabel } from 'react-bootstrap';
-import Stack from 'react-bootstrap/Stack';
+import { Button } from 'primereact/button';
 import styled from 'styled-components';
 import Links from "_shared/links";
 import Counter from '_shared/counter/Counter';
@@ -13,28 +12,32 @@ const H3 = styled.h3`
 const helpText = "This is help text";
 
 const Header = (docCount) => {
-    return(
-    <>
-        <Row>
-            <Stack direction="horizontal" gap={3}>
-                <div>
-                    <H3>neXgenAI Investigate</H3>
-                    <IconButton className="sage-icon-superscript" icon="circle-question" title={helpText} titlePlacement="bottom" />
+    return (
+        <>
+            <div className="grid">
+                <div className="col">
+                    <div class="flex flex-wrap justify-content-between">
+                        <div class="flex align-items-center">
+                            <H3>neXgenAI Investigate</H3>
+                            <IconButton className="sage-icon-superscript" icon="circle-question" title={helpText} titlePlacement="bottom" />
+                        </div>
+                        <div class="flex align-items-center">
+                            <Counter label='Total Documents ' count={docCount.docCount} />
+                            &nbsp;
+                            &nbsp;
+                            <Button label="Manage Document Population" severity="info" size="small" />
+                        </div>
+                    </div>
                 </div>
-                <div className="ms-auto">
-                    <Counter label='Total Documents ' count={docCount.docCount} />
+            </div>
+            <div className="grid">
+                <div className="col">
+                    <span>
+                        Enter a question to start your investigation process. For guidance on using the neXgenAI features in Sightline, please refer to the <a href={Links.GenAiFaq}>FAQ</a>.
+                    </span>
                 </div>
-                <div>
-                    <Button>Manage Document Population</Button>
-                </div>
-            </Stack>
-        </Row>
-        <Row>
-            <p>
-                Enter a question to start your investigation process. For guidance on using the neXgenAI features in Sightline, please refer to the <a href={Links.GenAiFaq}>FAQ</a>.
-            </p>
-        </Row>
-    </>
+            </div>
+        </>
     )
 }
 
