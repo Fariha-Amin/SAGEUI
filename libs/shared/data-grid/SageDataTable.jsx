@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { DataTable } from 'primereact/datatable';
-import { ProductService } from '../../../app/summarize/service/ProductService';
-import sageTableUtil from './utility/sageTableUtility'
-import CustomPaginatorTemplate from './CustomPaginatorTemplate'
+import React, { useState, useEffect } from "react";
+import { DataTable } from "primereact/datatable";
+import { ProductService } from "../../../app/summarize/service/ProductService";
+import sageTableUtil from "./utility/sageTableUtility";
+import CustomPaginatorTemplate from "./CustomPaginatorTemplate";
 
 export default function SageDataTable(props) {
   const tableConfig = sageTableUtil.createTableConfig(props);
@@ -62,13 +62,6 @@ export default function SageDataTable(props) {
       expandedRows={expandedRows}
       rowExpansionTemplate={rowExpansionTemplate}
       paginatorTemplate={CustomPaginatorTemplate()}
-    //   selectionMode="checkbox"
-    //   selection={selectedRows}
-    //   onSelectionChange={(e) => onCheckboxClick(e)}
-    //   onAllRowsSelect={(e) => {
-    //     console.log(e);
-    //   }}
-    //   showSelectAll={false}
     >
       {columnDefinations}
     </DataTable>
