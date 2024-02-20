@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { DataTable } from 'primereact/datatable';
 import { ProductService } from '../../../app/summarize/service/ProductService';
 import sageTableUtil from './utility/sageTableUtility'
+import CustomPaginatorTemplate from './CustomPaginatorTemplate'
 
 export default function SageDataTable(props) {
 
@@ -63,6 +64,7 @@ export default function SageDataTable(props) {
             rowExpansionTemplate={rowExpansionTemplate}
             selectionMode="checkbox"
             selection={selectedRows} onSelectionChange={(e) => onCheckboxClick(e)}
+            paginatorTemplate={CustomPaginatorTemplate()}
         >
             {columnDefinations}
         </DataTable>
