@@ -3,6 +3,7 @@ import { DataTable } from 'primereact/datatable';
 import { ProductService } from '../../../app/summarize/service/ProductService';
 import sageTableUtil from './utility/sageTableUtility'
 import CustomPaginatorTemplate from './CustomPaginatorTemplate'
+import { DataService } from "./utility/DataService";
 
 export default function SageDataTable(props) {
   
@@ -20,6 +21,7 @@ export default function SageDataTable(props) {
   );
   const [expandedRows, setExpandedRows] = useState(null);
   const [selectedRows, setSelectedRows] = useState(null);
+  const [totalRecords, setTotalRecords] = useState(0);
 
   let filterStateInitial = {};
 
@@ -129,7 +131,7 @@ export default function SageDataTable(props) {
   return (
     <DataTable
       {...tableConfig}
-      value={summmaryData}
+      value={data}
       onCellClick={onCellClick}
       expandedRows={expandedRows}
       rowExpansionTemplate={rowExpansionTemplate}
