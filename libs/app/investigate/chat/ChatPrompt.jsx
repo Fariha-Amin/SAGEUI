@@ -60,7 +60,7 @@ export default function ChatPrompt({ loading, onQuery, docCount }) {
         <>
             <div className="grid">
                 <div className="col">
-                    <div class="flex justify-content-end flex-wrap">
+                    <div className="flex justify-content-end flex-wrap">
                         <Button className="chat-prompt-advanced-options" link onClick={handleAdvOptShow}>Advanced Options</Button>
                         <IconButton className="sage-icon-superscript" icon="circle-question" title={advOptHelpText} data-test-id="advance-options-link-help" />
                     </div>
