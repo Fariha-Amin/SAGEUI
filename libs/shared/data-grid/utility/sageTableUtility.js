@@ -1,6 +1,6 @@
-import React from 'react';
-import { Column } from 'primereact/column';
-import { Skeleton } from 'primereact/skeleton';
+import React from "react";
+import { Column } from "primereact/column";
+import { Skeleton } from "primereact/skeleton";
 
 const SageTableUtility = {
     createColumnDefinition: (columns, isSkeleton = false) => {
@@ -39,15 +39,15 @@ const SageTableUtility = {
             filterDisplay: "row",
             //tableStyle: tableConfig.style, //{ minWidth: '50rem' },
             cellSelection: tableConfig.cellSelection,
-            paginatorLeft: true,
+           // paginatorLeft: true,
             tableClassName: "table table-border table-hover table-bordered align-middle dataTable no-footer table-striped",
-            paginatorTemplate: "CurrentPageReport PrevPageLink PageLinks NextPageLink RowsPerPageDropdown",
-            currentPageReportTemplate: "Total: {totalRecords} entries",
-            style:tableConfig.style,
-            //size:10
+           // paginatorTemplate: "CurrentPageReport PrevPageLink PageLinks NextPageLink RowsPerPageDropdown",
+            ///currentPageReportTemplate: "Total: {totalRecords} entries",
             //onCellClick: onCellClick,
             //expandedRows: expandedRows,
             //rowExpansionTemplate: rowExpansionTemplate
+            lazy: tableConfig.lazy,
+            style:tableConfig.style,
         };
     }
 }
