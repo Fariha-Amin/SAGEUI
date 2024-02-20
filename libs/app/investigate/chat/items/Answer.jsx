@@ -1,30 +1,25 @@
 import './Answer.scss';
 import React from 'react';
-import Placeholder from 'react-bootstrap/Placeholder';
-import Badge from 'react-bootstrap/Badge';
-import Card from 'react-bootstrap/Card';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
+import { Card } from 'primereact/card';
+import { Chip } from 'primereact/chip';
+import { Skeleton } from 'primereact/skeleton';
+import styled from 'styled-components';
 import parse from 'html-react-parser';
+
+const FullWidthDiv = styled.div`
+    width: 100%;
+`;
 
 export default function Answer({ model }) {
     let renderAnswer = () => {
         if (model.response.isInProgress) {
             return (
-                <>
-                    <Placeholder animation="glow" as="div">
-                        <Placeholder xs={6} />
-                    </Placeholder>
-                    <Placeholder animation="glow" as="div">
-                        <Placeholder xs={3} /> <Placeholder xs={3} /> <Placeholder xs={3} />
-                    </Placeholder>
-                    <Placeholder animation="glow" as="div">
-                        <Placeholder xs={4} /> <Placeholder xs={4} />
-                    </Placeholder>
-                    <Placeholder animation="glow" as="div">
-                        <Placeholder xs={7} />
-                    </Placeholder>
-                </>);
+                <FullWidthDiv>
+                    <Skeleton width="100%" className="mb-2"></Skeleton>
+                    <Skeleton width="50%" className="mb-2"></Skeleton>
+                    <Skeleton width="75%" className="mb-2"></Skeleton>
+                    <Skeleton width="25%" className="mb-2"></Skeleton>
+                </FullWidthDiv>);
         }
         else if (!model.response.result.isSuccess) {
             return model.response.result.failureReason;
@@ -35,22 +30,20 @@ export default function Answer({ model }) {
             for (let docId of model.response.documentIds) {
                 answer = answer.replaceAll(docId, `<a href="#">${docId}</a>`);
             }
-            return parse(answer);
+            return parse(`<span>${answer}</span>`);
         }
     };
 
     return (
         <Card className='sage-chat-history__item-answer'>
-            <Card.Body>
-                <Row>
-                    <Col xs="auto">
-                        <Badge bg="warning" text="dark">A{model.id}</Badge>
-                    </Col>
-                    <Col>
-                        {renderAnswer()}
-                    </Col>
-                </Row>
-            </Card.Body>
+            <div className="flex overflow-hidden">
+                <div className="flex flex-none">
+                    <Chip label={`A${model.id}`} />
+                </div>
+                <div className="flex flex-grow-1">
+                    {renderAnswer()}
+                </div>
+            </div>
         </Card>
     );
 }
