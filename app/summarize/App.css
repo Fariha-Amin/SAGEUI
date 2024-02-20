@@ -217,32 +217,13 @@ table.dataTable thead tr th {
     margin: 0px;
     height: auto;
 }
-  
+
 .p-paginator .p-paginator-pages .p-paginator-page.p-highlight,
 .p-paginator-first.p-paginator-element.p-link.p-highlight,
 .p-paginator-last.p-paginator-element.p-link.p-highlight
 {
   background-color: #016FA0 !important;
   border-color: #016FA0 !important;
-  background-color: #0F4880 !important;
-  border-color: #0F4880 !important;
-  border-radius: 1px !important;
-  color: #2f3541 !important;
-  box-sizing: border-box;
-  display: inline-block;
-  min-width: 1.5em;
-  padding: 0.5em 1em;
-  margin-left: 2px;
-  text-align: center;
-  text-decoration: none !important;
-  cursor: pointer;
-  border: 1px solid transparent;
-  margin: 0px;
-}
-
-.p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
-  background-color: #0f4880 !important;
-  border-color: #0f4880 !important;
   border-radius: 1px !important;
   color: #ffffff !important;
 }

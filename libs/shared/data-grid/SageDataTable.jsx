@@ -109,21 +109,6 @@ export default function SageDataTable(props) {
     return <td colSpan={6}>{data.Summary}</td>;
   };
 
-  // const loadData = () => {
-  //   ProductService.getSummaryData().then((data) => {
-  //     setSummmaryData(data);
-  //     setColumnDefinations(
-  //       sageTableUtil.createColumnDefinition(columnDef, false)
-  //     );
-  //   });
-  // };
-
-  // useEffect(() => {
-  //   setColumnDefinations(sageTableUtil.createColumnDefinition(columnDef, true));
-  //   ProductService.getSummaryData().then((data) => setSummmaryData(data));
-  //   setTimeout(loadData, 1000);
-  // }, []);
-
   const onCheckboxClick = (e) => {
     setSelectedRows(e.value);
   };
@@ -135,7 +120,7 @@ export default function SageDataTable(props) {
       onCellClick={onCellClick}
       expandedRows={expandedRows}
       rowExpansionTemplate={rowExpansionTemplate}
-      paginatorTemplate={CustomPaginatorTemplate()}
+      paginatorTemplate={CustomPaginatorTemplate({totalPages:Math.ceil(totalRecords/tableConfig.rows)})}
       first={lazyState.first}      
       totalRecords={totalRecords}
       onPage={onPage}
