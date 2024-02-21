@@ -36,3 +36,15 @@ html, body {
 .p-chip {
     max-height: 32px;
 }
+
+.p-card .p-card-body {
+    padding: 0.5rem;
+}
+
+.p-card .p-card-content {
+    padding: 0.5rem 0;
+}
+
+.p-accordion-header {
+    display: none;
+}
