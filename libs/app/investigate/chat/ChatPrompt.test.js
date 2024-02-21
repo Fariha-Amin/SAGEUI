@@ -1,6 +1,6 @@
 import React from 'react';
-import '@testing-library/jest-dom'
-import { render, waitFor, act, screen, fireEvent } from "@testing-library/react";
+import '@testing-library/jest-dom';
+import { render, waitFor, act, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import ChatPrompt from './ChatPrompt';
 import sageClient from "_investigate/httpClient";
@@ -306,14 +306,14 @@ describe('RPMXCON-79212 Advanced Settings Flyout', () => {
         const advanceOptionsLink = await waitFor(() => getAdvOptsElement());
         await userEvent.click(advanceOptionsLink);
 
-        // Click to close flyout
+        // Click to close Flyout
         const advanceOptionsClose = await waitFor(() => getAdvOptsCloseButton());
         await userEvent.click(advanceOptionsClose);
 
-        let element = document.querySelector(".sage-advanced-options__flyout");
-
         // Assert
-        expect(element).toBeNull();
+        await waitFor(() => {
+            expect(document.querySelector(".sage-advanced-options__flyout")).not.toBeInTheDocument()
+        });
     });
 
     test(`RPMXCON-84435 Verify that helptext icon should be present for advanced options link in AI investigate home page`, async () => {
@@ -349,7 +349,7 @@ function getAdvOptsElement() {
 }
 
 function getAdvOptsCloseButton() {
-    return document.querySelector(".advopt-close-button");
+    return document.querySelector(".sage-advanced-options__flyout .sage-flyout__footer .footer__close-button");
 }
 
 function mockWindowFunctions() {
