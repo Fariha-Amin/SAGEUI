@@ -1,7 +1,6 @@
 import './Actions.scss';
 import React from 'react';
 import { useState } from "react";
-import Stack from 'react-bootstrap/Stack';
 import Icon from '_shared/icon/Icon';
 import IconButton from '_shared/icon-button/IconButton';
 import LayeredIconButton from '_shared/layered-icon-button/LayeredIconButton';
@@ -41,7 +40,7 @@ export default function Actions({ model, onFavoriteClick, onNoteClick, onFeedbac
     }
 
     return (
-        <Stack direction="horizontal" className='sage-chat-history__item-actions'>
+        <div className="sage-chat-history__item-actions flex flex-wrap gap-1">
 
             {/* Favorite */}
             <IconButton icon={favoriteIcon} className={`item-actions_favorite ${favoriteCss}`} title="Favorite" onClick={onFavoriteClickDelegate} />
@@ -59,6 +58,6 @@ export default function Actions({ model, onFavoriteClick, onNoteClick, onFeedbac
             {/* Delete */}
             <IconButton icon="fa-regular fa-trash-can" className="item-actions_delete" title="Delete from page" onClick={onDeleteClickDelegate} />
 
-        </Stack>
+        </div>
     );
 }

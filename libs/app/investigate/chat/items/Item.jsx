@@ -69,7 +69,7 @@ export default function Item({ model }) {
     return (
         <div className='sage-chat-history__item' data-id={model.id}>
             <div className={`sage-chat-history__item-header ${itemHeaderCss}`}>
-                <div className="flex flex-wrap align-items-center justify-content-end gap-2">
+                <div className="flex flex-wrap align-items-center justify-content-end gap-1">
                     <Actions
                         model={model}
                         onFavoriteClick={onFavoriteClickDelegate}

@@ -2,7 +2,7 @@
 @use "./fonts";
 
 html, body {
-    font-family: fonts.$sage-font-family;
+    font-family: fonts.$sage-font-family !important;
     color: fonts.$sage-font-color;
     overflow: hidden;
 }
