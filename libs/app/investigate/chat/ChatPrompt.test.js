@@ -223,7 +223,7 @@ describe("ChatPrompt onQuery", () => {
         });
     });
 
-    test("updates button text", async () => {
+    test("updates button to indicate loading", async () => {
         // Arrange
         mockWindowFunctions();
         const mockTimeout = async () => {
@@ -235,7 +235,6 @@ describe("ChatPrompt onQuery", () => {
         sageClient.poseQuestionAsync.mockImplementation(mockTimeout);
         const handleOnQuery = jest.fn();
         const inputValue = "Lorem ipsum";
-        const buttonText = "Loading...";
 
         // Act
         act(() => render(<ChatPrompt loading={false} onQuery={handleOnQuery} />));
@@ -253,8 +252,9 @@ describe("ChatPrompt onQuery", () => {
 
         // Assert
         await waitFor(() => {
-            const button = getButtonElement();
-            expect(button.textContent).toMatch(buttonText);
+            const button = document.querySelector(".p-button-loading");
+            expect(button).not.toBeNull();
+            expect(button).toBeDefined();
         });
     });
 });

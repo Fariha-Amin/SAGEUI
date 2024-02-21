@@ -60,7 +60,7 @@ describe("Answer UI", () => {
 
         // Act
         render(<Answer model={model} />);
-        const element = await document.querySelector(".sage-chat-history__item-answer.card");
+        const element = await document.querySelector(".sage-chat-history__item-answer.p-card");
 
         // Assert
         expect(element).not.toBeNull();
