@@ -36,11 +36,11 @@ export default function Answer({ model }) {
 
     return (
         <Card className='sage-chat-history__item-answer'>
-            <div className="flex overflow-hidden">
-                <div className="flex flex-none">
+            <div className="flex align-content-center gap-2">
+                <div className="flex flex-none align-items-start">
                     <Chip label={`A${model.id}`} />
                 </div>
-                <div className="flex flex-grow-1">
+                <div className="flex flex-grow-1 align-items-center">
                     {renderAnswer()}
                 </div>
             </div>

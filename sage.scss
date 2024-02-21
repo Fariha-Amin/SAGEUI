@@ -2,7 +2,7 @@
 @use "./fonts";
 
 html, body {
-    font-family: fonts.$sage-font-family !important;
+    font-family: fonts.$sage-font-family;
     color: fonts.$sage-font-color;
     overflow: hidden;
     margin: 0px;
@@ -34,8 +34,8 @@ html, body {
     position: relative;
 }
 
-.p-chip {
-    max-height: 32px;
+.p-component {
+    font-family: fonts.$sage-font-family;
 }
 
 .p-card .p-card-body {
