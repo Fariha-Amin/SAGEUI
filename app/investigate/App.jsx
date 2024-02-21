@@ -45,12 +45,12 @@ const App = () => {
 
     return (
         <div className="sage-investigate">
-            <div className='grid sage-investigate-header'>
+            <div className='grid sage-investigate__header'>
                 <div className="col">
                     <Header docCount={docCount} />
                 </div>
             </div>
-            <div className='grid sage-investigate-body'>
+            <div className='grid sage-investigate__body'>
                 <div className="col">
                     <ChatHistory 
                         queryId={queryId} 
@@ -62,7 +62,7 @@ const App = () => {
                         />
                 </div>
             </div>
-            <div className='grid sage-investigate-footer'>
+            <div className='grid sage-investigate__footer'>
                 <div className="col">
                     <ChatPrompt loading={loading} onQuery={onQueryDelegate} docCount={docCount} />
                 </div>
