@@ -23,6 +23,9 @@ export default function SageDataTable(props) {
   const [selectedRows, setSelectedRows] = useState(null);
   const [totalRecords, setTotalRecords] = useState(0);
 
+  const [sortOrder, setSortOrder] = useState(null);
+  const [currentSortField, setCurrentSortField] = useState(null); // Added state for current sort field
+
   let filterStateInitial = {};
 
   var filtered = columnDef.filter((col) => col.props.isFilterable == true);
@@ -56,7 +59,7 @@ export default function SageDataTable(props) {
       clearTimeout(networkTimeout);
     }
 
-    setColumnDefinations(sageTableUtil.createColumnDefinition(columnDef, true));
+    setColumnDefinations(sageTableUtil.createColumnDefinition(columnDef, sortOrder, onSort, currentSortField, true)); // Updated to pass currentSortField
 
     DataService.getTableData(dataUrl, {
       dataTableRequest: JSON.stringify(lazyState),
@@ -64,7 +67,7 @@ export default function SageDataTable(props) {
       setTotalRecords(apiResponse.totalRecords);
       setData(apiResponse.data);
       setColumnDefinations(
-        sageTableUtil.createColumnDefinition(columnDef, false)
+        sageTableUtil.createColumnDefinition(columnDef, sortOrder, onSort, currentSortField, false) // Updated to pass currentSortField
       );
     });
   };
@@ -74,7 +77,13 @@ export default function SageDataTable(props) {
   };
 
   const onSort = (event) => {
-    setlazyState(event);
+    setSortOrder(event.order);
+    setCurrentSortField(event.field);
+    setlazyState(prevState => ({
+      ...prevState,
+      sortField: event.field,
+      sortOrder: event.order
+    }))
   };
 
   const onFilter = (event) => {

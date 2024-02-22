@@ -11,6 +11,15 @@ body {
   flex-direction: column;
 }
 
+.custom-sorticon{
+  position: relative;
+  cursor: pointer;
+  float: right;
+  right: 5px;
+  top:5px;
+}
+
+
 .justify-content-between {
   justify-content: space-between;
 }
@@ -81,6 +90,10 @@ body {
 
 .p-column-filter input {
     border-radius: 1px;
+  }
+  
+  .p-column-title{
+    width:100%;
   }
   
 .black-header-table .p-column-filter input {
