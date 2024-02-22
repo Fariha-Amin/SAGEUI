@@ -1,13 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { DataTable } from 'primereact/datatable';
-import { ProductService } from '../../../app/summarize/service/ProductService';
-import sageTableUtil from './utility/sageTableUtility'
-import CustomPaginatorTemplate from './CustomPaginatorTemplate'
+import React, { useState, useEffect } from "react";
+import { DataTable } from "primereact/datatable";
+import { ProductService } from "../../../app/summarize/service/ProductService";
+import sageTableUtil from "./utility/sageTableUtility";
+import CustomPaginatorTemplate from "./CustomPaginatorTemplate";
 import { DataService } from "./utility/DataService";
 
 export default function SageDataTable(props) {
-  
-
   const [summmaryData, setSummmaryData] = useState([]);
 
   //const lazyLoadTableCofig=
@@ -43,6 +41,8 @@ export default function SageDataTable(props) {
     filters: filterStateInitial,
   });
 
+  const [lazyStateTemp, setlazyStateTemp] = useState({});
+
   let networkTimeout = null;
 
   useEffect(() => {
@@ -70,16 +70,16 @@ export default function SageDataTable(props) {
   };
 
   const onPage = (event) => {
-    setlazyState(event);
+    setlazyState({ ...event, ...{ filters: lazyState.filters } });
   };
 
   const onSort = (event) => {
-    setlazyState(event);
+    setlazyState({ ...event, ...{ filters: lazyState.filters } });
   };
 
   const onFilter = (event) => {
     event["first"] = 0;
-    setlazyState(event);
+    setlazyStateTemp(event);
   };
 
   const onSelectionChange = (event) => {
@@ -113,6 +113,13 @@ export default function SageDataTable(props) {
     setSelectedRows(e.value);
   };
 
+  const onDataTableKeyDown = (event) => {
+    if (event.keyCode == 13 && event.target.type == "text") {
+      console.log(event.target);
+      setlazyState({ ...lazyStateTemp });
+    }
+  };
+
   return (
     <DataTable
       {...tableConfig}
@@ -120,8 +127,10 @@ export default function SageDataTable(props) {
       onCellClick={onCellClick}
       expandedRows={expandedRows}
       rowExpansionTemplate={rowExpansionTemplate}
-      paginatorTemplate={CustomPaginatorTemplate({totalPages:Math.ceil(totalRecords/tableConfig.rows)})}
-      first={lazyState.first}      
+      paginatorTemplate={CustomPaginatorTemplate({
+        totalPages: Math.ceil(totalRecords / tableConfig.rows),
+      })}
+      first={lazyState.first}
       totalRecords={totalRecords}
       onPage={onPage}
       onSort={onSort}
@@ -129,13 +138,14 @@ export default function SageDataTable(props) {
       sortOrder={lazyState.sortOrder}
       onFilter={onFilter}
       filters={lazyState.filters}
-    //   selectionMode="checkbox"
-    //   selection={selectedRows}
-    //   onSelectionChange={(e) => onCheckboxClick(e)}
-    //   onAllRowsSelect={(e) => {
-    //     console.log(e);
-    //   }}
-    //   showSelectAll={false}
+      onKeyDown={onDataTableKeyDown}
+      //   selectionMode="checkbox"
+      //   selection={selectedRows}
+      //   onSelectionChange={(e) => onCheckboxClick(e)}
+      //   onAllRowsSelect={(e) => {
+      //     console.log(e);
+      //   }}
+      //   showSelectAll={false}
     >
       {columnDefinations}
     </DataTable>
