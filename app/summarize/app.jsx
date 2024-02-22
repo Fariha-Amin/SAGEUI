@@ -125,6 +125,8 @@ export default function App() {
           />
         </SageDataTable>
       </div>
+
+      <AllSelectModal show={modalShow} onHide={() => setModalShow(false)} />
     </>
   );
 }
