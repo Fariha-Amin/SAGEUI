@@ -45,7 +45,7 @@ body {
 
 /* Font  */
 .font-family {
-  font-family: "Open Sans";
+    font-family:'Helvetica'
 }
 
 .font-size-header {
@@ -248,6 +248,12 @@ table.dataTable thead tr th {
   padding: 0px;
   float: right;
 }
+
+.form-check{
+  padding-left: 3rem;
+  margin-bottom: 0.45rem;
+}
+
 .btn.btn-link{
   --bs-btn-padding-x: 0.35rem;
 }
