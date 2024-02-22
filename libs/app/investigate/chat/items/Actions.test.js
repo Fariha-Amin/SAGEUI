@@ -5,7 +5,7 @@ import { userEvent } from "@testing-library/user-event";
 import Actions from './Actions';
 
 describe("'Favorite' action", () => {
-    test("renders correct default icon", async () => {
+    test("RPMXCON-84748 - renders correct default icon", async () => {
         // Arrange
         const model = getDefaultModel();
         const faIcon = "star";
@@ -18,7 +18,7 @@ describe("'Favorite' action", () => {
         expect(element.outerHTML).toMatch(`data-icon="${faIcon}"`);
     });
 
-    test("renders correct active icon", async () => {
+    test("RPMXCON-84752 - renders correct active icon", async () => {
         // Arrange
         const model = getDefaultModel();
         model.isFavorite = true; // <-- active
@@ -47,7 +47,7 @@ describe("'Favorite' action", () => {
         expect(handleOnFavorite).toHaveBeenCalledTimes(1);
     });
 
-    test('has tooltip that reads "Favorite"', async () => {
+    test('RPMXCON-84852 - has tooltip that reads "Favorite"', async () => {
         // Arrange
         const model = getDefaultModel();
         const toolTipText = "Favorite";

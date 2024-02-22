@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function SageTableColumn(
     // params
     {
@@ -9,6 +7,7 @@ export default function SageTableColumn(
         isSortable,
         isFilterable,
         style,
-        order
+        order,
+        selectionMode
     }
 ){}
