@@ -41,6 +41,8 @@ export default function SageDataTable(props) {
     filters: filterStateInitial,
   });
 
+  const [lazyStateTemp, setlazyStateTemp] = useState({});
+
   let networkTimeout = null;
 
   useEffect(() => {
@@ -68,16 +70,16 @@ export default function SageDataTable(props) {
   };
 
   const onPage = (event) => {
-    setlazyState(event);
+    setlazyState({ ...event, ...{ filters: lazyState.filters } });
   };
 
   const onSort = (event) => {
-    setlazyState(event);
+    setlazyState({ ...event, ...{ filters: lazyState.filters } });
   };
 
   const onFilter = (event) => {
     event["first"] = 0;
-    setlazyState(event);
+    setlazyStateTemp(event);
   };
 
   const onSelectionChange = (event) => {
@@ -111,6 +113,13 @@ export default function SageDataTable(props) {
     setSelectedRows(e.value);
   };
 
+  const onDataTableKeyDown = (event) => {
+    if (event.keyCode == 13 && event.target.type == "text") {
+      console.log(event.target);
+      setlazyState({ ...lazyStateTemp });
+    }
+  };
+
   return (
     <DataTable
       {...tableConfig}
@@ -129,6 +138,8 @@ export default function SageDataTable(props) {
       sortOrder={lazyState.sortOrder}
       onFilter={onFilter}
       filters={lazyState.filters}
+      onKeyDown={onDataTableKeyDown}
+     
     >
       {columnDefinations}
     </DataTable>
