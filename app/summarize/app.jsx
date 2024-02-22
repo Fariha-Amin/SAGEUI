@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import SummaryHeader from "./modules/summary/SummaryHeader";
 import SageDataTable from "../../libs/shared/data-grid/SageDataTable";
 import SageTableColumn from "../../libs/shared/data-grid/column/SageTableColumn";
+import MeasuredDisplay from '../../libs/shared/data-grid/MeasuredDisplay'
 import { Checkbox } from "primereact/checkbox";
 import AllSelectModal from "../../libs/shared/data-grid/AllSelectModal";
 
@@ -55,78 +56,72 @@ export default function App() {
             header="View Doc"
             isSortable={false}
             isFilterable={false}
-            style={{ width: "8.67%" }}
+            style={{ width: '8.67%' }}
+
           />
           <SageTableColumn
             order={3}
-            body={(row) => {
-              return <span>{row.DateTime}</span>;
-            }}
+            body={(row) => { return (<MeasuredDisplay displayText={row.DateTime} />); }}
             field="DateTime"
             header="Date/Time"
             isSortable={true}
             isFilterable={true}
-            style={{ width: "9.68%" }}
+            style={{ width: '9.68%' }}
           />
           <SageTableColumn
             order={4}
-            body={(row) => {
-              return <span>{row.User}</span>;
-            }}
+            body={(row) => { return (<MeasuredDisplay displayText={row.User} />); }}
             field="User"
             header="User"
             isSortable={true}
             isFilterable={true}
-            style={{ width: "10.16%" }}
+            style={{ width: '10.16%' }}
           />
           <SageTableColumn
             order={5}
-            body={(row) => {
-              return <span>{row.DocumentId}</span>;
-            }}
+            body={(row) => { return (<MeasuredDisplay displayText={row.DocumentId} />); }}
             field="DocumentId"
             header="DocId (Fed to AI)"
             isSortable={true}
             isFilterable={true}
-            style={{ width: "12.34%" }}
+            style={{ width: '12.34%' }}
           />
           <SageTableColumn
             order={6}
-            body={(row) => {
-              return <span>{row.Summary}</span>;
-            }}
+            body={(row) => { return (<MeasuredDisplay displayText={row.Summary} hideToolTip={true} />); }}
             field="Summary"
             header="Summary"
             isSortable={true}
             isFilterable={true}
-            style={{ width: "30.86%" }}
+            style={{ width: '30.86%' }}
           />
           <SageTableColumn
             order={7}
-            body={(row) => {
-              return <span>{row.Notes}</span>;
-            }}
+            body={(row) => { return (<MeasuredDisplay displayText={row.Notes} />); }}
             field="Notes"
             header="Notes"
             isSortable={true}
             isFilterable={true}
-            style={{ width: "12.57%" }}
+            style={{ width: '12.57%' }}
           />
           <SageTableColumn
             order={8}
             body={(row) => {
-              return <TableActionButtons rowData={row} />;
+              return (
+                <TableActionButtons rowData={row} />
+              );
             }}
             field="Actions"
             header=""
             isSortable={false}
             isFilterable={false}
-            style={{ width: "12.57%" }}
+            style={{ width: '12.57%' }}
           />
         </SageDataTable>
       </div>
 
       <AllSelectModal show={modalShow} onHide={() => setModalShow(false)} />
     </>
+
   );
 }
