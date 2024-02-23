@@ -38,13 +38,18 @@ const ChatHistory = ({
     onInvestigationLoaded,
     onAnswerLoading,
     onAnswerLoaded,
+    onQuery,
     docCount }) => {
+   
     const [isInitialLoad, setIsInitialLoad] = useState(true);
     const [chatHistory, setChatHistory] = useState([]);
     const [loadingHistory, setLoadingHistory] = useState(false);
     const [loadingItem, setLoadingItem] = useState(false);
-    
+    const onQueryChatHistoryDelegate = (e) => {
+        queryId = e.id;
+        getInvestigation(e.personalId);
 
+        };
     // Get chat history on load
     useEffect(() => {
         onHistoryLoading && onHistoryLoading();
@@ -63,35 +68,41 @@ const ChatHistory = ({
     // Ask question and get answer on query
     useEffect(() => {
         if (isInitialLoad) { return; }
-
-        async function getInvestigation() {
-            // Let the user know we are loading the investigation
-            setLoadingItem(true);
-            scrollToBottomOfChat();
-
-            // Get the investigation
-            onInvestigationLoading && onInvestigationLoading({ queryId });
-            let investigation = await sageClient.getInvestigationByQuestionAsync(queryId);
-
-            // Show the investigation
-            setLoadingItem(false);
-            setChatHistory(oldArray => {
-                let newArray = [...oldArray, investigation];
-                return reduceArray(newArray, 25);
-            });
-            scrollToBottomOfChat();
-            onInvestigationLoaded && onInvestigationLoaded({ investigation });
-
-            // Get the answer for this question and update the model
-            onAnswerLoading && onAnswerLoading({ queryId });
-            let response = await sageClient.getAnswerByQuestionAsync(queryId);
-            investigation.response = response;
-            setChatHistory(oldArray => oldArray);
-            onAnswerLoaded && onAnswerLoaded({ response });
-        };
         getInvestigation();
-
     }, [queryId]);
+
+    async function getInvestigation(personalId) {
+        // Let the user know we are loading the investigation
+        setLoadingItem(true);
+        scrollToBottomOfChat();
+        // Get the investigation
+        onInvestigationLoading && onInvestigationLoading({ queryId });
+        let investigation = await sageClient.getInvestigationByQuestionAsync(queryId);
+
+        // Show the investigation
+        setLoadingItem(false);
+        setChatHistory(oldArray => {
+            let newArray = [...oldArray, investigation];
+            return reduceArray(newArray, 25);
+        });
+        scrollToBottomOfChat();
+        onInvestigationLoaded && onInvestigationLoaded({ investigation });
+
+        // Get the answer for this question and update the model
+        onAnswerLoading && onAnswerLoading({ queryId });
+        let response;
+        if (personalId /*Individual Prompt*/) {
+            response = await sageClient.getAnswerByPersonName(personalId, queryId);
+        }
+        else 
+        {
+            /*Default Prompt*/
+             response = await sageClient.getAnswerByQuestionAsync(queryId);
+        }
+        investigation.response = response;
+        setChatHistory(oldArray => oldArray);
+        onAnswerLoaded && onAnswerLoaded({ response });
+    };
 
     if (loadingHistory) {
         // Loading history from API
@@ -105,7 +116,7 @@ const ChatHistory = ({
     else {
         return (
             <>
-                {chatHistory.map((chatItem) => <ChatItem key={chatItem.id} model={chatItem} />)}
+                {chatHistory.map((chatItem) => <ChatItem key={chatItem.id} model={chatItem} onQuery={onQueryChatHistoryDelegate}/>)}
                 {loadingItem ? <ChatItemLoading /> : null}
                 <div id="sage-chat-history__bottom"></div>
             </>);

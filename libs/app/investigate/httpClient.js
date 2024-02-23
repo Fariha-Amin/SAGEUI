@@ -16,6 +16,7 @@ class Response {
     isInProgress = true;
     result = new Result();
     documentIds = [];
+    personNames = [];
     datetime = new Date();
 }
 
@@ -111,7 +112,7 @@ class HttpClient {
         return mockAsyncTask;
     }
 
-    poseQuestionAsync(question) {
+    poseQuestionAsync(question, type) {
         // Pose a new question to the API for this user and project
         // POST - api/investigations/questions
         // header - userId
@@ -143,7 +144,7 @@ class HttpClient {
         query.id = queryId;
         query.question = question;
         query.prompt.value = "Lorem ipsum";
-        query.prompt.type = "Default";
+        query.prompt.type = type;
         query.datetime = new Date();
 
         // Set up the reponse
@@ -276,28 +277,32 @@ class HttpClient {
 
                 // Random integer between 0 and 9 (both included)
                 let rndNumber = Math.floor(Math.random() * 10);
-                if (rndNumber > 5) {
+                if (rndNumber > 8) {
                     response.answer = "";
                     response.documentIds = [];
+                    response.personNames = [];
                     response.result.isSuccess = false;
                     response.result.failureReason = "I do not have enough information in the provided sources to answer your question";
                 }
                 else {
                     response.answer = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                        Integer non congue ipsum, ut euismod nulla. 
+                        Integer non congue ipsum, ut euismod nulla.
+                        Quisque in rutrum neque, Jeff Skilling ut varius odio. 
                         Sed sed lorem ID000001 nec odio pharetra volutpat vel sit amet orci. 
                         Maecenas sit amet tristique eros. 
                         Maecenas sagittis augue ac ID000024 condimentum malesuada. 
-                        In rhoncus fermentum malesuada. 
+                        In rhoncus fermentum malesuada.
+                        Proin sollicitudin enim vitae Harry Proper velit tempus ID000024 pulvinar. 
                         Quisque scelerisque nibh ipsum, non dignissim augue euismod mattis. 
                         Quisque accumsan suscipit scelerisque. 
                         Phasellus et vehicula justo. 
                         Nulla dictum ex nec sem tristique eleifend. 
-                        Etiam a ID000001 leo ultricies, gravida nibh sit amet, dignissim odio. 
+                        Etiam a ID000001 leo ultricies, gravida nibh sit amet, at hendrerit erat Wanda Romaine commodo nec. 
                         In hac habitasse platea dictumst. 
                         Donec lectus odio, aliquam a nulla a, ullamcorper ID000024 luctus massa. 
                         Aliquam sem neque, consectetur sit amet sem nec, sodales feugiat lacus.`;
                     response.documentIds = ["ID000001", "ID000024"];
+                    response.personNames = ["Jeff Skilling", "Harry Proper", "Wanda Romaine"];
                     response.result.isSuccess = true;
                     response.result.failureReason = "";
                 }
@@ -308,6 +313,39 @@ class HttpClient {
         return mockAsyncTask;
     }
 
+    getAnswerByPersonName(personId, id){
+        // GET - api/investigations/person?personId=<personId>
+        // header - userId
+        // header - projectId
+        // body - see Response class above
+        
+        let queryLookup = () => {
+            return this._investigations.find(i => i.query.id === id).response;
+        };
+        let mockAsyncTask = new Promise(function (resolve, reject) {
+            setTimeout(() => {
+                let response = queryLookup();
+                response.isInProgress = false;
+                response.answer = `
+                Name of Individual: `+ personId.trim() +`<br> 
+                Job Title: Senior Former President<br>
+                Line Manager/Reports to: Ken Lay(CEO of Enron)<br>
+                Department: Executive Management <br>
+                Office Location: Enron Corporation, Miami, Florida <br>
+                Telephone Number: +13058124747<br>
+                Internal Extension: Not Available<br>
+                Email: `+personId.trim().replace(/ /g,"_")+`@company.com <br>
+                Any identified projects: Project Hercules / Project Arnold`;
+                    
+                response.result.isSuccess = true;
+                response.result.failureReason = "";
+                resolve(response);
+            }, 500);
+        });
+        console.log(personId+" from http client")
+        return mockAsyncTask;
+    }
+    
     getAnswerByInvestigationAsync(id) {
         // Poll the API for an answer to the user's previous question for this project
         // - Key off of "isInProgress" or something similar to know when the answer is ready

@@ -4,3 +4,15 @@
     background-color: colors.$sage-bg-color-light-grey;
     margin-bottom: 6px;
 }
+
+.personName{
+    background: none!important;
+    border: none;
+    padding: 0!important;
+    /*optional*/
+    font-family: arial, sans-serif;
+    /*input has OS specific font-family*/
+    color: #0D6EFD;
+    text-decoration: underline;
+    cursor: pointer;
+}

@@ -27,7 +27,13 @@ function formatDate(datetime) {
     return `${date} - ${time}`;
 }
 
-export default function Item({ model }) {
+
+export default function Item({ model, onQuery }) {
+    function onQueryItemDelegate(e) {
+        onQuery && onQuery({ id: e.id, value: e.value, personalId : e.personalId });
+        };
+
+    
     return (
         <Accordion defaultActiveKey="0" className='sage-chat-history__item' data-id={model.id}>
             <Card>
@@ -46,7 +52,7 @@ export default function Item({ model }) {
                 <Accordion.Collapse eventKey="0">
                     <Card.Body className='sage-chat-history__item-body'>
                         <Question model={model} />
-                        <Answer model={model} />
+                        <Answer model={model} onQuery={onQueryItemDelegate} />
                         <div className='sage-chat-history__item-timestamp'>
                             <Row>
                                 <Col>

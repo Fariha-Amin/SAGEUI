@@ -25,7 +25,7 @@ export default function ChatPrompt({ loading, onQuery, docCount }) {
     const onClickDelegate = async (e) => {
         setQuerying(true);
         const currentText = text.current.value;
-        let queryId = await sageClient.poseQuestionAsync(currentText);
+        let queryId = await sageClient.poseQuestionAsync(currentText, "Default");
         setQuerying(false);
         onQuery && onQuery({ id: queryId, value: currentText });
     }

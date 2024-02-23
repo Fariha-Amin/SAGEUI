@@ -7,8 +7,10 @@ import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import parse from 'html-react-parser';
+import ChatPrompt from '../ChatPrompt';
+import sageClient from '../../httpClient'
 
-export default function Answer({ model }) {
+export default function Answer({ model, onQuery }) {
     let renderAnswer = () => {
         if (model.response.isInProgress) {
             return (
@@ -36,9 +38,30 @@ export default function Answer({ model }) {
             for (let docId of model.response.documentIds) {
                 answer = answer.replaceAll(docId, `<a href="#">${docId}</a>`);
             }
-            return parse(answer);
+            for(let personName of model.response.personNames)
+            {
+                answer = answer.replaceAll(personName, `<button> ${personName}</button>`);
+            }
+            console.log(answer);
+            return parse(answer, {
+                replace: (domNode) => 
+                   {
+                        if (domNode.name === "button") 
+                            {
+                                //debugger;
+                                return <button className="personName" onClick={onClickAnswerDelegate} value={domNode.children[0].data} >{domNode.children[0].data}</button>;
+                            }
+                   }
+                });
         }
     };
+   
+    const onClickAnswerDelegate = async (e) => {
+        console.log(e.target.value);
+        const currentText = `Who is ${e.target.value} ?`;
+        let queryId = await sageClient.poseQuestionAsync(currentText, "Individual");
+        onQuery && onQuery({ id: queryId, value: currentText, personalId: e.target.value });
+    }
 
     return (
         <Card className='sage-chat-history__item-answer'>
