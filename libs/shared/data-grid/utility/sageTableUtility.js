@@ -13,7 +13,6 @@ const SageTableUtility = {
                     field={column.field}
                     header={<CustomSortTemplate field={column.field} header={column.header} sortOrder={sortOrder} sortable={column.isSortable} onSort={onSort} currentSortField={currentSortField} />}
                     body={isSkeleton ? <Skeleton /> : column.body}
-                    // sortable={column.isSortable}
                     filter={column.isFilterable}
                     headerStyle={column.headerStyle ?? null}
                     style={column.style}

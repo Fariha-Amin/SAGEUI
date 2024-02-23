@@ -14,12 +14,14 @@ const CustomSortTemplate = (props) => {
 
   const handleSortClick = () => {
     // Toggle sortOrder when clicked
-    const newSortOrder = field === currentSortField ? -1 : 1;
+    if(sortable){
+    const newSortOrder = field === currentSortField && (sortOrder==null || sortOrder==1) ? -1 : 1;
     onSort({ field, order: newSortOrder });
+    }
   };
 
   return (
-    <span onClick={handleSortClick} style={{ cursor: 'pointer' }}>
+    <span onClick={handleSortClick} style={{ cursor: 'pointer',display:'block' }}>
       {header} 
       {sortable && <img src={sortIconSrc} alt="Sort Icon" className="custom-sorticon" />}
     </span>
