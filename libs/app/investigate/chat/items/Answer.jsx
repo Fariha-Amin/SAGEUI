@@ -42,13 +42,11 @@ export default function Answer({ model, onQuery }) {
             {
                 answer = answer.replaceAll(personName, `<button> ${personName}</button>`);
             }
-            console.log(answer);
             return parse(answer, {
                 replace: (domNode) => 
                    {
                         if (domNode.name === "button") 
                             {
-                                //debugger;
                                 return <button className="personName" onClick={onClickAnswerDelegate} value={domNode.children[0].data} >{domNode.children[0].data}</button>;
                             }
                    }
@@ -70,9 +68,11 @@ export default function Answer({ model, onQuery }) {
                     <Col xs="auto">
                         <Badge bg="warning" text="dark">A{model.id}</Badge>
                     </Col>
-                    <Col>
-                        {renderAnswer()}
-                    </Col>
+                        {
+                            (model.query.prompt.type ==='Individual') 
+                                ? <Col className='individual-col'>{renderAnswer()}</Col>
+                                : <Col>{renderAnswer()}</Col>
+                        }
                 </Row>
             </Card.Body>
         </Card>
