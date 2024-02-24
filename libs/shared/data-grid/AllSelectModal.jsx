@@ -3,16 +3,16 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 
 export default function AllSelectModal(props) {
-  const modalStyle = {
-    fontFamily: "Helvetica",
-    fontSize: "16px",
-  };
+  // const modalStyle = {
+  //   fontFamily: "Helvetica",
+  //   fontSize: "16px",
+  // };
 
-  const modalHeaderStyle = {
-    fontWeight: "bold",
-    borderBottom: "0px",
-    padding: "1rem 1rem 0rem 1rem",
-  };
+  // const modalHeaderStyle = {
+  //   fontWeight: "bold",
+  //   borderBottom: "0px",
+  //   padding: "1rem 1rem 0rem 1rem",
+  // };
 
   const modalFooterStyle = {
     borderTop: "0px",
@@ -59,9 +59,13 @@ export default function AllSelectModal(props) {
       aria-labelledby="contained-modal-title-vcenter"
       backdrop="static"
       centered
-      style={modalStyle}
+      className="font-family font-size-16"
     >
-      <Modal.Header closeButton style={modalHeaderStyle}>
+      <Modal.Header
+        closeButton
+        className="font-weight-bold border-bottom-0 modal-header-padding"
+        
+      >
         Select documents
       </Modal.Header>
       <Modal.Body>{AllSelectOptions()}</Modal.Body>
