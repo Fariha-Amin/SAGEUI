@@ -27,9 +27,13 @@ function formatDate(datetime) {
     return `${date} - ${time}`;
 }
 
-export default function Item({ model }) {
+
+export default function Item({ model, onQuery }) {
     const [activeIndex, setActiveIndex] = useState(0);
     const [itemHeaderCss, setItemHeaderCss] = useState(expandedHeaderCss);
+    const onQueryItemDelegate = async (e) =>  {
+        onQuery && onQuery({ id: e.id, value: e.value, personalId : e.personalId });
+    };
 
     const onFavoriteClickDelegate = async (e) => {
         model.isFavorite = !model.isFavorite;
@@ -84,7 +88,7 @@ export default function Item({ model }) {
                 <AccordionTab>
                     <div className='sage-chat-history__item-body'>
                         <Question model={model} />
-                        <Answer model={model} />
+                        <Answer model={model} onQuery={onQueryItemDelegate} />
                         <div className='sage-chat-history__item-timestamp'>
                             {formatDate(model.datetime)}
                         </div>

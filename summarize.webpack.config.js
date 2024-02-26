@@ -9,7 +9,7 @@ module.exports = {
   entry: './app/Summarize/index.js',
   resolve: {extensions: ['*','.js','.jsx']},
   output: {
-    path:path.resolve(__dirname, "dist/SAGEUI/Summarizer"),
+    path:path.resolve(__dirname, "dist/Summarize"),
     filename: '[contenthash].js',
     publicPath: '/',
     clean: true
