@@ -342,7 +342,6 @@ class HttpClient {
                 resolve(response);
             }, 500);
         });
-        console.log(personId+" from http client")
         return mockAsyncTask;
     }
     

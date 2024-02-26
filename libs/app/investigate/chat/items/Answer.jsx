@@ -55,7 +55,6 @@ export default function Answer({ model, onQuery }) {
     };
    
     const onClickAnswerDelegate = async (e) => {
-        console.log(e.target.value);
         const currentText = `Provide a summary of ${e.target.value}.`;
         let queryId = await sageClient.poseQuestionAsync(currentText, "Individual");
         onQuery && onQuery({ id: queryId, value: currentText, personalId: e.target.value });
