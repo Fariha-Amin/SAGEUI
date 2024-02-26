@@ -123,6 +123,7 @@ function getDefaultModel() {
             answer: "",
             isInProgress: false,
             documentIds: [],
+            personNames: [],
             result: {
                 isSuccess: true,
                 failureReason: "",

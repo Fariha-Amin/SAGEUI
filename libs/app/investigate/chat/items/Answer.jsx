@@ -5,8 +5,7 @@ import { Chip } from 'primereact/chip';
 import { Skeleton } from 'primereact/skeleton';
 import styled from 'styled-components';
 import parse from 'html-react-parser';
-import ChatPrompt from '../ChatPrompt';
-import sageClient from '../../httpClient'
+import sageClient from "_investigate/httpClient";
 
 const FullWidthDiv = styled.div`
     width: 100%;
