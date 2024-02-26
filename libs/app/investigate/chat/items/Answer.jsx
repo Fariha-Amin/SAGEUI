@@ -7,8 +7,7 @@ import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import parse from 'html-react-parser';
-import ChatPrompt from '../ChatPrompt';
-import sageClient from '../../httpClient'
+import sageClient from "_investigate/httpClient";
 
 export default function Answer({ model, onQuery }) {
     let renderAnswer = () => {
