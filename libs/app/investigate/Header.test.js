@@ -1,11 +1,9 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import { render } from '@testing-library/react';
 import '@testing-library/jest-dom'
+import { render } from '@testing-library/react';
+import { userEvent } from "@testing-library/user-event";
 import Header from './Header'
-
-import { Provider } from 'react-redux';
-import store from '../../../app/Investigate/store'
 
 describe("Main Page Header Tests", () => {
     beforeEach(() => {
@@ -67,17 +65,14 @@ describe("Main Page Header Tests", () => {
     test('RPMXCON-84255 - AI Investigate: Verify the "Manage document population" button in AI Investigate page for newly created project.', ()=>{
         // Arrange
         fetch.mockResponseOnce(JSON.stringify({data:'0'}));
-        const totalDocCountLabel = "Total Documents";
         const btnLabel = "Manage Document Population";
+
         // Act
         const element = renderer
             .create(<Header docCount={100} />);
-        // Assert
-        expect(JSON.stringify(element)).toContain(totalDocCountLabel);
-        expect(JSON.stringify(element)).toContain("0");
-        expect(JSON.stringify(element)).toMatch(btnLabel);
-        expect(JSON.stringify(element)).toMatch("This is help text");
 
+        // Assert
+        expect(JSON.stringify(element)).toMatch(btnLabel);
     });
 
     test('RPMXCON-84231 - AI Investigate: Verify the composition of the header subtext in the AI Investigate home page.', ()=>{
@@ -91,5 +86,22 @@ describe("Main Page Header Tests", () => {
         // Assert
         expect(JSON.stringify(element)).toContain(appMainLabel);
         expect(JSON.stringify(element)).toContain(faqLabel);
+    });
+
+    test('RPMXCON-84230 - AI Investigate: Verify the Header and its tooltip icon in AI Investigate home page.', async () => {
+        // Arrange
+        fetch.mockResponseOnce(JSON.stringify({data:'0'}));
+        const toolTipText = "This is help text";
+
+        // Act
+        render(<Header docCount={100} />);
+        const helpButton = document.querySelector('[data-icon="circle-question"]');
+        await userEvent.hover(helpButton);
+        const toolTip = document.querySelector('[role="tooltip"]');
+
+        // Assert
+        expect(toolTip).not.toBeNull();
+        expect(toolTip).toBeDefined();
+        expect(toolTip.outerHTML).toMatch(toolTipText);
     });
 });

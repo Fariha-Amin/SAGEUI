@@ -1,14 +1,14 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Button, Row, FormLabel } from 'react-bootstrap';
 import Stack from 'react-bootstrap/Stack';
-import Links from "../../shared/links";
-import Counter from '../../shared/counter/Counter';
 import styled from 'styled-components';
-import IconButton from '../../shared/icon-button/IconButton'
+import Links from "_shared/links";
+import Counter from '_shared/counter/Counter';
+import IconButton from '_shared/icon-button/IconButton'
 
-const Bold = styled.div`
-    font-weight:bold;
+const H3 = styled.h3`
+    display: inline-block
 `;
 
 const helpText = "This is help text";
@@ -19,8 +19,8 @@ const Header = (docCount) => {
         <Row>
             <Stack direction="horizontal" gap={3}>
                 <div>
-                    <FormLabel><Bold>neXgenAI Investigate </Bold></FormLabel>
-                    <IconButton className="sage-icon-superscript" icon="circle-question" tooltip={helpText} tooltipId="header-title-help" />
+                    <H3>neXgenAI Investigate</H3>
+                    <IconButton className="sage-icon-superscript" icon="circle-question" title={helpText} titlePlacement="bottom" />
                 </div>
                 <div className="ms-auto">
                     <Counter label='Total Documents ' count={docCount.docCount} />
@@ -40,7 +40,3 @@ const Header = (docCount) => {
 }
 
 export default Header;
-
-
-
-

@@ -95,6 +95,7 @@ const config = {
     "\\.(css|sass|scss|less)$": "<rootDir>/jest.module-mapper.styles.js",
     "_shared/(.*)": "<rootDir>/libs/shared/$1",
     "_investigate/(.*)": "<rootDir>/libs/app/investigate/$1",
+    "_root/(.*)": "<rootDir>/$1",
   },
 
   // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader

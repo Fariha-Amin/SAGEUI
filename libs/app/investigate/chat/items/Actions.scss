@@ -1,0 +1,13 @@
+@use "_root/colors";
+
+.item-actions_favorite_active {
+    color: colors.$sage-color-blue;
+}
+
+.item-actions_notes_active [data-icon="circle"] {
+    color: colors.$sage-color-blue;
+}
+
+.item-actions_feedback_active {
+    color: colors.$sage-color-blue;
+}

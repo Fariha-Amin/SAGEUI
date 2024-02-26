@@ -10,12 +10,13 @@ module.exports = {
   resolve: {
     alias: {
       _shared: path.resolve(__dirname, "libs/shared"),
-      _investigate: path.resolve(__dirname, "libs/app/investigate")
+      _investigate: path.resolve(__dirname, "libs/app/investigate"),
+      _root: path.resolve(__dirname, "")
     },
     extensions: ['*','.js','.jsx']
   },
   output: {
-    path:path.resolve(__dirname, "dist/SAGEUI/Investigate"),
+    path:path.resolve(__dirname, "dist/Investigate"),
     filename: '[contenthash].js',
     publicPath: '/',
     clean: true

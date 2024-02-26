@@ -1,113 +1,147 @@
-import React, { useState, useEffect } from 'react';
-import { DataTable } from 'primereact/datatable';
-import { Column } from 'primereact/column';
-import { ProductService } from '../../../app/summarize/service/ProductService';
-import {Summary} from '../../../app/summarize/components/Summary';
-import { Skeleton } from 'primereact/skeleton';
-import customPaginatorTemplate from './CustomPaginatorTemplate';
-
-const renderSummary = (row)=>{
-    return(<Summary row={row} />);
-}
-function createColumnDefination(columnDef, skeleton = false){
-    if(skeleton){
-        return [
-            <Column body={<Skeleton />} headerStyle={{ width: '3rem' }} />,
-            <Column body={<Skeleton />} field="DateTime" header="Date/Time" sortable filter showFilterMenu={false}/>,
-            <Column body={<Skeleton />} field="User" header="User" sortable filter showFilterMenu={false}/>,
-            <Column body={<Skeleton />} field="DocumentId" header="DocId (Fed to AI)" sortable filter showFilterMenu={false}/>,
-            <Column body={<Skeleton />} field="Summary" header="Summary" sortable filter showFilterMenu={false}/>,
-            <Column body={<Skeleton />} field="Notes" header="Notes" sortable filter showFilterMenu={false}/>,
-            <Column body={<Skeleton />}  showFilterMenu={false} headerStyle={{ width: '10rem' }} />
-        ];
-    }else{
-        return [
-            <Column selectionMode="multiple" headerStyle={{ width: '3rem' }} />,
-            <Column field="DateTime" header="Date/Time" sortable filter showFilterMenu={false} showClearButton={false} align="center" />,
-            <Column field="User" header="User" sortable filter showFilterMenu={false} showClearButton={false} align="center" />,
-            <Column field="DocumentId" header="DocId (Fed to AI)" sortable filter showFilterMenu={false} showClearButton={false} align="center"/>,
-            <Column field="Summary" header="Summary" body={renderSummary}  filter showFilterMenu={false} showClearButton={false} align="center" />,
-            <Column field="Notes" header="Notes" sortable filter showFilterMenu={false} showClearButton={false} align="center" />,
-            <Column showFilterMenu={false} headerStyle={{ width: '10rem' }} />
-        ]
-    }
-    // columnDef.forEach(column => {
-    //     columnDefinations.push(
-    //         <Column field="User" header="User" sortable filter showFilterMenu={false} showClearButton={false} align="center" />,
-    //     );
-    // });
-    //return columnDefinations;
-}
+import React, { useState, useEffect } from "react";
+import { DataTable } from "primereact/datatable";
+import { ProductService } from "../../../app/summarize/service/ProductService";
+import sageTableUtil from "./utility/sageTableUtility";
+import CustomPaginatorTemplate from "./CustomPaginatorTemplate";
+import { DataService } from "./utility/DataService";
 
 export default function SageDataTable(props) {
+  const [summmaryData, setSummmaryData] = useState([]);
 
-    const [summmaryData, setSummmaryData] = useState([]);
-    const [columnDefinations, setColumnDefinations] = useState([]);
-    const [expandedRows, setExpandedRows] = useState(null);
+  //const lazyLoadTableCofig=
+  const tableConfig = sageTableUtil.createTableConfig(props);
+  const { dataUrl, lazy } = props;
+  const columnDef = props.children;
 
-    const {tableConfig} = props;
-    const {columnDef} = props;
+  const [data, setData] = useState([]);
+  const [columnDefinations, setColumnDefinations] = useState(
+    sageTableUtil.createColumnDefinition(columnDef, false)
+  );
+  const [expandedRows, setExpandedRows] = useState(null);
+  const [selectedRows, setSelectedRows] = useState(null);
+  const [totalRecords, setTotalRecords] = useState(0);
 
-    // Expanding row logic
-    const onRowClick = (e)=>{
-        let data = e.data;
-        let newExpandData = null;
-        if(expandedRows == null){
-            newExpandData = [data];
-        }else{
-            let filterData = expandedRows.filter(d=> d.RecId != data.RecId);
-            if(filterData.length == expandedRows.length){
-                filterData.push(data); 
-            }
-            newExpandData = filterData.length ? [...filterData] : null;
-        }
-        setExpandedRows(newExpandData);
-    }
-    // Expanding row template
-    const rowExpansionTemplate = (data)=>{
-        return(
-            <td colSpan={6}>{data.Summary}</td>
-        );
-    }
+  let filterStateInitial = {};
 
-    const defaultTableConfig = {
-        value:summmaryData,
-        resizableColumns:true,
-        showGridlines:true,
-        stripedRows:true,
-        paginator:true,
-        rows:25,
-        filterDisplay:"row",
-        tableStyle:{ minWidth: '50rem' },
-        cellSelection:true,
-        paginatorLeft:true,
-        tableClassName:"table table-striped table-hover table-bordered align-middle dataTable no-footer",
-        //paginatorTemplate:"CurrentPageReport PrevPageLink PageLinks NextPageLink",
-        //currentPageReportTemplate:"Total: {totalRecords} entries",
-        onRowClick:onRowClick,
-        expandedRows:expandedRows,
-        rowExpansionTemplate:rowExpansionTemplate
+  var filtered = columnDef.filter((col) => col.props.isFilterable == true);
+
+  filtered.forEach((col) => {
+    filterStateInitial[col.props.field] = {
+      value: "",
+      matchMode: "contains",
     };
+  });
 
-    
+  const [lazyState, setlazyState] = useState({
+    first: 0,
+    rows: 25,
+    page: 1,
+    sortField: null,
+    sortOrder: null,
+    filters: filterStateInitial,
+  });
 
-    const loadData = ()=>{
-        ProductService.getSummaryData().then(data =>{
-            setColumnDefinations(createColumnDefination(columnDef, false));
-            setSummmaryData(data)
-        } );
+  const [lazyStateTemp, setlazyStateTemp] = useState({});
+
+  let networkTimeout = null;
+
+  useEffect(() => {
+    loadLazyData();
+  }, [lazyState]);
+
+  const loadLazyData = () => {
+    //setLoading(true);
+
+    if (networkTimeout) {
+      clearTimeout(networkTimeout);
     }
 
-    useEffect(() => {
-        setColumnDefinations(createColumnDefination(columnDef, true));
-        ProductService.getSummaryData().then(data => setSummmaryData(data));
-        setTimeout(loadData, 3000);
-    }, []);
-    
-    return(
-        <DataTable {...{...defaultTableConfig, ...tableConfig}}  paginatorTemplate={customPaginatorTemplate}>
-            {[...columnDefinations]}
-        </DataTable>
-    );
-};
+    setColumnDefinations(sageTableUtil.createColumnDefinition(columnDef, true));
 
+    DataService.getTableData(dataUrl, {
+      dataTableRequest: JSON.stringify(lazyState),
+    }).then((apiResponse) => {
+      setTotalRecords(apiResponse.totalRecords);
+      setData(apiResponse.data);
+      setColumnDefinations(
+        sageTableUtil.createColumnDefinition(columnDef, false)
+      );
+    });
+  };
+
+  const onPage = (event) => {
+    setlazyState({ ...event, ...{ filters: lazyState.filters } });
+  };
+
+  const onSort = (event) => {
+    setlazyState({ ...event, ...{ filters: lazyState.filters } });
+  };
+
+  const onFilter = (event) => {
+    event["first"] = 0;
+    setlazyStateTemp(event);
+  };
+
+  const onSelectionChange = (event) => {
+    const value = event.value;
+
+    setSelectedCustomers(value);
+    setSelectAll(value.length === totalRecords);
+  };
+
+  // Expanding row logic
+  const onCellClick = (e) => {
+    let data = e.rowData;
+    let newExpandData = null;
+    if (expandedRows == null) {
+      newExpandData = [data];
+    } else {
+      let filterData = expandedRows.filter((d) => d.RecId != data.RecId);
+      if (filterData.length == expandedRows.length) {
+        filterData.push(data);
+      }
+      newExpandData = filterData.length ? [...filterData] : null;
+    }
+    setExpandedRows(newExpandData);
+  };
+  // Expanding row template
+  const rowExpansionTemplate = (data) => {
+    return <td colSpan={6}>{data.Summary}</td>;
+  };
+
+  const onCheckboxClick = (e) => {
+    setSelectedRows(e.value);
+  };
+
+  const onDataTableKeyDown = (event) => {
+    if (event.keyCode == 13 && event.target.type == "text") {
+      console.log(event.target);
+      setlazyState({ ...lazyStateTemp });
+    }
+  };
+
+  return (
+    <DataTable
+      {...tableConfig}
+      value={data}
+      onCellClick={onCellClick}
+      expandedRows={expandedRows}
+      rowExpansionTemplate={rowExpansionTemplate}
+      paginatorTemplate={CustomPaginatorTemplate({
+        totalPages: Math.ceil(totalRecords / tableConfig.rows),
+      })}
+      first={lazyState.first}
+      totalRecords={totalRecords}
+      onPage={onPage}
+      onSort={onSort}
+      sortField={lazyState.sortField}
+      sortOrder={lazyState.sortOrder}
+      onFilter={onFilter}
+      filters={lazyState.filters}
+      onKeyDown={onDataTableKeyDown}
+     
+    >
+      {columnDefinations}
+    </DataTable>
+  );
+}
