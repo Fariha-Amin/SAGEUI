@@ -29,9 +29,8 @@ function formatDate(datetime) {
 }
 
 
-export default function Item({ model }) {
-
-    function onQueryItemDelegate(e) {
+export default function Item({ model, onQuery }) {
+    const onQueryItemDelegate = async (e) =>  {
         onQuery && onQuery({ id: e.id, value: e.value, personalId : e.personalId });
     };
 
