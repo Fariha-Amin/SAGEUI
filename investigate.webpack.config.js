@@ -16,7 +16,7 @@ module.exports = {
     extensions: ['*','.js','.jsx']
   },
   output: {
-    path:path.resolve(__dirname, "dist/SAGEUI/Investigate"),
+    path:path.resolve(__dirname, "dist/Investigate"),
     filename: '[contenthash].js',
     publicPath: '/',
     clean: true
