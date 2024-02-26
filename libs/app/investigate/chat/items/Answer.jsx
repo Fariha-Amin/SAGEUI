@@ -36,7 +36,7 @@ export default function Answer({ model, onQuery }) {
             {
                 answer = answer.replaceAll(personName, `<button> ${personName}</button>`);
             }
-            return parse(answer, {
+            return parse(`<span>${answer}</span>`, {
                 replace: (domNode) => 
                    {
                         if (domNode.name === "button") 
@@ -57,10 +57,10 @@ export default function Answer({ model, onQuery }) {
     return (
         <Card className='sage-chat-history__item-answer'>
             <div className="flex align-content-center gap-2">
-                <div className="flex flex-none align-items-start">
+                <div className="flex flex-none align-items-start item-answer__chip">
                     <Chip label={`A${model.id}`} />
                 </div>
-                <div className="flex flex-grow-1 align-items-center">
+                <div className="flex flex-grow-1 align-items-center item-answer__answer">
                     {renderAnswer()}
                 </div>
             </div>
