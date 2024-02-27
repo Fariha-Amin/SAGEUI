@@ -84,7 +84,7 @@ describe("Answer UI", () => {
         
     });
 
-    test("Is responce contains new line characters" , async () => {
+    test("Is response contains new line characters" , async () => {
 
         //Arrange
         const model = getPersonalPromptAnswer();
@@ -92,11 +92,9 @@ describe("Answer UI", () => {
         //Act
         render(<Answer model={model} />);
         const element = await document.querySelector(".col");
-        console.log(element.outerHTML);
         //Assert
         expect(element).not.toBeNull();
         expect(element.outerHTML.split(/\n/).length).toBe(4);
-        console.log(element.outerHTML.split(/\n/).length);
     });
 
 });
