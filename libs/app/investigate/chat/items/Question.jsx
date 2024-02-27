@@ -8,6 +8,7 @@ import Row from 'react-bootstrap/Row';
 import IconButton from '_shared/icon-button/IconButton';
 
 export default function Question({ model }) {
+    
     return (
         <Card className='sage-chat-history__item-question'>
             <Card.Body>
@@ -18,13 +19,14 @@ export default function Question({ model }) {
                     <Col>
                         {model.query.question}
                     </Col>
-                    <Col xs="auto">
-                        {`${model.query.prompt.type} Prompt`}
-                        {" "}
-                        <a href="#">25 Relevant Docs</a>
-                        {" "}
-                        <IconButton icon="circle-question" />
-                    </Col>
+                    {(model.query.prompt.type ==='Individual') 
+                        ? <Col xs="auto"> {`${model.query.prompt.type} Prompt`} </Col> 
+                        : <Col xs="auto"> {`${model.query.prompt.type} Prompt`} 
+                                {" "} 
+                                <a href="#">25 Relevant Docs</a> 
+                                {" "}  
+                                <IconButton icon="circle-question" /> </Col> 
+                    }
                 </Row>
             </Card.Body>
         </Card>
