@@ -67,7 +67,7 @@ describe("Answer UI", () => {
         expect(element).toBeDefined();
     });
 
-    test("Is responce contains person Names with hyperlinks and document ids in one answer", async () => {
+    test("Is response contains person Names with hyperlinks and document ids in one answer", async () => {
         // Arrange
         const model = getDefaultPromptAnswer();
         
