@@ -266,6 +266,15 @@ table.dataTable thead tr th {
   border-radius: 0px;
 }
 
+/* .p-checkbox .p-checkbox-box .p-checkbox-icon{
+  color: #333030;
+}
+
+.p-checkbox .p-checkbox-box.p-highlight{
+  background-color: #ffffff;
+  border: 2px solid #d1d5db;
+} */
+
 .modal-content{
   border-radius: 0px;
 }

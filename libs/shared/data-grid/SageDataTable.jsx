@@ -4,10 +4,11 @@ import { ProductService } from "../../../app/summarize/service/ProductService";
 import sageTableUtil from "./utility/sageTableUtility";
 import CustomPaginatorTemplate from "./CustomPaginatorTemplate";
 import { DataService } from "./utility/DataService";
+import { Column } from "primereact/column";
+import { Checkbox } from "primereact/checkbox";
+import AllSelectModal from "./AllSelectModal";
 
 export default function SageDataTable(props) {
-  const [summmaryData, setSummmaryData] = useState([]);
-
   //const lazyLoadTableCofig=
   const tableConfig = sageTableUtil.createTableConfig(props);
   const { dataUrl, lazy } = props;
@@ -18,8 +19,11 @@ export default function SageDataTable(props) {
     sageTableUtil.createColumnDefinition(columnDef, false)
   );
   const [expandedRows, setExpandedRows] = useState(null);
-  const [selectedRows, setSelectedRows] = useState(null);
+  const [selectedRows, setSelectedRows] = useState([]);
+  const [removedRows, setRemovedRows] = useState([]);
   const [totalRecords, setTotalRecords] = useState(0);
+  const [selectAll, setSelectAll] = useState(false);
+  const [modalShow, setModalShow] = useState(false);
 
   let filterStateInitial = {};
 
@@ -63,6 +67,14 @@ export default function SageDataTable(props) {
     }).then((apiResponse) => {
       setTotalRecords(apiResponse.totalRecords);
       setData(apiResponse.data);
+      if (selectedRows.includes(-1)) {
+        setSelectedRows([
+          ...apiResponse.data.filter(
+            (data) => !removedRows.some((item) => data.RecId === item.RecId)
+          ),
+          -1,
+        ]);
+      }
       setColumnDefinations(
         sageTableUtil.createColumnDefinition(columnDef, false)
       );
@@ -80,13 +92,6 @@ export default function SageDataTable(props) {
   const onFilter = (event) => {
     event["first"] = 0;
     setlazyStateTemp(event);
-  };
-
-  const onSelectionChange = (event) => {
-    const value = event.value;
-
-    setSelectedCustomers(value);
-    setSelectAll(value.length === totalRecords);
   };
 
   // Expanding row logic
@@ -120,28 +125,106 @@ export default function SageDataTable(props) {
     }
   };
 
+  const onSelectAllChange = (event) => {
+    const selectAll = event.checked;
+
+    if (selectAll) {
+      setModalShow(true);
+      // setSelectAll(true);
+      // setSelectedRows([...data.concat(-1)]);
+    } else {
+      setSelectAll(false);
+      setSelectedRows([]);
+    }
+  };
+
+  const handleOkClick = (childdata) => {
+    if (childdata == "currentPage") {
+      setSelectedRows(data);
+      setRemovedRows([
+        removedRows.filter(
+          (data) => !selectedRows.some((item) => data.RecId === item.RecId)
+        ),
+        -1,
+      ]);
+      setRemovedRows([]);
+    } else if (childdata == "allPages") {
+      setSelectAll(true);
+      setSelectedRows([...data.concat(-1)]);
+      setRemovedRows([]);
+    } else {
+      setSelectedRows([]);
+    }
+    setModalShow(false);
+  };
+
+  const isRowSelected = (rowData) => {
+    return selectedRows.some((row) => row.RecId === rowData.RecId);
+  };
+
   return (
-    <DataTable
-      {...tableConfig}
-      value={data}
-      onCellClick={onCellClick}
-      expandedRows={expandedRows}
-      rowExpansionTemplate={rowExpansionTemplate}
-      paginatorTemplate={CustomPaginatorTemplate({
-        totalPages: Math.ceil(totalRecords / tableConfig.rows),
-      })}
-      first={lazyState.first}
-      totalRecords={totalRecords}
-      onPage={onPage}
-      onSort={onSort}
-      sortField={lazyState.sortField}
-      sortOrder={lazyState.sortOrder}
-      onFilter={onFilter}
-      filters={lazyState.filters}
-      onKeyDown={onDataTableKeyDown}
-     
-    >
-      {columnDefinations}
-    </DataTable>
+    <>
+      <DataTable
+        {...tableConfig}
+        value={data}
+        onCellClick={onCellClick}
+        expandedRows={expandedRows}
+        rowExpansionTemplate={rowExpansionTemplate}
+        paginatorTemplate={CustomPaginatorTemplate({
+          totalPages: Math.ceil(totalRecords / tableConfig.rows),
+        })}
+        first={lazyState.first}
+        totalRecords={totalRecords}
+        onPage={onPage}
+        onSort={onSort}
+        sortField={lazyState.sortField}
+        sortOrder={lazyState.sortOrder}
+        onFilter={onFilter}
+        filters={lazyState.filters}
+        onKeyDown={onDataTableKeyDown}
+      >
+        <Column
+          headerStyle={{ width: "3rem" }}
+          header={
+            <Checkbox
+              onChange={(e) => onSelectAllChange(e)}
+              checked={selectAll}
+            />
+          }
+          body={(rowData) => {
+            return (
+              <Checkbox
+                checked={isRowSelected(rowData)}
+                onChange={(e) => {
+                  const isChecked = e.checked;
+                  if (isChecked) {
+                    setSelectedRows([...selectedRows, rowData]);
+                    setRemovedRows(
+                      removedRows.filter((row) => row.RecId !== rowData.RecId)
+                    );
+                  } else {
+                    setSelectedRows(
+                      selectedRows.filter((row) => row.RecId !== rowData.RecId)
+                    );
+                    removedRows.push(rowData);
+                    setRemovedRows(removedRows);
+                    setSelectAll(false);
+                  }
+                }}
+              />
+            );
+          }}
+        />
+
+        {columnDefinations}
+      </DataTable>
+      {modalShow && (
+        <AllSelectModal
+          show={modalShow}
+          onHide={() => setModalShow(false)}
+          onClickCallBack={handleOkClick}
+        />
+      )}
+    </>
   );
 }

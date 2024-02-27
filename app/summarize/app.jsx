@@ -34,13 +34,13 @@ export default function App() {
           isColumnResizable={false}
           showGridlines={true}
           paginator={true}
-          rows={10}
+          rows={25}
           style={{ width: "100%", minWidth: "50rem" }}
           cellSelection={true}
           lazy={true}
           dataUrl="http://localhost:5000/api/getTableData"
         >
-          <SageTableColumn
+          {/* <SageTableColumn
             order={1}
             field="RecId"
             header={<Checkbox onClick={() => setModalShow(true)} />}
@@ -48,7 +48,7 @@ export default function App() {
               <Checkbox onChange={() => onCheckboxClick(rowData)} />
             )}
             style={{ width: "3.12%" }}
-          />
+          /> */}
           <SageTableColumn
             order={2}
             body={(row) => <ViewDocButton rowData={row} />}
