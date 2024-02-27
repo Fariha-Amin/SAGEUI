@@ -6,7 +6,7 @@ import viewDocDisableIcon from "../icons/view_doc_disabled.png";
 const ViewDocButton = ({ rowData, viewDocClickHandler, ...rest }) => {
   let style = null;
   let icon = viewDocIcon;
-  if (rowData.Inprogress) {
+  if (rowData.inprogress) {
     style = { cursor: "default" };
     icon = viewDocDisableIcon;
   }

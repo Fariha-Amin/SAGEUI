@@ -16,7 +16,7 @@ export default function App() {
       <SummaryHeader />
 
       <SageDataTable
-        dataKey="RecId"
+        dataKey="recId"
         isColumnResizable={false}
         showGridlines={true}
         paginator={true}
@@ -31,7 +31,7 @@ export default function App() {
           header="A"
           body="C"
           field="RecId_checkbox"
-          style={{ width: "3.12%" }}
+          style={{ width: "40px", maxWidth: "40px" }}
         />
         <SageTableColumn
           order={2}
@@ -45,44 +45,44 @@ export default function App() {
         <SageTableColumn
           order={3}
           body={(row) => {
-            return <MeasuredDisplay displayText={row.DateTime} />;
+            return <MeasuredDisplay displayText={row.summaryGeneratedOn} />;
           }}
-          field="DateTime"
+          field="summaryGeneratedOn"
           header="Date/Time"
           isSortable={true}
           isFilterable={true}
-          style={{ width: "124px", maxWidth: "124px" }}
+          style={{ width: "124px", maxWidth: "124px", textAlign: "left" }}
         />
         <SageTableColumn
           order={4}
           body={(row) => {
-            return <MeasuredDisplay displayText={row.User} />;
+            return <MeasuredDisplay displayText={row.user} />;
           }}
-          field="User"
+          field="user"
           header="User"
           isSortable={true}
           isFilterable={true}
-          style={{ width: "130px", maxWidth: "130px" }}
+          style={{ width: "130px", maxWidth: "130px", textAlign: "left" }}
         />
         <SageTableColumn
           order={5}
           body={(row) => {
-            return <MeasuredDisplay displayText={row.DocumentId} />;
+            return <MeasuredDisplay displayText={row.documentId} />;
           }}
-          field="DocumentId"
+          field="documentId"
           header="DocId (Fed to AI)"
           isSortable={true}
           isFilterable={true}
-          style={{ width: "158px", maxWidth: "158px" }}
+          style={{ width: "158px", maxWidth: "158px", textAlign: "left" }}
         />
         <SageTableColumn
           order={6}
           body={(row) => {
             return (
-              <MeasuredDisplay displayText={row.Summary} hideToolTip={true} />
+              <MeasuredDisplay displayText={row.summary} hideToolTip={true} />
             );
           }}
-          field="Summary"
+          field="summary"
           header="Summary"
           isSortable={true}
           isFilterable={true}
@@ -91,9 +91,9 @@ export default function App() {
         <SageTableColumn
           order={7}
           body={(row) => {
-            return <MeasuredDisplay displayText={row.Notes} />;
+            return <MeasuredDisplay displayText={row.notes} />;
           }}
-          field="Notes"
+          field="notes"
           header="Notes"
           isSortable={true}
           isFilterable={true}
