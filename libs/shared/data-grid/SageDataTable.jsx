@@ -76,7 +76,7 @@ export default function SageDataTable(props) {
       if (selectedRows.includes(-1)) {
         setSelectedRows([
           ...apiResponse.data.filter(
-            (data) => !removedRows.some((item) => data.RecId === item.RecId)
+            (data) => !removedRows.some((item) => data.recId === item.recId)
           ),
           -1,
         ]);
@@ -107,7 +107,7 @@ export default function SageDataTable(props) {
     if (expandedRows == null) {
       newExpandData = [data];
     } else {
-      let filterData = expandedRows.filter((d) => d.RecId != data.RecId);
+      let filterData = expandedRows.filter((d) => d.recId != data.recId);
       if (filterData.length == expandedRows.length) {
         filterData.push(data);
       }
@@ -124,10 +124,10 @@ export default function SageDataTable(props) {
     const isChecked = e.checked;
     if (isChecked) {
       setSelectedRows([...selectedRows, rowData]);
-      setRemovedRows(removedRows.filter((row) => row.RecId !== rowData.RecId));
+      setRemovedRows(removedRows.filter((row) => row.recId !== rowData.recId));
     } else {
       setSelectedRows(
-        selectedRows.filter((row) => row.RecId !== rowData.RecId)
+        selectedRows.filter((row) => row.recId !== rowData.recId)
       );
       removedRows.push(rowData);
       setRemovedRows(removedRows);
@@ -174,7 +174,7 @@ export default function SageDataTable(props) {
       setSelectedRows(data);
       setRemovedRows([
         removedRows.filter(
-          (data) => !selectedRows.some((item) => data.RecId === item.RecId)
+          (data) => !selectedRows.some((item) => data.recId === item.recId)
         ),
         -1,
       ]);
@@ -190,7 +190,7 @@ export default function SageDataTable(props) {
   };
 
   const isRowSelected = (rowData) => {
-    return selectedRows.some((row) => row.RecId === rowData.RecId);
+    return selectedRows.some((row) => row.recId === rowData.recId);
   };
 
   return (
@@ -198,21 +198,9 @@ export default function SageDataTable(props) {
       <DataTable
         {...tableConfig}
         value={data}
-        onCellClick={onCellClick}
-        expandedRows={expandedRows}
-        rowExpansionTemplate={rowExpansionTemplate}
         paginatorTemplate={CustomPaginatorTemplate({
           totalPages: Math.ceil(totalRecords / tableConfig.rows),
         })}
-        first={lazyState.first}
-        totalRecords={totalRecords}
-        onPage={onPage}
-        onSort={onSort}
-        sortField={lazyState.sortField}
-        sortOrder={lazyState.sortOrder}
-        onFilter={onFilter}
-        filters={lazyState.filters}
-        onKeyDown={onDataTableKeyDown}
       >
         <Column
           headerStyle={{ width: "3rem" }}
