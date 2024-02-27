@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, lazy } from "react";
 import { DataTable } from "primereact/datatable";
 import { ProductService } from "../../../app/summarize/service/ProductService";
 import sageTableUtil from "./utility/sageTableUtility";
@@ -9,7 +9,9 @@ export default function SageDataTable(props) {
   const [summmaryData, setSummmaryData] = useState([]);
 
   //const lazyLoadTableCofig=
-  const tableConfig = sageTableUtil.createTableConfig(props);
+
+  let tableConfig = sageTableUtil.createTableConfig(props);
+
   const { dataUrl, lazy } = props;
   const columnDef = props.children;
 
@@ -120,6 +122,22 @@ export default function SageDataTable(props) {
     }
   };
 
+  if (lazy) {
+    const tableConfigLazy = {
+      first: lazyState.first,
+      totalRecords: totalRecords,
+      onPage: onPage,
+      onSort: onSort,
+      sortField: lazyState.sortField,
+      sortOrder: lazyState.sortOrder,
+      onFilter: onFilter,
+      filters: lazyState.filters,
+      onKeyDown: onDataTableKeyDown,
+    };
+
+    tableConfig = { ...tableConfig, ...tableConfigLazy };
+  }
+
   return (
     <DataTable
       {...tableConfig}
@@ -130,16 +148,6 @@ export default function SageDataTable(props) {
       paginatorTemplate={CustomPaginatorTemplate({
         totalPages: Math.ceil(totalRecords / tableConfig.rows),
       })}
-      first={lazyState.first}
-      totalRecords={totalRecords}
-      onPage={onPage}
-      onSort={onSort}
-      sortField={lazyState.sortField}
-      sortOrder={lazyState.sortOrder}
-      onFilter={onFilter}
-      filters={lazyState.filters}
-      onKeyDown={onDataTableKeyDown}
-     
     >
       {columnDefinations}
     </DataTable>
