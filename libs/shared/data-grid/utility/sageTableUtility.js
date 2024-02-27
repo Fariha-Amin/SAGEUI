@@ -1,20 +1,20 @@
 import React from "react";
 import { Column } from "primereact/column";
 import { Skeleton } from "primereact/skeleton";
-import CustomSortTemplate from '../../data-grid/CustomSortTemplate'
 
 const SageTableUtility = {
-    createColumnDefinition: (columns, sortOrder, onSort, currentSortField, isSkeleton = false) => {
+    createColumnDefinition: (columns, isSkeleton = false) => {
         let orderedColumns = columns.map(column => column).sort((c1, c2) => c1.props.order - c2.props.order);
         return orderedColumns.map(({ props: column }) => {
             return (
                 <Column
                     key={column.field}
                     field={column.field}
-                    header={<CustomSortTemplate field={column.field} header={column.header} sortOrder={sortOrder} sortable={column.isSortable} onSort={onSort} currentSortField={currentSortField} />}
+                    header={column.header}
                     body={isSkeleton ? <Skeleton /> : column.body}
                     filter={column.isFilterable}
                     headerStyle={column.headerStyle ?? null}
+                    sortable={column.isSortable}
                     style={column.style}
                     filterMatchMode="contains"
                     showFilterMenu={false}

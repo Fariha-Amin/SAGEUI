@@ -11,13 +11,11 @@ body {
   flex-direction: column;
 }
 
-.custom-sorticon{
-  position: relative;
-  cursor: pointer;
-  float: right;
-  right: 5px;
-  top:5px;
+.p-icon.p-sortable-column-icon{
+  color:white;
 }
+
+
 
 
 .justify-content-between {
@@ -93,7 +91,7 @@ body {
   }
   
   .p-column-title{
-    width:100%;
+    /* width:100%; */
   }
   
 .black-header-table .p-column-filter input {

@@ -6,8 +6,6 @@ import CustomPaginatorTemplate from "./CustomPaginatorTemplate";
 import { DataService } from "./utility/DataService";
 
 export default function SageDataTable(props) {
-  const [summmaryData, setSummmaryData] = useState([]);
-
   //const lazyLoadTableCofig=
   const tableConfig = sageTableUtil.createTableConfig(props);
   const { dataUrl, lazy } = props;
@@ -20,9 +18,6 @@ export default function SageDataTable(props) {
   const [expandedRows, setExpandedRows] = useState(null);
   const [selectedRows, setSelectedRows] = useState(null);
   const [totalRecords, setTotalRecords] = useState(0);
-
-  const [sortOrder, setSortOrder] = useState(null);
-  const [currentSortField, setCurrentSortField] = useState(null); // Added state for current sort field
 
   let filterStateInitial = {};
 
@@ -59,7 +54,7 @@ export default function SageDataTable(props) {
       clearTimeout(networkTimeout);
     }
 
-    setColumnDefinations(sageTableUtil.createColumnDefinition(columnDef, sortOrder, onSort, currentSortField, true)); // Updated to pass currentSortField
+    setColumnDefinations(sageTableUtil.createColumnDefinition(columnDef, true)); // Updated to pass currentSortField
 
     DataService.getTableData(dataUrl, {
       dataTableRequest: JSON.stringify(lazyState),
@@ -67,7 +62,7 @@ export default function SageDataTable(props) {
       setTotalRecords(apiResponse.totalRecords);
       setData(apiResponse.data);
       setColumnDefinations(
-        sageTableUtil.createColumnDefinition(columnDef, sortOrder, onSort, currentSortField, false) // Updated to pass currentSortField
+        sageTableUtil.createColumnDefinition(columnDef, false) // Updated to pass currentSortField
       );
     });
   };
@@ -77,12 +72,10 @@ export default function SageDataTable(props) {
   };
 
   const onSort = (event) => {
-    setSortOrder(event.order);
-    setCurrentSortField(event.field);
     setlazyState(prevState => ({
       ...prevState,
-      sortField: event.field,
-      sortOrder: event.order
+      sortField: event.sortField,
+      sortOrder: event.sortOrder
     }))
   };
 
