@@ -56,7 +56,9 @@ export default function SageDataTable(props) {
       clearTimeout(networkTimeout);
     }
 
-    setColumnDefinations(sageTableUtil.createColumnDefinition(columnDef, true));
+    setColumnDefinations(
+      sageTableUtil.createColumnDefinition(columnDef, false)
+    );
 
     DataService.getTableData(dataUrl, {
       dataTableRequest: JSON.stringify(lazyState),
@@ -125,8 +127,8 @@ export default function SageDataTable(props) {
       {...tableConfig}
       value={data}
       onCellClick={onCellClick}
-      expandedRows={expandedRows}
-      rowExpansionTemplate={rowExpansionTemplate}
+      // expandedRows={expandedRows}
+      // rowExpansionTemplate={rowExpansionTemplate}
       paginatorTemplate={CustomPaginatorTemplate({
         totalPages: Math.ceil(totalRecords / tableConfig.rows),
       })}
@@ -139,7 +141,6 @@ export default function SageDataTable(props) {
       onFilter={onFilter}
       filters={lazyState.filters}
       onKeyDown={onDataTableKeyDown}
-     
     >
       {columnDefinations}
     </DataTable>
