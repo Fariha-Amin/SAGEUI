@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { DataTable } from "primereact/datatable";
-import { ProductService } from "../../../app/summarize/service/ProductService";
 import sageTableUtil from "./utility/sageTableUtility";
 import CustomPaginatorTemplate from "./CustomPaginatorTemplate";
 import { DataService } from "./utility/DataService";
 import { Column } from "primereact/column";
 import { Checkbox } from "primereact/checkbox";
 import AllSelectModal from "./AllSelectModal";
+import ColumnCheckBox from "./ColumnCheckBox";
 
 export default function SageDataTable(props) {
-  //const lazyLoadTableCofig=
   const tableConfig = sageTableUtil.createTableConfig(props);
   const { dataUrl, lazy } = props;
   const columnDef = props.children;
@@ -116,8 +115,19 @@ export default function SageDataTable(props) {
     return <td colSpan={6}>{data.Summary}</td>;
   };
 
-  const onCheckboxClick = (e) => {
-    setSelectedRows(e.value);
+  const onCheckboxClick = (e, rowData) => {
+    const isChecked = e.checked;
+    if (isChecked) {
+      setSelectedRows([...selectedRows, rowData]);
+      setRemovedRows(removedRows.filter((row) => row.RecId !== rowData.RecId));
+    } else {
+      setSelectedRows(
+        selectedRows.filter((row) => row.RecId !== rowData.RecId)
+      );
+      removedRows.push(rowData);
+      setRemovedRows(removedRows);
+      setSelectAll(false);
+    }
   };
 
   const onDataTableKeyDown = (event) => {
@@ -132,8 +142,6 @@ export default function SageDataTable(props) {
 
     if (selectAll) {
       setModalShow(true);
-      // setSelectAll(true);
-      // setSelectedRows([...data.concat(-1)]);
     } else {
       setSelectAll(false);
       setSelectedRows([]);
@@ -187,32 +195,12 @@ export default function SageDataTable(props) {
       >
         <Column
           headerStyle={{ width: "3rem" }}
-          header={
-            <Checkbox
-              onChange={(e) => onSelectAllChange(e)}
-              checked={selectAll}
-            />
-          }
+          header={<Checkbox onChange={onSelectAllChange} checked={selectAll} />}
           body={(rowData) => {
             return (
               <Checkbox
                 checked={isRowSelected(rowData)}
-                onChange={(e) => {
-                  const isChecked = e.checked;
-                  if (isChecked) {
-                    setSelectedRows([...selectedRows, rowData]);
-                    setRemovedRows(
-                      removedRows.filter((row) => row.RecId !== rowData.RecId)
-                    );
-                  } else {
-                    setSelectedRows(
-                      selectedRows.filter((row) => row.RecId !== rowData.RecId)
-                    );
-                    removedRows.push(rowData);
-                    setRemovedRows(removedRows);
-                    setSelectAll(false);
-                  }
-                }}
+                onChange={(e) => onCheckboxClick(e, rowData)}
               />
             );
           }}
