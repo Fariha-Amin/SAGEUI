@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest",
     "build": "set NODE_ENV=development && babel src -d lib",
-    "dev-investigate": "webpack serve --config investigate.webpack.config.js --mode development",
+    "dev-investigate": "set NODE_ENV=development && webpack serve --config investigate.webpack.config.js --mode development",
     "build-investigate": "set NODE_ENV=production && webpack --config investigate.webpack.config.js --mode production",
     "dev-summarize": "webpack serve --config summarize.webpack.config.js --mode development",
     "build-summarize": "webpack --config summarize.webpack.config.js --mode development",
