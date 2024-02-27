@@ -20,8 +20,8 @@ export default function Question({ model }) {
                         {model.query.question}
                     </Col>
                     {(model.query.prompt.type ==='Individual') 
-                        ? <Col xs="auto"> {`${model.query.prompt.type} Prompt`} </Col> 
-                        : <Col xs="auto"> {`${model.query.prompt.type} Prompt`} 
+                        ? <Col className='individual-prompt' xs="auto"> {`${model.query.prompt.type} Prompt`} </Col> 
+                        : <Col className='default-prompt' xs="auto"> {`${model.query.prompt.type} Prompt`} 
                                 {" "} 
                                 <a href="#">25 Relevant Docs</a> 
                                 {" "}  
