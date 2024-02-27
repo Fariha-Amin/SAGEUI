@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, lazy } from "react";
 import { DataTable } from "primereact/datatable";
 import sageTableUtil from "./utility/sageTableUtility";
 import CustomPaginatorTemplate from "./CustomPaginatorTemplate";
@@ -9,7 +9,12 @@ import AllSelectModal from "./AllSelectModal";
 import ColumnCheckBox from "./ColumnCheckBox";
 
 export default function SageDataTable(props) {
-  const tableConfig = sageTableUtil.createTableConfig(props);
+  const [summmaryData, setSummmaryData] = useState([]);
+
+  //const lazyLoadTableCofig=
+
+  let tableConfig = sageTableUtil.createTableConfig(props);
+
   const { dataUrl, lazy } = props;
   const columnDef = props.children;
 
@@ -136,6 +141,22 @@ export default function SageDataTable(props) {
       setlazyState({ ...lazyStateTemp });
     }
   };
+
+  if (lazy) {
+    const tableConfigLazy = {
+      first: lazyState.first,
+      totalRecords: totalRecords,
+      onPage: onPage,
+      onSort: onSort,
+      sortField: lazyState.sortField,
+      sortOrder: lazyState.sortOrder,
+      onFilter: onFilter,
+      filters: lazyState.filters,
+      onKeyDown: onDataTableKeyDown,
+    };
+
+    tableConfig = { ...tableConfig, ...tableConfigLazy };
+  }
 
   const onSelectAllChange = (event) => {
     const selectAll = event.checked;
