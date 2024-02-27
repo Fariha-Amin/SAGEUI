@@ -60,7 +60,9 @@ export default function SageDataTable(props) {
       clearTimeout(networkTimeout);
     }
 
-    setColumnDefinations(sageTableUtil.createColumnDefinition(columnDef, true));
+    setColumnDefinations(
+      sageTableUtil.createColumnDefinition(columnDef, false)
+    );
 
     DataService.getTableData(dataUrl, {
       dataTableRequest: JSON.stringify(lazyState),

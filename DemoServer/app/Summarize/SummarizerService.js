@@ -52,7 +52,7 @@ const SummarizerService = {
         DocumentId: "ID00002138, ID638769, ID98724, ID284756",
         Summary: "lacinia erat vestibulum sed",
         Notes: "Skinder",
-        inprogress: true,
+        Inprogress: true,
       },
       {
         RecId: 2,
@@ -60,8 +60,8 @@ const SummarizerService = {
         User: "nloakes1",
         DocumentId: "443523183-2",
         Summary: "maecenas rhoncus aliquam lacus morbi",
-        Notes: "Twitternation",
-        inprogress: true,
+        Notes: "",
+        Inprogress: true,
       },
       {
         RecId: 3,
