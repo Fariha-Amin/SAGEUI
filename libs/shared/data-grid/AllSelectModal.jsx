@@ -1,19 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 
 export default function AllSelectModal(props) {
-  const modalStyle = {
-    fontFamily: "Helvetica",
-    fontSize: "16px",
-  };
-
-  const modalHeaderStyle = {
-    fontWeight: "bold",
-    borderBottom: "0px",
-    padding: "1rem 1rem 0rem 1rem",
-  };
-
+  const [temp, setTemp] = useState("currentPage");
   const modalFooterStyle = {
     borderTop: "0px",
     padding: "0rem 2rem 1rem 1rem",
@@ -32,6 +22,7 @@ export default function AllSelectModal(props) {
             id="currentPage"
             value="currentPage"
             defaultChecked
+            onClick={() => setTemp("currentPage")}
           />
           <label className="form-check-label" htmlFor="currentPage">
             Documents on current page
@@ -44,6 +35,7 @@ export default function AllSelectModal(props) {
             name="allSelectOptionRadios"
             id="allPages"
             value="allPages"
+            onClick={() => setTemp("allPages")}
           />
           <label className="form-check-label" htmlFor="allPages">
             Documents across all pages
@@ -59,9 +51,12 @@ export default function AllSelectModal(props) {
       aria-labelledby="contained-modal-title-vcenter"
       backdrop="static"
       centered
-      style={modalStyle}
+      className="font-family font-size-16"
     >
-      <Modal.Header closeButton style={modalHeaderStyle}>
+      <Modal.Header
+        closeButton
+        className="font-weight-bold border-bottom-0 modal-header-padding"
+      >
         Select documents
       </Modal.Header>
       <Modal.Body>{AllSelectOptions()}</Modal.Body>
@@ -69,7 +64,9 @@ export default function AllSelectModal(props) {
         <Button variant="outline-secondary" onClick={props.onHide}>
           Cancel
         </Button>
-        <Button variant="primary">Ok</Button>
+        <Button variant="primary" onClick={() => props.onClickCallBack(temp)}>
+          Ok
+        </Button>
       </Modal.Footer>
     </Modal>
   );

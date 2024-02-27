@@ -27,13 +27,6 @@ export default function App() {
         dataUrl="http://localhost:5000/api/getTableData"
       >
         <SageTableColumn
-          order={1}
-          header="A"
-          body="C"
-          field="RecId_checkbox"
-          style={{ width: "40px", maxWidth: "40px" }}
-        />
-        <SageTableColumn
           order={2}
           body={(row) => <ViewDocButton rowData={row} />}
           field="ViewDoc"
