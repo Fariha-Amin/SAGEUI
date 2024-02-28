@@ -301,3 +301,21 @@ table.dataTable thead tr th {
   padding: 0rem 2rem 1rem 1rem
 }
 
+.p-radiobutton {
+  margin: 0.1rem 1rem 0rem 0rem;
+}
+
+.p-dialog .p-dialog-content {
+  background: #ffffff;
+  color: #4b5563;
+  padding: 0 4rem 1rem 4rem;
+}
+
+.p-dialog-content .p-col.p-modal-container{
+    padding: 5px 0px;
+}
+
+.footer-button .p-button.p-component{
+  margin: 0rem .5rem;
+  height: 35px;
+}

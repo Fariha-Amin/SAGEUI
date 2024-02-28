@@ -5,14 +5,14 @@ import CustomPaginatorTemplate from "./CustomPaginatorTemplate";
 import { DataService } from "./utility/DataService";
 import { Column } from "primereact/column";
 import { Checkbox } from "primereact/checkbox";
+import { Dialog } from "primereact/dialog";
+import { Button } from "primereact/button";
+import { RadioButton } from "primereact/radiobutton";
 import AllSelectModal from "./AllSelectModal";
 import ColumnCheckBox from "./ColumnCheckBox";
 
 export default function SageDataTable(props) {
-  const [summmaryData, setSummmaryData] = useState([]);
-
   //const lazyLoadTableCofig=
-
   let tableConfig = sageTableUtil.createTableConfig(props);
 
   const { dataUrl, lazy } = props;
@@ -28,6 +28,7 @@ export default function SageDataTable(props) {
   const [totalRecords, setTotalRecords] = useState(0);
   const [selectAll, setSelectAll] = useState(false);
   const [modalShow, setModalShow] = useState(false);
+  const [headerChecked, setHeaderChecked] = useState(false);
 
   let filterStateInitial = {};
 
@@ -78,7 +79,10 @@ export default function SageDataTable(props) {
           ...apiResponse.data
             .filter(
               (data) =>
-                !removedRows.some((removedRecId) => data.recId === removedRecId) && !selectedRows.some((addedRecId) => data.recId === addedRecId)
+                !removedRows.some(
+                  (removedRecId) => data.recId === removedRecId
+                ) &&
+                !selectedRows.some((addedRecId) => data.recId === addedRecId)
             )
             .map((data) => data.recId),
           -1,
@@ -162,16 +166,16 @@ export default function SageDataTable(props) {
   const onSelectAllChange = (event) => {
     const selectAll = event.checked;
 
-    if (selectAll) {
-      setModalShow(true);
-    } else {
-      setSelectAll(false);
-      setSelectedRows([]);
-    }
+    //if (selectAll) {
+    setModalShow(true);
+    // } else {
+    //   setSelectAll(false);
+    //   setSelectedRows([]);
+    // }
   };
 
-  const handleOkClick = (childdata) => {
-    if (childdata == "currentPage") {
+  const handleAllCheckOkClick = () => {
+    if (selectedOption == "all") {
       setSelectedRows([...selectedRows, ...data.map((_) => _.recId)]);
       setRemovedRows([
         removedRows.filter(
@@ -181,7 +185,7 @@ export default function SageDataTable(props) {
         -1,
       ]);
       setRemovedRows([]);
-    } else if (childdata == "allPages") {
+    } else if (selectedOption == "single") {
       setSelectAll(true);
       setSelectedRows([...data.map((_) => _.recId).concat(-1)]);
       setRemovedRows([]);
@@ -195,38 +199,87 @@ export default function SageDataTable(props) {
     return selectedRows.some((row) => row === rowData.recId);
   };
 
-  return (
-    <>
-      <DataTable
-        {...tableConfig}
-        value={data}
-        paginatorTemplate={CustomPaginatorTemplate({
-          totalPages: Math.ceil(totalRecords / tableConfig.rows),
-        })}
-      >
-        <Column
-          className="check"
-          headerStyle={{ width: "3rem" }}
-          header={<Checkbox onChange={onSelectAllChange} checked={selectAll} />}
-          body={(rowData) => {
-            return (
-              <Checkbox
-                checked={isRowSelected(rowData)}
-                onChange={(e) => onCheckboxClick(e, rowData)}
-              />
-            );
-          }}
-        />
+  const headerElement = (
+    <div className="inline-flex align-items-center justify-content-center gap-2">
+      <span className="font-bold white-space-nowrap">
+        {selectAll ? "Unselect documents" : "Select documents"}
+      </span>
+    </div>
+  );
 
-        {columnDefinations}
-      </DataTable>
-      {modalShow && (
-        <AllSelectModal
-          show={modalShow}
+  const footerContent = (
+    <div className="footer-button">
+      <Button
+        label="Cancel"
+        severity="secondary"
+        outlined
+        onClick={() => setModalShow(false)}
+        autoFocus
+      />
+      <Button label="Ok" onClick={() => handleAllCheckOkClick()} autoFocus />
+    </div>
+  );
+
+  const radioOptions = [
+    { label: "Documents on current page", value: "all" },
+    { label: "Documents across all pages", value: "single" },
+  ];
+
+  const [selectedOption, setSelectedOption] = useState(null); // State to hold the selected option
+
+  return (
+    <div>
+      <div>
+        <DataTable
+          {...tableConfig}
+          value={data}
+          paginatorTemplate={CustomPaginatorTemplate({
+            totalPages: Math.ceil(totalRecords / tableConfig.rows),
+          })}
+        >
+          <Column
+            className="check"
+            headerStyle={{ width: "3rem" }}
+            header={
+              <Checkbox onChange={onSelectAllChange} checked={selectAll} />
+            }
+            body={(rowData) => {
+              return (
+                <Checkbox
+                  checked={isRowSelected(rowData)}
+                  onChange={(e) => onCheckboxClick(e, rowData)}
+                />
+              );
+            }}
+          />
+
+          {columnDefinations}
+        </DataTable>
+      </div>
+      {
+        <Dialog
+          visible={modalShow}
+          modal
+          header={headerElement}
+          footer={footerContent}
+          style={{ width: "35rem" }}
           onHide={() => setModalShow(false)}
-          onClickCallBack={handleOkClick}
-        />
-      )}
-    </>
+          closable={false}
+        >
+          {radioOptions.map((option) => (
+            <div className="p-col p-modal-container" key={option.value}>
+              <RadioButton
+                inputId={option.value}
+                name="option"
+                value={option.value}
+                onChange={(e) => setSelectedOption(e.value)}
+                checked={selectedOption === option.value}
+              />
+              <label htmlFor={option.value}>{option.label}</label>
+            </div>
+          ))}
+        </Dialog>
+      }
+    </div>
   );
 }
