@@ -59,7 +59,7 @@ const AdvancedSettingsFlyout = (props) => {
                     </div>
                 </div>
                 <div className="sage-flyout__footer flex justify-content-end">
-                    <Button className="footer__close-button" severity="info" ref={closeIconRef} onClick={(e) => hide(e)} label="Close" />
+                    <Button className="footer__close-button" ref={closeIconRef} onClick={(e) => hide(e)} label="Close" />
                 </div>
             </>
         );

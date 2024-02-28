@@ -88,7 +88,7 @@ export default function ChatPrompt({ loading, onQuery, docCount }) {
                 <div className="col-1 chat-prompt-run-col">
                     <Button
                         className="chat-prompt-run-button"
-                        severity={canSubmitQuery ? "info" : "secondary"}
+                        severity={canSubmitQuery ? "primary" : "secondary"}
                         onClick={onClickDelegate}
                         disabled={!canSubmitQuery}
                         loading={querying}
