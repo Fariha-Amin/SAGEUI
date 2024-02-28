@@ -38,23 +38,18 @@ const ChatHistory = ({
     onInvestigationLoaded,
     onAnswerLoading,
     onAnswerLoaded,
-    onQuery,
     docCount }) => {
-   
+
     const [isInitialLoad, setIsInitialLoad] = useState(true);
     const [chatHistory, setChatHistory] = useState([]);
     const [loadingHistory, setLoadingHistory] = useState(false);
     const [loadingItem, setLoadingItem] = useState(false);
-    const onQueryChatHistoryDelegate = (e) => {
-        queryId = e.id;
-        getInvestigation(e.personalId);
 
-        };
     // Get chat history on load
     useEffect(() => {
         onHistoryLoading && onHistoryLoading();
         setLoadingHistory(true);
-        
+
         async function loadInitialInvestigations() {
             let investigations = await sageClient.getInvestigationsAsync();
             setChatHistory(reduceArray(investigations, 25));
@@ -75,6 +70,7 @@ const ChatHistory = ({
         // Let the user know we are loading the investigation
         setLoadingItem(true);
         scrollToBottomOfChat();
+
         // Get the investigation
         onInvestigationLoading && onInvestigationLoading({ queryId });
         let investigation = await sageClient.getInvestigationByQuestionAsync(queryId);
@@ -91,17 +87,22 @@ const ChatHistory = ({
         // Get the answer for this question and update the model
         onAnswerLoading && onAnswerLoading({ queryId });
         let response;
-        if (personalId /*Individual Prompt*/) {
+        if (personalId) {
+            // Individual Prompt
             response = await sageClient.getAnswerByPersonName(personalId, queryId);
         }
-        else 
-        {
-            /*Default Prompt*/
-             response = await sageClient.getAnswerByQuestionAsync(queryId);
+        else {
+            // Default Prompt
+            response = await sageClient.getAnswerByQuestionAsync(queryId);
         }
         investigation.response = response;
         setChatHistory(oldArray => oldArray);
         onAnswerLoaded && onAnswerLoaded({ response });
+    };
+
+    const onQueryChatHistoryDelegate = (e) => {
+        queryId = e.id;
+        getInvestigation(e.personalId);
     };
 
     if (loadingHistory) {
@@ -111,12 +112,12 @@ const ChatHistory = ({
 
     if (!chatHistory || chatHistory.length <= 0) {
         // No history yet
-        return <ChatHistoryPlaceholder docCount={docCount}/>
+        return <ChatHistoryPlaceholder docCount={docCount} />
     }
     else {
         return (
             <>
-                {chatHistory.map((chatItem) => <ChatItem key={chatItem.id} model={chatItem} onQuery={onQueryChatHistoryDelegate}/>)}
+                {chatHistory.map((chatItem) => <ChatItem key={chatItem.id} model={chatItem} onQuery={onQueryChatHistoryDelegate} />)}
                 {loadingItem ? <ChatItemLoading /> : null}
                 <div id="sage-chat-history__bottom"></div>
             </>);

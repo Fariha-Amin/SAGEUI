@@ -27,10 +27,10 @@ function formatDate(datetime) {
     return `${date} - ${time}`;
 }
 
-
 export default function Item({ model, onQuery }) {
     const [activeIndex, setActiveIndex] = useState(0);
     const [itemHeaderCss, setItemHeaderCss] = useState(expandedHeaderCss);
+    
     const onQueryItemDelegate = async (e) =>  {
         onQuery && onQuery({ id: e.id, value: e.value, personalId : e.personalId });
     };
