@@ -57,6 +57,7 @@ class HttpClient {
         startIndex = startIndex < 0 ? 0 : startIndex;
         let endIndex = startIndex + maxItemCount;
         let localInvestigations = this._investigations
+            .filter(i => !i.isDeleted)
             .toSorted((a, b) => a.datetime - b.datetime)
             .slice(startIndex, endIndex);
 

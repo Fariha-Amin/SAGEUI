@@ -105,6 +105,11 @@ const ChatHistory = ({
         getInvestigation(e.personalId);
     };
 
+    const onDeleteClickDelegate = async (e) => {
+        let investigations = await sageClient.getInvestigationsAsync();
+        setChatHistory(reduceArray(investigations, 25));
+    }
+
     if (loadingHistory) {
         // Loading history from API
         return <ChatHistoryLoading />
@@ -117,7 +122,13 @@ const ChatHistory = ({
     else {
         return (
             <>
-                {chatHistory.map((chatItem) => <ChatItem key={chatItem.id} model={chatItem} onQuery={onQueryChatHistoryDelegate} />)}
+                {chatHistory.map((chatItem) => (
+                    <ChatItem
+                        key={chatItem.id}
+                        model={chatItem}
+                        onQuery={onQueryChatHistoryDelegate}
+                        onDeleteClick={onDeleteClickDelegate} />)
+                )}
                 {loadingItem ? <ChatItemLoading /> : null}
                 <div id="sage-chat-history__bottom"></div>
             </>);

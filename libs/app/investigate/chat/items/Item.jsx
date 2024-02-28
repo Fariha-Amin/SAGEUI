@@ -3,6 +3,7 @@ import React from 'react';
 import { useState } from "react";
 import { Accordion, AccordionTab } from 'primereact/accordion';
 import IconButton from '_shared/icon-button/IconButton';
+import ConfirmDialog from '_shared/confirm-dialog/ConfirmDialog';
 import Actions from './Actions';
 import Answer from './Answer';
 import Question from './Question';
@@ -10,6 +11,7 @@ import sageClient from "_investigate/httpClient";
 
 const expandedHeaderCss = "item-header_expanded";
 const collapsedHeaderCss = "item-header_collapsed";
+const deleteMessage = "Deleting this Q&A block will remove it from the page, however the results will still be available to view in the Investigation History report.";
 
 function formatDate(datetime) {
     const d = new Date(datetime);
@@ -27,12 +29,14 @@ function formatDate(datetime) {
     return `${date} - ${time}`;
 }
 
-export default function Item({ model, onQuery }) {
+export default function Item({ model, onQuery, onDeleteClick }) {
     const [activeIndex, setActiveIndex] = useState(0);
     const [itemHeaderCss, setItemHeaderCss] = useState(expandedHeaderCss);
-    
-    const onQueryItemDelegate = async (e) =>  {
-        onQuery && onQuery({ id: e.id, value: e.value, personalId : e.personalId });
+    const [deleteModalVisible, setDeleteModalVisible] = useState(false);
+    const [isDeleting, setIsDeleting] = useState(false);
+
+    const onQueryItemDelegate = async (e) => {
+        onQuery && onQuery({ id: e.id, value: e.value, personalId: e.personalId });
     };
 
     const onFavoriteClickDelegate = async (e) => {
@@ -40,7 +44,7 @@ export default function Item({ model, onQuery }) {
         await sageClient.updateInvestigation(model);
     }
 
-    const onNoteClickkDelegate = async (e) => {
+    const onNoteClickDelegate = async (e) => {
         // Show note UI
         // To do
         model.hasNote = !model.hasNote;
@@ -55,9 +59,28 @@ export default function Item({ model, onQuery }) {
     }
 
     const onDeleteClickDelegate = async (e) => {
+        // Show delete confirmation modal
+        setDeleteModalVisible(true);
+    }
+
+    const onAcceptDelegate = async (e) => {
+        // Affirmative - Do delete
+        setIsDeleting(true);
         model.isDeleted = !model.isDeleted;
         await sageClient.updateInvestigation(model);
-    }
+        onDeleteClick && onDeleteClick({ e, investigationId: model.id });
+        setIsDeleting(false);
+    };
+
+    const onRejectDelegate = (e) => {
+        // Negative - Do not delete. Hide modal.
+        setDeleteModalVisible(false);
+    };
+
+    const onCloseDelegate = (e) => {
+        // Negative - Do not delete. Hide modal.
+        setDeleteModalVisible(false);
+    };
 
     const onAccordionClickDelegate = async (e) => {
         if (activeIndex === 0) {
@@ -71,30 +94,41 @@ export default function Item({ model, onQuery }) {
     }
 
     return (
-        <div className='sage-chat-history__item' data-id={model.id}>
-            <div className={`sage-chat-history__item-header ${itemHeaderCss}`}>
-                <div className="flex flex-wrap align-items-center justify-content-end gap-1">
-                    <Actions
-                        model={model}
-                        onFavoriteClick={onFavoriteClickDelegate}
-                        onNoteClick={onNoteClickkDelegate}
-                        onFeedbackClick={onFeedbackClickDelegate}
-                        onDeleteClick={onDeleteClickDelegate}
-                    />
-                    <IconButton icon={activeIndex === 0 ? "chevron-down" : "chevron-up"} onClick={onAccordionClickDelegate} />
-                </div>
-            </div>
-            <Accordion activeIndex={activeIndex} onTabChange={(e) => setActiveIndex(e.index)}>
-                <AccordionTab>
-                    <div className='sage-chat-history__item-body'>
-                        <Question model={model} />
-                        <Answer model={model} onQuery={onQueryItemDelegate} />
-                        <div className='sage-chat-history__item-timestamp'>
-                            {formatDate(model.datetime)}
-                        </div>
+        <>
+            <div className='sage-chat-history__item' data-id={model.id}>
+                <div className={`sage-chat-history__item-header ${itemHeaderCss}`}>
+                    <div className="flex flex-wrap align-items-center justify-content-end gap-1">
+                        <Actions
+                            model={model}
+                            onFavoriteClick={onFavoriteClickDelegate}
+                            onNoteClick={onNoteClickDelegate}
+                            onFeedbackClick={onFeedbackClickDelegate}
+                            onDeleteClick={onDeleteClickDelegate}
+                        />
+                        <IconButton icon={activeIndex === 0 ? "chevron-down" : "chevron-up"} onClick={onAccordionClickDelegate} />
                     </div>
-                </AccordionTab>
-            </Accordion>
-        </div>
+                </div>
+                <Accordion activeIndex={activeIndex} onTabChange={(e) => setActiveIndex(e.index)}>
+                    <AccordionTab>
+                        <div className='sage-chat-history__item-body'>
+                            <Question model={model} />
+                            <Answer model={model} onQuery={onQueryItemDelegate} />
+                            <div className='sage-chat-history__item-timestamp'>
+                                {formatDate(model.datetime)}
+                            </div>
+                        </div>
+                    </AccordionTab>
+                </Accordion>
+            </div>
+
+            <ConfirmDialog
+                visible={deleteModalVisible}
+                header="Delete"
+                message={deleteMessage}
+                onAccept={onAcceptDelegate}
+                acceptLoading={isDeleting}
+                onReject={onRejectDelegate}
+                onClose={onCloseDelegate} />
+        </>
     );
 }
