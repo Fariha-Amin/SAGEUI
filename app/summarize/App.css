@@ -266,14 +266,20 @@ table.dataTable thead tr th {
   border-radius: 0px;
 }
 
-/* .p-checkbox .p-checkbox-box .p-checkbox-icon{
+.p-checkbox .p-checkbox-box .p-checkbox-icon{
   color: #333030;
+  width: 22px;
+  height: 22px;
+}
+
+.p-checkbox.p-component{
+  margin-left: 6px;
 }
 
 .p-checkbox .p-checkbox-box.p-highlight{
   background-color: #ffffff;
   border: 2px solid #d1d5db;
-} */
+}
 
 .modal-content{
   border-radius: 0px;
@@ -294,3 +300,4 @@ table.dataTable thead tr th {
 .modal-footer-padding{
   padding: 0rem 2rem 1rem 1rem
 }
+

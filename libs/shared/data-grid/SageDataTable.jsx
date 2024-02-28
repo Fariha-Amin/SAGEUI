@@ -75,9 +75,12 @@ export default function SageDataTable(props) {
       setData(apiResponse.data);
       if (selectedRows.includes(-1)) {
         setSelectedRows([
-          ...apiResponse.data.filter(
-            (data) => !removedRows.some((item) => data.recId === item.recId)
-          ),
+          ...apiResponse.data
+            .filter(
+              (data) =>
+                !removedRows.some((removedRecId) => data.recId === removedRecId) && !selectedRows.some((addedRecId) => data.recId === addedRecId)
+            )
+            .map((data) => data.recId),
           -1,
         ]);
       }
@@ -123,13 +126,11 @@ export default function SageDataTable(props) {
   const onCheckboxClick = (e, rowData) => {
     const isChecked = e.checked;
     if (isChecked) {
-      setSelectedRows([...selectedRows, rowData]);
-      setRemovedRows(removedRows.filter((row) => row.recId !== rowData.recId));
+      setSelectedRows([...selectedRows, rowData.recId]);
+      setRemovedRows(removedRows.filter((row) => row !== rowData.recId));
     } else {
-      setSelectedRows(
-        selectedRows.filter((row) => row.recId !== rowData.recId)
-      );
-      removedRows.push(rowData);
+      setSelectedRows(selectedRows.filter((row) => row !== rowData.recId));
+      removedRows.push(rowData.recId);
       setRemovedRows(removedRows);
       setSelectAll(false);
     }
@@ -171,17 +172,18 @@ export default function SageDataTable(props) {
 
   const handleOkClick = (childdata) => {
     if (childdata == "currentPage") {
-      setSelectedRows(data);
+      setSelectedRows([...selectedRows, ...data.map((_) => _.recId)]);
       setRemovedRows([
         removedRows.filter(
-          (data) => !selectedRows.some((item) => data.recId === item.recId)
+          (removedRow) =>
+            !selectedRows.some((selectedRow) => removedRow === selectedRow)
         ),
         -1,
       ]);
       setRemovedRows([]);
     } else if (childdata == "allPages") {
       setSelectAll(true);
-      setSelectedRows([...data.concat(-1)]);
+      setSelectedRows([...data.map((_) => _.recId).concat(-1)]);
       setRemovedRows([]);
     } else {
       setSelectedRows([]);
@@ -190,7 +192,7 @@ export default function SageDataTable(props) {
   };
 
   const isRowSelected = (rowData) => {
-    return selectedRows.some((row) => row.recId === rowData.recId);
+    return selectedRows.some((row) => row === rowData.recId);
   };
 
   return (
@@ -203,6 +205,7 @@ export default function SageDataTable(props) {
         })}
       >
         <Column
+          className="check"
           headerStyle={{ width: "3rem" }}
           header={<Checkbox onChange={onSelectAllChange} checked={selectAll} />}
           body={(rowData) => {
