@@ -90,11 +90,7 @@ export default function SageDataTable(props) {
   };
 
   const onSort = (event) => {
-    setlazyState((prevState) => ({
-      ...prevState,
-      sortField: event.sortField,
-      sortOrder: event.sortOrder,
-    }));
+    setlazyState({ ...event, ...{ filters: lazyState.filters } });
   };
 
   const onFilter = (event) => {
