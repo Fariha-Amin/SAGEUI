@@ -1,4 +1,6 @@
 import React from "react";
+import { useRef } from 'react';
+import { Toast } from 'primereact/toast';
 import ChatItem from "./items/Item";
 import ChatItemLoading from "./items/ItemLoading";
 import ChatHistoryLoading from "./ChatHistoryLoading";
@@ -40,6 +42,7 @@ const ChatHistory = ({
     onAnswerLoaded,
     docCount }) => {
 
+    const toast = useRef(null);
     const [isInitialLoad, setIsInitialLoad] = useState(true);
     const [chatHistory, setChatHistory] = useState([]);
     const [loadingHistory, setLoadingHistory] = useState(false);
@@ -106,8 +109,17 @@ const ChatHistory = ({
     };
 
     const onDeleteClickDelegate = async (e) => {
+        // Reload the investigations
         let investigations = await sageClient.getInvestigationsAsync();
         setChatHistory(reduceArray(investigations, 25));
+        
+        // Show toast message
+        toast.current.show({
+            severity: "success",
+            summary: "Success",
+            detail: "Your question has been successfully deleted from the page.",
+            life: 5000
+        });
     }
 
     if (loadingHistory) {
@@ -115,12 +127,13 @@ const ChatHistory = ({
         return <ChatHistoryLoading />
     }
 
+    let content = null;
     if (!chatHistory || chatHistory.length <= 0) {
         // No history yet
-        return <ChatHistoryPlaceholder docCount={docCount} />
+        content = <ChatHistoryPlaceholder docCount={docCount} />
     }
     else {
-        return (
+        content = (
             <>
                 {chatHistory.map((chatItem) => (
                     <ChatItem
@@ -133,6 +146,12 @@ const ChatHistory = ({
                 <div id="sage-chat-history__bottom"></div>
             </>);
     }
+
+    return (
+        <>
+            {content}
+            <Toast ref={toast} position="bottom-right" />
+        </>);
 }
 
 export default ChatHistory;

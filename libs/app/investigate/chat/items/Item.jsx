@@ -11,7 +11,6 @@ import sageClient from "_investigate/httpClient";
 
 const expandedHeaderCss = "item-header_expanded";
 const collapsedHeaderCss = "item-header_collapsed";
-const deleteMessage = "Deleting this Q&A block will remove it from the page, however the results will still be available to view in the Investigation History report.";
 
 function formatDate(datetime) {
     const d = new Date(datetime);
@@ -32,7 +31,7 @@ function formatDate(datetime) {
 export default function Item({ model, onQuery, onDeleteClick }) {
     const [activeIndex, setActiveIndex] = useState(0);
     const [itemHeaderCss, setItemHeaderCss] = useState(expandedHeaderCss);
-    const [deleteModalVisible, setDeleteModalVisible] = useState(false);
+    const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
     const [isDeleting, setIsDeleting] = useState(false);
 
     const onQueryItemDelegate = async (e) => {
@@ -60,26 +59,29 @@ export default function Item({ model, onQuery, onDeleteClick }) {
 
     const onDeleteClickDelegate = async (e) => {
         // Show delete confirmation modal
-        setDeleteModalVisible(true);
+        setIsDeleteModalVisible(true);
     }
 
-    const onAcceptDelegate = async (e) => {
-        // Affirmative - Do delete
-        setIsDeleting(true);
-        model.isDeleted = !model.isDeleted;
-        await sageClient.updateInvestigation(model);
-        onDeleteClick && onDeleteClick({ e, investigationId: model.id });
-        setIsDeleting(false);
-    };
-
-    const onRejectDelegate = (e) => {
-        // Negative - Do not delete. Hide modal.
-        setDeleteModalVisible(false);
-    };
-
-    const onCloseDelegate = (e) => {
-        // Negative - Do not delete. Hide modal.
-        setDeleteModalVisible(false);
+    const deleteDialogOptions = {
+        visible: isDeleteModalVisible,
+        header: "Delete",
+        message: "Deleting this Q&A block will remove it from the page, however the results will still be available to view in the Investigation History report.",
+        acceptLoading: isDeleting,
+        onAccept: async (e) => {
+            // Delete
+            setIsDeleting(true);
+            model.isDeleted = !model.isDeleted;
+            await sageClient.updateInvestigation(model);
+            onDeleteClick && onDeleteClick({ e, investigationId: model.id });
+        },
+        onReject: () => {
+            // Hide modal
+            setIsDeleteModalVisible(false);
+        },
+        onClose: () => {
+            // Hide modal
+            setIsDeleteModalVisible(false);
+        }
     };
 
     const onAccordionClickDelegate = async (e) => {
@@ -121,14 +123,7 @@ export default function Item({ model, onQuery, onDeleteClick }) {
                 </Accordion>
             </div>
 
-            <ConfirmDialog
-                visible={deleteModalVisible}
-                header="Delete"
-                message={deleteMessage}
-                onAccept={onAcceptDelegate}
-                acceptLoading={isDeleting}
-                onReject={onRejectDelegate}
-                onClose={onCloseDelegate} />
+            <ConfirmDialog {...deleteDialogOptions} />
         </>
     );
 }
