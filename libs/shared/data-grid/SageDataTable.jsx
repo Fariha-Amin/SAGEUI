@@ -166,16 +166,16 @@ export default function SageDataTable(props) {
   const onSelectAllChange = (event) => {
     const selectAll = event.checked;
 
-    //if (selectAll) {
+    if (selectAll) {
     setModalShow(true);
-    // } else {
-    //   setSelectAll(false);
-    //   setSelectedRows([]);
-    // }
+     } else {
+      setSelectAll(false);
+       setSelectedRows([]);
+   }
   };
 
   const handleAllCheckOkClick = () => {
-    if (selectedOption == "all") {
+    if (selectedOption == "single") {
       setSelectedRows([...selectedRows, ...data.map((_) => _.recId)]);
       setRemovedRows([
         removedRows.filter(
@@ -185,7 +185,7 @@ export default function SageDataTable(props) {
         -1,
       ]);
       setRemovedRows([]);
-    } else if (selectedOption == "single") {
+    } else if (selectedOption == "all") {
       setSelectAll(true);
       setSelectedRows([...data.map((_) => _.recId).concat(-1)]);
       setRemovedRows([]);
@@ -221,8 +221,8 @@ export default function SageDataTable(props) {
   );
 
   const radioOptions = [
-    { label: "Documents on current page", value: "all" },
-    { label: "Documents across all pages", value: "single" },
+    { label: "Documents on current page", value: "single" },
+    { label: "Documents across all pages", value: "all" },
   ];
 
   const [selectedOption, setSelectedOption] = useState(null); // State to hold the selected option
