@@ -11,6 +11,13 @@ body {
   flex-direction: column;
 }
 
+.p-icon.p-sortable-column-icon{
+  color:white;
+}
+
+
+
+
 .justify-content-between {
   justify-content: space-between;
 }
@@ -85,6 +92,10 @@ body {
 
 .p-column-filter input {
     border-radius: 1px;
+  }
+  
+  .p-column-title{
+    /* width:100%; */
   }
   
 .black-header-table .p-column-filter input {

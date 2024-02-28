@@ -9,8 +9,6 @@ import AllSelectModal from "./AllSelectModal";
 import ColumnCheckBox from "./ColumnCheckBox";
 
 export default function SageDataTable(props) {
-  const [summmaryData, setSummmaryData] = useState([]);
-
   //const lazyLoadTableCofig=
 
   let tableConfig = sageTableUtil.createTableConfig(props);
@@ -82,7 +80,7 @@ export default function SageDataTable(props) {
         ]);
       }
       setColumnDefinations(
-        sageTableUtil.createColumnDefinition(columnDef, false)
+        sageTableUtil.createColumnDefinition(columnDef, false) // Updated to pass currentSortField
       );
     });
   };
