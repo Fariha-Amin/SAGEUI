@@ -26,7 +26,7 @@ const Header = (docCount) => {
                             <Counter label='Total Documents ' count={docCount.docCount} />
                             &nbsp;
                             &nbsp;
-                            <Button label="Manage Document Population" severity="info" size="small" />
+                            <Button label="Manage Document Population" size="small" />
                         </div>
                     </div>
                 </div>

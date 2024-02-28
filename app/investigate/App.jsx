@@ -1,6 +1,6 @@
 import 'primeflex/primeflex.css';
 import 'primereact/resources/primereact.css';
-import 'primereact/resources/themes/lara-light-indigo/theme.css';
+import 'primereact/resources/themes/bootstrap4-light-blue/theme.css';
 import "_root/sage.scss";
 import './App.css';
 import React from "react";
