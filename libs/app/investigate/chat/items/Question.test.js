@@ -55,7 +55,7 @@ describe("Question UI", () => {
 
         // Act
         render(<Question model={model} />);
-        const element = await document.querySelector(".sage-chat-history__item-question.card");
+        const element = await document.querySelector(".sage-chat-history__item-question.p-card");
 
         // Assert
         expect(element).not.toBeNull();

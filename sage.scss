@@ -31,3 +31,19 @@ html, body {
     vertical-align: super;
     position: relative;
 }
+
+.p-component {
+    font-family: fonts.$sage-font-family;
+}
+
+.p-card .p-card-body {
+    padding: 0.5rem;
+}
+
+.p-card .p-card-content {
+    padding: 0.5rem 0;
+}
+
+.p-accordion-header {
+    display: none;
+}

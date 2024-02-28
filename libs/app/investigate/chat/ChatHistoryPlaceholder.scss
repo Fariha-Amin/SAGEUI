@@ -4,10 +4,11 @@
     height: 100%;
 }
 
-.sage-chat-history__placeholder .card {
+.sage-chat-history__placeholder .p-card {
     background-color: colors.$sage-bg-color-light-grey;
+    padding: 0px 12px;
 }
 
-.sage-chat-history__placeholder .card-title {
+.sage-chat-history__placeholder .p-card-title {
     font-weight: 600;
 }

@@ -1,12 +1,24 @@
 @use "_root/colors";
 
 .sage-chat-history__item {
-    margin: 3px 0px 6px 0px;
+    margin-bottom: 6px;
 }
 
 .sage-chat-history__item-header {
     background-color: colors.$sage-bg-color-light-grey;
-    min-height: 42px;
+    margin-top: 0rem;
+    padding-top: 0.5rem;
+    padding-right: 1.25rem;
+    padding-bottom: 0.5rem;
+    padding-left: 1.25rem;
+}
+
+.item-header_expanded {
+    border-radius: 8px 8px 0px 0px;
+}
+
+.item-header_collapsed {
+    border-radius: 8px;
 }
 
 .sage-chat-history__item-timestamp {

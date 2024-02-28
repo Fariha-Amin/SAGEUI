@@ -10,7 +10,7 @@ describe("ChatHistoryPlaceholder renders", () => {
 
         // Act
         render(<ChatHistoryPlaceholder docCount={100}/>);
-        const element = document.querySelector(".card");
+        const element = document.querySelector(".p-card");
 
         // Assert
         expect(element).toBeDefined();
@@ -22,7 +22,7 @@ describe("ChatHistoryPlaceholder renders", () => {
 
         // Act
         render(<ChatHistoryPlaceholder docCount={100} />);
-        const element = document.querySelector(".card .card-body .card-title");
+        const element = document.querySelector(".p-card .p-card-body .p-card-title");
 
         // Assert
         expect(element).toBeDefined();
@@ -35,7 +35,7 @@ describe("ChatHistoryPlaceholder renders", () => {
 
         // Act
         render(<ChatHistoryPlaceholder docCount={100} />);
-        const element = document.querySelector(".card .card-body .card-text");
+        const element = document.querySelector(".p-card .p-card-body .p-card-content");
 
         // Assert
         expect(element).toBeDefined();
@@ -48,7 +48,7 @@ describe("ChatHistoryPlaceholder renders", () => {
 
         // Act
         render(<ChatHistoryPlaceholder docCount={0} />);
-        const element = document.querySelector(".card .card-body .card-title");
+        const element = document.querySelector(".p-card .p-card-body .p-card-title");
 
         // Assert
         expect(element).toBeDefined();
@@ -57,11 +57,11 @@ describe("ChatHistoryPlaceholder renders", () => {
 
     test("RPMXCON-84257-B when zero docs as a card with specific body text", () => {
         // Arrange
-        const bodyText = "Please add documents using the “Manage Population” button above. Once added, you can ask questions about the documents in your Investigate Population and take action on the responses provided by the Generative AI model.";
+        const bodyText = `Please add documents using the "Manage Population" button above. Once added, you can ask questions about the documents in your Investigate Population and take action on the responses provided by the Generative AI model.`;
 
         // Act
         render(<ChatHistoryPlaceholder docCount={0} />);
-        const element = document.querySelector(".card .card-body .card-text");
+        const element = document.querySelector(".p-card .p-card-body .p-card-content");
 
         // Assert
         expect(element).toBeDefined();

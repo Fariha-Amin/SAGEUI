@@ -60,20 +60,20 @@ describe("Answer UI", () => {
 
         // Act
         render(<Answer model={model} />);
-        const element = await document.querySelector(".sage-chat-history__item-answer.card");
+        const element = await document.querySelector(".sage-chat-history__item-answer.p-card");
 
         // Assert
         expect(element).not.toBeNull();
         expect(element).toBeDefined();
     });
 
-    test("Is response contains person Names with hyperlinks and document ids in one answer", async () => {
+    test("response contains person Names with hyperlinks and document ids in one answer", async () => {
         // Arrange
         const model = getDefaultPromptAnswer();
         
         // Act
         render(<Answer model={model} />);
-        const element = await document.querySelector(".col");
+        const element = await document.querySelector(".item-answer__answer");
 
         // Assert
         expect(element).not.toBeNull();
@@ -84,14 +84,14 @@ describe("Answer UI", () => {
         
     });
 
-    test("Is response contains new line characters" , async () => {
+    test("response contains new line characters" , async () => {
 
         //Arrange
         const model = getPersonalPromptAnswer();
 
         //Act
         render(<Answer model={model} />);
-        const element = await document.querySelector(".col");
+        const element = await document.querySelector(".item-answer__answer");
         //Assert
         expect(element).not.toBeNull();
         expect(element.outerHTML.split(/\n/).length).toBe(4);

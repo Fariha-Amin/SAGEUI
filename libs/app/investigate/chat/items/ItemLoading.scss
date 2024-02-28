@@ -1,7 +1,12 @@
 @use "_root/colors";
 
-.sage-chat-history__item-loader {
+.item-loading__loader {
     text-align: center;
     color: colors.$sage-color-dark-grey;
     padding: 24px;
+}
+
+.item-loading__header {
+    min-height: 42px;
+    border-radius: 8px 8px 0px 0px;
 }
