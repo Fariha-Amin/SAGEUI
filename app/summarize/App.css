@@ -277,14 +277,20 @@ table.dataTable thead tr th {
   border-radius: 0px;
 }
 
-/* .p-checkbox .p-checkbox-box .p-checkbox-icon{
+.p-checkbox .p-checkbox-box .p-checkbox-icon{
   color: #333030;
+  width: 22px;
+  height: 22px;
+}
+
+.p-checkbox.p-component{
+  margin-left: 6px;
 }
 
 .p-checkbox .p-checkbox-box.p-highlight{
   background-color: #ffffff;
   border: 2px solid #d1d5db;
-} */
+}
 
 .modal-content{
   border-radius: 0px;
@@ -304,4 +310,23 @@ table.dataTable thead tr th {
 
 .modal-footer-padding{
   padding: 0rem 2rem 1rem 1rem
+}
+
+.p-radiobutton {
+  margin: 0.1rem 1rem 0rem 0rem;
+}
+
+.p-dialog .p-dialog-content {
+  background: #ffffff;
+  color: #4b5563;
+  padding: 0 4rem 1rem 4rem;
+}
+
+.p-dialog-content .p-col.p-modal-container{
+    padding: 5px 0px;
+}
+
+.footer-button .p-button.p-component{
+  margin: 0rem .5rem;
+  height: 35px;
 }
