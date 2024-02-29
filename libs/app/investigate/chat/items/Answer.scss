@@ -5,10 +5,18 @@
     margin-bottom: 6px;
 }
 
-.personName{
-    background: none!important;
+.sage-chat-history__item-answer .p-chip {
+    background-color: colors.$sage-bg-color-yellow;
+    max-height: 28px;
+    padding: 0 0.5rem;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.personName {
+    background: none !important;
     border: none;
-    padding: 0!important;
+    padding: 0 !important;
     /*optional*/
     font-family: arial, sans-serif;
     /*input has OS specific font-family*/
@@ -17,7 +25,6 @@
     cursor: pointer;
 }
 
-.individual-col{
+.item-answer__answer {
     white-space: pre-line;
-    line-height: 0.75rem;
 }

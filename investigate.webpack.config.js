@@ -3,7 +3,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const TerserPlugin = require("terser-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const devMode = process.env.NODE_ENV !== "production";
+const devMode = process.env.NODE_ENV == "development ";
 
 module.exports = {
   entry: './app/investigate/index.js',
@@ -18,7 +18,7 @@ module.exports = {
   output: {
     path:path.resolve(__dirname, "dist/Investigate"),
     filename: '[contenthash].js',
-    publicPath: '/',
+    publicPath: devMode ? '/' : '/app/Investigate/',
     clean: true
   },
   module: {
@@ -56,6 +56,11 @@ module.exports = {
         devMiddleware:{
             publicPath: 'http://localhost:3000'
         }
+  },
+  performance: {
+    hints: false,
+    maxEntrypointSize: 512000,
+    maxAssetSize: 512000
   },
   plugins: [
     new HtmlWebpackPlugin({title: "Investigate", template: path.join(__dirname, "index.html"),}),

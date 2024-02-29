@@ -1,25 +1,25 @@
 .sage-investigate {
-    margin: 6px;
     padding: 6px;
     height: 98vh;
     display: flex;
     flex-direction: column;
 }
 
-.sage-investigate-header {
+.sage-investigate__header {
     padding: 6px;
     display: flex;
     flex-direction: column;
 }
 
-.sage-investigate-body {
+.sage-investigate__body {
     padding: 6px;
     overflow-y: auto;
     flex: 1;
     align-content: flex-start;
 }
 
-.sage-investigate-footer {
+.sage-investigate__footer {
     padding: 12px 6px 6px 6px;
+    margin-top: 0px;
     border-top: 1px solid #ccc;
 }

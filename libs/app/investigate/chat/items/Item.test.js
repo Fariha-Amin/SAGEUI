@@ -33,7 +33,7 @@ describe("ChatItem UI", () => {
         
         // Act
         render(<ChatItem model={model} />);
-        const element = await document.querySelector(".sage-chat-history__item.accordion");
+        const element = await document.querySelector(".sage-chat-history__item .p-accordion");
         
         // Assert
         expect(element).not.toBeNull();

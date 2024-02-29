@@ -344,15 +344,14 @@ class HttpClient {
             setTimeout(() => {
                 let response = queryLookup();
                 response.isInProgress = false;
-                response.answer = `
-                Name of Individual: `+ personId.trim() +`\n 
-                Job Title: Senior Former President\n
-                Line Manager/Reports to: Ken Lay(CEO of Enron)\n
-                Department: Executive Management \n
-                Office Location: Enron Corporation, Miami, Florida \n
-                Telephone Number: +13058124747 \n
-                Internal Extension: Not Available \n
-                Email: `+personId.trim().replace(/ /g,"_")+`@company.com \n
+                response.answer = `Name of Individual: `+ personId.trim() +`
+                Job Title: Senior Former President
+                Line Manager/Reports to: Ken Lay(CEO of Enron)
+                Department: Executive Management
+                Office Location: Enron Corporation, Miami, Florida
+                Telephone Number: +13058124747
+                Internal Extension: Not Available
+                Email: `+personId.trim().replace(/ /g,"_")+`@company.com
                 Any identified projects: Project Hercules / Project Arnold`;
                     
                 response.result.isSuccess = true;
