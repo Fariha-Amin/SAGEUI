@@ -1,32 +1,26 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
 import './Answer.scss';
 import React from 'react';
-import Placeholder from 'react-bootstrap/Placeholder';
-import Badge from 'react-bootstrap/Badge';
-import Card from 'react-bootstrap/Card';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
+import { Card } from 'primereact/card';
+import { Chip } from 'primereact/chip';
+import { Skeleton } from 'primereact/skeleton';
+import styled from 'styled-components';
 import parse from 'html-react-parser';
 import sageClient from "_investigate/httpClient";
+
+const FullWidthDiv = styled.div`
+    width: 100%;
+`;
 
 export default function Answer({ model, onQuery }) {
     let renderAnswer = () => {
         if (model.response.isInProgress) {
             return (
-                <>
-                    <Placeholder animation="glow" as="div">
-                        <Placeholder xs={6} />
-                    </Placeholder>
-                    <Placeholder animation="glow" as="div">
-                        <Placeholder xs={3} /> <Placeholder xs={3} /> <Placeholder xs={3} />
-                    </Placeholder>
-                    <Placeholder animation="glow" as="div">
-                        <Placeholder xs={4} /> <Placeholder xs={4} />
-                    </Placeholder>
-                    <Placeholder animation="glow" as="div">
-                        <Placeholder xs={7} />
-                    </Placeholder>
-                </>);
+                <FullWidthDiv>
+                    <Skeleton width="100%" className="mb-2"></Skeleton>
+                    <Skeleton width="50%" className="mb-2"></Skeleton>
+                    <Skeleton width="75%" className="mb-2"></Skeleton>
+                    <Skeleton width="25%" className="mb-2"></Skeleton>
+                </FullWidthDiv>);
         }
         else if (!model.response.result.isSuccess) {
             return model.response.result.failureReason;
@@ -41,7 +35,7 @@ export default function Answer({ model, onQuery }) {
             {
                 answer = answer.replaceAll(personName, `<button> ${personName}</button>`);
             }
-            return parse(answer, {
+            return parse(`<span>${answer}</span>`, {
                 replace: (domNode) => 
                    {
                         if (domNode.name === "button") 
@@ -61,18 +55,14 @@ export default function Answer({ model, onQuery }) {
 
     return (
         <Card className='sage-chat-history__item-answer'>
-            <Card.Body>
-                <Row>
-                    <Col xs="auto">
-                        <Badge bg="warning" text="dark">A{model.id}</Badge>
-                    </Col>
-                        {
-                            (model.query.prompt.type ==='Individual') 
-                                ? <Col className='individual-col'>{renderAnswer()}</Col>
-                                : <Col>{renderAnswer()}</Col>
-                        }
-                </Row>
-            </Card.Body>
+            <div className="flex align-content-center gap-2">
+                <div className="flex flex-none align-items-start item-answer__chip">
+                    <Chip label={`A${model.id}`} />
+                </div>
+                <div className="flex flex-grow-1 align-items-center item-answer__answer">
+                    {renderAnswer()}
+                </div>
+            </div>
         </Card>
     );
 }

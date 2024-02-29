@@ -4,3 +4,11 @@
     background-color: colors.$sage-bg-color-light-grey;
     margin-bottom: 6px;
 }
+
+.sage-chat-history__item-question .p-chip {
+    background-color: colors.$sage-bg-color-yellow;
+    max-height: 28px;
+    padding: 0 0.5rem;
+    font-size: 0.8rem;
+    font-weight: bold;
+}

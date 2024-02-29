@@ -1,16 +1,15 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
 import './Item.scss';
 import React from 'react';
-import Accordion from 'react-bootstrap/Accordion';
-import Card from 'react-bootstrap/Card';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
-import Stack from 'react-bootstrap/Stack';
-import AccordionButton from '_shared/accordion-button/AccordionButton'
+import { useState } from "react";
+import { Accordion, AccordionTab } from 'primereact/accordion';
+import IconButton from '_shared/icon-button/IconButton';
 import Actions from './Actions';
 import Answer from './Answer';
 import Question from './Question';
 import sageClient from "_investigate/httpClient";
+
+const expandedHeaderCss = "item-header_expanded";
+const collapsedHeaderCss = "item-header_collapsed";
 
 function formatDate(datetime) {
     const d = new Date(datetime);
@@ -30,6 +29,8 @@ function formatDate(datetime) {
 
 
 export default function Item({ model, onQuery }) {
+    const [activeIndex, setActiveIndex] = useState(0);
+    const [itemHeaderCss, setItemHeaderCss] = useState(expandedHeaderCss);
     const onQueryItemDelegate = async (e) =>  {
         onQuery && onQuery({ id: e.id, value: e.value, personalId : e.personalId });
     };
@@ -58,41 +59,42 @@ export default function Item({ model, onQuery }) {
         await sageClient.updateInvestigation(model);
     }
 
+    const onAccordionClickDelegate = async (e) => {
+        if (activeIndex === 0) {
+            setItemHeaderCss(collapsedHeaderCss);
+            setActiveIndex(1);
+        }
+        else {
+            setItemHeaderCss(expandedHeaderCss);
+            setActiveIndex(0);
+        }
+    }
+
     return (
-        <Accordion defaultActiveKey="0" className='sage-chat-history__item' data-id={model.id}>
-            <Card>
-                <Card.Header className='sage-chat-history__item-header'>
-                    <Row>
-                        <Col>
-                        </Col>
-                        <Col xs="auto">
-                            <Stack direction="horizontal">
-                                <Actions
-                                    model={model}
-                                    onFavoriteClick={onFavoriteClickDelegate}
-                                    onNoteClick={onNoteClickkDelegate}
-                                    onFeedbackClick={onFeedbackClickDelegate}
-                                    onDeleteClick={onDeleteClickDelegate}
-                                />
-                                <AccordionButton eventKey="0" />
-                            </Stack>
-                        </Col>
-                    </Row>
-                </Card.Header>
-                <Accordion.Collapse eventKey="0">
-                    <Card.Body className='sage-chat-history__item-body'>
+        <div className='sage-chat-history__item' data-id={model.id}>
+            <div className={`sage-chat-history__item-header ${itemHeaderCss}`}>
+                <div className="flex flex-wrap align-items-center justify-content-end gap-1">
+                    <Actions
+                        model={model}
+                        onFavoriteClick={onFavoriteClickDelegate}
+                        onNoteClick={onNoteClickkDelegate}
+                        onFeedbackClick={onFeedbackClickDelegate}
+                        onDeleteClick={onDeleteClickDelegate}
+                    />
+                    <IconButton icon={activeIndex === 0 ? "chevron-down" : "chevron-up"} onClick={onAccordionClickDelegate} />
+                </div>
+            </div>
+            <Accordion activeIndex={activeIndex} onTabChange={(e) => setActiveIndex(e.index)}>
+                <AccordionTab>
+                    <div className='sage-chat-history__item-body'>
                         <Question model={model} />
                         <Answer model={model} onQuery={onQueryItemDelegate} />
                         <div className='sage-chat-history__item-timestamp'>
-                            <Row>
-                                <Col>
-                                    {formatDate(model.datetime)}
-                                </Col>
-                            </Row>
+                            {formatDate(model.datetime)}
                         </div>
-                    </Card.Body>
-                </Accordion.Collapse>
-            </Card>
-        </Accordion>
+                    </div>
+                </AccordionTab>
+            </Accordion>
+        </div>
     );
 }

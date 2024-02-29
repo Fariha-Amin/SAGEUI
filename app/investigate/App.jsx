@@ -1,17 +1,16 @@
-import 'bootstrap/dist/css/bootstrap.min.css'
-import "../../sage.scss";
+import 'primeflex/primeflex.css';
+import 'primereact/resources/primereact.css';
+import 'primereact/resources/themes/bootstrap4-light-blue/theme.css';
+import "_root/sage.scss";
 import './App.css';
 import React from "react";
 import { useState, useEffect } from "react";
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
+import { useSelector, useDispatch } from 'react-redux'
 import ChatPrompt from "_investigate/chat/ChatPrompt";
 import ChatHistory from "_investigate/chat/ChatHistory";
 import Header from '_investigate/Header';
-
-import { useSelector, useDispatch } from 'react-redux'
-import { setCount } from '../../libs/app/investigate/Reducers/docCounterSlice';
-import client from '../../libs/app/investigate/httpClient';
+import { setCount } from '_investigate/Reducers/docCounterSlice';
+import client from '_investigate/httpClient';
 
 const App = () => {
     useEffect(() => {
@@ -46,13 +45,13 @@ const App = () => {
 
     return (
         <div className="sage-investigate">
-            <Row className='sage-investigate-header'>
-                <Col>
+            <div className='grid sage-investigate__header'>
+                <div className="col">
                     <Header docCount={docCount} />
-                </Col>
-            </Row>
-            <Row className='sage-investigate-body'>
-                <Col>
+                </div>
+            </div>
+            <div className='grid sage-investigate__body'>
+                <div className="col">
                     <ChatHistory 
                         queryId={queryId} 
                         onHistoryLoading={onHistoryLoadingDelegate} 
@@ -61,13 +60,13 @@ const App = () => {
                         onAnswerLoaded={onAnswerLoadedDelegate}
                         docCount={docCount}
                         />
-                </Col>
-            </Row>
-            <Row className='sage-investigate-footer'>
-                <Col>
+                </div>
+            </div>
+            <div className='grid sage-investigate__footer'>
+                <div className="col">
                     <ChatPrompt loading={loading} onQuery={onQueryDelegate} docCount={docCount} />
-                </Col>
-            </Row>
+                </div>
+            </div>
         </div>
     );
 };

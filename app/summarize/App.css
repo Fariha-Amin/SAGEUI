@@ -20,6 +20,13 @@ body {
   flex-direction: column;
 }
 
+.p-icon.p-sortable-column-icon{
+  color:white;
+}
+
+
+
+
 .justify-content-between {
   justify-content: space-between;
 }
@@ -61,6 +68,10 @@ body {
   font-size: 28px;
 }
 
+.font-size-16 {
+  font-size: 16px;
+}
+
 .margin-zero {
   margin: 0;
 }
@@ -89,9 +100,13 @@ body {
 }
 
 .p-column-filter input {
-  border-radius: 1px;
-}
-
+    border-radius: 1px;
+  }
+  
+  .p-column-title{
+    /* width:100%; */
+  }
+  
 .black-header-table .p-column-filter input {
   padding: 4px;
   margin: 0;

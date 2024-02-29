@@ -4,7 +4,6 @@
 html, body {
     font-family: fonts.$sage-font-family;
     color: fonts.$sage-font-color;
-    overflow: hidden;
 }
 
 .sage-icon-button {
@@ -31,4 +30,20 @@ html, body {
     left: -0.25rem;
     vertical-align: super;
     position: relative;
+}
+
+.p-component {
+    font-family: fonts.$sage-font-family;
+}
+
+.p-card .p-card-body {
+    padding: 0.5rem;
+}
+
+.p-card .p-card-content {
+    padding: 0.5rem 0;
+}
+
+.p-accordion-header {
+    display: none;
 }
