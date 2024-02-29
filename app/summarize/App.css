@@ -319,3 +319,23 @@ table.dataTable thead tr th {
   margin: 0rem .5rem;
   height: 35px;
 }
+
+.p-radiobutton .p-radiobutton-box.p-highlight {
+  border-color: #3387E0 !important;
+  background: #3387E0 !important;
+}
+
+.p-radiobutton .p-radiobutton-box .p-radiobutton-icon {
+  width: 9px;
+  height: 9px;
+}
+
+.p-dialog .p-dialog-header {
+  border-top-right-radius: 0px;
+  border-top-left-radius: 0px;
+}
+
+.p-dialog .p-dialog-footer {
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+}
