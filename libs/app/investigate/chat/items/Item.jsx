@@ -2,6 +2,7 @@ import './Item.scss';
 import React from 'react';
 import { useState } from "react";
 import { Accordion, AccordionTab } from 'primereact/accordion';
+import FeedbackModal from './FeedbackModal';
 import IconButton from '_shared/icon-button/IconButton';
 import Actions from './Actions';
 import Answer from './Answer';
@@ -31,6 +32,8 @@ function formatDate(datetime) {
 export default function Item({ model, onQuery }) {
     const [activeIndex, setActiveIndex] = useState(0);
     const [itemHeaderCss, setItemHeaderCss] = useState(expandedHeaderCss);
+    const [showFeedback, setShowFeedback] = useState(false);
+
     const onQueryItemDelegate = async (e) =>  {
         onQuery && onQuery({ id: e.id, value: e.value, personalId : e.personalId });
     };
@@ -50,6 +53,7 @@ export default function Item({ model, onQuery }) {
     const onFeedbackClickDelegate = async (e) => {
         // Show feedback UI
         // To do
+        setShowFeedback(true);
         model.hasFeedback = !model.hasFeedback;
         await sageClient.updateInvestigation(model);
     }
@@ -82,6 +86,7 @@ export default function Item({ model, onQuery }) {
                         onDeleteClick={onDeleteClickDelegate}
                     />
                     <IconButton icon={activeIndex === 0 ? "chevron-down" : "chevron-up"} onClick={onAccordionClickDelegate} />
+                    <FeedbackModal shouldShow={showFeedback} onClose={setShowFeedback} />
                 </div>
             </div>
             <Accordion activeIndex={activeIndex} onTabChange={(e) => setActiveIndex(e.index)}>
