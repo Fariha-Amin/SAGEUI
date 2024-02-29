@@ -8,8 +8,6 @@ import { Checkbox } from "primereact/checkbox";
 import { Dialog } from "primereact/dialog";
 import { Button } from "primereact/button";
 import { RadioButton } from "primereact/radiobutton";
-import AllSelectModal from "./AllSelectModal";
-import ColumnCheckBox from "./ColumnCheckBox";
 
 export default function SageDataTable(props) {
   //const lazyLoadTableCofig=
@@ -27,7 +25,11 @@ export default function SageDataTable(props) {
   const [totalRecords, setTotalRecords] = useState(0);
   const [selectAll, setSelectAll] = useState(false);
   const [modalShow, setModalShow] = useState(false);
-  const [headerChecked, setHeaderChecked] = useState(false);
+  const [selectedRadioOption, setSelectedRadioOption] = useState(null);
+  const radioOptions = [
+    { label: "Documents on current page", value: 1 },
+    { label: "Documents across all pages", value: 2 },
+  ];
 
   let filterStateInitial = {};
 
@@ -69,20 +71,6 @@ export default function SageDataTable(props) {
     }).then((apiResponse) => {
       setTotalRecords(apiResponse.totalRecords);
       setData(apiResponse.data);
-      if (selectedRows.includes(-1)) {
-        setSelectedRows([
-          ...apiResponse.data
-            .filter(
-              (data) =>
-                !removedRows.some(
-                  (removedRecId) => data.recId === removedRecId
-                ) &&
-                !selectedRows.some((addedRecId) => data.recId === addedRecId)
-            )
-            .map((data) => data.recId),
-          -1,
-        ]);
-      }
       setLoading(false);
     });
   };
@@ -120,23 +108,13 @@ export default function SageDataTable(props) {
     return <td colSpan={6}>{data.Summary}</td>;
   };
 
-  const onCheckboxClick = (e, rowData) => {
-    const isChecked = e.checked;
-    if (isChecked) {
-      setSelectedRows([...selectedRows, rowData.recId]);
-      setRemovedRows(removedRows.filter((row) => row !== rowData.recId));
-    } else {
-      setSelectedRows(selectedRows.filter((row) => row !== rowData.recId));
-      removedRows.push(rowData.recId);
-      setRemovedRows(removedRows);
-      setSelectAll(false);
-    }
-  };
-
   const onDataTableKeyDown = (event) => {
     if (event.keyCode == 13 && event.target.type == "text") {
       console.log(event.target);
       setlazyState({ ...lazyStateTemp });
+      setSelectedRows([]);
+      setRemovedRows([]);
+      setSelectAll(false);
     }
   };
 
@@ -158,39 +136,78 @@ export default function SageDataTable(props) {
   }
 
   const onSelectAllChange = (event) => {
-    const selectAll = event.checked;
-
-    if (selectAll) {
-      setModalShow(true);
+    if (totalRecords <= tableConfig.rows) {
+      setSelectAll(event.checked ? true : false);
+      setSelectedRows(event.checked ? [-1] : []);
     } else {
-      setSelectAll(false);
-      setSelectedRows([]);
+      setSelectedRadioOption(1);
+      setModalShow(true);
     }
   };
 
-  const handleAllCheckOkClick = () => {
-    if (selectedOption == "single") {
-      setSelectedRows([...selectedRows, ...data.map((_) => _.recId)]);
-      setRemovedRows([
-        removedRows.filter(
-          (removedRow) =>
-            !selectedRows.some((selectedRow) => removedRow === selectedRow)
-        ),
-        -1,
-      ]);
-      setRemovedRows([]);
-    } else if (selectedOption == "all") {
-      setSelectAll(true);
-      setSelectedRows([...data.map((_) => _.recId).concat(-1)]);
-      setRemovedRows([]);
+  const onCheckBoxChange = (e, rowData) => {
+    const isChecked = e.checked;
+    if (isChecked) {
+      setSelectedRows([...selectedRows, rowData.recId]);
+      setRemovedRows(removedRows.filter((row) => row !== rowData.recId));
     } else {
-      setSelectedRows([]);
+      setSelectedRows(selectedRows.filter((row) => row !== rowData.recId));
+      removedRows.push(rowData.recId);
+      setRemovedRows(removedRows);
+      setSelectAll(false);
+    }
+  };
+
+  const onRadioBtnClick = () => {
+    if (!selectAll) {
+      if (selectedRadioOption == 1) {
+        if (selectedRows.includes(-1)) {
+          setSelectedRows([...data.map((_) => _.recId)]);
+        } else {
+          setSelectedRows([
+            ...new Set([...selectedRows, ...data.map((_) => _.recId)]),
+          ]);
+        }
+        setRemovedRows([
+          removedRows.filter(
+            (removedRow) =>
+              !selectedRows.some((selectedRow) => removedRow === selectedRow)
+          ),
+        ]);
+      } else if (selectedRadioOption == 2) {
+        setSelectAll(true);
+        setSelectedRows([-1]);
+        setRemovedRows([]);
+      } else {
+        setSelectedRows([]);
+      }
+    } else {
+      setSelectAll(false);
+      if (selectedRadioOption == 2) {
+        setSelectedRows([]);
+      } else {
+        setSelectedRows([
+          ...selectedRows.filter(
+            (selectedRow) => !data.some((_) => _.recId === selectedRow)
+          ),
+        ]);
+        setRemovedRows([
+          ...new Set([...removedRows, ...data.map((_) => _.recId)]),
+        ]);
+      }
     }
     setModalShow(false);
   };
 
   const isRowSelected = (rowData) => {
-    return selectedRows.some((row) => row === rowData.recId);
+    if (
+      selectedRows.includes(-1) &&
+      !removedRows.some((_) => _ === rowData.recId)
+    ) {
+      return true;
+    } else {
+      return selectedRows.some((row) => row === rowData.recId);
+    }
   };
 
   const headerElement = (
@@ -208,18 +225,17 @@ export default function SageDataTable(props) {
         severity="secondary"
         outlined
         onClick={() => setModalShow(false)}
+        style={{ color: "#6C757D", borderColor: "#6C757D" }}
         autoFocus
       />
-      <Button label="Ok" onClick={() => handleAllCheckOkClick()} autoFocus />
+      <Button
+        style={{ backgroundColor: "#066FDE", color: "#FFFFFF" }}
+        label="Ok"
+        onClick={() => onRadioBtnClick()}
+        autoFocus
+      />
     </div>
   );
-
-  const radioOptions = [
-    { label: "Documents on current page", value: "single" },
-    { label: "Documents across all pages", value: "all" },
-  ];
-
-  const [selectedOption, setSelectedOption] = useState(null); // State to hold the selected option
 
   return (
     <div>
@@ -246,7 +262,7 @@ export default function SageDataTable(props) {
               return (
                 <Checkbox
                   checked={isRowSelected(rowData)}
-                  onChange={(e) => onCheckboxClick(e, rowData)}
+                  onChange={(e) => onCheckBoxChange(e, rowData)}
                 />
               );
             }}
@@ -255,15 +271,14 @@ export default function SageDataTable(props) {
           {sageTableUtil.createColumnDefinition(columnDef, false)}
         </DataTable>
       </div>
-      {
+      {modalShow && (
         <Dialog
           visible={modalShow}
           modal
           header={headerElement}
           footer={footerContent}
-          style={{ width: "35rem" }}
+          style={{ width: "32rem" }}
           onHide={() => setModalShow(false)}
-          closable={false}
         >
           {radioOptions.map((option) => (
             <div className="p-col p-modal-container" key={option.value}>
@@ -271,14 +286,16 @@ export default function SageDataTable(props) {
                 inputId={option.value}
                 name="option"
                 value={option.value}
-                onChange={(e) => setSelectedOption(e.value)}
-                checked={selectedOption === option.value}
+                onChange={(e) => setSelectedRadioOption(e.value)}
+                checked={selectedRadioOption === option.value}
               />
-              <label htmlFor={option.value}>{option.label}</label>
+              <label style={{ fontSize: "16px" }} htmlFor={option.value}>
+                {option.label}
+              </label>
             </div>
           ))}
         </Dialog>
-      }
+      )}
     </div>
   );
 }
