@@ -359,6 +359,7 @@ table.table-bordered.dataTable td:last-child {
 .footer-button .p-button.p-component{
   margin: 0rem .5rem;
   height: 35px;
+  font-size: 14px;
 }
 
 .form-check{
@@ -368,4 +369,23 @@ table.table-bordered.dataTable td:last-child {
 
 .btn.btn-link{
   --bs-btn-padding-x: 0.35rem;
+}
+.p-radiobutton .p-radiobutton-box.p-highlight {
+  border-color: #3387E0 !important;
+  background: #3387E0 !important;
+}
+
+.p-radiobutton .p-radiobutton-box .p-radiobutton-icon {
+  width: 9px;
+  height: 9px;
+}
+
+.p-dialog .p-dialog-header {
+  border-top-right-radius: 0px;
+  border-top-left-radius: 0px;
+}
+
+.p-dialog .p-dialog-footer {
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 0px;
 }
