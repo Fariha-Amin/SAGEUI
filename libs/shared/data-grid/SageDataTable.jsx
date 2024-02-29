@@ -71,20 +71,6 @@ export default function SageDataTable(props) {
     }).then((apiResponse) => {
       setTotalRecords(apiResponse.totalRecords);
       setData(apiResponse.data);
-      if (selectedRows.includes(-1)) {
-        setSelectedRows([
-          ...apiResponse.data
-            .filter(
-              (data) =>
-                !removedRows.some(
-                  (removedRecId) => data.recId === removedRecId
-                ) &&
-                !selectedRows.some((addedRecId) => data.recId === addedRecId)
-            )
-            .map((data) => data.recId),
-          -1,
-        ]);
-      }
       setLoading(false);
     });
   };
