@@ -7,10 +7,31 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 import TableActionButtons from "./components/TableActionButtons";
 import ViewDocButton from "./components/ViewDocButton";
-
 import "./App.css";
+import SageDataTableCell from "../../libs/shared/data-grid/SageDataTableCell";
 
 export default function App() {
+  const docIdsToDisplayInSingleLine = 5;
+  const prettifyDocIdForToolTip = (cellText) => {
+    let docIdslist = cellText.split(",").map((docId) => docId.trim());
+
+    let result = "";
+
+    for (let i = 0; i < docIdslist.length; i++) {
+      result += docIdslist[i];
+      if (
+        (i + 1) % docIdsToDisplayInSingleLine === 0 &&
+        i !== docIdslist.length - 1
+      ) {
+        result += ",\n"; // Add new line after every 5 values, except the last one
+      } else if (i !== docIdslist.length - 1) {
+        result += ", "; // Add comma and space for separation, except the last one
+      }
+    }
+
+    return result;
+  };
+
   return (
     <div className="App">
       <SummaryHeader />
@@ -45,7 +66,13 @@ export default function App() {
         <SageTableColumn
           order={3}
           body={(row) => {
-            return <MeasuredDisplay displayText={row.summaryGeneratedOn} />;
+            return (
+              <SageDataTableCell
+                cellText={row.summaryGeneratedOn}
+                showToolTip={true}
+                truncateText={true}
+              />
+            );
           }}
           field="summaryGeneratedOn"
           header="Date/Time"
@@ -56,7 +83,13 @@ export default function App() {
         <SageTableColumn
           order={4}
           body={(row) => {
-            return <MeasuredDisplay displayText={row.user} />;
+            return (
+              <SageDataTableCell
+                cellText={row.user}
+                showToolTip={true}
+                truncateText={true}
+              />
+            );
           }}
           field="user"
           header="User"
@@ -67,7 +100,14 @@ export default function App() {
         <SageTableColumn
           order={5}
           body={(row) => {
-            return <MeasuredDisplay displayText={row.documentId} />;
+            return (
+              <SageDataTableCell
+                cellText={row.documentId}
+                showToolTip={true}
+                truncateText={true}
+                onRenderringToolTipText={prettifyDocIdForToolTip}
+              />
+            );
           }}
           field="documentId"
           header="DocId (Fed to AI)"
@@ -79,7 +119,11 @@ export default function App() {
           order={6}
           body={(row) => {
             return (
-              <MeasuredDisplay displayText={row.summary} hideToolTip={true} />
+              <SageDataTableCell
+                cellText={row.summary}
+                showToolTip={false}
+                truncateText={true}
+              />
             );
           }}
           field="summary"
@@ -91,7 +135,13 @@ export default function App() {
         <SageTableColumn
           order={7}
           body={(row) => {
-            return <MeasuredDisplay displayText={row.notes} />;
+            return (
+              <SageDataTableCell
+                cellText={row.notes}
+                showToolTip={false}
+                truncateText={true}
+              />
+            );
           }}
           field="notes"
           header="Notes"

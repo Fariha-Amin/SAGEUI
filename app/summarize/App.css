@@ -2,6 +2,15 @@ body {
   margin: 3rem 1.5rem;
   color: #000000;
   background-color: #f2f3f9;
+  /* font-family: "Open Sans"; */
+}
+.p-component {
+  font-family: "Open Sans-Regular", Helvetica;
+  font-size: 12px;
+  font-weight: 400;
+  left: 0;
+  letter-spacing: 0;
+  color: #333333;
 }
 
 .flex {
@@ -44,9 +53,9 @@ body {
 }
 
 /* Font  */
-.font-family {
-    font-family:'Helvetica'
-}
+/* .font-family {
+  font-family: "Helvetica";
+} */
 
 .font-size-header {
   font-size: 28px;
@@ -80,9 +89,9 @@ body {
 }
 
 .p-column-filter input {
-    border-radius: 1px;
-  }
-  
+  border-radius: 1px;
+}
+
 .black-header-table .p-column-filter input {
   padding: 4px;
   margin: 0;
@@ -97,15 +106,21 @@ body {
   height: 2rem; /* Adjust the height as needed */
 }
 
-.p-datatable{
+/* .p-datatable {
   font-size: 12px;
-  font-family: 'Helvetica';
-}
+  font-family: "Helvetica";
+} */
 
 .p-datatable tr td {
-    white-space: nowrap; /* Prevent text from wrapping */
-    overflow: hidden; /* Hide overflow text */
-    text-overflow: ellipsis; /* Show ellipsis for overflow text */
+  white-space: nowrap; /* Prevent text from wrapping */
+  overflow: hidden; /* Hide overflow text */
+  text-overflow: ellipsis; /* Show ellipsis for overflow text */
+}
+
+.truncateCellText {
+  white-space: nowrap; /* Prevent text from wrapping */
+  overflow: hidden; /* Hide overflow text */
+  text-overflow: ellipsis; /* Show ellipsis for overflow text */
 }
 
 .p-datatable tr td div {
@@ -115,74 +130,74 @@ body {
 }
 
 table.dataTable thead tr th {
-    background-color: #595d67;
-    color: white;
-  }
-  
-  body table.dataTable thead tr th.sorting_asc:after {
-    content: "\f0dd";
-    color: #ffffff;
-  }
-  
-  body table.dataTable thead tr th.sorting_desc:after {
-    content: "\f0de";
-    color: #ffffff;
-  }
-  
-  table.dataTable thead .sorting_asc,
-  table.dataTable thead .sorting_desc {
-    background-color: #5c6a84 !important;
-  }
-  
-  body table.dataTable thead tr th.sorting {
-    content: "\f0dc";
-  }
-  
-  div.dataTables_wrapper div.dataTables_info {
-    margin-top: 15px;
-  }
-  
-  .dataTables_wrapper table.dataTable thead .sorting_asc,
-  .dataTables_wrapper table.dataTable thead .sorting_desc {
-    background-color: #5c6a84 !important;
-  }
-  
-  table.table-bordered.dataTable thead tr:first-child th,
-  table.table-bordered.dataTable thead tr:first-child td {
-    border-top-width: 0px;
-  }
-  
-  .table-hover > tbody > tr.active-row > td,
-  .table-hover > tbody > tr:hover > td,
-  .dataTable > tbody > tr.active-row > td,
-  .dataTable > tbody > tr:hover > td {
-    background-color: #ecf3f8 !important;
-  }
-  
-  /* data table border color with thickness */
-  
-  /* .table-bordered > :not(caption) > * > * {
+  background-color: #595d67;
+  color: white;
+}
+
+body table.dataTable thead tr th.sorting_asc:after {
+  content: "\f0dd";
+  color: #ffffff;
+}
+
+body table.dataTable thead tr th.sorting_desc:after {
+  content: "\f0de";
+  color: #ffffff;
+}
+
+table.dataTable thead .sorting_asc,
+table.dataTable thead .sorting_desc {
+  background-color: #5c6a84 !important;
+}
+
+body table.dataTable thead tr th.sorting {
+  content: "\f0dc";
+}
+
+div.dataTables_wrapper div.dataTables_info {
+  margin-top: 15px;
+}
+
+.dataTables_wrapper table.dataTable thead .sorting_asc,
+.dataTables_wrapper table.dataTable thead .sorting_desc {
+  background-color: #5c6a84 !important;
+}
+
+table.table-bordered.dataTable thead tr:first-child th,
+table.table-bordered.dataTable thead tr:first-child td {
+  border-top-width: 0px;
+}
+
+.table-hover > tbody > tr.active-row > td,
+.table-hover > tbody > tr:hover > td,
+.dataTable > tbody > tr.active-row > td,
+.dataTable > tbody > tr:hover > td {
+  background-color: #ecf3f8 !important;
+}
+
+/* data table border color with thickness */
+
+/* .table-bordered > :not(caption) > * > * {
     border-width: 1 1px;
   } */
-  
-  table.table-bordered.dataTable thead tr th,
-  table.table-bordered.dataTable thead tr td {
-    border-width: 3px;
-  }
-  
-  table.table-bordered.dataTable th:first-child,
-  table.table-bordered.dataTable th:first-child,
-  table.table-bordered.dataTable td:first-child,
-  table.table-bordered.dataTable td:first-child {
-    border-left-width: 3px;
-  }
-  
-  table.table-bordered.dataTable th:last-child,
-  table.table-bordered.dataTable th:last-child,
-  table.table-bordered.dataTable td:last-child,
-  table.table-bordered.dataTable td:last-child {
-    border-right-width: 1px;
-  }
+
+table.table-bordered.dataTable thead tr th,
+table.table-bordered.dataTable thead tr td {
+  border-width: 3px;
+}
+
+table.table-bordered.dataTable th:first-child,
+table.table-bordered.dataTable th:first-child,
+table.table-bordered.dataTable td:first-child,
+table.table-bordered.dataTable td:first-child {
+  border-left-width: 3px;
+}
+
+table.table-bordered.dataTable th:last-child,
+table.table-bordered.dataTable th:last-child,
+table.table-bordered.dataTable td:last-child,
+table.table-bordered.dataTable td:last-child {
+  border-right-width: 1px;
+}
 
 /* PrimeReact paginator */
 .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
@@ -202,29 +217,28 @@ table.dataTable thead tr th {
 .p-paginator .p-paginator-prev.p-link,
 .p-paginator .p-paginator-next.p-link,
 .p-paginator .p-paginator-last.p-paginator-element.p-link,
-.p-paginator .p-paginator-first.p-paginator-element.p-link{
-    border-color: #ced4da !important;
-    border-radius: 1px !important;
-    color: #2F3541 !important;
-    box-sizing: border-box;
-    display: inline-block;
-    min-width: 1.5em;
-    padding: 0.5em 1em;
-    margin-left: 2px;
-    text-align: center;
-    text-decoration: none !important;
-    cursor: pointer;
-    border: 1px solid transparent;
-    margin: 0px;
-    height: auto;
+.p-paginator .p-paginator-first.p-paginator-element.p-link {
+  border-color: #ced4da !important;
+  border-radius: 1px !important;
+  color: #2f3541 !important;
+  box-sizing: border-box;
+  display: inline-block;
+  min-width: 1.5em;
+  padding: 0.5em 1em;
+  margin-left: 2px;
+  text-align: center;
+  text-decoration: none !important;
+  cursor: pointer;
+  border: 1px solid transparent;
+  margin: 0px;
+  height: auto;
 }
 
 .p-paginator .p-paginator-pages .p-paginator-page.p-highlight,
 .p-paginator-first.p-paginator-element.p-link.p-highlight,
-.p-paginator-last.p-paginator-element.p-link.p-highlight
-{
-  background-color: #016FA0 !important;
-  border-color: #016FA0 !important;
+.p-paginator-last.p-paginator-element.p-link.p-highlight {
+  background-color: #016fa0 !important;
+  border-color: #016fa0 !important;
   border-radius: 1px !important;
   color: #ffffff !important;
 }
@@ -249,11 +263,27 @@ table.dataTable thead tr th {
   float: right;
 }
 
-.form-check{
+.form-check {
   padding-left: 3rem;
   margin-bottom: 0.45rem;
 }
 
-.btn.btn-link{
+.btn.btn-link {
   --bs-btn-padding-x: 0.35rem;
+}
+
+.abc > .p-tooltip-text {
+  background: #4b5563;
+  color: #ffffff;
+  padding: 0.75rem 0.75rem;
+  box-shadow: none;
+  border-radius: 2px;
+}
+
+.p-tooltip-arrow {
+  border-style: none;
+}
+
+.table > :not(caption) > * > * {
+  color: #333333;
 }
