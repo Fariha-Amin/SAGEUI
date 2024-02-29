@@ -131,6 +131,7 @@ function getDefaultModel() {
     return {
         id: 0,
         datetime: new Date(),
+        isDeleted: false,
         query: {
             id: 0,
             datetime: new Date(),

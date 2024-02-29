@@ -5,15 +5,12 @@ import { Button } from 'primereact/button';
 export default function ConfirmDialog({
     message = "Are you sure you want to proceed?",
     header = "Confirm",
-    
     onAccept,
     acceptLoading,
     acceptButtonLabel = "Ok",
-    
     onReject,
     rejectLoading,
     rejectButtonLabel = "Cancel",
-
     visible = false,
     onOpen,
     onClose }) {
