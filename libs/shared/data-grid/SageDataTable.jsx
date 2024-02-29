@@ -26,6 +26,11 @@ export default function SageDataTable(props) {
   const [totalRecords, setTotalRecords] = useState(0);
   const [selectAll, setSelectAll] = useState(false);
   const [modalShow, setModalShow] = useState(false);
+  const [selectedRadioOption, setSelectedRadioOption] = useState(null);
+  const radioOptions = [
+    { label: "Documents on current page", value: 1 },
+    { label: "Documents across all pages", value: 2 },
+  ];
 
   let filterStateInitial = {};
 
@@ -236,13 +241,6 @@ export default function SageDataTable(props) {
       />
     </div>
   );
-
-  const radioOptions = [
-    { label: "Documents on current page", value: 1 },
-    { label: "Documents across all pages", value: 2 },
-  ];
-
-  const [selectedRadioOption, setSelectedRadioOption] = useState(null); // State to hold the selected option
 
   return (
     <div>
