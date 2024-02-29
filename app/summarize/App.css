@@ -359,6 +359,7 @@ table.table-bordered.dataTable td:last-child {
 .footer-button .p-button.p-component{
   margin: 0rem .5rem;
   height: 35px;
+  font-size: 14px;
 }
 
 .form-check{
