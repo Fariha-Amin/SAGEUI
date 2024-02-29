@@ -16,10 +16,9 @@ export default function SageDataTable(props) {
   const { dataUrl, lazy } = props;
   const columnDef = props.children;
 
-  const [data, setData] = useState([]);
-  const [columnDefinations, setColumnDefinations] = useState(
-    sageTableUtil.createColumnDefinition(columnDef, false)
-  );
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
   const [expandedRows, setExpandedRows] = useState(null);
   const [selectedRows, setSelectedRows] = useState([]);
   const [removedRows, setRemovedRows] = useState([]);
@@ -45,10 +44,10 @@ export default function SageDataTable(props) {
 
   const [lazyState, setlazyState] = useState({
     first: 0,
-    rows: 25,
+    rows: 20,
     page: 1,
-    sortField: null,
-    sortOrder: null,
+    sortField: props.defaultSortField,
+    sortOrder: props.defaultSortOrder,
     filters: filterStateInitial,
   });
 
@@ -61,24 +60,32 @@ export default function SageDataTable(props) {
   }, [lazyState]);
 
   const loadLazyData = () => {
-    //setLoading(true);
+    setLoading(true);
 
     if (networkTimeout) {
       clearTimeout(networkTimeout);
     }
-
-    setColumnDefinations(
-      sageTableUtil.createColumnDefinition(columnDef, false)
-    );
 
     DataService.getTableData(dataUrl, {
       dataTableRequest: JSON.stringify(lazyState),
     }).then((apiResponse) => {
       setTotalRecords(apiResponse.totalRecords);
       setData(apiResponse.data);
-      setColumnDefinations(
-        sageTableUtil.createColumnDefinition(columnDef, false) // Updated to pass currentSortField
-      );
+      if (selectedRows.includes(-1)) {
+        setSelectedRows([
+          ...apiResponse.data
+            .filter(
+              (data) =>
+                !removedRows.some(
+                  (removedRecId) => data.recId === removedRecId
+                ) &&
+                !selectedRows.some((addedRecId) => data.recId === addedRecId)
+            )
+            .map((data) => data.recId),
+          -1,
+        ]);
+      }
+      setLoading(false);
     });
   };
 
@@ -136,6 +143,7 @@ export default function SageDataTable(props) {
       onFilter: onFilter,
       filters: lazyState.filters,
       onKeyDown: onDataTableKeyDown,
+      loading: loading,
     };
 
     tableConfig = { ...tableConfig, ...tableConfigLazy };
@@ -252,6 +260,11 @@ export default function SageDataTable(props) {
           paginatorTemplate={CustomPaginatorTemplate({
             totalPages: Math.ceil(totalRecords / tableConfig.rows),
           })}
+          emptyMessage={() => (
+            <div style={{ textAlign: "center" }}>
+              Your query returned no data
+            </div>
+          )}
         >
           <Column
             className="check"
@@ -269,7 +282,7 @@ export default function SageDataTable(props) {
             }}
           />
 
-          {columnDefinations}
+          {sageTableUtil.createColumnDefinition(columnDef, false)}
         </DataTable>
       </div>
       {modalShow && (
