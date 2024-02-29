@@ -25,6 +25,8 @@ export default function App() {
         cellSelection={true}
         lazy={true}
         dataUrl="http://localhost:5000/api/getTableData"
+        defaultSortField="summaryGeneratedOn"
+        defaultSortOrder={-1}
       >
         <SageTableColumn
           order={2}
