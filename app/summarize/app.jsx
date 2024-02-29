@@ -138,7 +138,7 @@ export default function App() {
             return (
               <SageDataTableCell
                 cellText={row.notes}
-                showToolTip={false}
+                showToolTip={true}
                 truncateText={true}
               />
             );

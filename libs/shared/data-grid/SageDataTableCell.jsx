@@ -15,7 +15,7 @@ function SageDataTableCell({
     />
   );
 
-  const cellClassName = `tooltipTarget${
+  const cellClassName = `${showToolTip ? "tooltipTarget" : ""}${
     truncateText ? " truncateCellText" : ""
   }`;
 
@@ -33,7 +33,7 @@ function SageDataTableCell({
 
   return (
     <>
-      {showToolTip ? tooltipComp : ""}
+      {showToolTip ? "" : tooltipComp}
       {cellComp}
     </>
   );
