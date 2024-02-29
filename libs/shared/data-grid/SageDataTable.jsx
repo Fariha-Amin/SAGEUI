@@ -8,9 +8,15 @@ import { Checkbox } from "primereact/checkbox";
 import { Dialog } from "primereact/dialog";
 import { Button } from "primereact/button";
 import { RadioButton } from "primereact/radiobutton";
+import { useDispatch, useSelector } from "react-redux";
+import { checkboxCheck, checkboxUncheck } from "./reducers/checkboxSlice";
 
 export default function SageDataTable(props) {
-  //const lazyLoadTableCofig=
+  const dispatch = useDispatch();
+  useSelector((state) => {
+    state;
+  });
+
   let tableConfig = sageTableUtil.createTableConfig(props);
 
   const { dataUrl, lazy } = props;
@@ -145,10 +151,12 @@ export default function SageDataTable(props) {
     }
   };
 
-  const onCheckBoxChange = (e, rowData) => {
+  const onCheckboxChange = (e, rowData) => {
     const isChecked = e.checked;
+
     if (isChecked) {
-      setSelectedRows([...selectedRows, rowData.recId]);
+      // setSelectedRows([...selectedRows, rowData.recId]);
+      dispatch(checkboxCheck(rowData.recId));
       setRemovedRows(removedRows.filter((row) => row !== rowData.recId));
     } else {
       setSelectedRows(selectedRows.filter((row) => row !== rowData.recId));
@@ -262,7 +270,7 @@ export default function SageDataTable(props) {
               return (
                 <Checkbox
                   checked={isRowSelected(rowData)}
-                  onChange={(e) => onCheckBoxChange(e, rowData)}
+                  onChange={(e) => onCheckboxChange(e, rowData)}
                 />
               );
             }}

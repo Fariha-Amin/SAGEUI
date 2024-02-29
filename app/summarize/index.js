@@ -2,15 +2,19 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./app";
 import { PrimeReactProvider } from "primereact/api";
+import { Provider } from "react-redux";
 import "primeflex/primeflex.css";
 import "primereact/resources/primereact.css";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
+import { sageDatatableStore } from "../../libs/shared/data-grid/stores/sageDatatableStore";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <PrimeReactProvider>
-      <App />
-    </PrimeReactProvider>
+    <Provider store={sageDatatableStore}>
+      <PrimeReactProvider>
+        <App />
+      </PrimeReactProvider>
+    </Provider>
   </React.StrictMode>
 );
