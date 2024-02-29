@@ -30,6 +30,13 @@ const filterTableData = (array, filters) => {
         .includes(filters.summary.value.toLowerCase())
     );
   }
+  if (filters.summaryGeneratedOn.value) {
+    filteredArray = filteredArray.filter((summarizer) =>
+      summarizer.summaryGeneratedOn
+        .toLowerCase()
+        .includes(filters.summaryGeneratedOn.value.toLowerCase())
+    );
+  }
 
   return filteredArray;
 };
