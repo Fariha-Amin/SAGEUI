@@ -1,6 +1,6 @@
 import React from 'react';
 import '@testing-library/jest-dom'
-import { fireEvent, render, waitFor } from "@testing-library/react";
+import { fireEvent, render } from "@testing-library/react";
 import ConfirmDialog from './ConfirmDialog';
 
 describe("ConfirmDialog renders", () => {

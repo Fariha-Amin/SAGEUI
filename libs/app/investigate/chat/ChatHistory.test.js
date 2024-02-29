@@ -1,6 +1,7 @@
 import React from 'react';
 import '@testing-library/jest-dom'
-import { render, waitFor } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
+import { userEvent } from "@testing-library/user-event";
 import ChatHistory from './ChatHistory';
 import sageClient from "_investigate/httpClient";
 
@@ -124,6 +125,52 @@ describe("ChatHistory UI", () => {
         expect(elements).not.toBeNull();
         expect(elements).toBeDefined();
         expect(elements).toHaveLength(25);
+    });
+});
+
+describe("ChatHistory UX", () => {
+    describe("Delete Item", () => {
+        test("shows toast notification", async () => {
+            // Arrange
+            const queryId = 0;
+            const onHistoryLoading = jest.fn();
+            const onHistoryLoaded = jest.fn();
+            const onInvestigationLoading = jest.fn();
+            const onInvestigationLoaded = jest.fn();
+            const onAnswerLoading = jest.fn();
+            const onAnswerLoaded = jest.fn();
+            const toastText = "Your question has been successfully deleted from the page.";
+    
+            // Load 1 item
+            const mockGetInvestigationsAsync = () => {
+                return new Promise(function (resolve, reject) {
+                    let data = [ getDefaultModel() ];
+                    resolve(data);
+                });
+            };
+            sageClient.getInvestigationsAsync.mockImplementation(mockGetInvestigationsAsync);
+    
+            // Act
+            render(<ChatHistory
+                queryId={queryId}
+                onHistoryLoading={onHistoryLoading}
+                onHistoryLoaded={onHistoryLoaded}
+                onInvestigationLoading={onInvestigationLoading}
+                onInvestigationLoaded={onInvestigationLoaded}
+                onAnswerLoading={onAnswerLoading}
+                onAnswerLoaded={onAnswerLoaded}
+            />);
+            await waitFor(() => expect(sageClient.getInvestigationsAsync).toHaveBeenCalled());
+            const deleteButton = document.querySelector(".item-actions_delete");
+            await userEvent.click(deleteButton);
+            const okButton = document.querySelector('button[aria-label="Ok"]');
+            await userEvent.click(okButton);
+            const element = await screen.findByText(toastText);
+    
+            // Assert
+            expect(element).not.toBeNull();
+            expect(element).toBeDefined();
+        });
     });
 });
 

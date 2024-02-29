@@ -70,7 +70,7 @@ export default function Item({ model, onQuery, onDeleteClick }) {
         onAccept: async (e) => {
             // Delete
             setIsDeleting(true);
-            model.isDeleted = !model.isDeleted;
+            model.isDeleted = true;
             await sageClient.updateInvestigation(model);
             onDeleteClick && onDeleteClick({ e, investigationId: model.id });
         },
