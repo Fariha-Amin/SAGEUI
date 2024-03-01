@@ -1,6 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
-import checkboxReducer from "../reducers/checkboxSlice";
+import checkboxSlice from "../reducers/checkboxSlice";
 
 export const sageDatatableStore = configureStore({
-  reducer: checkboxReducer,
+  reducer: {
+    checkbox: checkboxSlice,
+  },
 });

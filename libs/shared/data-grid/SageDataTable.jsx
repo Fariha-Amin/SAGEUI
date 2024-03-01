@@ -10,12 +10,11 @@ import { Button } from "primereact/button";
 import { RadioButton } from "primereact/radiobutton";
 import { useDispatch, useSelector } from "react-redux";
 import { checkboxCheck, checkboxUncheck } from "./reducers/checkboxSlice";
+import { sageDatatableStore } from "./stores/sageDatatableStore";
 
 export default function SageDataTable(props) {
   const dispatch = useDispatch();
-  useSelector((state) => {
-    state;
-  });
+  const checkedRows = useSelector((state) => state.checkbox);
 
   let tableConfig = sageTableUtil.createTableConfig(props);
 
@@ -159,7 +158,8 @@ export default function SageDataTable(props) {
       dispatch(checkboxCheck(rowData.recId));
       setRemovedRows(removedRows.filter((row) => row !== rowData.recId));
     } else {
-      setSelectedRows(selectedRows.filter((row) => row !== rowData.recId));
+      // setSelectedRows(selectedRows.filter((row) => row !== rowData.recId));
+      dispatch(checkboxUncheck(rowData.recId));
       removedRows.push(rowData.recId);
       setRemovedRows(removedRows);
       setSelectAll(false);
@@ -209,12 +209,12 @@ export default function SageDataTable(props) {
 
   const isRowSelected = (rowData) => {
     if (
-      selectedRows.includes(-1) &&
+      checkedRows.includes(-1) &&
       !removedRows.some((_) => _ === rowData.recId)
     ) {
       return true;
     } else {
-      return selectedRows.some((row) => row === rowData.recId);
+      return checkedRows.some((row) => row === rowData.recId);
     }
   };
 
