@@ -20,6 +20,13 @@ body {
   flex-direction: column;
 }
 
+.p-icon.p-sortable-column-icon{
+  color:white;
+}
+
+
+
+
 .justify-content-between {
   justify-content: space-between;
 }
@@ -61,6 +68,10 @@ body {
   font-size: 28px;
 }
 
+.font-size-16 {
+  font-size: 16px;
+}
+
 .margin-zero {
   margin: 0;
 }
@@ -89,9 +100,13 @@ body {
 }
 
 .p-column-filter input {
-  border-radius: 1px;
-}
-
+    border-radius: 1px;
+  }
+  
+  .p-column-title{
+    /* width:100%; */
+  }
+  
 .black-header-table .p-column-filter input {
   padding: 4px;
   margin: 0;
@@ -286,4 +301,91 @@ table.table-bordered.dataTable td:last-child {
 
 .table > :not(caption) > * > * {
   color: #333333;
+}
+
+.p-checkbox-box{
+  border-radius: 0px;
+}
+
+.p-checkbox .p-checkbox-box .p-checkbox-icon{
+  color: #333030;
+  width: 22px;
+  height: 22px;
+}
+
+.p-checkbox.p-component{
+  margin-left: 6px;
+}
+
+.p-checkbox .p-checkbox-box.p-highlight{
+  background-color: #ffffff;
+  border: 2px solid #d1d5db;
+}
+
+.modal-content{
+  border-radius: 0px;
+}
+
+.modal-header-padding {
+  padding: 1rem 1rem 0rem 1rem;
+}
+
+.border-bottom-0{
+  border-bottom: 0px
+}
+
+.border-top-0{
+  border-top: 0px
+}
+
+.modal-footer-padding{
+  padding: 0rem 2rem 1rem 1rem
+}
+
+.p-radiobutton {
+  margin: 0.1rem 1rem 0rem 0rem;
+}
+
+.p-dialog .p-dialog-content {
+  background: #ffffff;
+  color: #4b5563;
+  padding: 0 4rem 1rem 4rem;
+}
+
+.p-dialog-content .p-col.p-modal-container{
+    padding: 5px 0px;
+}
+
+.footer-button .p-button.p-component{
+  margin: 0rem .5rem;
+  height: 35px;
+  font-size: 14px;
+}
+
+.form-check{
+  padding-left: 3rem;
+  margin-bottom: 0.45rem;
+}
+
+.btn.btn-link{
+  --bs-btn-padding-x: 0.35rem;
+}
+.p-radiobutton .p-radiobutton-box.p-highlight {
+  border-color: #3387E0 !important;
+  background: #3387E0 !important;
+}
+
+.p-radiobutton .p-radiobutton-box .p-radiobutton-icon {
+  width: 9px;
+  height: 9px;
+}
+
+.p-dialog .p-dialog-header {
+  border-top-right-radius: 0px;
+  border-top-left-radius: 0px;
+}
+
+.p-dialog .p-dialog-footer {
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 0px;
 }

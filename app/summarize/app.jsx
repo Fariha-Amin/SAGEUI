@@ -40,19 +40,14 @@ export default function App() {
         isColumnResizable={false}
         showGridlines={true}
         paginator={true}
-        rows={25}
+        rows={20}
         style={{ width: "100%", minWidth: "50rem" }}
         cellSelection={true}
         lazy={true}
         dataUrl="http://localhost:5000/api/getTableData"
+        defaultSortField="summaryGeneratedOn"
+        defaultSortOrder={-1}
       >
-        <SageTableColumn
-          order={1}
-          header="A"
-          body="C"
-          field="RecId_checkbox"
-          style={{ width: "40px", maxWidth: "40px" }}
-        />
         <SageTableColumn
           order={2}
           body={(row) => <ViewDocButton rowData={row} />}
@@ -146,7 +141,7 @@ export default function App() {
           header="Notes"
           isSortable={true}
           isFilterable={true}
-          style={{ width: "161px", maxWidth: "161px" }}
+          style={{ width: "161px", maxWidth: "161px", textAlign: "left" }}
         />
         <SageTableColumn
           order={8}
