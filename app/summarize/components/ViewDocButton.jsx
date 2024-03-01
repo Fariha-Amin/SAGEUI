@@ -1,19 +1,19 @@
 import React from "react";
 import TableActionButton from "./TableActionButton";
-import viewDocIcon from "../icons/view_doc.png";
-import viewDocDisableIcon from "../icons/view_doc_disabled.png";
+import ViewDocRegularLogo from "../icons/viewdocregular.svg";
+import ViewDocDisableLogo from "../icons/viewdocdisabled.svg";
 
 const ViewDocButton = ({ rowData, viewDocClickHandler, ...rest }) => {
   let style = null;
-  let icon = viewDocIcon;
+  let icon = <ViewDocRegularLogo />;
   if (rowData.inprogress) {
     style = { cursor: "default" };
-    icon = viewDocDisableIcon;
+    icon = <ViewDocDisableLogo />;
   }
   return (
     <div>
       <TableActionButton className="btn  btn-link" style={style}>
-        <img src={icon}></img>
+        {icon}
       </TableActionButton>
     </div>
   );
