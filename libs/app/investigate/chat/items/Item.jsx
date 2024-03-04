@@ -34,6 +34,8 @@ export default function Item({ model, onQuery }) {
     const [itemHeaderCss, setItemHeaderCss] = useState(expandedHeaderCss);
     const [showFeedback, setShowFeedback] = useState(false);
 
+    model.hasFeedback = (model.response.feedback != "");
+
     const onQueryItemDelegate = async (e) =>  {
         onQuery && onQuery({ id: e.id, value: e.value, personalId : e.personalId });
     };
@@ -51,10 +53,14 @@ export default function Item({ model, onQuery }) {
     }
 
     const onFeedbackClickDelegate = async (e) => {
-        // Show feedback UI
-        // To do
         setShowFeedback(true);
-        model.hasFeedback = !model.hasFeedback;
+    }
+
+    const onFeedbackSaveDelegate = async (e) => {
+        setShowFeedback(false);
+        model.hasFeedback = (e != "");
+        model.response.feedback = e;
+        console.log(model);
         await sageClient.updateInvestigation(model);
     }
 
@@ -86,7 +92,7 @@ export default function Item({ model, onQuery }) {
                         onDeleteClick={onDeleteClickDelegate}
                     />
                     <IconButton icon={activeIndex === 0 ? "chevron-down" : "chevron-up"} onClick={onAccordionClickDelegate} />
-                    <FeedbackModal shouldShow={showFeedback} onClose={setShowFeedback} />
+                    <FeedbackModal model={model} shouldShow={showFeedback} onClose={setShowFeedback} onSave={onFeedbackSaveDelegate} />
                 </div>
             </div>
             <Accordion activeIndex={activeIndex} onTabChange={(e) => setActiveIndex(e.index)}>

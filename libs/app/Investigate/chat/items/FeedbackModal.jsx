@@ -1,6 +1,6 @@
 import './FeedbackModal.scss';
 import React from 'react';
-import { useState, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Dialog } from 'primereact/dialog';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { Button } from 'primereact/button';
@@ -11,8 +11,15 @@ import sageClient from "_investigate/httpClient";
 
 
 const FeedbackModal = (props) => {
+    const [text, setText] = useState('');
     const [textLength, setTextLength] = useState(0);
-    const text = useRef("");
+    useEffect(() => {
+        var initialText = props.model.response.feedback;
+        setText(props.model.response.feedback);
+        console.log(props.model);
+        console.log(text);
+        console.log(initialText);
+    }, []);
     const helpText = "If you are not satisfied with the response, please let us know. For more optimal results, please be specific when forming your questions. The default investigation prompt is a guide on how to format questions to the LLM.";
     const maxTextLength = 400;
     const placeholderText = `Enter your feedback for this question & answer here.`;
@@ -23,12 +30,12 @@ const FeedbackModal = (props) => {
                                 <IconButton className="sage-icon-superscript" icon="circle-question" title={helpText} titlePlacement="bottom" />
                         </div>
 
-    var counterContent = textCounter;
-
-    const onInputDelegate = (e) => {
-        const currentText = text.current.value;
-        setTextLength(currentText.length);
+    
+    const onInputDelegate = (e) =>{
+        setText(e.target.value); 
+        setTextLength(text.length);
     }
+
 
     return(
         <Dialog header={headerContent} visible={props.shouldShow} className='feedback-modal__dialog' onHide={() => props.onClose(false)}>
@@ -36,15 +43,15 @@ const FeedbackModal = (props) => {
                 maxLength={maxTextLength}
                 className='feedback-modal__text-area'
                 placeholder={placeholderText}
-                ref={text}
-                onInput={onInputDelegate}
+                onChange={(e) => onInputDelegate(e)}
                 rows={2} 
+                value={text}
             />
             <div>
                 {textLength === maxTextLength ? maxTextError : textCounter}
             </div>
             <div className='feedback-modal__buttons'>
-                <Button label="Save" raised size="small" />
+                <Button label="Save" raised size="small" onClick={() => props.onSave(text) } />
                 &nbsp;
                 <Button label="Cancel" raised outlined size="small" severity="secondary" onClick={() => props.onClose(false) } />
                 
