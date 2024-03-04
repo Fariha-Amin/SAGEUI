@@ -5,73 +5,21 @@ import { Sidebar } from 'primereact/sidebar';
 import { Button } from 'primereact/button';
 import Icon from '_shared/icon/Icon';
 import IconButton from '_shared/icon-button/IconButton';
+import DataTable from "_shared/data-table/DataTable";
+import DataColumn from "_shared/data-table/DataColumn";
 import styled from 'styled-components';
 import client from './httpClient';
 
-import DataTable from "_shared/data-table/DataTable";
-import DataColumn from "_shared/data-table/DataColumn";
-
 const columns = [
     { field: "number", header: "#" },
-    { field: "view", header: "", body: (row) => { return (<IconButton icon="fa-regular fa-eye"/>) } },
-    { field: "summary", header: "AI Summary", body: (row) => { return (<IconButton icon="fa-regular fa-file"/>) } },
+    { field: "view", header: "", body: (row) => { return (<IconButton icon="fa-regular fa-eye" />); } },
+    { field: "summary", header: "AI Summary", body: (row) => { return (<IconButton icon="fa-regular fa-file" />); } },
     { field: "documentId", header: "DOCID" },
     { field: "filename", header: "Doc File Name/Subject" },
     { field: "filetype", header: "Doc File Type" },
     { field: "score", header: "Similarity Score" },
-    { field: "included", header: "Fed to AI", body: (row) => { if (row.included) {return (<Icon icon="check"/>) }} },
-    { field: "cited", header: "Cited by AI", body: (row) => { if (row.cited) {return (<Icon icon="check"/>) }} }
-];
-
-const data = [
-    {
-        select: false,
-        number: 1,
-        view: "",
-        summary: "summary",
-        documentId: "4321",
-        filename: "filename",
-        filetype: "filetype",
-        score: "1.0",
-        included: true,
-        cited: true
-    },
-    {
-        select: false,
-        number: 2,
-        view: "",
-        summary: "summary",
-        documentId: "3214",
-        filename: "filename",
-        filetype: "filetype",
-        score: "0.9",
-        included: false,
-        cited: false
-    },
-    {
-        select: false,
-        number: 3,
-        view: "",
-        summary: "summary",
-        documentId: "2143",
-        filename: "filename",
-        filetype: "filetype",
-        score: "0.8",
-        included: true,
-        cited: false
-    },
-    {
-        select: false,
-        number: 4,
-        view: "",
-        summary: "summary",
-        documentId: "1432",
-        filename: "filename",
-        filetype: "filetype",
-        score: "0.7",
-        included: false,
-        cited: true
-    }
+    { field: "included", header: "Fed to AI", body: (row) => { if (row.included) { return (<Icon icon="check" />); } } },
+    { field: "cited", header: "Cited by AI", body: (row) => { if (row.cited) { return (<Icon icon="check" />); } } }
 ];
 
 const H3 = styled.h3`
@@ -81,13 +29,30 @@ const H3 = styled.h3`
 const header = "Relevant Documents";
 const helpTooltipText = "This is informative text.";
 
-const RelatedDocumentsFlyout = ({ visible, onClose }) => {
-    const [values, setValues] = useState([]);
-    const [selectedData, setSelectedData] = useState(null);
+const RelatedDocumentsFlyout = ({ visible, onClose, investigationId }) => {
+    const [relatedDocs, setRelatedDocs] = useState([]);
+    const [selectedDocs, setSelectedDocs] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
-        setValues(data)
-    }, []);
+        setIsLoading(true);
+
+        async function getRelatedDocuments(investigationId) {
+            let docs = await client.getReferenceDocumentsAsync(investigationId);
+            
+            // Sort by most relevant (Score descending)
+            docs = docs.toSorted((a, b) => b.score - a.score);
+
+            // Add index as "number" field
+            for (let i = 0; i < docs.length; i++) {
+                docs[i].number = i + 1;
+            }
+
+            setRelatedDocs(docs);
+            setIsLoading(false);
+        }
+        getRelatedDocuments(investigationId);
+    }, [investigationId]);
 
     const content = ({ closeIconRef, hide }) => {
         return (
@@ -101,11 +66,12 @@ const RelatedDocumentsFlyout = ({ visible, onClose }) => {
                 <div className="sage-flyout__body flex flex-grow-1 mb-2">
                     <DataTable
                         dataKey="documentId"
-                        value={values}
+                        value={relatedDocs}
                         selectionMode="multiple"
-                        selection={selectedData}
-                        onSelectionChange={(e) => setSelectedData(e.value)}
-                        style={{ width: "100%" }}>
+                        selection={selectedDocs}
+                        onSelectionChange={(e) => setSelectedDocs(e.value)}
+                        style={{ width: "100%" }}
+                        loading={isLoading}>
                         {columns.map((col, i) => (
                             <DataColumn
                                 key={col.field}

@@ -37,6 +37,15 @@ class Prompt {
     type = "";
 }
 
+class ReferenceDocument {
+    documentId = "";
+    filename = "";
+    filetype = "";
+    score = 0.0;
+    included = false;
+    cited = false;
+}
+
 class HttpClient {
     constructor() {
         this._investigations = [];
@@ -417,6 +426,32 @@ class HttpClient {
         return mockAsyncTask;
     }
 
+    getReferenceDocumentsAsync(id) {
+        // Get the related documents for this investigation
+        // GET - api/investigations/<id>/documents
+        // header - userId
+        // header - projectId
+        // body - array of ReferenceDocument class from above
+        
+        let documents = [];
+        for (let i = 1; i <= 25; i++) {
+            let document = new ReferenceDocument();
+            document.documentId = `DOC7000000-${i}`;
+            document.filename = this.getRandomData([ "lorem", "ipsum", "dolor" ]);
+            document.filetype = this.getRandomData([ "email", "pdf", "word" ]);
+            document.score = this.getRandomData([ 0.90, 0.91, 0.92, 0.93, 0.94, 0.95, 0.96, 0.97, 0.98, 0.99 ]);
+            document.included = this.getRandomData([ true, false ]);
+            document.cited = this.getRandomData([ true, false ]);
+            documents.push(document);
+        }
+
+        let mockAsyncTask = new Promise(function (resolve, reject) {
+            setTimeout(() => resolve(documents), 3000);
+        });
+
+        return mockAsyncTask;
+    }
+
     // Mock data helpers
     getInvestigationById(id) {
         return this._investigations.find(i => i.id === id);
@@ -453,6 +488,12 @@ class HttpClient {
             response.answer = `Answer Number ${i}`;
             this._responses.push(response);
         }
+    }
+
+    getRandomData(data) {
+        const multiplier = data.length;
+        let randomIndex = Math.floor(Math.random() * multiplier);
+        return data[randomIndex];
     }
 }
 

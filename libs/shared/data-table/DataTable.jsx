@@ -1,6 +1,5 @@
 import './DataTable.scss'
 import React from "react";
-import { useState, useEffect } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 
@@ -15,6 +14,7 @@ export default function SageDataTable(props) {
     tableProps.value = props.value;
     tableProps.style = props.style;
     tableProps.className = props.className;
+    tableProps.loading = props.loading;
 
     // Apply defaults
     tableProps.stripedRows = true;

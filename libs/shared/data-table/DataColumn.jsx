@@ -1,6 +1,4 @@
 import React from "react";
-import { useState, useEffect } from "react";
-import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 
 const columnTemplate = {

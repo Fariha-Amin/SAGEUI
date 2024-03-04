@@ -33,6 +33,7 @@ export default function Item({ model, onQuery }) {
     const [activeIndex, setActiveIndex] = useState(0);
     const [itemHeaderCss, setItemHeaderCss] = useState(expandedHeaderCss);
     const [isFlyoutVisible, setIsFlyoutVisible] = useState(false);
+    const [flyoutInvestigationId, setFlyoutInvestigationId] = useState(null);
     const onQueryItemDelegate = async (e) => {
         onQuery && onQuery({ id: e.id, value: e.value, personalId: e.personalId });
     };
@@ -62,6 +63,7 @@ export default function Item({ model, onQuery }) {
     }
 
     const onRelevantDocsClickedDelegate = (e) => {
+        setFlyoutInvestigationId(model.id);
         setIsFlyoutVisible(true);
     }
 
@@ -108,7 +110,7 @@ export default function Item({ model, onQuery }) {
                 </Accordion>
             </div>
 
-            <RelatedDocumentsFlyout visible={isFlyoutVisible} onClose={onCloseDelegate} />
+            <RelatedDocumentsFlyout visible={isFlyoutVisible} onClose={onCloseDelegate} investigationId={flyoutInvestigationId} />
         </>
     );
 }
