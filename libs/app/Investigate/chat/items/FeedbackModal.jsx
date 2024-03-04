@@ -5,21 +5,17 @@ import { Dialog } from 'primereact/dialog';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { Button } from 'primereact/button';
 import IconButton from '_shared/icon-button/IconButton';
-import sageClient from "_investigate/httpClient";
-
-
-
 
 const FeedbackModal = (props) => {
     const [text, setText] = useState('');
     const [textLength, setTextLength] = useState(0);
+
     useEffect(() => {
-        var initialText = props.model.response.feedback;
-        setText(props.model.response.feedback);
-        console.log(props.model);
-        console.log(text);
-        console.log(initialText);
-    }, []);
+        var initialText = props.feedback;
+        setText(initialText);
+        setTextLength(initialText.length);
+    },[props.feedback]);
+
     const helpText = "If you are not satisfied with the response, please let us know. For more optimal results, please be specific when forming your questions. The default investigation prompt is a guide on how to format questions to the LLM.";
     const maxTextLength = 400;
     const placeholderText = `Enter your feedback for this question & answer here.`;
@@ -32,8 +28,9 @@ const FeedbackModal = (props) => {
 
     
     const onInputDelegate = (e) =>{
-        setText(e.target.value); 
-        setTextLength(text.length);
+        const newText = e.target.value
+        setText(newText); 
+        setTextLength(newText.length);
     }
 
 

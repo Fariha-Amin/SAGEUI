@@ -80,6 +80,8 @@ export default function Item({ model, onQuery }) {
         }
     }
 
+    const feedback = model.response.feedback;
+
     return (
         <div className='sage-chat-history__item' data-id={model.id}>
             <div className={`sage-chat-history__item-header ${itemHeaderCss}`}>
@@ -92,7 +94,7 @@ export default function Item({ model, onQuery }) {
                         onDeleteClick={onDeleteClickDelegate}
                     />
                     <IconButton icon={activeIndex === 0 ? "chevron-down" : "chevron-up"} onClick={onAccordionClickDelegate} />
-                    <FeedbackModal model={model} shouldShow={showFeedback} onClose={setShowFeedback} onSave={onFeedbackSaveDelegate} />
+                    <FeedbackModal feedback={feedback} shouldShow={showFeedback} onClose={setShowFeedback} onSave={onFeedbackSaveDelegate} />
                 </div>
             </div>
             <Accordion activeIndex={activeIndex} onTabChange={(e) => setActiveIndex(e.index)}>

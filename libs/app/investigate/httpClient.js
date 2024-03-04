@@ -355,7 +355,7 @@ class HttpClient {
                 Internal Extension: Not Available
                 Email: `+personId.trim().replace(/ /g,"_")+`@company.com
                 Any identified projects: Project Hercules / Project Arnold`;
-                response.feedback = "Test";
+                response.feedback = "";
                 response.result.isSuccess = true;
                 response.result.failureReason = "";
                 resolve(response);
