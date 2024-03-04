@@ -1,28 +1,77 @@
-//import './RelatedDocumentsFlyout.scss'
-import './AdvancedSettingsFlyout.scss'
+import './RelatedDocumentsFlyout.scss'
 import React from 'react';
 import { useEffect, useState } from 'react';
 import { Sidebar } from 'primereact/sidebar';
 import { Button } from 'primereact/button';
+import Icon from '_shared/icon/Icon';
 import IconButton from '_shared/icon-button/IconButton';
 import styled from 'styled-components';
 import client from './httpClient';
 
-import SageDataTable from "_shared/data-grid/SageDataTable";
-import SageTableColumn from "_shared/data-grid/column/SageTableColumn";
-import SageDataTableCell from "_shared/data-grid/SageDataTableCell";
+import DataTable from "_shared/data-table/DataTable";
+import DataColumn from "_shared/data-table/DataColumn";
 
 const columns = [
-    { field: "select", header: "" },
     { field: "number", header: "#" },
-    { field: "view", header: "" },
-    { field: "summary", header: "AI SUMMARY" },
+    { field: "view", header: "", body: (row) => { return (<IconButton icon="fa-regular fa-eye"/>) } },
+    { field: "summary", header: "AI Summary", body: (row) => { return (<IconButton icon="fa-regular fa-file"/>) } },
     { field: "documentId", header: "DOCID" },
-    { field: "filename", header: "DOC FILENAME/SUBJECT" },
-    { field: "filetype", header: "DOC FILE TYPE" },
-    { field: "score", header: "SIMILARITY SCORE" },
-    { field: "included", header: "FED TO AI" },
-    { field: "cited", header: "CITED BY AI" }
+    { field: "filename", header: "Doc File Name/Subject" },
+    { field: "filetype", header: "Doc File Type" },
+    { field: "score", header: "Similarity Score" },
+    { field: "included", header: "Fed to AI", body: (row) => { if (row.included) {return (<Icon icon="check"/>) }} },
+    { field: "cited", header: "Cited by AI", body: (row) => { if (row.cited) {return (<Icon icon="check"/>) }} }
+];
+
+const data = [
+    {
+        select: false,
+        number: 1,
+        view: "",
+        summary: "summary",
+        documentId: "4321",
+        filename: "filename",
+        filetype: "filetype",
+        score: "1.0",
+        included: true,
+        cited: true
+    },
+    {
+        select: false,
+        number: 2,
+        view: "",
+        summary: "summary",
+        documentId: "3214",
+        filename: "filename",
+        filetype: "filetype",
+        score: "0.9",
+        included: false,
+        cited: false
+    },
+    {
+        select: false,
+        number: 3,
+        view: "",
+        summary: "summary",
+        documentId: "2143",
+        filename: "filename",
+        filetype: "filetype",
+        score: "0.8",
+        included: true,
+        cited: false
+    },
+    {
+        select: false,
+        number: 4,
+        view: "",
+        summary: "summary",
+        documentId: "1432",
+        filename: "filename",
+        filetype: "filetype",
+        score: "0.7",
+        included: false,
+        cited: true
+    }
 ];
 
 const H3 = styled.h3`
@@ -33,6 +82,12 @@ const header = "Relevant Documents";
 const helpTooltipText = "This is informative text.";
 
 const RelatedDocumentsFlyout = ({ visible, onClose }) => {
+    const [values, setValues] = useState([]);
+    const [selectedData, setSelectedData] = useState(null);
+
+    useEffect(() => {
+        setValues(data)
+    }, []);
 
     const content = ({ closeIconRef, hide }) => {
         return (
@@ -43,37 +98,22 @@ const RelatedDocumentsFlyout = ({ visible, onClose }) => {
                         <IconButton className="sage-icon-superscript" icon="circle-question" title={helpTooltipText} titlePlacement="bottom" />
                     </div>
                 </div>
-                <div className="sage-flyout__body flex flex-grow-1">
-                    <div>
-                        <SageDataTable
-                            dataKey="docId"
-                            isColumnResizable={false}
-                            showGridlines={true}
-                            paginator={false}
-                            rows={25}
-                            style={{ width: "100%", minWidth: "50rem" }}
-                            cellSelection={false}
-                        >
-                            {columns.map((col, i) => (
-                                <SageTableColumn
-                                    key={col.field}
-                                    field={col.field}
-                                    header={col.header}
-                                    isSortable={false}
-                                    isFilterable={false}
-                                    body={(row) => {
-                                        return (
-                                            <SageDataTableCell
-                                                cellText={row[col.field]}
-                                                showToolTip={false}
-                                                truncateText={true}
-                                            />
-                                        );
-                                    }}
-                                />
-                            ))}
-                        </SageDataTable>
-                    </div>
+                <div className="sage-flyout__body flex flex-grow-1 mb-2">
+                    <DataTable
+                        dataKey="documentId"
+                        value={values}
+                        selectionMode="multiple"
+                        selection={selectedData}
+                        onSelectionChange={(e) => setSelectedData(e.value)}
+                        style={{ width: "100%" }}>
+                        {columns.map((col, i) => (
+                            <DataColumn
+                                key={col.field}
+                                columnKey={col.field}
+                                {...col}
+                            />
+                        ))}
+                    </DataTable>
                 </div>
                 <div className="sage-flyout__footer flex justify-content-end">
                     <Button className="footer__close-button" ref={closeIconRef} onClick={(e) => hide(e)} label="Close" />
@@ -87,7 +127,7 @@ const RelatedDocumentsFlyout = ({ visible, onClose }) => {
             position="right"
             visible={visible}
             onHide={onClose}
-            className="sage-advanced-options__flyout flex flex-column"
+            className="sage-related-documents__flyout flex flex-column"
             content={content}></Sidebar>
     );
 }
