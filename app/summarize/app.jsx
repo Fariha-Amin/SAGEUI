@@ -44,7 +44,7 @@ export default function App() {
         style={{ width: "100%", minWidth: "50rem" }}
         cellSelection={true}
         lazy={true}
-        dataUrl="http://localhost:5000/api/getTableData"
+        dataUrl="https://localhost:5000/api/getTableData"
         defaultSortField="summaryGeneratedOn"
         defaultSortOrder={-1}
       >
