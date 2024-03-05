@@ -1,7 +1,7 @@
 body {
-  margin: 3rem 1.5rem;
+  /* margin: 3rem 1.5rem;  */
   color: #000000;
-  background-color: #f2f3f9;
+  background-color: #ffffff;
   /* font-family: "Open Sans"; */
 }
 .p-component {
@@ -10,7 +10,7 @@ body {
   font-weight: 400;
   left: 0;
   letter-spacing: 0;
-  color: #333333;
+  /* color: #333333; */
 }
 
 .flex {
@@ -313,10 +313,6 @@ table.table-bordered.dataTable td:last-child {
   height: 22px;
 }
 
-.p-checkbox.p-component{
-  margin-left: 6px;
-}
-
 .p-checkbox .p-checkbox-box.p-highlight{
   background-color: #ffffff;
   border: 2px solid #d1d5db;
@@ -361,6 +357,7 @@ table.table-bordered.dataTable td:last-child {
   height: 35px;
   font-size: 14px;
 }
+/*  */
 
 .form-check{
   padding-left: 3rem;
@@ -388,4 +385,20 @@ table.table-bordered.dataTable td:last-child {
 .p-dialog .p-dialog-footer {
   border-bottom-right-radius: 0px;
   border-bottom-left-radius: 0px;
+}
+/* 
+button{
+  background-color: #3B82F6;
+} */
+
+.p-button.p-button-primary {
+  background: #3B82F6;
+  color: #ffffff;
+  border-color: #3B82F6;
+}
+
+.p-button.p-button-info.p-button-outlined{
+  background-color: transparent;
+  color: #0ea5e9;
+  border: 1px solid;
 }

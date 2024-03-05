@@ -238,64 +238,70 @@ export default function SageDataTable(props) {
   );
 
   return (
-    <div>
-      <div>
-        <DataTable
-          {...tableConfig}
-          value={data}
-          paginatorTemplate={CustomPaginatorTemplate({
-            totalPages: Math.ceil(totalRecords / tableConfig.rows),
-          })}
-          emptyMessage={() => (
-            <div style={{ textAlign: "center" }}>
-              Your query returned no data
-            </div>
-          )}
-        >
-          <Column
-            className="check"
-            headerStyle={{ width: "3rem" }}
-            header={
-              <Checkbox onChange={onSelectAllChange} checked={selectAll} />
-            }
-            body={(rowData) => {
-              return (
-                <Checkbox
-                  checked={isRowSelected(rowData)}
-                  onChange={(e) => onCheckBoxChange(e, rowData)}
-                />
-              );
-            }}
-          />
+    <div className="row">
+      <div className="col">
+        <div>
+          <DataTable
+            {...tableConfig}
+            value={data}
+            paginatorTemplate={CustomPaginatorTemplate({
+              totalPages: Math.ceil(totalRecords / tableConfig.rows),
+            })}
+            emptyMessage={() => (
+              <div style={{ textAlign: "center" }}>
+                Your query returned no data
+              </div>
+            )}
+          >
+            <Column
+              isSortable={false}
+              isFilterable={false}
+              align="center"
+              headerStyle={{ width: "3rem" }}
+              header={
+                <Checkbox onChange={onSelectAllChange} checked={selectAll} />
+              }
+              body={(rowData) => {
+                return (
+                  <Checkbox
+                    checked={isRowSelected(rowData)}
+                    onChange={(e) => onCheckBoxChange(e, rowData)}
+                  />
+                );
+              }}
+            />
 
-          {sageTableUtil.createColumnDefinition(columnDef, false)}
-        </DataTable>
-      </div>
-      {modalShow && (
-        <Dialog
-          visible={modalShow}
-          modal
-          header={headerElement}
-          footer={footerContent}
-          style={{ width: "32rem" }}
-          onHide={() => setModalShow(false)}
-        >
-          {radioOptions.map((option) => (
-            <div className="p-col p-modal-container" key={option.value}>
-              <RadioButton
-                inputId={option.value}
-                name="option"
-                value={option.value}
-                onChange={(e) => setSelectedRadioOption(e.value)}
-                checked={selectedRadioOption === option.value}
-              />
-              <label style={{ fontSize: "16px" }} htmlFor={option.value}>
-                {option.label}
-              </label>
+            {sageTableUtil.createColumnDefinition(columnDef, false)}
+          </DataTable>
+        </div>
+        {modalShow && (
+          <Dialog
+            visible={modalShow}
+            modal
+            header={headerElement}
+            footer={footerContent}
+            style={{ width: "32rem" }}
+            onHide={() => setModalShow(false)}
+          >
+            <div>
+              {radioOptions.map((option) => (
+                <div className="col p-modal-container" key={option.value}>
+                  <RadioButton
+                    inputId={option.value}
+                    name="option"
+                    value={option.value}
+                    onChange={(e) => setSelectedRadioOption(e.value)}
+                    checked={selectedRadioOption === option.value}
+                  />
+                  <label style={{ fontSize: "16px" }} htmlFor={option.value}>
+                    {option.label}
+                  </label>
+                </div>
+              ))}
             </div>
-          ))}
-        </Dialog>
-      )}
+          </Dialog>
+        )}
+      </div>
     </div>
   );
 }
