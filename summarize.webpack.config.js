@@ -6,11 +6,11 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const devMode = process.env.NODE_ENV !== "production";
 
 module.exports = {
-  entry: "./app/Summarize/index.js",
+  entry: "/app/Summarize/index.js",
   resolve: { extensions: ["*", ".js", ".jsx"] },
   output: {
     path: path.resolve(__dirname, "dist/Summarize"),
-    filename: "[contenthash].js",
+    filename: "nextGenSummarizer.js",
     publicPath: "/",
     clean: true,
   },
