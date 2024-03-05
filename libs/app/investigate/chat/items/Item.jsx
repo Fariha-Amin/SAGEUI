@@ -60,7 +60,6 @@ export default function Item({ model, onQuery }) {
         setShowFeedback(false);
         model.hasFeedback = (e != "");
         model.response.feedback = e;
-        console.log(model);
         await sageClient.updateInvestigation(model);
     }
 
