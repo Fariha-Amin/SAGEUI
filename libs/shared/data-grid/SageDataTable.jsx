@@ -296,7 +296,7 @@ export default function SageDataTable(props) {
           visible={modalShow}
           header={headerElement}
           footer={footerContent}
-          onHide={() => setModalShow(false)}
+          onHideHandler={() => setModalShow(false)}
           radioOptions={radioOptions}
           setSelectedRadioOption={setSelectedRadioOption}
           selectedRadioOption={selectedRadioOption}
