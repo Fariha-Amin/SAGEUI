@@ -111,26 +111,14 @@ export default function SageDataTable(props) {
 
   // Expanding row logic
   const onCellClick = (e) => {
-    debugger;
     const rowData = e.rowData;
     if (expandedRows.filter((row) => row.recId === rowData.recId).length) {
       dispatch(collapseRow(rowData));
     } else {
       dispatch(expandRow(rowData));
     }
-    // let data = e.rowData;
-    // let newExpandData = null;
-    // if (expandedRows == null) {
-    //   newExpandData = [data];
-    // } else {
-    //   let filterData = expandedRows.filter((d) => d.recId != data.recId);
-    //   if (filterData.length == expandedRows.length) {
-    //     filterData.push(data);
-    //   }
-    //   newExpandData = filterData.length ? [...filterData] : null;
-    // }
-    // setExpandedRows(newExpandData);
   };
+
   // Expanding row template
   const rowExpansionTemplate = (data) => {
     return <td colSpan={6}>{data.summary}</td>;
