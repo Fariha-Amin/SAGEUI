@@ -2,6 +2,7 @@ import './Item.scss';
 import React from 'react';
 import { useState } from "react";
 import { Accordion, AccordionTab } from 'primereact/accordion';
+import FeedbackModal from './FeedbackModal';
 import IconButton from '_shared/icon-button/IconButton';
 import ConfirmDialog from '_shared/confirm-dialog/ConfirmDialog';
 import Actions from './Actions';
@@ -31,8 +32,11 @@ function formatDate(datetime) {
 export default function Item({ model, onQuery, onDeleteClick }) {
     const [activeIndex, setActiveIndex] = useState(0);
     const [itemHeaderCss, setItemHeaderCss] = useState(expandedHeaderCss);
+    const [showFeedback, setShowFeedback] = useState(false);
     const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
     const [isDeleting, setIsDeleting] = useState(false);
+  
+    model.hasFeedback = (model.response.feedback != "");
 
     const onQueryItemDelegate = async (e) => {
         onQuery && onQuery({ id: e.id, value: e.value, personalId: e.personalId });
@@ -51,9 +55,13 @@ export default function Item({ model, onQuery, onDeleteClick }) {
     }
 
     const onFeedbackClickDelegate = async (e) => {
-        // Show feedback UI
-        // To do
-        model.hasFeedback = !model.hasFeedback;
+        setShowFeedback(true);
+    }
+
+    const onFeedbackSaveDelegate = async (e) => {
+        setShowFeedback(false);
+        model.hasFeedback = (e != "");
+        model.response.feedback = e;
         await sageClient.updateInvestigation(model);
     }
 
@@ -95,6 +103,8 @@ export default function Item({ model, onQuery, onDeleteClick }) {
         }
     }
 
+    const feedback = model.response.feedback;
+
     return (
         <>
             <div className='sage-chat-history__item' data-id={model.id}>
@@ -123,6 +133,7 @@ export default function Item({ model, onQuery, onDeleteClick }) {
                 </Accordion>
             </div>
 
+            <FeedbackModal feedback={feedback} shouldShow={showFeedback} onClose={setShowFeedback} onSave={onFeedbackSaveDelegate} />
             <ConfirmDialog {...deleteDialogOptions} />
         </>
     );
