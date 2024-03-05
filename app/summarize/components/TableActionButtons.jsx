@@ -1,13 +1,13 @@
 import React from "react";
 import TableActionButton from "./TableActionButton";
 
-import noteIcon from "../icons/note.png";
-import noteIconBlue from "../icons/note_blue.png";
+import NoteRegularLogo from "../icons/noteregular.svg";
+import NoteBlueLogo from "../icons/noteblue.svg";
 
-import favouriteIcon from "../icons/favourite.png";
-import favouriteIconClicked from "../icons/favourite_clicked.png";
+import FavRegularLogo from "../icons/favregular.svg";
+import FavYellowLogo from "../icons/favyellow.svg";
 
-import deleteIcon from "../icons/delete.png";
+import DeleteLogo from "../icons/delete.svg";
 
 const TableActionButtons = ({
   rowData,
@@ -18,19 +18,19 @@ const TableActionButtons = ({
 }) => {
   const noteButton = (
     <TableActionButton className="btn  btn-link">
-      <img src={rowData.notes ? noteIconBlue : noteIcon}></img>
+      {rowData.notes ? <NoteBlueLogo /> : <NoteRegularLogo />}
     </TableActionButton>
   );
   const favouriteButton = (
     <TableActionButton className="btn  btn-link">
-      <img src={rowData.favourite ? favouriteIconClicked : favouriteIcon}></img>
+      {rowData.favourite ? <FavYellowLogo /> : <FavRegularLogo />}
     </TableActionButton>
   );
   const deleteButton = (
     <TableActionButton
       className={rowData.inprogress ? "btn btn-link disabled" : "btn btn-link"}
     >
-      <img src={deleteIcon}></img>
+      <DeleteLogo />
     </TableActionButton>
   );
   return (

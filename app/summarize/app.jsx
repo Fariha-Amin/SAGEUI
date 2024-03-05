@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import SummaryHeader from "./modules/summary/SummaryHeader";
 import SageDataTable from "../../libs/shared/data-grid/SageDataTable";
 import SageTableColumn from "../../libs/shared/data-grid/column/SageTableColumn";
-import MeasuredDisplay from "../../libs/shared/data-grid/MeasuredDisplay";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import TableActionButtons from "./components/TableActionButtons";
