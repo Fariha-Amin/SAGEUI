@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import SummaryHeader from "./modules/summary/SummaryHeader";
 import SageDataTable from "../../libs/shared/data-grid/SageDataTable";
 import SageTableColumn from "../../libs/shared/data-grid/column/SageTableColumn";
-import MeasuredDisplay from "../../libs/shared/data-grid/MeasuredDisplay";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import TableActionButtons from "./components/TableActionButtons";
@@ -45,7 +44,7 @@ export default function App() {
         style={{ width: "100%", minWidth: "50rem" }}
         cellSelection={true}
         lazy={true}
-        dataUrl="http://localhost:5000/api/getTableData"
+        dataUrl="https://localhost:5000/api/getTableData"
         defaultSortField="summaryGeneratedOn"
         defaultSortOrder={-1}
       >
