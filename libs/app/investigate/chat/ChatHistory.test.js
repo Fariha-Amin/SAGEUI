@@ -131,6 +131,7 @@ function getDefaultModel() {
     return {
         id: 0,
         datetime: new Date(),
+        hasFeedback: false,
         query: {
             id: 0,
             datetime: new Date(),
@@ -145,6 +146,7 @@ function getDefaultModel() {
             id: 0,
             datetime: new Date(),
             answer: "",
+            feedback: "",
             isInProgress: false,
             documentIds: [],
             personNames: [],
