@@ -1,7 +1,10 @@
 import React from 'react';
 import '@testing-library/jest-dom'
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor, act } from "@testing-library/react";
 import ChatItem from './Item';
+import sageClient from "_investigate/httpClient";
+
+jest.mock("_investigate/httpClient");
 
 describe("ChatItem UI", () => {
     test("RPMXCON-84290 renders timestamp correctly", async () => {
@@ -18,8 +21,11 @@ describe("ChatItem UI", () => {
         // Expectation -> 2 March 1234 - 03:45 PM
         const expectedFormat = `${day} March ${year} - 03:${minute} ${meridiem}`;
 
+        const mockGetReferenceDocumentsAsync = () => { return Promise.resolve([]); };
+        sageClient.getReferenceDocumentsAsync.mockImplementation(mockGetReferenceDocumentsAsync);
+
         // Act
-        render(<ChatItem model={model} />);
+        act(() => render(<ChatItem model={model} />));
         const element = await screen.findByText(expectedFormat);
         
         // Assert
@@ -31,9 +37,12 @@ describe("ChatItem UI", () => {
         // Arrange
         const model = getDefaultModel();
         
+        const mockGetReferenceDocumentsAsync = () => { return Promise.resolve([]); };
+        sageClient.getReferenceDocumentsAsync.mockImplementation(mockGetReferenceDocumentsAsync);
+
         // Act
-        render(<ChatItem model={model} />);
-        const element = await document.querySelector(".sage-chat-history__item .p-accordion");
+        act(() => render(<ChatItem model={model} />));
+        const element = await waitFor(() => { return document.querySelector(".sage-chat-history__item .p-accordion"); });
         
         // Assert
         expect(element).not.toBeNull();
@@ -46,10 +55,13 @@ describe("ChatItem UI", () => {
         const model = getDefaultModel();
         model.query.question = question;
         
+        const mockGetReferenceDocumentsAsync = () => { return Promise.resolve([]); };
+        sageClient.getReferenceDocumentsAsync.mockImplementation(mockGetReferenceDocumentsAsync);
+
         // Act
-        render(<ChatItem model={model} />);
+        act(() => render(<ChatItem model={model} />));
         const questionText = await screen.findByText(question);
-        const questionElement = await document.querySelector(".sage-chat-history__item-question");
+        const questionElement = document.querySelector(".sage-chat-history__item-question");
         
         // Assert
         expect(questionText).not.toBeNull();
@@ -64,10 +76,13 @@ describe("ChatItem UI", () => {
         const model = getDefaultModel();
         model.response.answer = answer;
         
+        const mockGetReferenceDocumentsAsync = () => { return Promise.resolve([]); };
+        sageClient.getReferenceDocumentsAsync.mockImplementation(mockGetReferenceDocumentsAsync);
+
         // Act
-        render(<ChatItem model={model} />);
+        act(() => render(<ChatItem model={model} />));
         const answerText = await screen.findByText(answer);
-        const answerElement = await document.querySelector(".sage-chat-history__item-answer");
+        const answerElement = document.querySelector(".sage-chat-history__item-answer");
         
         // Assert
         expect(answerText).not.toBeNull();
@@ -84,12 +99,15 @@ describe("ChatItem UI", () => {
         model.query.question = question;
         model.response.answer = answer;
         
+        const mockGetReferenceDocumentsAsync = () => { return Promise.resolve([]); };
+        sageClient.getReferenceDocumentsAsync.mockImplementation(mockGetReferenceDocumentsAsync);
+
         // Act
-        render(<ChatItem model={model} />);
+        act(() => render(<ChatItem model={model} />));
         const questionText = await screen.findByText(question);
-        const questionElement = await document.querySelector(".sage-chat-history__item-question");
+        const questionElement = document.querySelector(".sage-chat-history__item-question");
         const answerText = await screen.findByText(answer);
-        const answerElement = await document.querySelector(".sage-chat-history__item-answer");
+        const answerElement = document.querySelector(".sage-chat-history__item-answer");
         
         // Assert
         expect(questionText).not.toBeNull();

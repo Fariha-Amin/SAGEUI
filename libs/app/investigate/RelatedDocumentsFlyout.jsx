@@ -65,7 +65,9 @@ const RelatedDocumentsFlyout = ({ visible, onClose, investigationId }) => {
                 </div>
                 <div className="sage-flyout__body flex flex-grow-1 mb-2">
                     <DataTable
+                        id="relatedDocsTable"
                         dataKey="documentId"
+                        className="sage-table"
                         value={relatedDocs}
                         selectionMode="multiple"
                         selection={selectedDocs}
@@ -76,6 +78,7 @@ const RelatedDocumentsFlyout = ({ visible, onClose, investigationId }) => {
                             <DataColumn
                                 key={col.field}
                                 columnKey={col.field}
+                                className="sage-column"
                                 {...col}
                             />
                         ))}

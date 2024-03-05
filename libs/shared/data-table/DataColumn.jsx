@@ -2,8 +2,6 @@ import React from "react";
 import { Column } from "primereact/column";
 
 const columnTemplate = {
-    id: null,
-    name: null,
     columnKey: null,
     field: null,
     style: null,

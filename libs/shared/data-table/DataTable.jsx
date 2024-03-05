@@ -9,7 +9,6 @@ export default function SageDataTable(props) {
 
     // Apply passthroughs
     tableProps.id = props.id;
-    tableProps.name = props.name;
     tableProps.dataKey = props.dataKey;
     tableProps.value = props.value;
     tableProps.style = props.style;
@@ -36,7 +35,10 @@ export default function SageDataTable(props) {
     }
 
     // Apply sorting if any column is "sortable=true"
-    // Example: <DataColumn sortable sortOrder={1} onSort={(e) => setSort(e)}/>
+    // Example: 
+    // <DataTable onSort={(e) => setSort(e)}>
+    //   <DataColumn sortable sortOrder={1}/>
+    // </DataTable>
     const sortingEnabled = props.children.filter((column, i) => column.props.sortable === true);
     if (sortingEnabled) {
         // Sort order:
@@ -82,7 +84,7 @@ export default function SageDataTable(props) {
         const tableId = props.id;
         if (tableId) {
             tableProps.stateStorage = "session";
-            tableProps.stateKey = `sage-dt-state-${id}`;
+            tableProps.stateKey = `sage-dt-state-${tableId}`;
         }
     }
 
