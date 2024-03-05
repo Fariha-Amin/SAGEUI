@@ -14,23 +14,34 @@ import {
   headerCheckbox,
   allCheckboxSelection,
   removedRowsState,
-} from "./reducers/checkboxSlice";
+} from "./features/checkboxSlice";
+
+import {
+  expandRow,
+  collapseRow,
+  expandAllRows,
+  collapseAllRows,
+} from "./features/rowExpansionSlice";
 
 export default function SageDataTable(props) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [expandedRows, setExpandedRows] = useState(null);
+  // const [expandedRows, setExpandedRows] = useState(null);
   const [totalRecords, setTotalRecords] = useState(0);
   const [modalShow, setModalShow] = useState(false);
   const [selectedRadioOption, setSelectedRadioOption] = useState(null);
 
-  const dispatch = useDispatch();
-
+  // Checkbox state subscriber
   const checkedRows = useSelector((state) => state.checkbox).selectedRows;
   const uncheckedRows = useSelector((state) => state.checkbox).removedRows;
   const selectAllChecked = useSelector(
     (state) => state.checkbox
   ).selectAllChecked;
+
+  // Row expand state subscriber
+  const expandedRows = useSelector((state) => state.rowExpansion.expandedRows);
+
+  const dispatch = useDispatch();
 
   let tableConfig = sageTableUtil.createTableConfig(props);
 
@@ -100,22 +111,29 @@ export default function SageDataTable(props) {
 
   // Expanding row logic
   const onCellClick = (e) => {
-    let data = e.rowData;
-    let newExpandData = null;
-    if (expandedRows == null) {
-      newExpandData = [data];
+    debugger;
+    const rowData = e.rowData;
+    if (expandedRows.filter((row) => row.recId === rowData.recId).length) {
+      dispatch(collapseRow(rowData));
     } else {
-      let filterData = expandedRows.filter((d) => d.recId != data.recId);
-      if (filterData.length == expandedRows.length) {
-        filterData.push(data);
-      }
-      newExpandData = filterData.length ? [...filterData] : null;
+      dispatch(expandRow(rowData));
     }
-    setExpandedRows(newExpandData);
+    // let data = e.rowData;
+    // let newExpandData = null;
+    // if (expandedRows == null) {
+    //   newExpandData = [data];
+    // } else {
+    //   let filterData = expandedRows.filter((d) => d.recId != data.recId);
+    //   if (filterData.length == expandedRows.length) {
+    //     filterData.push(data);
+    //   }
+    //   newExpandData = filterData.length ? [...filterData] : null;
+    // }
+    // setExpandedRows(newExpandData);
   };
   // Expanding row template
   const rowExpansionTemplate = (data) => {
-    return <td colSpan={6}>{data.Summary}</td>;
+    return <td colSpan={6}>{data.summary}</td>;
   };
 
   const onDataTableKeyDown = (event) => {
@@ -267,6 +285,10 @@ export default function SageDataTable(props) {
               Your query returned no data
             </div>
           )}
+          rowExpansionTemplate={rowExpansionTemplate}
+          selection={true}
+          onCellClick={onCellClick}
+          expandedRows={expandedRows}
         >
           <Column
             className="check"
@@ -296,7 +318,7 @@ export default function SageDataTable(props) {
           visible={modalShow}
           header={headerElement}
           footer={footerContent}
-          onHide={() => setModalShow(false)}
+          onHideHandler={() => setModalShow(false)}
           radioOptions={radioOptions}
           setSelectedRadioOption={setSelectedRadioOption}
           selectedRadioOption={selectedRadioOption}
