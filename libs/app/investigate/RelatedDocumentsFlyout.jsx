@@ -10,10 +10,35 @@ import DataColumn from "_shared/data-table/DataColumn";
 import styled from 'styled-components';
 import client from './httpClient';
 
+const rowExpandedTemplate = (row) => {
+    // To do: get summary from API
+    return (
+        <p>
+            Summary goes here
+            <br/>
+            {row.documentId} - {row.filetype} = {row.filename}
+        </p>
+    );
+};
+
+const summaryTemplate = (row) => {
+    const [title, setTitle] = useState("View Summary");
+    const onExpandedDelegate = () => {
+        setTitle("Hide Summary");
+    };
+    const onCollapsedDelegate = () => {
+        setTitle("View Summary");
+    };
+    const onClickDelegate = () => {
+        row.toggleRowExpansion(onExpandedDelegate, onCollapsedDelegate)
+    };
+    return (<IconButton icon="fa-regular fa-file" onClick={onClickDelegate} title={title} />);
+};
+
 const columns = [
     { field: "number", header: "#" },
     { field: "view", header: "", body: (row) => { return (<IconButton icon="fa-regular fa-eye" />); } },
-    { field: "summary", header: "AI Summary", body: (row) => { return (<IconButton icon="fa-regular fa-file" />); } },
+    { field: "summary", header: "AI Summary", body: summaryTemplate },
     { field: "documentId", header: "DOCID" },
     { field: "filename", header: "Doc File Name/Subject" },
     { field: "filetype", header: "Doc File Type" },
@@ -73,7 +98,9 @@ const RelatedDocumentsFlyout = ({ visible, onClose, investigationId }) => {
                         selection={selectedDocs}
                         onSelectionChange={(e) => setSelectedDocs(e.value)}
                         style={{ width: "100%" }}
-                        loading={isLoading}>
+                        loading={isLoading}
+                        expandable
+                        rowExpandedTemplate={rowExpandedTemplate}>
                         {columns.map((col, i) => (
                             <DataColumn
                                 key={col.field}

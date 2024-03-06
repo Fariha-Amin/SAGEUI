@@ -19,6 +19,7 @@ export default function SageDataTable(props) {
     const [sortField, setSortField] = useState(null);
     const [sortOrder, setSortOrder] = useState(null);
     const [multiSortMeta, setMultiSortMeta] = useState(getDefaultSort(props));
+    const [expandedRows, setExpandedRows] = useState(null);
 
     let tableProps = {};
 
@@ -116,6 +117,51 @@ export default function SageDataTable(props) {
         if (tableId) {
             tableProps.stateStorage = "session";
             tableProps.stateKey = `sage-dt-state-${tableId}`;
+        }
+    }
+
+    // Apply row expansion if requested
+    // Example: 
+    // <DataTable expandable rowExpandedTemplate={template} onRowExpand={(e) => setRow(e)} onRowCollapse={(e) => setRow(e)}>
+    //   <DataColumn expander/>
+    //   <DataColumn body={(row) => <a onClick={row.toggleRowExpansion} />}/>
+    // </DataTable>
+    const rowExpansionEnabled = props.expandable ? true : false;
+    if (rowExpansionEnabled) {
+        tableProps.expandedRows = expandedRows;
+        tableProps.rowExpansionTemplate = props.rowExpandedTemplate;
+        tableProps.onRowToggle = (e) => setExpandedRows(e.data);
+        tableProps.onRowExpand = props.onRowExpand;
+        tableProps.onRowCollapse = props.onRowCollapse;
+    }
+
+    // Add toggle expansion method to exposed "row" parameter
+    for(const item of tableProps.value) {
+        item.toggleRowExpansion = (onExpanded, onCollapsed) => {
+            const key = item[props.dataKey];
+
+            // Nothing has been expanded yet, set the first one
+            if (!expandedRows) {
+                let expandedRow = {};
+                expandedRow[key] = true;
+                setExpandedRows(expandedRow);
+                onExpanded && onExpanded(item);
+                return;
+            }
+
+            // Toggle existing expansions
+            let rows = {...expandedRows};
+            let row = rows[key];
+            if (row == true) {
+                delete rows[key];
+                setExpandedRows(rows);
+                onCollapsed && onCollapsed(item);
+            }
+            else {
+                rows[key] = true;
+                setExpandedRows(rows);
+                onExpanded && onExpanded(item);
+            }
         }
     }
 

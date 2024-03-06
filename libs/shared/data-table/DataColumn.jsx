@@ -16,7 +16,8 @@ const columnTemplate = {
     bodyStyle: null,
     bodyClassName: null,
     sortable: null,
-    selectionMode: null
+    selectionMode: null,
+    expander: null
 }
 
 function intersect(template, data) {
