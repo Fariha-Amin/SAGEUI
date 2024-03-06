@@ -22,14 +22,18 @@ import {
   expandAllRows,
   collapseAllRows,
 } from "./features/rowExpansionSlice";
+import { useRef } from "react";
 
 export default function SageDataTable(props) {
+  const dataKey = useRef(props.dataKey);
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   // const [expandedRows, setExpandedRows] = useState(null);
   const [totalRecords, setTotalRecords] = useState(0);
   const [modalShow, setModalShow] = useState(false);
   const [selectedRadioOption, setSelectedRadioOption] = useState(null);
+
+  const { onCellClickHandler } = props;
 
   // Checkbox state subscriber
   const checkedRows = useSelector((state) => state.checkbox).selectedRows;
@@ -111,12 +115,8 @@ export default function SageDataTable(props) {
 
   // Expanding row logic
   const onCellClick = (e) => {
-    const rowData = e.rowData;
-    if (expandedRows.filter((row) => row.recId === rowData.recId).length) {
-      dispatch(collapseRow(rowData));
-    } else {
-      dispatch(expandRow(rowData));
-    }
+    if (!e.column.props.cellClickable) return;
+    onCellClickHandler(e);
   };
 
   // Expanding row template
