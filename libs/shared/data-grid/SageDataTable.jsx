@@ -1,4 +1,4 @@
-import React, { useState, useEffect, lazy } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { DataTable } from "primereact/datatable";
 import sageTableUtil from "./utility/sageTableUtility";
 import CustomPaginatorTemplate from "./CustomPaginatorTemplate";
@@ -16,34 +16,34 @@ import {
   removedRowsState,
 } from "./features/checkboxSlice";
 
-import {
-  expandRow,
-  collapseRow,
-  expandAllRows,
-  collapseAllRows,
-} from "./features/rowExpansionSlice";
-import { useRef } from "react";
+import { updateAllTableData } from "./features/tableDataSlice";
 
 export default function SageDataTable(props) {
   const dataKey = useRef(props.dataKey);
-  const [data, setData] = useState(null);
+  //const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
-  // const [expandedRows, setExpandedRows] = useState(null);
   const [totalRecords, setTotalRecords] = useState(0);
   const [modalShow, setModalShow] = useState(false);
   const [selectedRadioOption, setSelectedRadioOption] = useState(null);
 
   const { onCellClickHandler } = props;
 
-  // Checkbox state subscriber
-  const checkedRows = useSelector((state) => state.checkbox).selectedRows;
-  const uncheckedRows = useSelector((state) => state.checkbox).removedRows;
+  // Checkbox state subscribers
+  const data = useSelector((state) => state.tableDataSlice.tableData);
+  const checkedRows = useSelector(
+    (state) => state.checkboxDataSlice.selectedRows
+  );
+  const uncheckedRows = useSelector(
+    (state) => state.checkboxDataSlice.removedRows
+  );
   const selectAllChecked = useSelector(
-    (state) => state.checkbox
-  ).selectAllChecked;
+    (state) => state.checkboxDataSlice.selectAllChecked
+  );
 
-  // Row expand state subscriber
-  const expandedRows = useSelector((state) => state.rowExpansion.expandedRows);
+  // Row expand state subscribers
+  const expandedRows = useSelector(
+    (state) => state.rowExpansionDataSlice.expandedRows
+  );
 
   const dispatch = useDispatch();
 
@@ -95,7 +95,8 @@ export default function SageDataTable(props) {
       dataTableRequest: JSON.stringify(lazyState),
     }).then((apiResponse) => {
       setTotalRecords(apiResponse.totalRecords);
-      setData(apiResponse.data);
+      //setData(apiResponse.data);
+      dispatch(updateAllTableData(apiResponse.data));
       setLoading(false);
     });
   };
@@ -165,9 +166,9 @@ export default function SageDataTable(props) {
     const isChecked = e.checked;
 
     if (isChecked) {
-      dispatch(bodyCheckboxCheck(rowData.recId));
+      dispatch(bodyCheckboxCheck(rowData[dataKey.current]));
     } else {
-      dispatch(bodyCheckboxUncheck(rowData.recId));
+      dispatch(bodyCheckboxUncheck(rowData[dataKey.current]));
       dispatch(headerCheckbox(false));
     }
   };
@@ -176,11 +177,16 @@ export default function SageDataTable(props) {
     if (!selectAllChecked) {
       if (selectedRadioOption == 1) {
         if (checkedRows.includes(-1)) {
-          dispatch(allCheckboxSelection([...data.map((_) => _.recId)]));
+          dispatch(
+            allCheckboxSelection([...data.map((_) => _[dataKey.current])])
+          );
         } else {
           dispatch(
             allCheckboxSelection([
-              ...new Set([...checkedRows, ...data.map((_) => _.recId)]),
+              ...new Set([
+                ...checkedRows,
+                ...data.map((_) => _[dataKey.current]),
+              ]),
             ])
           );
         }
@@ -207,13 +213,17 @@ export default function SageDataTable(props) {
         dispatch(
           allCheckboxSelection([
             ...checkedRows.filter(
-              (checkedRows) => !data.some((_) => _.recId === checkedRows)
+              (checkedRows) =>
+                !data.some((_) => _[dataKey.current] === checkedRows)
             ),
           ])
         );
         dispatch(
           removedRowsState([
-            ...new Set([...uncheckedRows, ...data.map((_) => _.recId)]),
+            ...new Set([
+              ...uncheckedRows,
+              ...data.map((_) => _[dataKey.current]),
+            ]),
           ])
         );
       }
@@ -224,11 +234,11 @@ export default function SageDataTable(props) {
   const isRowSelected = (rowData) => {
     if (
       checkedRows.includes(-1) &&
-      !uncheckedRows.some((_) => _ === rowData.recId)
+      !uncheckedRows.some((_) => _ === rowData[dataKey.current])
     ) {
       return true;
     } else {
-      return checkedRows.some((row) => row === rowData.recId);
+      return checkedRows.some((row) => row === rowData[dataKey.current]);
     }
   };
 
