@@ -67,24 +67,33 @@ describe("Answer UI", () => {
         expect(element).toBeDefined();
     });
 
-    test("response contains person Names with hyperlinks and document ids in one answer", async () => {
+    test("response contains person link", () => {
         // Arrange
         const model = getDefaultPromptAnswer();
-        
+
         // Act
         render(<Answer model={model} />);
-        const element = await document.querySelector(".item-answer__answer");
+        const element = document.querySelector('.item-answer__answer button[aria-label="Wanda Romaine"]');
 
         // Assert
         expect(element).not.toBeNull();
         expect(element).toBeDefined();
-        expect(element.outerHTML).toContain('<button class="personName" value=" Wanda Romaine">');
-        expect(element.outerHTML).toContain('> Wanda Romaine<');
-        expect(element.outerHTML).toContain('<a href="#">ID000001</a>');
-        
     });
 
-    test("response contains new line characters" , async () => {
+    test("response contains document link", () => {
+        // Arrange
+        const model = getDefaultPromptAnswer();
+
+        // Act
+        render(<Answer model={model} />);
+        const element = document.querySelector('.item-answer__answer button[aria-label="ID000001"]');
+
+        // Assert
+        expect(element).not.toBeNull();
+        expect(element).toBeDefined();
+    });
+
+    test("response contains new line characters", async () => {
 
         //Arrange
         const model = getPersonalPromptAnswer();
@@ -128,8 +137,8 @@ function getDefaultModel() {
     };
 }
 
-function getDefaultPromptAnswer(){
-    return{
+function getDefaultPromptAnswer() {
+    return {
         id: 0,
         datetime: new Date(),
         query: {
@@ -157,8 +166,8 @@ function getDefaultPromptAnswer(){
     };
 }
 
-function getPersonalPromptAnswer(){
-    return{
+function getPersonalPromptAnswer() {
+    return {
         id: 0,
         datetime: new Date(),
         query: {

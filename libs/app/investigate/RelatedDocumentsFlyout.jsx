@@ -7,18 +7,12 @@ import Icon from '_shared/icon/Icon';
 import IconButton from '_shared/icon-button/IconButton';
 import DataTable from "_shared/data-table/DataTable";
 import DataColumn from "_shared/data-table/DataColumn";
+import RowSummary from './RowSummary';
 import styled from 'styled-components';
 import client from './httpClient';
 
 const rowExpandedTemplate = (row) => {
-    // To do: get summary from API
-    return (
-        <p>
-            Summary goes here
-            <br/>
-            {row.documentId} - {row.filetype} = {row.filename}
-        </p>
-    );
+    return (<RowSummary documentId={row.documentId} />);
 };
 
 const summaryTemplate = (row) => {
@@ -54,9 +48,10 @@ const H3 = styled.h3`
 const header = "Relevant Documents";
 const helpTooltipText = "Help text placeholder";
 
-const RelatedDocumentsFlyout = ({ visible, onClose, investigationId }) => {
+const RelatedDocumentsFlyout = ({ visible, onClose, investigationId, documentId }) => {
     const [relatedDocs, setRelatedDocs] = useState([]);
     const [selectedDocs, setSelectedDocs] = useState(null);
+    const [expandedDocs, setExpandedDocs] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
@@ -79,6 +74,19 @@ const RelatedDocumentsFlyout = ({ visible, onClose, investigationId }) => {
         getRelatedDocuments(investigationId);
     }, [investigationId]);
 
+    useEffect(() => {
+        if (!documentId) { return; }
+
+        // Set selected
+        const selectedDoc = relatedDocs.find(i => i.documentId === documentId);
+        setSelectedDocs([selectedDoc]);
+
+        // Set expanded
+        const expandedDoc = {};
+        expandedDoc[documentId] = true;
+        setExpandedDocs(expandedDoc);
+    }, [documentId]);
+
     const content = ({ closeIconRef, hide }) => {
         return (
             <>
@@ -100,6 +108,7 @@ const RelatedDocumentsFlyout = ({ visible, onClose, investigationId }) => {
                         style={{ width: "100%" }}
                         loading={isLoading}
                         expandable
+                        expanded={expandedDocs}
                         rowExpandedTemplate={rowExpandedTemplate}>
                         {columns.map((col, i) => (
                             <DataColumn

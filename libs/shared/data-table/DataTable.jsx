@@ -19,7 +19,7 @@ export default function SageDataTable(props) {
     const [sortField, setSortField] = useState(null);
     const [sortOrder, setSortOrder] = useState(null);
     const [multiSortMeta, setMultiSortMeta] = useState(getDefaultSort(props));
-    const [expandedRows, setExpandedRows] = useState(null);
+    const [expandedRows, setExpandedRows] = useState(props.expanded);
 
     let tableProps = {};
 
@@ -37,6 +37,7 @@ export default function SageDataTable(props) {
     tableProps.resizableColumns = false;
     tableProps.reorderableColumns = false;
     tableProps.reorderableRows = false;
+    tableProps.selectionAutoFocus = false;
     tableProps.scrollable = true;
     tableProps.scrollHeight = "flex";
     if (props.scrollHeight) {
@@ -136,7 +137,7 @@ export default function SageDataTable(props) {
     }
 
     // Add toggle expansion method to exposed "row" parameter
-    for(const item of tableProps.value) {
+    for (const item of tableProps.value) {
         item.toggleRowExpansion = (onExpanded, onCollapsed) => {
             const key = item[props.dataKey];
 
@@ -150,7 +151,7 @@ export default function SageDataTable(props) {
             }
 
             // Toggle existing expansions
-            let rows = {...expandedRows};
+            let rows = { ...expandedRows };
             let row = rows[key];
             if (row == true) {
                 delete rows[key];

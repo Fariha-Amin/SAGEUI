@@ -38,6 +38,7 @@ export default function Item({ model, onQuery, onDeleteClick }) {
     const [isDeleting, setIsDeleting] = useState(false);
     const [isFlyoutVisible, setIsFlyoutVisible] = useState(false);
     const [flyoutInvestigationId, setFlyoutInvestigationId] = useState(null);
+    const [flyoutDocumentId, setFlyoutDocumentId] = useState(null);
 
     const feedback = model.response.feedback;
     model.hasFeedback = (model.response.feedback != "");
@@ -105,6 +106,12 @@ export default function Item({ model, onQuery, onDeleteClick }) {
         setIsFlyoutVisible(false);
     }
 
+    const onDocumentClickDelegate = (e) => {
+        setFlyoutInvestigationId(model.id);
+        setFlyoutDocumentId(e);
+        setIsFlyoutVisible(true);
+    }
+
     const onAccordionClickDelegate = async (e) => {
         if (activeIndex === 0) {
             setItemHeaderCss(collapsedHeaderCss);
@@ -135,7 +142,7 @@ export default function Item({ model, onQuery, onDeleteClick }) {
                     <AccordionTab>
                         <div className='sage-chat-history__item-body'>
                             <Question model={model} onRelevantDocsClicked={onRelevantDocsClickedDelegate} />
-                            <Answer model={model} onQuery={onQueryItemDelegate} />
+                            <Answer model={model} onQuery={onQueryItemDelegate} onDocumentClick={onDocumentClickDelegate} />
                             <div className='sage-chat-history__item-timestamp'>
                                 {formatDate(model.datetime)}
                             </div>
@@ -146,7 +153,7 @@ export default function Item({ model, onQuery, onDeleteClick }) {
 
             <FeedbackModal feedback={feedback} shouldShow={showFeedback} onClose={setShowFeedback} onSave={onFeedbackSaveDelegate} />
             <ConfirmDialog {...deleteDialogOptions} />
-            <RelatedDocumentsFlyout visible={isFlyoutVisible} onClose={onCloseDelegate} investigationId={flyoutInvestigationId} />
+            <RelatedDocumentsFlyout visible={isFlyoutVisible} onClose={onCloseDelegate} investigationId={flyoutInvestigationId} documentId={flyoutDocumentId} />
         </>
     );
 }
