@@ -38,11 +38,12 @@ export default function Item({ model, onQuery, onDeleteClick }) {
     const [isDeleting, setIsDeleting] = useState(false);
     const [isFlyoutVisible, setIsFlyoutVisible] = useState(false);
     const [flyoutInvestigationId, setFlyoutInvestigationId] = useState(null);
-  
+
+    const feedback = model.response.feedback;
     model.hasFeedback = (model.response.feedback != "");
-    
-    const onQueryItemDelegate = async (e) =>  {
-        onQuery && onQuery({ id: e.id, value: e.value, personalId : e.personalId });
+
+    const onQueryItemDelegate = async (e) => {
+        onQuery && onQuery({ id: e.id, value: e.value, personalId: e.personalId });
     };
 
     const onFavoriteClickDelegate = async (e) => {
@@ -95,6 +96,15 @@ export default function Item({ model, onQuery, onDeleteClick }) {
         }
     };
 
+    const onRelevantDocsClickedDelegate = (e) => {
+        setFlyoutInvestigationId(model.id);
+        setIsFlyoutVisible(true);
+    }
+
+    const onCloseDelegate = (e) => {
+        setIsFlyoutVisible(false);
+    }
+
     const onAccordionClickDelegate = async (e) => {
         if (activeIndex === 0) {
             setItemHeaderCss(collapsedHeaderCss);
@@ -106,39 +116,37 @@ export default function Item({ model, onQuery, onDeleteClick }) {
         }
     }
 
-    const feedback = model.response.feedback;
-
     return (
         <>
-        <div className='sage-chat-history__item' data-id={model.id}>
-            <div className={`sage-chat-history__item-header ${itemHeaderCss}`}>
-                <div className="flex flex-wrap align-items-center justify-content-end gap-1">
-                    <Actions
-                        model={model}
-                        onFavoriteClick={onFavoriteClickDelegate}
-                        onNoteClick={onNoteClickkDelegate}
-                        onFeedbackClick={onFeedbackClickDelegate}
-                        onDeleteClick={onDeleteClickDelegate}
-                    />
-                    <IconButton icon={activeIndex === 0 ? "chevron-down" : "chevron-up"} onClick={onAccordionClickDelegate} />
-                </div>
-            </div>
-            <Accordion activeIndex={activeIndex} onTabChange={(e) => setActiveIndex(e.index)}>
-                <AccordionTab>
-                    <div className='sage-chat-history__item-body'>
-                        <Question model={model} onRelevantDocsClicked={onRelevantDocsClickedDelegate} />
-                        <Answer model={model} onQuery={onQueryItemDelegate} />
-                        <div className='sage-chat-history__item-timestamp'>
-                            {formatDate(model.datetime)}
-                        </div>
+            <div className='sage-chat-history__item' data-id={model.id}>
+                <div className={`sage-chat-history__item-header ${itemHeaderCss}`}>
+                    <div className="flex flex-wrap align-items-center justify-content-end gap-1">
+                        <Actions
+                            model={model}
+                            onFavoriteClick={onFavoriteClickDelegate}
+                            onNoteClick={onNoteClickDelegate}
+                            onFeedbackClick={onFeedbackClickDelegate}
+                            onDeleteClick={onDeleteClickDelegate}
+                        />
+                        <IconButton icon={activeIndex === 0 ? "chevron-down" : "chevron-up"} onClick={onAccordionClickDelegate} />
                     </div>
-                </AccordionTab>
-            </Accordion>
-        </div>
-        
-        <FeedbackModal feedback={feedback} shouldShow={showFeedback} onClose={setShowFeedback} onSave={onFeedbackSaveDelegate} />
-        <ConfirmDialog {...deleteDialogOptions} />
-        <RelatedDocumentsFlyout visible={isFlyoutVisible} onClose={onCloseDelegate} investigationId={flyoutInvestigationId} />
-    </>
+                </div>
+                <Accordion activeIndex={activeIndex} onTabChange={(e) => setActiveIndex(e.index)}>
+                    <AccordionTab>
+                        <div className='sage-chat-history__item-body'>
+                            <Question model={model} onRelevantDocsClicked={onRelevantDocsClickedDelegate} />
+                            <Answer model={model} onQuery={onQueryItemDelegate} />
+                            <div className='sage-chat-history__item-timestamp'>
+                                {formatDate(model.datetime)}
+                            </div>
+                        </div>
+                    </AccordionTab>
+                </Accordion>
+            </div>
+
+            <FeedbackModal feedback={feedback} shouldShow={showFeedback} onClose={setShowFeedback} onSave={onFeedbackSaveDelegate} />
+            <ConfirmDialog {...deleteDialogOptions} />
+            <RelatedDocumentsFlyout visible={isFlyoutVisible} onClose={onCloseDelegate} investigationId={flyoutInvestigationId} />
+        </>
     );
 }

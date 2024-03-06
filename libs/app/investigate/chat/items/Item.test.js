@@ -28,7 +28,7 @@ describe("ChatItem UI", () => {
         // Act
         act(() => render(<ChatItem model={model} />));
         const element = await screen.findByText(expectedFormat);
-        
+
         // Assert
         expect(element).not.toBeNull();
         expect(element).toBeDefined();
@@ -37,14 +37,14 @@ describe("ChatItem UI", () => {
     test("renders as an accordian", async () => {
         // Arrange
         const model = getDefaultModel();
-        
+
         const mockGetReferenceDocumentsAsync = () => { return Promise.resolve([]); };
         sageClient.getReferenceDocumentsAsync.mockImplementation(mockGetReferenceDocumentsAsync);
 
         // Act
         act(() => render(<ChatItem model={model} />));
         const element = await waitFor(() => { return document.querySelector(".sage-chat-history__item .p-accordion"); });
-        
+
         // Assert
         expect(element).not.toBeNull();
         expect(element).toBeDefined();
@@ -55,7 +55,7 @@ describe("ChatItem UI", () => {
         const question = "What is the answer?";
         const model = getDefaultModel();
         model.query.question = question;
-        
+
         const mockGetReferenceDocumentsAsync = () => { return Promise.resolve([]); };
         sageClient.getReferenceDocumentsAsync.mockImplementation(mockGetReferenceDocumentsAsync);
 
@@ -63,7 +63,7 @@ describe("ChatItem UI", () => {
         act(() => render(<ChatItem model={model} />));
         const questionText = await screen.findByText(question);
         const questionElement = document.querySelector(".sage-chat-history__item-question");
-        
+
         // Assert
         expect(questionText).not.toBeNull();
         expect(questionText).toBeDefined();
@@ -76,7 +76,7 @@ describe("ChatItem UI", () => {
         const answer = "42, according to Douglas Adams.";
         const model = getDefaultModel();
         model.response.answer = answer;
-        
+
         const mockGetReferenceDocumentsAsync = () => { return Promise.resolve([]); };
         sageClient.getReferenceDocumentsAsync.mockImplementation(mockGetReferenceDocumentsAsync);
 
@@ -84,7 +84,7 @@ describe("ChatItem UI", () => {
         act(() => render(<ChatItem model={model} />));
         const answerText = await screen.findByText(answer);
         const answerElement = document.querySelector(".sage-chat-history__item-answer");
-        
+
         // Assert
         expect(answerText).not.toBeNull();
         expect(answerText).toBeDefined();
@@ -99,7 +99,7 @@ describe("ChatItem UI", () => {
         const model = getDefaultModel();
         model.query.question = question;
         model.response.answer = answer;
-        
+
         const mockGetReferenceDocumentsAsync = () => { return Promise.resolve([]); };
         sageClient.getReferenceDocumentsAsync.mockImplementation(mockGetReferenceDocumentsAsync);
 
@@ -109,7 +109,7 @@ describe("ChatItem UI", () => {
         const questionElement = document.querySelector(".sage-chat-history__item-question");
         const answerText = await screen.findByText(answer);
         const answerElement = document.querySelector(".sage-chat-history__item-answer");
-        
+
         // Assert
         expect(questionText).not.toBeNull();
         expect(questionText).toBeDefined();
@@ -135,76 +135,76 @@ describe("ChatItem UX", () => {
 
         const link = await screen.findByText("25 Relevant Docs");
         await userEvent.click(link);
-        
+
         const flyout = document.querySelector(".sage-related-documents__flyout");
 
         // Assert
         expect(flyout).not.toBeNull();
         expect(flyout).toBeDefined();
     });
-    
+
     describe("Delete", () => {
         test("clicking shows confirmation dialog", async () => {
             // Arrange
             const model = getDefaultModel();
-    
+
             // Act
             render(<ChatItem model={model} />);
             const hiddenDialog = document.querySelector(".sage-dialog");
             const button = document.querySelector(".item-actions_delete");
             await userEvent.click(button);
             const visibleDialog = document.querySelector(".sage-dialog");
-    
+
             // Assert
             expect(hiddenDialog).toBeNull();
             expect(visibleDialog).not.toBeNull();
             expect(visibleDialog).toBeDefined();
         });
-    
+
         test("cancelling does not delete item", async () => {
             // Arrange
             const model = getDefaultModel();
-    
+
             const mockUpdateInvestigationAsync = jest.fn();
             sageClient.updateInvestigation.mockImplementation(mockUpdateInvestigationAsync);
-    
+
             // Act
             render(<ChatItem model={model} />);
             const deleteButton = document.querySelector(".item-actions_delete");
             await userEvent.click(deleteButton);
             const cancelButton = document.querySelector('button[aria-label="Cancel"]');
             await userEvent.click(cancelButton);
-    
+
             // Assert
             expect(mockUpdateInvestigationAsync).not.toHaveBeenCalled();
         });
-    
+
         test("confirming does delete item", async () => {
             // Arrange
             const model = getDefaultModel();
-    
+
             const mockUpdateInvestigationAsync = jest.fn();
             sageClient.updateInvestigation.mockImplementation(mockUpdateInvestigationAsync);
-    
+
             // Act
             render(<ChatItem model={model} />);
             const deleteButton = document.querySelector(".item-actions_delete");
             await userEvent.click(deleteButton);
             const okButton = document.querySelector('button[aria-label="Ok"]');
             await userEvent.click(okButton);
-    
+
             // Assert
             expect(mockUpdateInvestigationAsync).toHaveBeenCalled();
             expect(mockUpdateInvestigationAsync).toHaveBeenCalledTimes(1);
         });
-    
+
         test("deleting shows progress indicator", async () => {
             // Arrange
             const model = getDefaultModel();
-    
+
             const mockUpdateInvestigationAsync = jest.fn();
             sageClient.updateInvestigation.mockImplementation(mockUpdateInvestigationAsync);
-    
+
             // Act
             render(<ChatItem model={model} />);
             const deleteButton = document.querySelector(".item-actions_delete");
@@ -212,7 +212,7 @@ describe("ChatItem UX", () => {
             const okButton = document.querySelector('button[aria-label="Ok"]');
             await userEvent.click(okButton);
             const progress = document.querySelector('button[aria-label="Ok"].p-button-loading');
-    
+
             // Assert
             expect(progress).not.toBeNull();
             expect(progress).toBeDefined();
@@ -223,15 +223,15 @@ describe("ChatItem UX", () => {
         test("clicking does favorite the item", async () => {
             // Arrange
             const model = getDefaultModel();
-    
+
             const mockUpdateInvestigationAsync = jest.fn();
             sageClient.updateInvestigation.mockImplementation(mockUpdateInvestigationAsync);
-    
+
             // Act
             render(<ChatItem model={model} />);
             const favoriteButton = document.querySelector(".item-actions_favorite");
             await userEvent.click(favoriteButton);
-    
+
             // Assert
             expect(mockUpdateInvestigationAsync).toHaveBeenCalled();
             expect(mockUpdateInvestigationAsync).toHaveBeenCalledTimes(1);
