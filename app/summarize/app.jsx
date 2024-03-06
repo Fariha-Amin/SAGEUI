@@ -33,7 +33,7 @@ export default function App() {
   };
 
   return (
-    <div className="App">
+    <div className="container-fluid" style={{ padding: "4rem 4rem 0rem 0rem" }}>
       <SummaryHeader />
 
       <SageDataTable

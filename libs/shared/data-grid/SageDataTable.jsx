@@ -270,8 +270,8 @@ export default function SageDataTable(props) {
   );
 
   return (
-    <div>
-      <div>
+    <div className="row">
+      <div className="col">
         <DataTable
           {...tableConfig}
           value={data}
@@ -291,6 +291,7 @@ export default function SageDataTable(props) {
           <Column
             className="check"
             headerStyle={{ width: "3rem" }}
+            align="center"
             header={
               <Checkbox
                 onChange={onSelectAllChange}
