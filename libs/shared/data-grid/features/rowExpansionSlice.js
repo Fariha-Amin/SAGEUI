@@ -7,7 +7,7 @@ const initialState = {
 };
 
 const rowExpansionSlice = createSlice({
-  name: "rowExpansion",
+  name: "rowExpansionSlice",
   initialState,
   reducers: {
     expandRow(state, action) {

@@ -7,7 +7,7 @@ const initialState = {
 };
 
 const checkboxSlice = createSlice({
-  name: "bodyCheckbox",
+  name: "checkboxSlice",
   initialState,
   reducers: {
     bodyCheckboxCheck: (state, action) => {
