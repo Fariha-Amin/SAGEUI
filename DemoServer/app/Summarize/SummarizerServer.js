@@ -26,7 +26,7 @@ app.get("/api/getTableData", (req, res) => {
   res.json(service.getFilterAndPaginatedData(sageDataTableRequest));
 });
 // Start the server
-const port = 5000;
+const port = 5004;
 
 https.createServer(options, app).listen(port, () => {
   console.log(`Server running at https://localhost:${port}/`);
