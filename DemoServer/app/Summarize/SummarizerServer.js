@@ -1,11 +1,18 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const service = require("./SummarizerService");
-const cors = require("cors");
 
+const https = require("https");
+const fs = require("fs");
+const path = require("path");
+const cors = require("cors");
 // Create an Express application
 const app = express();
 
+const options = {
+  key: fs.readFileSync(path.join(__dirname, "server.key")),
+  cert: fs.readFileSync(path.join(__dirname, "server.cert")),
+};
 app.use(cors());
 
 app.use(bodyParser.json());
@@ -21,6 +28,6 @@ app.get("/api/getTableData", (req, res) => {
 // Start the server
 const port = 5000;
 
-app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}/`);
+https.createServer(options, app).listen(port, () => {
+  console.log(`Server running at https://localhost:${port}/`);
 });
