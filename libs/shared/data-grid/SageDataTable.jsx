@@ -26,10 +26,12 @@ export default function SageDataTable(props) {
   const [modalShow, setModalShow] = useState(false);
   const [selectedRadioOption, setSelectedRadioOption] = useState(null);
 
-  const { onCellClickHandler } = props;
+  const { onCellClickHandler, onTableDataUpdateHandler } = props;
+
+  // Table data state subscribers
+  const data = useSelector((state) => state.tableDataSlice.tableData);
 
   // Checkbox state subscribers
-  const data = useSelector((state) => state.tableDataSlice.tableData);
   const checkedRows = useSelector(
     (state) => state.checkboxDataSlice.selectedRows
   );
@@ -84,6 +86,11 @@ export default function SageDataTable(props) {
     loadLazyData();
   }, [lazyState]);
 
+  // Invoke when table data updated
+  useEffect(() => {
+    onTableDataUpdateHandler && onTableDataUpdateHandler();
+  }, [data]);
+
   const loadLazyData = () => {
     setLoading(true);
 
@@ -117,7 +124,7 @@ export default function SageDataTable(props) {
   // Expanding row logic
   const onCellClick = (e) => {
     if (!e.column.props.cellClickable) return;
-    onCellClickHandler(e);
+    onCellClickHandler && onCellClickHandler(e);
   };
 
   // Expanding row template

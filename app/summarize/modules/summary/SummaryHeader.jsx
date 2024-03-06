@@ -54,9 +54,9 @@ const SummaryHeader = () => {
         style={{ padding: "0px 8px", backGroundColor: "#F9FAFB" }}
       >
         <div className="col">
-          <div class="position-relative mt-4">
+          <div className="position-relative mt-4">
             <span className="header-text-wrapper">List of Summaries </span>
-            <span class="icon-position">
+            <span className="icon-position">
               <HelpIconSm onClick={(e) => op.current.toggle(e)} />
             </span>
           </div>

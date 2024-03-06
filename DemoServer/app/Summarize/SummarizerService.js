@@ -1,6 +1,4 @@
 const filterTableData = (array, filters) => {
-  console.log(filters);
-
   let filteredArray = array;
 
   if (filters.user.value) {

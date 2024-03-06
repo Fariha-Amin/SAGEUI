@@ -20,10 +20,18 @@ const rowExpansionSlice = createSlice({
     },
     expandAllRows(state, action) {},
     collapseAllRows(state, action) {},
+    updateIsAllRowExpanded(state, action) {
+      state.isAllRowExpanded = action.payload;
+    },
   },
 });
 
-export const { expandRow, collapseRow, expandAllRows, collapseAllRows } =
-  rowExpansionSlice.actions;
+export const {
+  expandRow,
+  collapseRow,
+  expandAllRows,
+  collapseAllRows,
+  updateIsAllRowExpanded,
+} = rowExpansionSlice.actions;
 
 export default rowExpansionSlice.reducer;
