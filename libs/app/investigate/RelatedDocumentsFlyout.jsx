@@ -27,7 +27,7 @@ const H3 = styled.h3`
 `;
 
 const header = "Relevant Documents";
-const helpTooltipText = "This is informative text.";
+const helpTooltipText = "Help text placeholder";
 
 const RelatedDocumentsFlyout = ({ visible, onClose, investigationId }) => {
     const [relatedDocs, setRelatedDocs] = useState([]);

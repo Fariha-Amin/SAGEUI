@@ -1,6 +1,7 @@
 import React from 'react';
 import '@testing-library/jest-dom'
 import { render, screen, waitFor, act } from "@testing-library/react";
+import userEvent from '@testing-library/user-event';
 import ChatItem from './Item';
 import sageClient from "_investigate/httpClient";
 
@@ -118,6 +119,28 @@ describe("ChatItem UI", () => {
         expect(answerText).toBeDefined();
         expect(answerElement).not.toBeNull();
         expect(answerElement).toBeDefined();
+    });
+});
+
+describe("ChatItem UX", () => {
+    test("clicking '25 Relevant Docs' link opens flyout", async () => {
+        // Arrange
+        const model = getDefaultModel();
+
+        const mockGetReferenceDocumentsAsync = () => { return Promise.resolve([]); };
+        sageClient.getReferenceDocumentsAsync.mockImplementation(mockGetReferenceDocumentsAsync);
+
+        // Act
+        act(() => render(<ChatItem model={model} />));
+
+        const link = await screen.findByText("25 Relevant Docs");
+        await userEvent.click(link);
+        
+        const flyout = document.querySelector(".sage-related-documents__flyout");
+
+        // Assert
+        expect(flyout).not.toBeNull();
+        expect(flyout).toBeDefined();
     });
 });
 
