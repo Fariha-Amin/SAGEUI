@@ -204,6 +204,9 @@ table.table-bordered.sageDataTable td:last-child,
 table.table-bordered.sageDataTable td:last-child {
   border-right-width: 1px;
 }
+.sageDataTable thead tr{
+  text-transform : inherit
+}
 
 /* PrimeReact paginator */
 .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
