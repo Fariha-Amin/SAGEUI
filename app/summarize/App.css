@@ -402,3 +402,20 @@ button{
   color: #0ea5e9;
   border: 1px solid;
 }
+
+.p-splitbutton .p-splitbutton-defaultbutton {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.p-splitbutton-menubutton{
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+}
+
+.p-button {
+  background: #3B82F6;
+  color: #ffffff;
+  border-color: #3B82F6;
+  border-radius: 6px;
+}
