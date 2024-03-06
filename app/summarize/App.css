@@ -407,6 +407,7 @@ button{
 
 .p-button {
   border-radius: 6px;
+  box-shadow: none;
 }
 
 .icon-position{
