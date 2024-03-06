@@ -1,7 +1,7 @@
 
 .p-component {
   font-family: "Open Sans-Regular", Helvetica;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 400;
   left: 0;
   letter-spacing: 0;
@@ -412,4 +412,9 @@ button{
 .icon-position{
   position: absolute;
   top: -15px;
+}
+
+.header-text-wrapper {
+  font-family:Helvetica;
+  font-weight: 700;
 }
