@@ -7,7 +7,7 @@ export const SelectAllModal = (props) => {
     visible,
     header,
     footer,
-    onHideandler,
+    onHideHandler,
     radioOptions,
     setSelectedRadioOption,
     selectedRadioOption,
@@ -19,7 +19,7 @@ export const SelectAllModal = (props) => {
       header={header}
       footer={footer}
       style={{ width: "32rem" }}
-      onHide={onHideandler}
+      onHide={onHideHandler}
     >
       {radioOptions.map((option) => (
         <div className="p-col p-modal-container" key={option.value}>
