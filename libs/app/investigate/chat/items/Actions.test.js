@@ -169,7 +169,7 @@ describe("'Bad Response' action", () => {
         expect(handleOnFeedback).toHaveBeenCalledTimes(1);
     });
 
-    test('has tooltip that reads "Report a bad response"', async () => {
+    test('RPMXCON-85401 has tooltip that reads "Report a bad response"', async () => {
         // Arrange
         const model = getDefaultModel();
         const toolTipText = "Report a bad response";
@@ -188,7 +188,7 @@ describe("'Bad Response' action", () => {
 });
 
 describe("'Delete' action", () => {
-    test("renders correct icon", async () => {
+    test("RPMXCON-85184 renders correct icon", async () => {
         // Arrange
         const model = getDefaultModel();
         const faIcon = "trash-can";
@@ -216,7 +216,7 @@ describe("'Delete' action", () => {
         expect(handleOnDelete).toHaveBeenCalledTimes(1);
     });
 
-    test('has tooltip that reads "Delete from page"', async () => {
+    test('RPMXCON-85196 has tooltip that reads "Delete from page"', async () => {
         // Arrange
         const model = getDefaultModel();
         const toolTipText = "Delete from page";

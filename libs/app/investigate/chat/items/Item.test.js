@@ -1,6 +1,6 @@
 import React from 'react';
 import '@testing-library/jest-dom'
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import ChatItem from './Item';
 import sageClient from "_investigate/httpClient";
@@ -200,6 +200,65 @@ describe("ChatItem UX", () => {
             // Assert
             expect(mockUpdateInvestigationAsync).toHaveBeenCalled();
             expect(mockUpdateInvestigationAsync).toHaveBeenCalledTimes(1);
+        });
+    });
+
+    describe("Feedback", () => {
+        test("RPMXCON-85412 - Clicking Save closes Modal and updates item", async () => {
+            const model = getDefaultModel();
+            const feedback = "";
+            const newFeedback = "This is an example feedback.";
+            model.response.feedback = feedback;
+            const user = userEvent.setup({ delay: null });
+    
+            const mockUpdateInvestigationAsync = jest.fn();
+            sageClient.updateInvestigation.mockImplementation(mockUpdateInvestigationAsync);
+    
+            // Act
+            render(<ChatItem model={model} />);
+
+            const feedbackButton = await waitFor(() => document.querySelector(".item-actions_feedback"));
+            await userEvent.click(feedbackButton);
+            const textarea = await waitFor(() => document.querySelector(".feedback-modal__text-area"));
+            await user.type(textarea, newFeedback);
+            const cancelButton = await waitFor(() => document.querySelector(".feedback-modal__save"));
+            await userEvent.click(cancelButton);
+            //Get feedback button state after cancel
+            const feedbackButtonAfter = await waitFor(() => document.querySelector(".item-actions_feedback"));
+            
+    
+            // Assert
+            expect(model.response.feedback).toEqual(newFeedback);
+            expect(feedbackButton.outerHTML).toContain("item-actions_feedback_active");
+        });
+
+        test("RPMXCON-85411 - Clicking Cancel closes Modal without changes", async () => {
+            // Arrange
+            const model = getDefaultModel();
+            const feedback = "";
+            const newFeedback = "This is an example feedback.";
+            model.response.feedback = feedback;
+            const user = userEvent.setup({ delay: null });
+    
+            const mockUpdateInvestigationAsync = jest.fn();
+            sageClient.updateInvestigation.mockImplementation(mockUpdateInvestigationAsync);
+    
+            // Act
+            render(<ChatItem model={model} />);
+
+            const feedbackButton = await waitFor(() => document.querySelector(".item-actions_feedback"));
+            await userEvent.click(feedbackButton);
+            const textarea = await waitFor(() => document.querySelector(".feedback-modal__text-area"));
+            await user.type(textarea, newFeedback);
+            const cancelButton = await waitFor(() => document.querySelector(".feedback-modal__cancel"));
+            await userEvent.click(cancelButton);
+            //Get feedback button state after cancel
+            const feedbackButtonAfter = await waitFor(() => document.querySelector(".item-actions_feedback"));
+            
+    
+            // Assert
+            expect(model.response.feedback).toEqual(feedback);
+            expect(feedbackButton.outerHTML).toEqual(feedbackButtonAfter.outerHTML);
         });
     });
 });
