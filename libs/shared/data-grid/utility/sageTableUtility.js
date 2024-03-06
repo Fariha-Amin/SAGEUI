@@ -48,7 +48,7 @@ const SageTableUtility = {
       cellSelection: tableConfig.cellSelection,
       // paginatorLeft: true,
       tableClassName:
-        "table table-border table-hover table-bordered align-middle dataTable no-footer table-striped",
+        "table table-border table-hover table-bordered align-middle sageDataTable no-footer table-striped",
       // paginatorTemplate: "CurrentPageReport PrevPageLink PageLinks NextPageLink RowsPerPageDropdown",
       ///currentPageReportTemplate: "Total: {totalRecords} entries",
       //onCellClick: onCellClick,
