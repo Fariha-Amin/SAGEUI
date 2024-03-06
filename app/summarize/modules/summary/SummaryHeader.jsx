@@ -4,22 +4,12 @@ import { SplitButton } from "primereact/splitbutton";
 import HelpIcon from "../../icons/help.svg";
 import DownloadIcon from "../../icons/download.svg";
 import { OverlayPanel } from "primereact/overlaypanel";
-import { ConfirmPopup, confirmPopup } from "primereact/confirmpopup";
 
 const SummaryHeader = () => {
   const op = useRef(null);
 
-  const confirm1 = (event) => {
-    confirmPopup({
-      target: event.currentTarget,
-      message: "Are you sure you want to proceed?",
-      icon: "pi pi-exclamation-triangle",
-      defaultFocus: "accept",
-    });
-  };
   return (
     <>
-      {/* <ConfirmPopup /> */}
       <OverlayPanel
         ref={op}
         style={{ width: "320px", height: "180px", overflowY: "scroll" }}
@@ -39,10 +29,10 @@ const SummaryHeader = () => {
       <div className="row">
         <div className="col d-flex align-items-center">
           <p className="font-size-header font-weight-bold">
-            neXgenAI Summarize{" "}
+            neXgenAI Summarize
             <span>
               <HelpIcon
-                style={{ verticalAlign: "center" }}
+                style={{ verticalAlign: "top" }}
                 onClick={(e) => op.current.toggle(e)}
               />
             </span>
@@ -63,13 +53,12 @@ const SummaryHeader = () => {
         style={{ padding: "0px 8px", backGroundColor: "#F9FAFB" }}
       >
         <div className="col">
-          <span className="font-weight-bold">List of Summaries </span>
-          <span>
-            <HelpIcon
-              style={{ verticalAlign: "top" }}
-              onClick={(e) => op.current.toggle(e)}
-            />
-          </span>
+          <div class="position-relative mt-4 font-weight-bold">
+            <span class="">List of summaries </span>
+            <span class="icon-position">
+              <HelpIcon onClick={(e) => op.current.toggle(e)} />
+            </span>
+          </div>
         </div>
 
         <div className="col d-flex justify-content-end">
