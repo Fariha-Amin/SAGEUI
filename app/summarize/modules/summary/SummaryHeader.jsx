@@ -4,6 +4,7 @@ import { SplitButton } from "primereact/splitbutton";
 import HelpIcon from "../../icons/help.svg";
 import DownloadIcon from "../../icons/download.svg";
 import { OverlayPanel } from "primereact/overlaypanel";
+import HelpIconSm from "../../icons/help_18.svg";
 
 const SummaryHeader = () => {
   const op = useRef(null);
@@ -53,10 +54,10 @@ const SummaryHeader = () => {
         style={{ padding: "0px 8px", backGroundColor: "#F9FAFB" }}
       >
         <div className="col">
-          <div class="position-relative mt-4 font-weight-bold">
-            <span class="">List of summaries </span>
+          <div class="position-relative mt-4">
+            <span className="header-text-wrapper">List of Summaries </span>
             <span class="icon-position">
-              <HelpIcon onClick={(e) => op.current.toggle(e)} />
+              <HelpIconSm onClick={(e) => op.current.toggle(e)} />
             </span>
           </div>
         </div>
@@ -69,7 +70,7 @@ const SummaryHeader = () => {
             outlined
           />
           <div className="ml-4">
-            <DownloadIcon />
+            <DownloadIcon style={{ marginTop: "8px" }} />
           </div>
           <SplitButton
             className="btn-height ml-4"
