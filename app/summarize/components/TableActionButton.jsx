@@ -1,11 +1,11 @@
-import React from 'react'
+import React from "react";
 
-const TableActionButton = ({children, onClickHandler, ...rest}) => {
+const TableActionButton = ({ children, onClick, ...rest }) => {
   return (
-    <button onClick={onClickHandler} {...rest}>
+    <button onClick={onClick} {...rest}>
       {children}
     </button>
-  )
-}
+  );
+};
 
-export default TableActionButton
+export default TableActionButton;
