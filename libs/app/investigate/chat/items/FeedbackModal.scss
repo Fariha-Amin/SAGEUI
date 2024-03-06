@@ -1,0 +1,26 @@
+@use "_root/colors";
+
+.feedback-modal__dialog {
+    width: 50vw;
+    height: 50vh;
+}
+
+.feedback-modal__dialog .p-dialog-header{
+    border-bottom:0px;
+    padding-bottom:0px;
+}
+
+.feedback-modal__text-area {
+    width: 46vw;
+    height: 25vh;
+    resize: none;
+}
+
+.feedback-modal__buttons {
+    margin-top:4rem;
+    direction:rtl;
+}
+
+.feedback-modal__max-text-error {
+    color: colors.$sage-red;
+}

@@ -5,8 +5,8 @@ import { Skeleton } from "primereact/skeleton";
 const SageTableUtility = {
   createColumnDefinition: (columns, isSkeleton = false) => {
     let orderedColumns = columns
-      .map((column) => column)
-      .sort((c1, c2) => c1.props.order - c2.props.order);
+      .slice()
+      .sort((x, y) => x.props.order - y.props.order);
     return orderedColumns.map(({ props: column }) => {
       return (
         <Column
@@ -24,6 +24,7 @@ const SageTableUtility = {
           align="center"
           selectionMode={column.selectionMode}
           className={column.className}
+          cellClickable={column.cellClickable}
         />
       );
     });
@@ -48,16 +49,10 @@ const SageTableUtility = {
       cellSelection: tableConfig.cellSelection,
       // paginatorLeft: true,
       tableClassName:
-        "table table-border table-hover table-bordered align-middle dataTable no-footer table-striped",
-      // paginatorTemplate: "CurrentPageReport PrevPageLink PageLinks NextPageLink RowsPerPageDropdown",
-      ///currentPageReportTemplate: "Total: {totalRecords} entries",
-      //onCellClick: onCellClick,
-      //expandedRows: expandedRows,
-      //rowExpansionTemplate: rowExpansionTemplate
+        "table table-border table-hover table-bordered align-middle sageDataTable no-footer table-striped",
       lazy: tableConfig.lazy,
       style: tableConfig.style,
-      //sortField: tableConfig.defaultSortField,
-      //sortOrder: tableConfig.defaultSortOrder,
+      onCellClickHandler: tableConfig.onCellClickHandler,
     };
   },
 };

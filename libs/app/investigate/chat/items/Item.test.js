@@ -142,12 +142,108 @@ describe("ChatItem UX", () => {
         expect(flyout).not.toBeNull();
         expect(flyout).toBeDefined();
     });
+    
+    describe("Delete", () => {
+        test("clicking shows confirmation dialog", async () => {
+            // Arrange
+            const model = getDefaultModel();
+    
+            // Act
+            render(<ChatItem model={model} />);
+            const hiddenDialog = document.querySelector(".sage-dialog");
+            const button = document.querySelector(".item-actions_delete");
+            await userEvent.click(button);
+            const visibleDialog = document.querySelector(".sage-dialog");
+    
+            // Assert
+            expect(hiddenDialog).toBeNull();
+            expect(visibleDialog).not.toBeNull();
+            expect(visibleDialog).toBeDefined();
+        });
+    
+        test("cancelling does not delete item", async () => {
+            // Arrange
+            const model = getDefaultModel();
+    
+            const mockUpdateInvestigationAsync = jest.fn();
+            sageClient.updateInvestigation.mockImplementation(mockUpdateInvestigationAsync);
+    
+            // Act
+            render(<ChatItem model={model} />);
+            const deleteButton = document.querySelector(".item-actions_delete");
+            await userEvent.click(deleteButton);
+            const cancelButton = document.querySelector('button[aria-label="Cancel"]');
+            await userEvent.click(cancelButton);
+    
+            // Assert
+            expect(mockUpdateInvestigationAsync).not.toHaveBeenCalled();
+        });
+    
+        test("confirming does delete item", async () => {
+            // Arrange
+            const model = getDefaultModel();
+    
+            const mockUpdateInvestigationAsync = jest.fn();
+            sageClient.updateInvestigation.mockImplementation(mockUpdateInvestigationAsync);
+    
+            // Act
+            render(<ChatItem model={model} />);
+            const deleteButton = document.querySelector(".item-actions_delete");
+            await userEvent.click(deleteButton);
+            const okButton = document.querySelector('button[aria-label="Ok"]');
+            await userEvent.click(okButton);
+    
+            // Assert
+            expect(mockUpdateInvestigationAsync).toHaveBeenCalled();
+            expect(mockUpdateInvestigationAsync).toHaveBeenCalledTimes(1);
+        });
+    
+        test("deleting shows progress indicator", async () => {
+            // Arrange
+            const model = getDefaultModel();
+    
+            const mockUpdateInvestigationAsync = jest.fn();
+            sageClient.updateInvestigation.mockImplementation(mockUpdateInvestigationAsync);
+    
+            // Act
+            render(<ChatItem model={model} />);
+            const deleteButton = document.querySelector(".item-actions_delete");
+            await userEvent.click(deleteButton);
+            const okButton = document.querySelector('button[aria-label="Ok"]');
+            await userEvent.click(okButton);
+            const progress = document.querySelector('button[aria-label="Ok"].p-button-loading');
+    
+            // Assert
+            expect(progress).not.toBeNull();
+            expect(progress).toBeDefined();
+        });
+    });
+
+    describe("Favorite", () => {
+        test("clicking does favorite the item", async () => {
+            // Arrange
+            const model = getDefaultModel();
+    
+            const mockUpdateInvestigationAsync = jest.fn();
+            sageClient.updateInvestigation.mockImplementation(mockUpdateInvestigationAsync);
+    
+            // Act
+            render(<ChatItem model={model} />);
+            const favoriteButton = document.querySelector(".item-actions_favorite");
+            await userEvent.click(favoriteButton);
+    
+            // Assert
+            expect(mockUpdateInvestigationAsync).toHaveBeenCalled();
+            expect(mockUpdateInvestigationAsync).toHaveBeenCalledTimes(1);
+        });
+    });
 });
 
 function getDefaultModel() {
     return {
         id: 0,
         datetime: new Date(),
+        hasFeedback: false,
         query: {
             id: 0,
             datetime: new Date(),
@@ -162,6 +258,7 @@ function getDefaultModel() {
             id: 0,
             datetime: new Date(),
             answer: "",
+            feedback: "",
             isInProgress: false,
             documentIds: [],
             personNames: [],

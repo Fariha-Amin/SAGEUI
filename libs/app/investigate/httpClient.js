@@ -22,6 +22,7 @@ class Response {
     documentIds = [];
     personNames = [];
     datetime = new Date();
+    feedback = "";
 }
 
 class Query {
@@ -66,6 +67,7 @@ class HttpClient {
         startIndex = startIndex < 0 ? 0 : startIndex;
         let endIndex = startIndex + maxItemCount;
         let localInvestigations = this._investigations
+            .filter(i => !i.isDeleted)
             .toSorted((a, b) => a.datetime - b.datetime)
             .slice(startIndex, endIndex);
 
@@ -330,6 +332,7 @@ class HttpClient {
                         Aliquam sem neque, consectetur sit amet sem nec, sodales feugiat lacus.`;
                     response.documentIds = ["ID000001", "ID000024"];
                     response.personNames = ["Jeff Skilling", "Harry Proper", "Wanda Romaine"];
+                    response.feedback = "Test";
                     response.result.isSuccess = true;
                     response.result.failureReason = "";
                 }
@@ -362,7 +365,7 @@ class HttpClient {
                 Internal Extension: Not Available
                 Email: `+personId.trim().replace(/ /g,"_")+`@company.com
                 Any identified projects: Project Hercules / Project Arnold`;
-                    
+                response.feedback = "";
                 response.result.isSuccess = true;
                 response.result.failureReason = "";
                 resolve(response);

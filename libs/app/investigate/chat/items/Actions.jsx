@@ -8,7 +8,6 @@ import LayeredIconButton from '_shared/layered-icon-button/LayeredIconButton';
 export default function Actions({ model, onFavoriteClick, onNoteClick, onFeedbackClick, onDeleteClick }) {
     const [isFavorite, setIsFavorite] = useState(model.isFavorite);
     const [hasNote, setHasNote] = useState(model.hasNote);
-    const [hasFeedback, setHasFeedback] = useState(model.hasFeedback);
     const [isDeleted, setIsDeleted] = useState(model.isDeleted);
 
     // Favorite
@@ -27,9 +26,8 @@ export default function Actions({ model, onFavoriteClick, onNoteClick, onFeedbac
     }
 
     // Bad Response
-    const feedbackCss = hasFeedback ? "item-actions_feedback_active" : "";
+    const feedbackCss = model.hasFeedback ? "item-actions_feedback_active" : "";
     const onFeedbackClickDelegate = (e) => {
-        setHasFeedback(!hasFeedback);
         onFeedbackClick && onFeedbackClick(e);
     }
 

@@ -8,6 +8,7 @@ import TableActionButtons from "./components/TableActionButtons";
 import ViewDocButton from "./components/ViewDocButton";
 import "./App.css";
 import SageDataTableCell from "../../libs/shared/data-grid/SageDataTableCell";
+import { onCellClickHandler } from "./summaryDataTable/summaryTableEvents";
 
 export default function App() {
   const docIdsToDisplayInSingleLine = 5;
@@ -32,7 +33,7 @@ export default function App() {
   };
 
   return (
-    <div className="App">
+    <div className="container-fluid" style={{ padding: "4rem 4rem 0rem 0rem" }}>
       <SummaryHeader />
 
       <SageDataTable
@@ -44,9 +45,10 @@ export default function App() {
         style={{ width: "100%", minWidth: "50rem" }}
         cellSelection={true}
         lazy={true}
-        dataUrl="http://localhost:5000/api/getTableData"
+        dataUrl="https://localhost:5000/api/getTableData"
         defaultSortField="summaryGeneratedOn"
         defaultSortOrder={-1}
+        onCellClickHandler={onCellClickHandler}
       >
         <SageTableColumn
           order={2}
@@ -73,6 +75,7 @@ export default function App() {
           isSortable={true}
           isFilterable={true}
           style={{ width: "124px", maxWidth: "124px", textAlign: "left" }}
+          cellClickable={true}
         />
         <SageTableColumn
           order={4}
@@ -90,6 +93,7 @@ export default function App() {
           isSortable={true}
           isFilterable={true}
           style={{ width: "130px", maxWidth: "130px", textAlign: "left" }}
+          cellClickable={true}
         />
         <SageTableColumn
           order={5}
@@ -108,6 +112,7 @@ export default function App() {
           isSortable={true}
           isFilterable={true}
           style={{ width: "158px", maxWidth: "158px", textAlign: "left" }}
+          cellClickable={true}
         />
         <SageTableColumn
           order={6}
@@ -125,6 +130,7 @@ export default function App() {
           isSortable={true}
           isFilterable={true}
           style={{ width: "395px", maxWidth: "395px", textAlign: "left" }}
+          cellClickable={true}
         />
         <SageTableColumn
           order={7}
@@ -142,6 +148,7 @@ export default function App() {
           isSortable={true}
           isFilterable={true}
           style={{ width: "161px", maxWidth: "161px", textAlign: "left" }}
+          cellClickable={true}
         />
         <SageTableColumn
           order={8}
