@@ -21,7 +21,6 @@ export default function ConfirmDialog({
 
     const onCancelClickDelegate = (e) => {
         onReject && onReject(e);
-        console.log("onCancel fired");
     };
 
     const onHideDelegate = () => {
