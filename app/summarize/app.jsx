@@ -32,6 +32,10 @@ export default function App() {
     return result;
   };
 
+  const favouriteClickHandler = (rowData) =>
+  {
+  };
+
   return (
     <div className="container-fluid" style={{ padding: "4rem 4rem 0rem 0rem" }}>
       <SummaryHeader />
@@ -45,7 +49,7 @@ export default function App() {
         style={{ width: "100%", minWidth: "50rem" }}
         cellSelection={true}
         lazy={true}
-        dataUrl="https://localhost:5000/api/getTableData"
+        dataUrl="https://localhost:5002/api/getTableData"
         defaultSortField="summaryGeneratedOn"
         defaultSortOrder={-1}
         onCellClickHandler={onCellClickHandler}
@@ -153,7 +157,7 @@ export default function App() {
         <SageTableColumn
           order={8}
           body={(row) => {
-            return <TableActionButtons rowData={row} />;
+            return <TableActionButtons rowData={row} favouriteClickHandler={favouriteClickHandler} />;
           }}
           field="Actions"
           header=""
