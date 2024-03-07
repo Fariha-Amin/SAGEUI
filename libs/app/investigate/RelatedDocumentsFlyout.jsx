@@ -23,22 +23,23 @@ const summaryTemplate = (row) => {
     const onCollapsedDelegate = () => {
         setTitle("View Summary");
     };
-    const onClickDelegate = () => {
-        row.toggleRowExpansion(onExpandedDelegate, onCollapsedDelegate)
+    const onClickDelegate = (e) => {
+        row.toggleRowExpansion(e, onExpandedDelegate, onCollapsedDelegate)
     };
     return (<IconButton icon="fa-regular fa-file" onClick={onClickDelegate} title={title} />);
 };
 
 const columns = [
-    { field: "number", header: "#" },
-    { field: "view", header: "", body: (row) => { return (<IconButton icon="fa-regular fa-eye" />); } },
-    { field: "summary", header: "AI Summary", body: summaryTemplate },
-    { field: "documentId", header: "DOCID" },
-    { field: "filename", header: "Doc File Name/Subject" },
-    { field: "filetype", header: "Doc File Type" },
-    { field: "score", header: "Similarity Score" },
-    { field: "included", header: "Fed to AI", body: (row) => { if (row.included) { return (<Icon icon="check" />); } } },
-    { field: "cited", header: "Cited by AI", body: (row) => { if (row.cited) { return (<Icon icon="check" />); } } }
+    { key: 0, selector: true },
+    { key: 1, field: "number", header: "#" },
+    { key: 2, field: "view", header: "", body: (row) => { return (<IconButton icon="fa-regular fa-eye" />); } },
+    { key: 3, field: "summary", header: "AI Summary", body: summaryTemplate },
+    { key: 4, field: "documentId", header: "DOCID" },
+    { key: 5, field: "filename", header: "Doc File Name/Subject" },
+    { key: 6, field: "filetype", header: "Doc File Type" },
+    { key: 7, field: "score", header: "Similarity Score" },
+    { key: 8, field: "included", header: "Fed to AI", body: (row) => { if (row.included) { return (<Icon icon="check" />); } } },
+    { key: 9, field: "cited", header: "Cited by AI", body: (row) => { if (row.cited) { return (<Icon icon="check" />); } } }
 ];
 
 const H3 = styled.h3`
@@ -102,13 +103,13 @@ const RelatedDocumentsFlyout = ({ visible, onClose, investigationId, documentId 
                         dataKey="documentId"
                         className="sage-table"
                         value={relatedDocs}
-                        selectionMode="multiple"
-                        selection={selectedDocs}
-                        onSelectionChange={(e) => setSelectedDocs(e.value)}
                         style={{ width: "100%" }}
                         loading={isLoading}
+                        selectable
+                        selectionType="multiple"
+                        selectedRows={selectedDocs}
                         expandable
-                        expanded={expandedDocs}
+                        expandedRows={expandedDocs}
                         rowExpandedTemplate={rowExpandedTemplate}>
                         {columns.map((col, i) => (
                             <DataColumn

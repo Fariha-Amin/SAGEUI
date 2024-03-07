@@ -2,7 +2,7 @@ import './DataTable.scss'
 import React from "react";
 import { useState } from 'react';
 import { DataTable } from "primereact/datatable";
-import { Column } from "primereact/column";
+import DataColumn from "./DataColumn";
 
 function getDefaultSort(props) {
     // Pull sort information off the columns like so:
@@ -19,9 +19,11 @@ export default function SageDataTable(props) {
     const [sortField, setSortField] = useState(null);
     const [sortOrder, setSortOrder] = useState(null);
     const [multiSortMeta, setMultiSortMeta] = useState(getDefaultSort(props));
-    const [expandedRows, setExpandedRows] = useState(props.expanded);
+    const [selectedRows, setSelectedRows] = useState(props.selectedRows);
+    const [expandedRows, setExpandedRows] = useState(props.expandedRows);
 
     let tableProps = {};
+    let columnProps = props.children.map(({ props: p }) => { return { ...p }; });
 
     // Apply passthroughs
     tableProps.id = props.id;
@@ -65,7 +67,7 @@ export default function SageDataTable(props) {
     // <DataTable onSort={(e) => setSort(e.first, e.rows, e.filters, e.sort)}>
     //   <DataColumn sortable sortOrder={1}/>
     // </DataTable>
-    const sortingEnabled = props.children.filter((column, i) => column.props.sortable === true);
+    const sortingEnabled = columnProps.filter((column, i) => column.sortable === true);
     if (sortingEnabled) {
         // Sort order:
         // -1 - descending
@@ -94,20 +96,179 @@ export default function SageDataTable(props) {
     }
 
     // Apply row selection if requested
-    // Example: <DataTable selectionMode={single|multiple} selection={selectedItem} onSelectionChange={(e) => setSelectedItem(e.value)}>
-    let selectColumn = null;
-    const selectingEnabled = props.selectionMode ? true : false;
+    // Example: 
+    // <DataTable selectable selectionType={single|multiple} selectedRows={[rows]} onSelectionChange={(e) => setSelectedItem(e)}>
+    //   <DataColumn selector />
+    //   <DataColumn body={(row) => <a onClick={row.toggleRowSelection|row.unselectRow|row.selectRow} />} />
+    // </DataTable>
+    const selectingEnabled = props.selectable ? true : false;
     if (selectingEnabled) {
-        tableProps.selection = props.selection;
-        tableProps.onSelectionChange = props.onSelectionChange;
-        if (props.selectionMode === "single") {
+        tableProps.selection = selectedRows;
+        tableProps.onSelectionChange = (e) => {
+            setSelectedRows(e.value);
+            props.onSelectionChange && props.onSelectionChange(e.value);
+        };
+
+        const selectors = columnProps.filter((column, i) => column.selector === true);
+        if (props.selectionType === "single") {
             tableProps.selectionMode = "radiobutton";
-            selectColumn = (<Column selectionMode="single"></Column>);
+            for (const selector of selectors) {
+                selector.selectionMode = "single";
+            }
         }
-        else if (props.selectionMode === "multiple") {
+        else {
+            // Assume "multiple" if "single" is not specified
             tableProps.selectionMode = "checkbox";
-            selectColumn = (<Column selectionMode="multiple"></Column>);
+            for (const selector of selectors) {
+                selector.selectionMode = "multiple";
+            }
         }
+    }
+
+    function select(item, onSelected) {
+        const key = item[props.dataKey];
+
+        let rows = [];
+        if (selectedRows) {
+            rows = [ ...selectedRows ];
+        }
+
+        const selectedRow = rows.find(i => i[props.dataKey] === key);
+        if (selectedRow) { 
+            // It's already selected
+            return;
+        }
+
+        rows.push(item);
+        setSelectedRows(rows);
+        props.onSelectionChange && props.onSelectionChange(rows);
+        onSelected && onSelected(item);
+    }
+
+    function unselect(item, onUnselected) {
+        const key = item[props.dataKey];
+
+        // Nothing has been selected yet so there is nothing to unselect
+        if (!selectedRows) {
+            return;
+        }
+
+        const tempArray = selectedRows.filter(i => i[props.dataKey] != key);
+        setSelectedRows(tempArray);
+        props.onSelectionChange && props.onSelectionChange(tempArray);
+        onUnselected && onUnselected(item);
+    }
+
+    function toggleSelect(item, onSelected, onUnselected) {
+        const key = item[props.dataKey];
+
+        // Nothing has been selected yet, set the first one
+        if (!selectedRows) {
+            select(item, onSelected);
+            return;
+        }
+
+        // Toggle existing selections
+        const selectedRow = selectedRows.find(i => i[props.dataKey] === key);
+        if (selectedRow) { 
+            unselect(item, onUnselected);
+        }
+        else {
+            select(item, onSelected);
+        }
+    }
+
+    // Add helper methods to the exposed "row" parameter
+    for (const item of tableProps.value) {
+        item.toggleRowSelection = (event, onSelected, onUnselected) => {
+            toggleSelect(item, onSelected, onUnselected);
+        };
+        item.unselectRow = (event, onUnselected) => {
+            unselect(item, onUnselected);
+        };
+        item.selectRow = (event, onSelected) => {
+            select(item, onSelected);
+        };
+    }
+
+    // Apply row expansion if requested
+    // Example: 
+    // <DataTable expandable rowExpandedTemplate={template} onExpansionChange={(e) => setRow(e)}>
+    //   <DataColumn expander />
+    //   <DataColumn body={(row) => <a onClick={row.toggleRowExpansion|row.expandRow|row.collapseRow} />} />
+    // </DataTable>
+    const rowExpansionEnabled = props.expandable ? true : false;
+    if (rowExpansionEnabled) {
+        tableProps.expandedRows = expandedRows;
+        tableProps.rowExpansionTemplate = props.rowExpandedTemplate;
+        tableProps.onRowToggle = (e) => {
+            setExpandedRows(e.data);
+            props.onExpansionChange && props.onExpansionChange(e.data);
+        }
+    }
+
+    function expand(item, onExpanded) {
+        const key = item[props.dataKey];
+
+        let rows = { ...expandedRows };
+        let row = rows[key];
+        if (!row) {
+            rows[key] = true;
+            setExpandedRows(rows);
+            props.onExpansionChange && props.onExpansionChange(rows);
+            onExpanded && onExpanded(item);
+        }
+    }
+
+    function collapse(item, onCollapsed) {
+        const key = item[props.dataKey];
+
+        // Nothing has been expanded yet so there is nothing to collapse
+        if (!expandedRows) {
+            return;
+        }
+
+        let rows = { ...expandedRows };
+        let row = rows[key];
+        if (row == true) {
+            delete rows[key];
+            setExpandedRows(rows);
+            props.onExpansionChange && props.onExpansionChange(rows);
+            onCollapsed && onCollapsed(item);
+        }
+    }
+
+    function toggleExpansion(item, onExpanded, onCollapsed) {
+        const key = item[props.dataKey];
+
+        // Nothing has been expanded yet, set the first one
+        if (!expandedRows) {
+            expand(item, onExpanded);
+            return;
+        }
+
+        // Toggle existing expansions
+        let rows = { ...expandedRows };
+        let row = rows[key];
+        if (row == true) {
+            collapse(item, onCollapsed);
+        }
+        else {
+            expand(item, onExpanded);
+        }
+    }
+
+    // Add helper methods to the exposed "row" parameter
+    for (const item of tableProps.value) {
+        item.toggleRowExpansion = (event, onExpanded, onCollapsed) => {
+            toggleExpansion(item, onExpanded, onCollapsed);
+        };
+        item.expandRow = (event, onExpanded) => {
+            expand(item, onExpanded);
+        };
+        item.collapseRow = (event, onCollapsed) => {
+            collapse(item, onCollapsed);
+        };
     }
 
     // Apply state - sort, page, etc. will be remembered across page reloads
@@ -121,55 +282,9 @@ export default function SageDataTable(props) {
         }
     }
 
-    // Apply row expansion if requested
-    // Example: 
-    // <DataTable expandable rowExpandedTemplate={template} onRowExpand={(e) => setRow(e)} onRowCollapse={(e) => setRow(e)}>
-    //   <DataColumn expander/>
-    //   <DataColumn body={(row) => <a onClick={row.toggleRowExpansion} />}/>
-    // </DataTable>
-    const rowExpansionEnabled = props.expandable ? true : false;
-    if (rowExpansionEnabled) {
-        tableProps.expandedRows = expandedRows;
-        tableProps.rowExpansionTemplate = props.rowExpandedTemplate;
-        tableProps.onRowToggle = (e) => setExpandedRows(e.data);
-        tableProps.onRowExpand = props.onRowExpand;
-        tableProps.onRowCollapse = props.onRowCollapse;
-    }
-
-    // Add toggle expansion method to exposed "row" parameter
-    for (const item of tableProps.value) {
-        item.toggleRowExpansion = (onExpanded, onCollapsed) => {
-            const key = item[props.dataKey];
-
-            // Nothing has been expanded yet, set the first one
-            if (!expandedRows) {
-                let expandedRow = {};
-                expandedRow[key] = true;
-                setExpandedRows(expandedRow);
-                onExpanded && onExpanded(item);
-                return;
-            }
-
-            // Toggle existing expansions
-            let rows = { ...expandedRows };
-            let row = rows[key];
-            if (row == true) {
-                delete rows[key];
-                setExpandedRows(rows);
-                onCollapsed && onCollapsed(item);
-            }
-            else {
-                rows[key] = true;
-                setExpandedRows(rows);
-                onExpanded && onExpanded(item);
-            }
-        }
-    }
-
     return (
         <DataTable {...tableProps}>
-            {selectColumn}
-            {props.children}
+            {columnProps.map((col, i) => (<DataColumn {...col} />))}
         </DataTable>
     );
 }
