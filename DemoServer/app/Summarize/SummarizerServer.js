@@ -25,6 +25,21 @@ app.get("/api/getTableData", (req, res) => {
 
   res.json(service.getFilterAndPaginatedData(sageDataTableRequest));
 });
+
+// POST endpoint to update Summarize data
+app.post("/api/updateSummarizeData", (req, res) =>
+{
+  const sageDataTableupdateRequest = req.body;
+  try
+  {
+    const updatedRecord = service.updateSummarizeData(sageDataTableupdateRequest);
+
+    res.json(updatedRecord);
+  } catch (error)
+  {
+    res.status(400).json({ error: error.message });
+  }
+});
 // Start the server
 const port = 5004;
 
