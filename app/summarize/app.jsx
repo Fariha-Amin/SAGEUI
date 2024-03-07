@@ -8,6 +8,7 @@ import TableActionButtons from "./components/TableActionButtons";
 import ViewDocButton from "./components/ViewDocButton";
 import "./App.css";
 import SageDataTableCell from "../../libs/shared/data-grid/SageDataTableCell";
+import { onCellClickHandler } from "./summaryDataTable/summaryTableEvents";
 
 export default function App() {
   const docIdsToDisplayInSingleLine = 5;
@@ -47,6 +48,7 @@ export default function App() {
         dataUrl="https://localhost:5000/api/getTableData"
         defaultSortField="summaryGeneratedOn"
         defaultSortOrder={-1}
+        onCellClickHandler={onCellClickHandler}
       >
         <SageTableColumn
           order={2}
@@ -73,6 +75,7 @@ export default function App() {
           isSortable={true}
           isFilterable={true}
           style={{ width: "134px", maxWidth: "134px", textAlign: "left" }}
+          cellClickable={true}
         />
         <SageTableColumn
           order={4}
@@ -90,6 +93,7 @@ export default function App() {
           isSortable={true}
           isFilterable={true}
           style={{ width: "130px", maxWidth: "130px", textAlign: "left" }}
+          cellClickable={true}
         />
         <SageTableColumn
           order={5}
@@ -108,6 +112,7 @@ export default function App() {
           isSortable={true}
           isFilterable={true}
           style={{ width: "158px", maxWidth: "158px", textAlign: "left" }}
+          cellClickable={true}
         />
         <SageTableColumn
           order={6}
@@ -125,6 +130,7 @@ export default function App() {
           isSortable={true}
           isFilterable={true}
           style={{ width: "395px", maxWidth: "395px", textAlign: "left" }}
+          cellClickable={true}
         />
         <SageTableColumn
           order={7}
@@ -142,6 +148,7 @@ export default function App() {
           isSortable={true}
           isFilterable={true}
           style={{ width: "161px", maxWidth: "161px", textAlign: "left" }}
+          cellClickable={true}
         />
         <SageTableColumn
           order={8}
