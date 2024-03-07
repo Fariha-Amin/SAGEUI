@@ -7,7 +7,7 @@ import { Column } from "primereact/column";
 import { Checkbox } from "primereact/checkbox";
 import { Button } from "primereact/button";
 import { useDispatch, useSelector } from "react-redux";
-import SelectAllModal from "./DatatableSelectAllModal";
+import SelectAllModal from "./modals/DatatableSelectAllModal";
 import {
   bodyCheckboxCheck,
   bodyCheckboxUncheck,

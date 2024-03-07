@@ -10,7 +10,24 @@ import FavYellowLogo from "../icons/favyellow.svg";
 
 import DeleteLogo from "../icons/delete.svg";
 
-import { Dialog } from "primereact/dialog";
+import NotesModal from "../../../libs/shared/data-grid/modals/NotesModal";
+
+const calculateDialogPosition = (posX, posY) => {
+  const viewportWidth =
+    window.innerWidth || document.documentElement.clientWidth;
+
+  const viewportHeight =
+    window.innerHeight || document.documentElement.clientHeight;
+
+  posX = posX - (20 * viewportWidth) / 100;
+
+  if (posY + (30 * viewportHeight) / 100 > viewportHeight) {
+    console.log("Yes");
+    posY = viewportHeight - (40 * viewportHeight) / 100;
+  }
+
+  return { posX, posY };
+};
 
 const TableActionButtons = ({
   rowData,
@@ -23,8 +40,10 @@ const TableActionButtons = ({
   const [dialogPosition, setDialogPosition] = useState({ x: 0, y: 0 });
 
   const onNoteClick = (event) => {
-    const posX = event.clientX;
-    const posY = event.clientY;
+    const { posX, posY } = calculateDialogPosition(
+      event.clientX,
+      event.clientY
+    );
 
     setDialogPosition({ x: posX, y: posY });
     setVisible(true);
@@ -52,19 +71,11 @@ const TableActionButtons = ({
       {noteButton}
       {favouriteButton}
       {deleteButton}
-      <Dialog
-        header="Header"
+      <NotesModal
+        dialogPosition={dialogPosition}
         visible={visible}
-        style={{
-          width: "10vw",
-          position: "absolute",
-          left: dialogPosition.x,
-          top: dialogPosition.y,
-        }}
-        onHide={() => setVisible(false)}
-      >
-        <p className="m-0">Lorem ipsum dolor sit</p>
-      </Dialog>
+        setVisible={setVisible}
+      />
     </div>
   );
 };
