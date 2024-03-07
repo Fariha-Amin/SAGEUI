@@ -16,7 +16,7 @@ describe("ConfirmDialog renders", () => {
         expect(element.innerHTML).toMatch(text);
     });
 
-    test('custom title text', () => {
+    test('RPMXCON-85197 custom title text', () => {
         // Arrange
         const text = "Custom jest test title";
 
@@ -40,7 +40,7 @@ describe("ConfirmDialog renders", () => {
         expect(element.innerHTML).toMatch(text);
     });
 
-    test('custom body text', () => {
+    test('RPMXCON-85197 custom body text', () => {
         // Arrange
         const text = "Custom jest test body";
 
@@ -52,7 +52,7 @@ describe("ConfirmDialog renders", () => {
         expect(element.innerHTML).toMatch(text);
     });
 
-    test('default accept button text', () => {
+    test('RPMXCON-85197 default accept button text', () => {
         // Arrange
         const text = "Ok";
 
@@ -78,7 +78,7 @@ describe("ConfirmDialog renders", () => {
         expect(element).toBeDefined();
     });
 
-    test('default reject button text', () => {
+    test('RPMXCON-85197 default reject button text', () => {
         // Arrange
         const text = "Cancel";
 
@@ -132,7 +132,7 @@ describe("ConfirmDialog renders", () => {
 });
 
 describe("ConfirmDialog onClick", () => {
-    test('fires accept click event', () => {
+    test('RPMXCON-85252 fires accept click event', () => {
         // Arrange
         const handleOnClick = jest.fn();
 
@@ -146,13 +146,27 @@ describe("ConfirmDialog onClick", () => {
         expect(handleOnClick).toHaveBeenCalledTimes(1);
     });
 
-    test('fires reject click event', () => {
+    test('RPMXCON-85251 fires reject click event', () => {
         // Arrange
         const handleOnClick = jest.fn();
 
         // Act
         render(<ConfirmDialog visible={true} onReject={handleOnClick} />);
         const element = document.querySelector('button[aria-label="Cancel"]');
+        fireEvent.click(element);
+
+        // Assert
+        expect(handleOnClick).toHaveBeenCalled();
+        expect(handleOnClick).toHaveBeenCalledTimes(1);
+    });
+
+    test('RPMXCON-85248 X fires close click event', () => {
+        // Arrange
+        const handleOnClick = jest.fn();
+
+        // Act
+        render(<ConfirmDialog visible={true} onClose={handleOnClick} />);
+        const element = document.querySelector('button[aria-label="Close"]');
         fireEvent.click(element);
 
         // Assert
