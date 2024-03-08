@@ -331,7 +331,7 @@ class HttpClient {
                         Donec lectus odio, aliquam a nulla a, ullamcorper DOC7000000-15 luctus massa. 
                         Aliquam sem neque, consectetur sit amet sem nec, sodales feugiat lacus.`;
                     response.personNames = ["Jeff Skilling", "Harry Proper", "Wanda Romaine"];
-                    response.feedback = "Test";
+                    response.feedback = "";
                     response.result.isSuccess = true;
                     response.result.failureReason = "";
 

@@ -1,6 +1,44 @@
-const filterTableData = (array, filters) => {
-  console.log(filters);
+const sqlite3 = require("sqlite3").verbose();
+const { call } = require("file-loader");
+const path = require("path");
+const db = new sqlite3.Database(path.join(__dirname, "Db", "summarizer.db"));
 
+const getFilterSql = (filters) => {
+  let filterSql = " where 1=1 ";
+
+  if (filters.user.value) {
+    filterSql = filterSql + ` and user like '%${filters.user.value}%'`;
+  }
+
+  if (filters.documentId.value) {
+    filterSql =
+      filterSql + ` and documentId like'%${filters.documentId.value}%'`;
+  }
+  if (filters.summary.value) {
+    filterSql = filterSql + ` and summary like '%${filters.summary.value}%'`;
+  }
+  if (filters.notes.value) {
+    filterSql = filterSql + ` and notes like '%${filters.notes.value}%'`;
+  }
+
+  if (filters.summaryGeneratedOn.value) {
+    filterSql =
+      filterSql +
+      ` and summaryGeneratedOn like '%${filters.summaryGeneratedOn.value}%'`;
+  }
+
+  return filterSql;
+};
+
+const getOrderSql = (sortField, sortOrder) => {
+  return `order by  ${sortField} ${sortOrder == 1 ? "asc" : "desc"}`;
+};
+
+const getLimitQuery = (skipCount, takeCount) => {
+  return ` limit ${skipCount} , ${takeCount}`;
+};
+
+const filterTableData = (array, filters) => {
   let filteredArray = array;
 
   if (filters.user.value) {
@@ -71,7 +109,7 @@ const SummarizerService = {
         summary:
           "Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem. Integer tincidunt ante vel ipsum. Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat. Praesent blandit. Nam nulla. Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede. Morbi porttitor lorem id ligula. Suspendisse ornare consequat lectus. In est risus, auctor sed, tristique in, tempus sit amet, sem. Fusce consequat. Nulla nisl. Nunc nisl. Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Duis at velit eu est congue elementum. In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo.",
         notes: "Enhanced non-volatile standardization",
-        favourite: true,
+        favorite: true,
       },
       {
         recId: 2,
@@ -2792,24 +2830,89 @@ const SummarizerService = {
       totalRecords: filterData.length,
     };
   },
-  updateSummarizeData(sageDataTableupdateRequest)
-  {
-    let dummyData = this.getData();
-    const dataIndex = dummyData.findIndex((item) => item.recId === sageDataTableupdateRequest.recId);
+  getFilterAndPaginatedDataNew(sageDataTableRequest, callback) {
+    let dbsql = "SELECT * FROM nextgensummary ";
 
-    if (dataIndex !== -1)
-    {
-      dummyData[dataIndex].IsFavorite = sageDataTableupdateRequest.IsFavorite;
-    } else
-    {
-      throw new Error("Record not found"); // Throw an error if the record doesn't exist
-    }
+    const filterSql = getFilterSql(sageDataTableRequest.filters);
 
-    // Return the updated data
-    return dummyData[dataIndex];
+    const countQuery = `select count(1) as row_count from nextgensummary ${
+      filterSql ?? ""
+    }`;
+
+    db.get(countQuery, (err, row) => {
+      const count = row.row_count;
+
+      dbsql = `${dbsql} ${filterSql ?? " "} `;
+      if (sageDataTableRequest.sortField) {
+        dbsql =
+          dbsql +
+          getOrderSql(
+            sageDataTableRequest.sortField,
+            sageDataTableRequest.sortOrder
+          );
+      }
+
+      dbsql =
+        dbsql +
+        getLimitQuery(sageDataTableRequest.first, sageDataTableRequest.rows);
+
+      const data = [];
+
+      console.log(dbsql);
+      // Execute a query to select data from the table
+      db.all(dbsql, (err, rows) => {
+        if (err) {
+          console.error("Error retrieving data from database:", err);
+          //callback(err, null);
+          return;
+        }
+
+        //console.log(rows);
+        // Transform each row into a JSON object
+        rows.forEach((row) => {
+          data.push({
+            recId: row.recId,
+            summaryGeneratedOn: row.summaryGeneratedOn,
+            user: row.user,
+            documentId: row.documentId,
+            summary: row.summary,
+            notes: row.notes,
+            favorite: row.favourite == 1 ? true : false,
+          });
+          //console.log(data);
+        });
+
+        // console.log(data);
+
+        // Call the callback function with the array of JSON objects
+        callback(null, {
+          data: data,
+          totalRecords: count,
+        });
+      });
+    });
+
+    // Call the callback function with the array of JSON objects
   },
-  getsummaryData()
-  {
+  markSummaryAsFavorite(sageDataTableupdateRequest, callback) {
+    const updateFavouriteSql = `update nextgensummary set favourite=? where recId=?`;
+    console.log(updateFavouriteSql);
+    db.run(
+      updateFavouriteSql,
+      [sageDataTableupdateRequest.favorite, sageDataTableupdateRequest.recId],
+      function (err) {
+        if (err) {
+          console.error("Error updating data:", err);
+        } else {
+          console.log("Data updated successfully");
+          console.log("Number of rows affected:", this.changes);
+        }
+
+        callback(err);
+      }
+    );
+  },
+  getsummaryData() {
     return Promise.resolve(this.getData());
   },
 };

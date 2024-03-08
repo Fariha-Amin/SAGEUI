@@ -10,6 +10,10 @@ import ViewDocButton from "./components/ViewDocButton";
 import "./App.css";
 import SageDataTableCell from "../../libs/shared/data-grid/SageDataTableCell";
 import { onCellClickHandler } from "./summaryDataTable/summaryTableEvents";
+import {
+  onTableDataUpdateHandler,
+  expandedRowsTemplateHandler,
+} from "./summaryDataTable/summaryTableEvents";
 
 export default function App() {
   const docIdsToDisplayInSingleLine = 5;
@@ -33,9 +37,11 @@ export default function App() {
     return result;
   };
 
-  const favouriteClickHandler = (rowData) =>
-  {
-    DataService.updateSummarizeData("http://localhost:5000/api/updateSummarizeData", rowData);
+  const favouriteClickHandler = (rowData) => {
+    DataService.updateSummarizeData(
+      "https://localhost:5000/api/markAsFavorite",
+      rowData
+    );
   };
 
   return (
@@ -51,10 +57,12 @@ export default function App() {
         style={{ width: "100%", minWidth: "50rem" }}
         cellSelection={true}
         lazy={true}
-        dataUrl="https://localhost:5002/api/getTableData"
+        dataUrl="https://localhost:5000/api/getTableData"
         defaultSortField="summaryGeneratedOn"
         defaultSortOrder={-1}
         onCellClickHandler={onCellClickHandler}
+        onTableDataUpdateHandler={onTableDataUpdateHandler}
+        expandedRowsTemplateHandler={expandedRowsTemplateHandler}
       >
         <SageTableColumn
           order={2}
@@ -80,7 +88,7 @@ export default function App() {
           header="Date/Time"
           isSortable={true}
           isFilterable={true}
-          style={{ width: "134px", maxWidth: "134px", textAlign: "left" }}
+          style={{ width: "160px", maxWidth: "160px", textAlign: "left" }}
           cellClickable={true}
         />
         <SageTableColumn
@@ -159,7 +167,12 @@ export default function App() {
         <SageTableColumn
           order={8}
           body={(row) => {
-            return <TableActionButtons rowData={row} favouriteClickHandler={favouriteClickHandler} />;
+            return (
+              <TableActionButtons
+                rowData={row}
+                favouriteClickHandler={favouriteClickHandler}
+              />
+            );
           }}
           field="Actions"
           header=""
