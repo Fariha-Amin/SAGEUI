@@ -123,24 +123,125 @@ describe("ChatItem UI", () => {
 });
 
 describe("ChatItem UX", () => {
-    test("clicking '25 Relevant Docs' link opens flyout", async () => {
-        // Arrange
-        const model = getDefaultModel();
+    describe("Relevant Docs", () => {
+        test("clicking '25 Relevant Docs' link opens flyout", async () => {
+            // Arrange
+            const model = getDefaultModel();
 
-        const mockGetReferenceDocumentsAsync = () => { return Promise.resolve([]); };
-        sageClient.getReferenceDocumentsAsync.mockImplementation(mockGetReferenceDocumentsAsync);
+            const mockGetReferenceDocumentsAsync = () => { return Promise.resolve([]); };
+            sageClient.getReferenceDocumentsAsync.mockImplementation(mockGetReferenceDocumentsAsync);
 
-        // Act
-        act(() => render(<ChatItem model={model} />));
+            // Act
+            act(() => render(<ChatItem model={model} />));
 
-        const link = await screen.findByText("25 Relevant Docs");
-        await userEvent.click(link);
+            const link = await screen.findByText("25 Relevant Docs");
+            await userEvent.click(link);
 
-        const flyout = document.querySelector(".sage-related-documents__flyout");
+            const flyout = document.querySelector(".sage-related-documents__flyout");
 
-        // Assert
-        expect(flyout).not.toBeNull();
-        expect(flyout).toBeDefined();
+            // Assert
+            expect(flyout).not.toBeNull();
+            expect(flyout).toBeDefined();
+        });
+
+        test("clicking individual document link opens flyout", async () => {
+            // Arrange
+            const docId = "DOC0000001";
+            const summaryText = "Test Summary Text";
+            const model = getDefaultModel();
+            model.response.answer = docId;
+            model.response.documentIds = [docId];
+
+            const mockGetReferenceDocumentsAsync = () => { return Promise.resolve([]); };
+            sageClient.getReferenceDocumentsAsync.mockImplementation(mockGetReferenceDocumentsAsync);
+
+            const mockGetSummaryAsync = () => { return Promise.resolve(summaryText); };
+            sageClient.getSummaryAsync.mockImplementation(mockGetSummaryAsync);
+
+            // Act
+            act(() => render(<ChatItem model={model} />));
+
+            const link = await screen.findByText(docId);
+            await userEvent.click(link);
+
+            const flyout = document.querySelector(".sage-related-documents__flyout");
+
+            // Assert
+            expect(flyout).not.toBeNull();
+            expect(flyout).toBeDefined();
+        });
+
+        test("clicking individual document link selects specific table row", async () => {
+            // Arrange
+            const docId = "DOC0000002";
+            const summaryText = "Test Summary Text";
+            const model = getDefaultModel();
+            model.response.answer = docId;
+            model.response.documentIds = [docId];
+
+            // 3 rows of data - 2nd row should be selected
+            const tableData = [
+                { documentId: "DOC0000001", filename: "", filetype: "", score: 0.0, included: false, cited: false },
+                { documentId: docId, filename: "", filetype: "", score: 0.0, included: false, cited: false },
+                { documentId: "DOC0000003", filename: "", filetype: "", score: 0.0, included: false, cited: false }
+            ];
+            const mockGetReferenceDocumentsAsync = () => { return Promise.resolve(tableData); };
+            sageClient.getReferenceDocumentsAsync.mockImplementation(mockGetReferenceDocumentsAsync);
+
+            const mockGetSummaryAsync = () => { return Promise.resolve(summaryText); };
+            sageClient.getSummaryAsync.mockImplementation(mockGetSummaryAsync);
+
+            // Act
+            act(() => render(<ChatItem model={model} />));
+
+            const link = await screen.findByText(docId);
+            await userEvent.click(link);
+
+            const rows = document.querySelectorAll("tr");
+            const row1 = rows[1];
+            const row1column1 = row1.querySelector('.p-checkbox-box[aria-checked="true"]');
+            const row2 = rows[2];
+            const row2column1 = row2.querySelector('.p-checkbox-box[aria-checked="true"]');
+            const row3 = rows[3];
+            const row3column1 = row3.querySelector('.p-checkbox-box[aria-checked="true"]');
+
+            // Assert
+            expect(row1column1).toBeNull();
+            expect(row2column1).not.toBeNull();
+            expect(row3column1).toBeNull();
+        });
+
+        test("clicking individual document link expands specific table row", async () => {
+            // Arrange
+            const docId = "DOC0000002";
+            const summaryText = "Test Summary Text";
+            const model = getDefaultModel();
+            model.response.answer = docId;
+            model.response.documentIds = [docId];
+
+            // 3 rows of data - 2nd row should be expanded
+            const tableData = [
+                { documentId: "DOC0000001", filename: "", filetype: "", score: 0.0, included: false, cited: false },
+                { documentId: docId, filename: "", filetype: "", score: 0.0, included: false, cited: false },
+                { documentId: "DOC0000003", filename: "", filetype: "", score: 0.0, included: false, cited: false }
+            ];
+            const mockGetReferenceDocumentsAsync = () => { return Promise.resolve(tableData); };
+            sageClient.getReferenceDocumentsAsync.mockImplementation(mockGetReferenceDocumentsAsync);
+
+            const mockGetSummaryAsync = () => { return Promise.resolve(summaryText); };
+            sageClient.getSummaryAsync.mockImplementation(mockGetSummaryAsync);
+
+            // Act
+            act(() => render(<ChatItem model={model} />));
+
+            const link = await screen.findByText(docId);
+            await userEvent.click(link);
+
+            const expansion = await screen.findByText(summaryText);
+
+            // Assert
+            expect(expansion).not.toBeNull();
+        });
     });
 
     describe("Delete", () => {
@@ -245,10 +346,10 @@ describe("ChatItem UX", () => {
             const newFeedback = "This is an example feedback.";
             model.response.feedback = feedback;
             const user = userEvent.setup({ delay: null });
-    
+
             const mockUpdateInvestigationAsync = jest.fn();
             sageClient.updateInvestigation.mockImplementation(mockUpdateInvestigationAsync);
-    
+
             // Act
             render(<ChatItem model={model} />);
 
@@ -260,8 +361,8 @@ describe("ChatItem UX", () => {
             await userEvent.click(cancelButton);
             //Get feedback button state after cancel
             const feedbackButtonAfter = await waitFor(() => document.querySelector(".item-actions_feedback"));
-            
-    
+
+
             // Assert
             expect(model.response.feedback).toEqual(newFeedback);
             expect(feedbackButton.outerHTML).toContain("item-actions_feedback_active");
@@ -274,10 +375,10 @@ describe("ChatItem UX", () => {
             const newFeedback = "This is an example feedback.";
             model.response.feedback = feedback;
             const user = userEvent.setup({ delay: null });
-    
+
             const mockUpdateInvestigationAsync = jest.fn();
             sageClient.updateInvestigation.mockImplementation(mockUpdateInvestigationAsync);
-    
+
             // Act
             render(<ChatItem model={model} />);
 
@@ -289,8 +390,8 @@ describe("ChatItem UX", () => {
             await userEvent.click(cancelButton);
             //Get feedback button state after cancel
             const feedbackButtonAfter = await waitFor(() => document.querySelector(".item-actions_feedback"));
-            
-    
+
+
             // Assert
             expect(model.response.feedback).toEqual(feedback);
             expect(feedbackButton.outerHTML).toEqual(feedbackButtonAfter.outerHTML);
