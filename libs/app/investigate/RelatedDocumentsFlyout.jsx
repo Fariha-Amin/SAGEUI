@@ -111,10 +111,7 @@ const RelatedDocumentsFlyout = ({ visible, onClose, investigationId, documentId 
                         expandedRows={expandedDocs}
                         rowExpandedTemplate={rowExpandedTemplate}>
                         {columns.map((col, i) => (
-                            <DataColumn
-                                columnKey={col.field}
-                                {...col}
-                            />
+                            <DataColumn {...col} />
                         ))}
                     </DataTable>
                 </div>

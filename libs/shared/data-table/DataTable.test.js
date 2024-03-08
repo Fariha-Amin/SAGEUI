@@ -1,6 +1,6 @@
 import React from 'react';
 import '@testing-library/jest-dom'
-import { screen, render } from "@testing-library/react";
+import { screen, render, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import DataTable from './DataTable';
 import DataColumn from './DataColumn';
@@ -82,6 +82,186 @@ describe("DataTable UI", () => {
 });
 
 describe("DataTable UX", () => {
+    describe("Page", () => {
+        test("'first' button fires onPage event", async () => {
+            // Arrange
+            const handleOnPage = jest.fn();
+            const testData = [
+                { field1: 1, field2: "a", field3: "I" },
+                { field1: 2, field2: "b", field3: "II" },
+                { field1: 3, field2: "c", field3: "III" },
+                { field1: 4, field2: "d", field3: "IV" },
+                { field1: 5, field2: "e", field3: "V" }
+            ];
+
+            // Act
+            render((
+                <DataTable id="testTable" data={testData} pageable rowsPerPage={1} rowsPerPageOptions={[1, 5, 10]} onPage={handleOnPage} startPage={2}>
+                    <DataColumn headerClassName="column1" field="field1" />
+                    <DataColumn headerClassName="column2" field="field2" />
+                    <DataColumn headerClassName="column3" field="field3" />
+                </DataTable>
+            ));
+
+            const button = document.querySelector("button.p-paginator-first");
+            await userEvent.click(button);
+
+            // Assert
+            expect(handleOnPage).toHaveBeenCalled();
+            expect(handleOnPage).toHaveBeenCalledTimes(1);
+        });
+
+        test("'previous' button fires onPage event", async () => {
+            // Arrange
+            const handleOnPage = jest.fn();
+            const testData = [
+                { field1: 1, field2: "a", field3: "I" },
+                { field1: 2, field2: "b", field3: "II" },
+                { field1: 3, field2: "c", field3: "III" },
+                { field1: 4, field2: "d", field3: "IV" },
+                { field1: 5, field2: "e", field3: "V" }
+            ];
+
+            // Act
+            render((
+                <DataTable id="testTable" data={testData} pageable rowsPerPage={1} rowsPerPageOptions={[1, 5, 10]} onPage={handleOnPage} startPage={2}>
+                    <DataColumn headerClassName="column1" field="field1" />
+                    <DataColumn headerClassName="column2" field="field2" />
+                    <DataColumn headerClassName="column3" field="field3" />
+                </DataTable>
+            ));
+
+            const button = document.querySelector("button.p-paginator-prev");
+            await userEvent.click(button);
+
+            // Assert
+            expect(handleOnPage).toHaveBeenCalled();
+            expect(handleOnPage).toHaveBeenCalledTimes(1);
+        });
+
+        test("'next' button fires onPage event", async () => {
+            // Arrange
+            const handleOnPage = jest.fn();
+            const testData = [
+                { field1: 1, field2: "a", field3: "I" },
+                { field1: 2, field2: "b", field3: "II" },
+                { field1: 3, field2: "c", field3: "III" },
+                { field1: 4, field2: "d", field3: "IV" },
+                { field1: 5, field2: "e", field3: "V" }
+            ];
+
+            // Act
+            render((
+                <DataTable id="testTable" data={testData} pageable rowsPerPage={1} rowsPerPageOptions={[1, 5, 10]} onPage={handleOnPage} startPage={2}>
+                    <DataColumn headerClassName="column1" field="field1" />
+                    <DataColumn headerClassName="column2" field="field2" />
+                    <DataColumn headerClassName="column3" field="field3" />
+                </DataTable>
+            ));
+
+            const button = document.querySelector("button.p-paginator-next");
+            await userEvent.click(button);
+
+            // Assert
+            expect(handleOnPage).toHaveBeenCalled();
+            expect(handleOnPage).toHaveBeenCalledTimes(1);
+        });
+
+        test("'last' button fires onPage event", async () => {
+            // Arrange
+            const handleOnPage = jest.fn();
+            const testData = [
+                { field1: 1, field2: "a", field3: "I" },
+                { field1: 2, field2: "b", field3: "II" },
+                { field1: 3, field2: "c", field3: "III" },
+                { field1: 4, field2: "d", field3: "IV" },
+                { field1: 5, field2: "e", field3: "V" }
+            ];
+
+            // Act
+            render((
+                <DataTable id="testTable" data={testData} pageable rowsPerPage={1} rowsPerPageOptions={[1, 5, 10]} onPage={handleOnPage} startPage={2}>
+                    <DataColumn headerClassName="column1" field="field1" />
+                    <DataColumn headerClassName="column2" field="field2" />
+                    <DataColumn headerClassName="column3" field="field3" />
+                </DataTable>
+            ));
+
+            const button = document.querySelector("button.p-paginator-last");
+            await userEvent.click(button);
+
+            // Assert
+            expect(handleOnPage).toHaveBeenCalled();
+            expect(handleOnPage).toHaveBeenCalledTimes(1);
+        });
+
+        test("selecting different rows per page option fires onPage event", async () => {
+            // Arrange
+            const handleOnPage = jest.fn();
+            const testData = [
+                { field1: 1, field2: "a", field3: "I" },
+                { field1: 2, field2: "b", field3: "II" },
+                { field1: 3, field2: "c", field3: "III" },
+                { field1: 4, field2: "d", field3: "IV" },
+                { field1: 5, field2: "e", field3: "V" }
+            ];
+
+            // Act
+            render((
+                <DataTable id="testTable" data={testData} pageable rowsPerPage={1} rowsPerPageOptions={[1, 5, 10]} onPage={handleOnPage}>
+                    <DataColumn headerClassName="column1" field="field1" />
+                    <DataColumn headerClassName="column2" field="field2" />
+                    <DataColumn headerClassName="column3" field="field3" />
+                </DataTable>
+            ));
+
+            const dropdown = document.querySelector(".p-dropdown");
+            await userEvent.click(dropdown);
+
+            const option = document.querySelector(".p-dropdown-item[aria-label='5']");
+            await userEvent.click(option);
+
+            // Assert
+            expect(handleOnPage).toHaveBeenCalled();
+            expect(handleOnPage).toHaveBeenCalledTimes(1);
+        });
+
+        test("selecting different rows per page option updates visible rows", async () => {
+            // Arrange
+            const handleOnPage = jest.fn();
+            const testData = [
+                { field1: 1, field2: "a", field3: "I" },
+                { field1: 2, field2: "b", field3: "II" },
+                { field1: 3, field2: "c", field3: "III" },
+                { field1: 4, field2: "d", field3: "IV" },
+                { field1: 5, field2: "e", field3: "V" }
+            ];
+
+            // Act
+            render((
+                <DataTable id="testTable" data={testData} pageable rowsPerPage={1} rowsPerPageOptions={[1, 5, 10]} onPage={handleOnPage}>
+                    <DataColumn headerClassName="column1" field="field1" />
+                    <DataColumn headerClassName="column2" field="field2" />
+                    <DataColumn headerClassName="column3" field="field3" />
+                </DataTable>
+            ));
+
+            const originalRows = document.querySelectorAll("tbody tr");
+
+            const dropdown = document.querySelector(".p-dropdown");
+            await userEvent.click(dropdown);
+
+            const option = document.querySelector(".p-dropdown-item[aria-label='5']");
+            await userEvent.click(option);
+
+            const updatedRows = document.querySelectorAll("tbody tr");
+
+            // Assert
+            expect(originalRows).toHaveLength(1);
+            expect(updatedRows).toHaveLength(5);
+        });
+    });
+
     describe("Sort", () => {
         test('sortable column fires onSort event', async () => {
             // Arrange

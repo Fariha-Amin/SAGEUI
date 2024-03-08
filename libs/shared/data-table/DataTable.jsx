@@ -11,8 +11,21 @@ function getDefaultSort(props) {
     //   <DataColumn field="bar" sortable sortOrder={-1}/>
     // </DataTable>
     return props.children
-        .map((column, i) => { return { field: column.props.field, order: column.props.sortOrder }; })
+        .map((column, i) => {
+            return {
+                field: column.props.field,
+                order: column.props.sortOrder
+            };
+        })
         .filter((sort, i) => sort.field && sort.order);
+};
+
+function getStartingPage(props) {
+    // Convert 0-based page number to data index
+    const pageNumber = props.startPage || 0;
+    const recordsPerPage = props.rowsPerPage || 25;
+    const startIndex = pageNumber * recordsPerPage;
+    return startIndex;
 };
 
 export default function SageDataTable(props) {
@@ -21,9 +34,11 @@ export default function SageDataTable(props) {
     const [multiSortMeta, setMultiSortMeta] = useState(getDefaultSort(props));
     const [selectedRows, setSelectedRows] = useState(props.selectedRows);
     const [expandedRows, setExpandedRows] = useState(props.expandedRows);
+    const [first, setFirst] = useState(getStartingPage(props));
+    const [rows, setRows] = useState(props.rowsPerPage || 25);
 
     let tableProps = {};
-    let columnProps = props.children.map(({ props: p }) => { return { ...p }; });
+    let columnProps = props.children.map((child, i) => { return { key: child.key, ...child.props }; });
     for (const columnProp of columnProps) {
         columnProp.className = columnProp.className ? `sage-table__column ${columnProp.className}` : "sage-table__column";
         columnProp.headerClassName = columnProp.headerClassName ? `sage-table__header ${columnProp.headerClassName}` : "sage-table__header";
@@ -59,18 +74,48 @@ export default function SageDataTable(props) {
     );
 
     // Apply paging if requested
-    // Example: <DataTable rowsPerPage={25} rowsPerPageOptions={[25,50,100]} onPage={(e) => setPage(e.first, e.rows, e.page, e.pageCount)}>
-    const pagingEnabled = props.rowsPerPageOptions ? true : false;
+    // Example: <DataTable pageable rowsPerPage={25} rowsPerPageOptions={[25,50,100]} page={(e) => customPage(e)} onPage={(e) => reportPaged(e)} startPage={2}>
+    const pagingEnabled = props.pageable ? true : false;
     if (pagingEnabled) {
         tableProps.paginator = true;
-        tableProps.rows = props.rowsPerPage || 25;
         tableProps.rowsPerPageOptions = props.rowsPerPageOptions;
-        tableProps.onPage = props.onPage;
+
+        const customPageEnabled = props.page ? true : false;
+        if (!customPageEnabled) {
+            tableProps.first = first;
+            tableProps.rows = rows;
+        }
+
+        function onPageDelegate(e) {
+            const stateChangedEvent = {
+                page: {
+                    first: e.first,
+                    rows: e.rows,
+                    page: e.page,
+                    pageCount: e.pageCount,
+                },
+                filter: e.filters,
+                sort: e.multiSortMeta
+            };
+
+            if (customPageEnabled) {
+                // Custom page functionality
+                props.page(stateChangedEvent); 
+            }
+            else {
+                // Default page functionality
+                setFirst(e.first);
+                setRows(e.rows);
+            }
+
+            props.onPage && props.onPage(stateChangedEvent);
+        };
+        tableProps.onPage = onPageDelegate;
     }
 
     // Apply sorting if any column is "sortable=true"
     // Example: 
-    // <DataTable onSort={(e) => setSort(e.first, e.rows, e.filters, e.sort)}>
+    // <DataTable sort={(e) => customSort(e)} onSort={(e) => reportSorted(e)}>
     //   <DataColumn sortable sortOrder={1}/>
     // </DataTable>
     const sortingEnabled = columnProps.filter((column, i) => column.sortable === true);
@@ -81,22 +126,38 @@ export default function SageDataTable(props) {
         //  1 - ascending
         tableProps.sortMode = "multiple";
         tableProps.removableSort = true;
-        tableProps.multiSortMeta = multiSortMeta;
-        tableProps.sortField = sortField;
-        tableProps.sortOrder = sortOrder;
+
+        const customSortEnabled = props.sort ? true : false;
+        if (!customSortEnabled) {
+            tableProps.multiSortMeta = multiSortMeta;
+            tableProps.sortField = sortField;
+            tableProps.sortOrder = sortOrder;
+        }
 
         function onSortDelegate(e) {
-            setSortField(e.sortField);
-            setSortOrder(e.sortOrder);
-            setMultiSortMeta(e.multiSortMeta);
-
-            const modifiedEvent = {
-                first: e.first,
-                rows: e.rows,
-                filters: e.filters,
+            const stateChangedEvent = {
+                page: {
+                    first: e.first,
+                    rows: e.rows,
+                    page: e.page,
+                    pageCount: e.pageCount,
+                },
+                filter: e.filters,
                 sort: e.multiSortMeta
             };
-            props.onSort && props.onSort(modifiedEvent);
+
+            if (customSortEnabled) {
+                // Custom sort functionality
+                props.sort(stateChangedEvent); 
+            }
+            else {
+                // Default sort functionality
+                setSortField(e.sortField);
+                setSortOrder(e.sortOrder);
+                setMultiSortMeta(e.multiSortMeta);
+            }
+
+            props.onSort && props.onSort(stateChangedEvent);
         };
         tableProps.onSort = onSortDelegate;
     }
@@ -136,11 +197,11 @@ export default function SageDataTable(props) {
 
         let rows = [];
         if (selectedRows) {
-            rows = [ ...selectedRows ];
+            rows = [...selectedRows];
         }
 
         const selectedRow = rows.find(i => i[props.dataKey] === key);
-        if (selectedRow) { 
+        if (selectedRow) {
             // It's already selected
             return;
         }
@@ -176,7 +237,7 @@ export default function SageDataTable(props) {
 
         // Toggle existing selections
         const selectedRow = selectedRows.find(i => i[props.dataKey] === key);
-        if (selectedRow) { 
+        if (selectedRow) {
             unselect(item, onUnselected);
         }
         else {

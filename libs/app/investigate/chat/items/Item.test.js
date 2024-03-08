@@ -124,7 +124,24 @@ describe("ChatItem UI", () => {
 
 describe("ChatItem UX", () => {
     describe("Relevant Docs", () => {
-        test("clicking '25 Relevant Docs' link opens flyout", async () => {
+        test("RPMXCON-85447 '25 Relevant Docs' link is visible", async () => {
+            // Arrange
+            const model = getDefaultModel();
+
+            const mockGetReferenceDocumentsAsync = () => { return Promise.resolve([]); };
+            sageClient.getReferenceDocumentsAsync.mockImplementation(mockGetReferenceDocumentsAsync);
+
+            // Act
+            act(() => render(<ChatItem model={model} />));
+
+            const link = await screen.findByText("25 Relevant Docs");
+
+            // Assert
+            expect(link).not.toBeNull();
+            expect(link).toBeDefined();
+        });
+
+        test("RPMXCON-85448 clicking '25 Relevant Docs' link opens flyout", async () => {
             // Arrange
             const model = getDefaultModel();
 
@@ -144,7 +161,7 @@ describe("ChatItem UX", () => {
             expect(flyout).toBeDefined();
         });
 
-        test("clicking individual document link opens flyout", async () => {
+        test("RPMXCON-85451 clicking individual document link opens flyout", async () => {
             // Arrange
             const docId = "DOC0000001";
             const summaryText = "Test Summary Text";
@@ -171,7 +188,7 @@ describe("ChatItem UX", () => {
             expect(flyout).toBeDefined();
         });
 
-        test("clicking individual document link selects specific table row", async () => {
+        test("RPMXCON-85451 clicking individual document link selects specific table row", async () => {
             // Arrange
             const docId = "DOC0000002";
             const summaryText = "Test Summary Text";
@@ -211,7 +228,7 @@ describe("ChatItem UX", () => {
             expect(row3column1).toBeNull();
         });
 
-        test("clicking individual document link expands specific table row", async () => {
+        test("RPMXCON-85451 clicking individual document link expands specific table row", async () => {
             // Arrange
             const docId = "DOC0000002";
             const summaryText = "Test Summary Text";
