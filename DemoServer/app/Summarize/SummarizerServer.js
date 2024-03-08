@@ -33,8 +33,23 @@ app.get("/api/getTableData", (req, res) => {
     }
   );
 });
+
+// POST endpoint to update Summarize data
+app.post("/api/updateSummarizeData", (req, res) =>
+{
+  const sageDataTableupdateRequest = req.body;
+  try
+  {
+    const updatedRecord = service.updateSummarizeData(sageDataTableupdateRequest);
+
+    res.json(updatedRecord);
+  } catch (error)
+  {
+    res.status(400).json({ error: error.message });
+  }
+});
 // Start the server
-const port = 5000;
+const port = 5004;
 
 https.createServer(options, app).listen(port, () => {
   dataSeed.seedIntialDataForTesing();
