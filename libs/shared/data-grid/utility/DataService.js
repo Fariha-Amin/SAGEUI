@@ -11,10 +11,9 @@ export const DataService = {
     console.log(fetchUrl);
     return fetch(fetchUrl).then((res) => res.json());
   },
-  updateSummarizeData(url, data)
-  {
+  updateSummarizeData(url, data) {
     return fetch(url, {
-      method: "POST",
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
