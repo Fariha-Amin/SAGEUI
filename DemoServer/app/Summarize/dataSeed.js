@@ -32,7 +32,7 @@ const DataSeed = {
             documentId,
             summary,
             notes,
-            favourite,
+            favorite,
           } = data;
           db.run(
             "INSERT INTO nextgensummary (recId, user,summaryGeneratedOn,documentId,summary,notes,favourite) VALUES (?,?,?,?, ?,?,?)",
