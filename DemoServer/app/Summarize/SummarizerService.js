@@ -1,6 +1,43 @@
-const filterTableData = (array, filters) => {
-  console.log(filters);
+const sqlite3 = require("sqlite3").verbose();
+const path = require("path");
+const db = new sqlite3.Database(path.join(__dirname, "Db", "summarizer.db"));
 
+const getFilterSql = (filters) => {
+  let filterSql = " where 1=1 ";
+
+  if (filters.user.value) {
+    filterSql = filterSql + ` and user like '%${filters.user.value}%'`;
+  }
+
+  if (filters.documentId.value) {
+    filterSql =
+      filterSql + ` and documentId like'%${filters.documentId.value}%'`;
+  }
+  if (filters.summary.value) {
+    filterSql = filterSql + ` and summary like '%${filters.summary.value}%'`;
+  }
+  if (filters.notes.value) {
+    filterSql = filterSql + ` and notes like '%${filters.notes.value}%'`;
+  }
+
+  if (filters.summaryGeneratedOn.value) {
+    filterSql =
+      filterSql +
+      ` and summaryGeneratedOn like '%${filters.summaryGeneratedOn.value}%'`;
+  }
+
+  return filterSql;
+};
+
+const getOrderSql = (sortField, sortOrder) => {
+  return `order by  ${sortField} ${sortOrder == 1 ? "asc" : "desc"}`;
+};
+
+const getLimitQuery = (skipCount, takeCount) => {
+  return ` limit ${skipCount} , ${takeCount}`;
+};
+
+const filterTableData = (array, filters) => {
   let filteredArray = array;
 
   if (filters.user.value) {
@@ -2791,6 +2828,68 @@ const SummarizerService = {
       ),
       totalRecords: filterData.length,
     };
+  },
+  getFilterAndPaginatedDataNew(sageDataTableRequest, callback) {
+    let dbsql = "SELECT * FROM nextgensummary ";
+
+    const filterSql = getFilterSql(sageDataTableRequest.filters);
+
+    const countQuery = `select count(1) as row_count from nextgensummary ${
+      filterSql ?? ""
+    }`;
+
+    db.get(countQuery, (err, row) => {
+      const count = row.row_count;
+
+      dbsql = `${dbsql} ${filterSql ?? " "} `;
+      if (sageDataTableRequest.sortField) {
+        dbsql =
+          dbsql +
+          getOrderSql(
+            sageDataTableRequest.sortField,
+            sageDataTableRequest.sortOrder
+          );
+      }
+
+      dbsql =
+        dbsql +
+        getLimitQuery(sageDataTableRequest.first, sageDataTableRequest.rows);
+
+      const data = [];
+      // Execute a query to select data from the table
+      db.all(dbsql, (err, rows) => {
+        if (err) {
+          console.error("Error retrieving data from database:", err);
+          //callback(err, null);
+          return;
+        }
+
+        //console.log(rows);
+        // Transform each row into a JSON object
+        rows.forEach((row) => {
+          data.push({
+            recId: row.recId,
+            summaryGeneratedOn: row.summaryGeneratedOn,
+            user: row.user,
+            documentId: row.documentId,
+            summary: row.summary,
+            notes: row.notes,
+            favourite: row.favourite == 1 ? true : false,
+          });
+          //console.log(data);
+        });
+
+        // console.log(data);
+
+        // Call the callback function with the array of JSON objects
+        callback(null, {
+          data: data,
+          totalRecords: count,
+        });
+      });
+    });
+
+    // Call the callback function with the array of JSON objects
   },
   getsummaryData() {
     return Promise.resolve(this.getData());

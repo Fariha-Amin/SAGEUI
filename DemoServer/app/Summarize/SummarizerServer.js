@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const service = require("./SummarizerService");
+const seedData = require("./dataSeed");
 
 const https = require("https");
 const fs = require("fs");
@@ -23,7 +24,14 @@ app.get("/api/getTableData", (req, res) => {
 
   const sageDataTableRequest = JSON.parse(dataTableRequest);
 
-  res.json(service.getFilterAndPaginatedData(sageDataTableRequest));
+  service.getFilterAndPaginatedDataNew(
+    sageDataTableRequest,
+    (err, responseData) => {
+      //console.log("Data found from db", responseData);
+
+      res.json(responseData);
+    }
+  );
 });
 // Start the server
 const port = 5000;
