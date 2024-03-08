@@ -102,7 +102,7 @@ const RelatedDocumentsFlyout = ({ visible, onClose, investigationId, documentId 
                         id="relatedDocsTable"
                         dataKey="documentId"
                         className="sage-table"
-                        value={relatedDocs}
+                        data={relatedDocs}
                         style={{ width: "100%" }}
                         loading={isLoading}
                         selectable

@@ -28,7 +28,7 @@ export default function SageDataTable(props) {
     // Apply passthroughs
     tableProps.id = props.id;
     tableProps.dataKey = props.dataKey;
-    tableProps.value = props.value;
+    tableProps.value = props.data;
     tableProps.style = props.style;
     tableProps.className = props.className;
     tableProps.loading = props.loading;

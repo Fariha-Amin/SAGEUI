@@ -14,7 +14,7 @@ describe("DataTable UI", () => {
 
             // Act
             render((
-                <DataTable id="testTable" value={testData}>
+                <DataTable id="testTable" data={testData}>
                     <DataColumn field="field1" />
                     <DataColumn field="field2" />
                     <DataColumn field="field3" />
@@ -42,7 +42,7 @@ describe("DataTable UI", () => {
 
             // Act
             render((
-                <DataTable id="testTable" value={testData}>
+                <DataTable id="testTable" data={testData}>
                     <DataColumn field="field1" />
                     <DataColumn field="field2" />
                     <DataColumn field="field3" />
@@ -67,7 +67,7 @@ describe("DataTable UI", () => {
 
             // Act
             render((
-                <DataTable id="testTable" value={testData}>
+                <DataTable id="testTable" data={testData}>
                     <DataColumn field="field1" />
                     <DataColumn field="field2" />
                     <DataColumn field="field3" />
@@ -94,7 +94,7 @@ describe("DataTable UX", () => {
 
             // Act
             render((
-                <DataTable id="testTable" value={testData} onSort={handleOnSort}>
+                <DataTable id="testTable" data={testData} onSort={handleOnSort}>
                     <DataColumn headerClassName="column1" field="field1" sortable />
                     <DataColumn headerClassName="column2" field="field2" sortable />
                     <DataColumn headerClassName="column3" field="field3" sortable />
@@ -120,7 +120,7 @@ describe("DataTable UX", () => {
 
             // Act
             render((
-                <DataTable id="testTable" value={testData} onSort={handleOnSort}>
+                <DataTable id="testTable" data={testData} onSort={handleOnSort}>
                     <DataColumn headerClassName="column1" field="field1" />
                     <DataColumn headerClassName="column2" field="field2" />
                     <DataColumn headerClassName="column3" field="field3" />
@@ -145,7 +145,7 @@ describe("DataTable UX", () => {
 
             // Act
             render((
-                <DataTable id="testTable" value={testData} onSort={handleOnSort}>
+                <DataTable id="testTable" data={testData} onSort={handleOnSort}>
                     <DataColumn headerClassName="column1" field="field1" sortable sortOrder={1} />
                     <DataColumn headerClassName="column2" field="field2" />
                     <DataColumn headerClassName="column3" field="field3" />
@@ -177,7 +177,7 @@ describe("DataTable UX", () => {
 
             // Act
             render((
-                <DataTable id="testTable" value={testData} onSort={handleOnSort}>
+                <DataTable id="testTable" data={testData} onSort={handleOnSort}>
                     <DataColumn headerClassName="column1" field="field1" sortable sortOrder={0} />
                     <DataColumn headerClassName="column2" field="field2" />
                     <DataColumn headerClassName="column3" field="field3" />
@@ -213,7 +213,7 @@ describe("DataTable UX", () => {
 
             // Act
             render((
-                <DataTable id="testTable" value={testData} onSort={handleOnSort}>
+                <DataTable id="testTable" data={testData} onSort={handleOnSort}>
                     <DataColumn headerClassName="column1" field="field1" sortable sortOrder={-1} />
                     <DataColumn headerClassName="column2" field="field2" />
                     <DataColumn headerClassName="column3" field="field3" />
@@ -245,7 +245,7 @@ describe("DataTable UX", () => {
 
             // Act
             render((
-                <DataTable id="testTable" value={testData} onSort={handleOnSort}>
+                <DataTable id="testTable" data={testData} onSort={handleOnSort}>
                     <DataColumn headerClassName="column1" field="field1" sortable sortOrder={0} />
                     <DataColumn headerClassName="column2" field="field2" />
                     <DataColumn headerClassName="column3" field="field3" />
@@ -285,7 +285,7 @@ describe("DataTable UX", () => {
 
                 // Act
                 render((
-                    <DataTable id="testTable" dataKey="field1" value={testData} selectable onSelectionChange={handleOnSelectionChange}>
+                    <DataTable id="testTable" dataKey="field1" data={testData} selectable onSelectionChange={handleOnSelectionChange}>
                         <DataColumn headerClassName="column1" selector />
                         <DataColumn headerClassName="column2" field="field1" />
                         <DataColumn headerClassName="column3" field="field2" />
@@ -319,7 +319,7 @@ describe("DataTable UX", () => {
 
                 // Act
                 render((
-                    <DataTable id="testTable" dataKey="field1" value={testData} selectable selectedRows={selectedRows}>
+                    <DataTable id="testTable" dataKey="field1" data={testData} selectable selectedRows={selectedRows}>
                         <DataColumn headerClassName="column1" selector />
                         <DataColumn headerClassName="column2" field="field1" />
                         <DataColumn headerClassName="column3" field="field2" />
@@ -351,7 +351,7 @@ describe("DataTable UX", () => {
 
                 // Act
                 render((
-                    <DataTable id="testTable" dataKey="field1" value={testData} selectable>
+                    <DataTable id="testTable" dataKey="field1" data={testData} selectable>
                         <DataColumn headerClassName="column1" selector />
                         <DataColumn headerClassName="column2" field="field1" />
                         <DataColumn headerClassName="column3" field="field2" />
@@ -389,7 +389,7 @@ describe("DataTable UX", () => {
 
                 // Act
                 render((
-                    <DataTable id="testTable" dataKey="field1" value={testData} selectable selectionType="multiple">
+                    <DataTable id="testTable" dataKey="field1" data={testData} selectable selectionType="multiple">
                         <DataColumn headerClassName="column1" selector />
                         <DataColumn headerClassName="column2" field="field1" />
                         <DataColumn headerClassName="column3" field="field2" />
@@ -415,7 +415,7 @@ describe("DataTable UX", () => {
 
                 // Act
                 render((
-                    <DataTable id="testTable" dataKey="field1" value={testData} selectable selectionType="single">
+                    <DataTable id="testTable" dataKey="field1" data={testData} selectable selectionType="single">
                         <DataColumn headerClassName="column1" selector />
                         <DataColumn headerClassName="column2" field="field1" />
                         <DataColumn headerClassName="column3" field="field2" />
@@ -448,7 +448,7 @@ describe("DataTable UX", () => {
 
                 // Act
                 render((
-                    <DataTable id="testTable" dataKey="field1" value={testData} selectable onSelectionChange={handleOnSelectionChange}>
+                    <DataTable id="testTable" dataKey="field1" data={testData} selectable onSelectionChange={handleOnSelectionChange}>
                         <DataColumn headerClassName="column1" body={bodyTemplate} />
                         <DataColumn headerClassName="column2" field="field1" />
                         <DataColumn headerClassName="column3" field="field2" />
@@ -484,7 +484,7 @@ describe("DataTable UX", () => {
 
                 // Act
                 render((
-                    <DataTable id="testTable" dataKey="field1" value={testData} selectable selectedRows={selectedRows}>
+                    <DataTable id="testTable" dataKey="field1" data={testData} selectable selectedRows={selectedRows}>
                         <DataColumn headerClassName="column1" body={bodyTemplate} />
                         <DataColumn headerClassName="column2" field="field1" />
                         <DataColumn headerClassName="column3" field="field2" />
@@ -514,7 +514,7 @@ describe("DataTable UX", () => {
 
                 // Act
                 render((
-                    <DataTable id="testTable" dataKey="field1" value={testData} selectable>
+                    <DataTable id="testTable" dataKey="field1" data={testData} selectable>
                         <DataColumn headerClassName="column1" body={bodyTemplate} />
                         <DataColumn headerClassName="column2" field="field1" />
                         <DataColumn headerClassName="column3" field="field2" />
@@ -557,7 +557,7 @@ describe("DataTable UX", () => {
 
                 // Act
                 render((
-                    <DataTable id="testTable" dataKey="field1" value={testData} selectable>
+                    <DataTable id="testTable" dataKey="field1" data={testData} selectable>
                         <DataColumn headerClassName="column1" body={bodyTemplate} />
                         <DataColumn headerClassName="column2" field="field1" />
                         <DataColumn headerClassName="column3" field="field2" />
@@ -593,7 +593,7 @@ describe("DataTable UX", () => {
 
                 // Act
                 render((
-                    <DataTable id="testTable" dataKey="field1" value={testData} expandable onExpansionChange={handleOnExpansionChange}>
+                    <DataTable id="testTable" dataKey="field1" data={testData} expandable onExpansionChange={handleOnExpansionChange}>
                         <DataColumn headerClassName="column1" expander />
                         <DataColumn headerClassName="column2" field="field1" />
                         <DataColumn headerClassName="column3" field="field2" />
@@ -628,7 +628,7 @@ describe("DataTable UX", () => {
 
                 // Act
                 render((
-                    <DataTable id="testTable" dataKey="field1" value={testData} expandable expandedRows={expandedRows} rowExpandedTemplate={rowExpandedTemplate}>
+                    <DataTable id="testTable" dataKey="field1" data={testData} expandable expandedRows={expandedRows} rowExpandedTemplate={rowExpandedTemplate}>
                         <DataColumn headerClassName="column1" expander />
                         <DataColumn headerClassName="column2" field="field1" />
                         <DataColumn headerClassName="column3" field="field2" />
@@ -659,7 +659,7 @@ describe("DataTable UX", () => {
 
                 // Act
                 render((
-                    <DataTable id="testTable" dataKey="field1" value={testData} expandable rowExpandedTemplate={rowExpandedTemplate}>
+                    <DataTable id="testTable" dataKey="field1" data={testData} expandable rowExpandedTemplate={rowExpandedTemplate}>
                         <DataColumn headerClassName="column1" expander />
                         <DataColumn headerClassName="column2" field="field1" />
                         <DataColumn headerClassName="column3" field="field2" />
@@ -699,7 +699,7 @@ describe("DataTable UX", () => {
 
                 // Act
                 render((
-                    <DataTable id="testTable" dataKey="field1" value={testData} expandable onExpansionChange={handleOnExpansionChange}>
+                    <DataTable id="testTable" dataKey="field1" data={testData} expandable onExpansionChange={handleOnExpansionChange}>
                         <DataColumn headerClassName="column1" body={bodyTemplate} />
                         <DataColumn headerClassName="column2" field="field1" />
                         <DataColumn headerClassName="column3" field="field2" />
@@ -738,7 +738,7 @@ describe("DataTable UX", () => {
 
                 // Act
                 render((
-                    <DataTable id="testTable" dataKey="field1" value={testData} expandable expandedRows={expandedRows} rowExpandedTemplate={rowExpandedTemplate}>
+                    <DataTable id="testTable" dataKey="field1" data={testData} expandable expandedRows={expandedRows} rowExpandedTemplate={rowExpandedTemplate}>
                         <DataColumn headerClassName="column1" body={bodyTemplate} />
                         <DataColumn headerClassName="column2" field="field1" />
                         <DataColumn headerClassName="column3" field="field2" />
@@ -773,7 +773,7 @@ describe("DataTable UX", () => {
 
                 // Act
                 render((
-                    <DataTable id="testTable" dataKey="field1" value={testData} expandable rowExpandedTemplate={rowExpandedTemplate}>
+                    <DataTable id="testTable" dataKey="field1" data={testData} expandable rowExpandedTemplate={rowExpandedTemplate}>
                         <DataColumn headerClassName="column1" body={bodyTemplate} />
                         <DataColumn headerClassName="column2" field="field1" />
                         <DataColumn headerClassName="column3" field="field2" />
@@ -818,7 +818,7 @@ describe("DataTable UX", () => {
 
                 // Act
                 render((
-                    <DataTable id="testTable" dataKey="field1" value={testData} expandable>
+                    <DataTable id="testTable" dataKey="field1" data={testData} expandable>
                         <DataColumn headerClassName="column1" body={bodyTemplate} />
                         <DataColumn headerClassName="column2" field="field1" />
                         <DataColumn headerClassName="column3" field="field2" />
