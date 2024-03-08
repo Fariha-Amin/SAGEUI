@@ -14,17 +14,13 @@ import NotesModal from "../../../libs/shared/data-grid/modals/NotesModal";
 import { Tooltip } from "primereact/tooltip";
 
 const calculateDialogPosition = (posX, posY) => {
-  const viewportWidth =
-    window.innerWidth || document.documentElement.clientWidth;
-
   const viewportHeight =
     window.innerHeight || document.documentElement.clientHeight;
 
-  posX = posX - (20 * viewportWidth) / 100;
+  posX = posX - 375;
 
-  if (posY + (30 * viewportHeight) / 100 > viewportHeight) {
-    console.log("Yes");
-    posY = viewportHeight - (40 * viewportHeight) / 100;
+  if (posY + 400 > viewportHeight) {
+    posY = viewportHeight - 380;
   }
 
   return { posX, posY };
