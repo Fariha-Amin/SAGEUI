@@ -5,6 +5,18 @@ const db = new sqlite3.Database(path.join(__dirname, "Db", "summarizer.db"));
 
 const DataSeed = {
   seedIntialDataForTesing() {
+
+    db.run(`CREATE TABLE IF NOT EXISTS "nextgensummary" (
+      "recId"	INTEGER,
+      "user"	TEXT,
+      "summaryGeneratedOn"	TEXT,
+      "documentId"	TEXT,
+      "summary"	TEXT,
+      "notes"	TEXT,
+      "favourite"	INTEGER,
+      PRIMARY KEY("recId")
+    )`);
+
     db.get("SELECT COUNT(*) AS count FROM nextgensummary", (err, row) => {
       if (err) {
         console.error("Error checking data:", err);
