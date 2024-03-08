@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 
 import TableActionButton from "./TableActionButton";
-import { useState } from "react";
 
 import NoteRegularLogo from "../icons/noteregular.svg";
 import NoteBlueLogo from "../icons/noteblue.svg";
