@@ -18,8 +18,14 @@ const rowExpansionSlice = createSlice({
         (row) => row.recId !== action.payload.recId
       );
     },
-    expandAllRows(state, action) {},
-    collapseAllRows(state, action) {},
+    expandAllRows(state, action) {
+      state.expandedRows = [...state.expandedRows, ...action.payload];
+    },
+    collapseAllRows(state, action) {
+      state.expandedRows = state.expandedRows.filter(
+        (row) => !action.payload.find((_) => _.recId === row.recId)
+      );
+    },
     updateIsAllRowExpanded(state, action) {
       state.isAllRowExpanded = action.payload;
     },

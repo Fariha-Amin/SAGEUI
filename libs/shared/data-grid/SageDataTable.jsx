@@ -20,13 +20,16 @@ import { updateAllTableData } from "./features/tableDataSlice";
 
 export default function SageDataTable(props) {
   const dataKey = useRef(props.dataKey);
-  //const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [totalRecords, setTotalRecords] = useState(0);
   const [modalShow, setModalShow] = useState(false);
   const [selectedRadioOption, setSelectedRadioOption] = useState(null);
 
-  const { onCellClickHandler, onTableDataUpdateHandler } = props;
+  const {
+    onCellClickHandler,
+    onTableDataUpdateHandler,
+    expandedRowsTemplateHandler,
+  } = props;
 
   // Table data state subscribers
   const data = useSelector((state) => state.tableDataSlice.tableData);
@@ -121,7 +124,6 @@ export default function SageDataTable(props) {
     setlazyStateTemp(event);
   };
 
-  // Expanding row logic
   const onCellClick = (e) => {
     if (!e.column.props.cellClickable) return;
     onCellClickHandler && onCellClickHandler(e);
@@ -129,7 +131,8 @@ export default function SageDataTable(props) {
 
   // Expanding row template
   const rowExpansionTemplate = (data) => {
-    return <td colSpan={6}>{data.summary}</td>;
+    if (!expandedRowsTemplateHandler) return null;
+    return expandedRowsTemplateHandler(data);
   };
 
   const onDataTableKeyDown = (event) => {

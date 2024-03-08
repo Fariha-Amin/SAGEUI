@@ -9,7 +9,10 @@ import ViewDocButton from "./components/ViewDocButton";
 import "./App.css";
 import SageDataTableCell from "../../libs/shared/data-grid/SageDataTableCell";
 import { onCellClickHandler } from "./summaryDataTable/summaryTableEvents";
-import { onTableDataUpdateHandler } from "./summaryDataTable/summaryTableEvents";
+import {
+  onTableDataUpdateHandler,
+  expandedRowsTemplateHandler,
+} from "./summaryDataTable/summaryTableEvents";
 
 export default function App() {
   const docIdsToDisplayInSingleLine = 5;
@@ -51,6 +54,7 @@ export default function App() {
         defaultSortOrder={-1}
         onCellClickHandler={onCellClickHandler}
         onTableDataUpdateHandler={onTableDataUpdateHandler}
+        expandedRowsTemplateHandler={expandedRowsTemplateHandler}
       >
         <SageTableColumn
           order={2}

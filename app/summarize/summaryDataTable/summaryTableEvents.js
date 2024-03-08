@@ -1,3 +1,4 @@
+import React from "react";
 import store from "../store/store";
 import {
   expandRow,
@@ -6,6 +7,7 @@ import {
   collapseAllRows,
   updateIsAllRowExpanded,
 } from "../../../libs/shared/data-grid/features/rowExpansionSlice";
+import ExpandedRowTemplate from "../components/ExpandedRowTemplate";
 
 export const onCellClickHandler = (e) => {
   if (!e || e.rowData.inprogress) return;
@@ -40,8 +42,8 @@ export const viewAllSummaryClickHandler = (e) => {
   const rowExpansionData = store.getState().rowExpansionDataSlice;
   let expandedRows = store.getState().rowExpansionDataSlice.expandedRows;
   let currentTableData = store.getState().tableDataSlice.tableData;
-  const rowsToInsert = [];
-  const rowsToRemove = [];
+  let rowsToInsert = [];
+  let rowsToRemove = [];
 
   let expandedRowsDict = expandedRows.reduce((accumulator, current) => {
     accumulator[current.recId] = true;
@@ -49,7 +51,7 @@ export const viewAllSummaryClickHandler = (e) => {
   }, {});
   if (!rowExpansionData.isAllRowExpanded) {
     rowsToInsert = currentTableData.reduce((accumulator, current) => {
-      if (!expandedRowsDict[current.recId]) {
+      if (!expandedRowsDict[current.recId] && !current.inprogress) {
         accumulator.push(current);
         return accumulator;
       }
@@ -65,6 +67,10 @@ export const viewAllSummaryClickHandler = (e) => {
   store.dispatch(
     updateIsAllRowExpanded(isAllRowExist(expandedRows, currentTableData))
   );
+};
+
+export const expandedRowsTemplateHandler = (rowData) => {
+  return <ExpandedRowTemplate rowData={rowData} />;
 };
 
 const isAllRowExist = (expandedRows, currentTableData) => {
