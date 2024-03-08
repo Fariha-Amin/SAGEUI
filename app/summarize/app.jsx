@@ -10,6 +10,10 @@ import ViewDocButton from "./components/ViewDocButton";
 import "./App.css";
 import SageDataTableCell from "../../libs/shared/data-grid/SageDataTableCell";
 import { onCellClickHandler } from "./summaryDataTable/summaryTableEvents";
+import {
+  onTableDataUpdateHandler,
+  expandedRowsTemplateHandler,
+} from "./summaryDataTable/summaryTableEvents";
 
 export default function App() {
   const docIdsToDisplayInSingleLine = 5;
@@ -35,7 +39,7 @@ export default function App() {
 
   const favouriteClickHandler = (rowData) => {
     DataService.updateSummarizeData(
-      "https://localhost:5000/api/updateSummarizeData",
+      "https://localhost:5000/api/markAsFavorite",
       rowData
     );
   };
@@ -57,6 +61,8 @@ export default function App() {
         defaultSortField="summaryGeneratedOn"
         defaultSortOrder={-1}
         onCellClickHandler={onCellClickHandler}
+        onTableDataUpdateHandler={onTableDataUpdateHandler}
+        expandedRowsTemplateHandler={expandedRowsTemplateHandler}
       >
         <SageTableColumn
           order={2}
@@ -82,7 +88,7 @@ export default function App() {
           header="Date/Time"
           isSortable={true}
           isFilterable={true}
-          style={{ width: "134px", maxWidth: "134px", textAlign: "left" }}
+          style={{ width: "160px", maxWidth: "160px", textAlign: "left" }}
           cellClickable={true}
         />
         <SageTableColumn

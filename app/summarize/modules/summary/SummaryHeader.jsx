@@ -4,18 +4,29 @@ import { SplitButton } from "primereact/splitbutton";
 import HelpIcon from "../../icons/help.svg";
 import DownloadIcon from "../../icons/download.svg";
 import HelpIconSm from "../../icons/help_18.svg";
+import ViewAllSummariesButton from "../../components/ViewAllSummariesButton";
 import HelpButton from "../../components/Helpbutton";
 import HelpOverlayPanel from "../../components/HelpOverlayPanel";
 
 const SummaryHeader = () => {
-  const helpButtonPointer = useRef(null);
+  const titleHelpButtonPointer = useRef(null);
+  const labelHelpButtonPointer = useRef(null);
 
   return (
     <>
-      {helpButtonPointer && (
+      {titleHelpButtonPointer && (
         <HelpOverlayPanel
           title={"neXgenAI Summarize"}
-          objectPointer={helpButtonPointer}
+          objectPointer={titleHelpButtonPointer}
+          style={{ width: "320px", height: "180px" }}
+        />
+      )}
+
+      {labelHelpButtonPointer && (
+        <HelpOverlayPanel
+          title={"List of Summaries"}
+          objectPointer={labelHelpButtonPointer}
+          style={{ width: "320px", height: "180px" }}
         />
       )}
       <div className="row">
@@ -26,7 +37,7 @@ const SummaryHeader = () => {
             </span>
             <span className="header-icon-position">
               <HelpButton
-                onClickHandle={(e) => helpButtonPointer.current.toggle(e)}
+                onClickHandle={(e) => titleHelpButtonPointer.current.toggle(e)}
                 icon={<HelpIcon />}
               />
             </span>
@@ -51,7 +62,7 @@ const SummaryHeader = () => {
             <span className="header-text-wrapper">List of Summaries </span>
             <span className="icon-position">
               <HelpButton
-                onClickHandle={(e) => helpButtonPointer.current.toggle(e)}
+                onClickHandle={(e) => labelHelpButtonPointer.current.toggle(e)}
                 icon={<HelpIconSm />}
               />
             </span>
@@ -59,18 +70,12 @@ const SummaryHeader = () => {
         </div>
 
         <div className="col d-flex justify-content-end">
-          <Button
-            className="btn-height ml-4"
-            label="View all summaries"
-            severity="info"
-            outlined
-          />
+          <ViewAllSummariesButton />
           <div className="ml-4">
             <DownloadIcon style={{ marginTop: "8px" }} />
           </div>
           <SplitButton
-            className="btn-height ml-4"
-            buttonClassName="p-disabled"
+            className="btn-height ml-4 p-disabled"
             severity="primary"
             label="Action"
           ></SplitButton>

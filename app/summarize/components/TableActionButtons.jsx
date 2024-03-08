@@ -35,7 +35,7 @@ const TableActionButtons = ({
 }) => {
   const [visible, setVisible] = useState(false);
   const [dialogPosition, setDialogPosition] = useState({ x: 0, y: 0 });
-  const [favorite, setFavorite] = useState(rowData.isfavorite || false);
+  const [favorite, setFavorite] = useState(rowData.favorite);
 
   const onNoteClick = (event) => {
     const { posX, posY } = calculateDialogPosition(
@@ -48,8 +48,8 @@ const TableActionButtons = ({
   };
 
   const handleFavoriteClick = () => {
+    favouriteClickHandler({ ...rowData, favorite: !favorite });
     setFavorite(!favorite);
-    favouriteClickHandler({ ...rowData, IsFavorite: !favorite });
   };
 
   const noteButton = (
@@ -75,12 +75,9 @@ const TableActionButtons = ({
       <TableActionButton
         className="btn  btn-link"
         id={`favorite-tooltip-${rowData.recId}`}
+        onClickHandler={handleFavoriteClick}
       >
-        {favorite ? (
-          <FavYellowLogo onClick={handleFavoriteClick} />
-        ) : (
-          <FavRegularLogo onClick={handleFavoriteClick} />
-        )}
+        {favorite ? <FavYellowLogo /> : <FavRegularLogo />}
       </TableActionButton>
     </>
   );

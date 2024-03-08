@@ -20,16 +20,21 @@ import { updateAllTableData } from "./features/tableDataSlice";
 
 export default function SageDataTable(props) {
   const dataKey = useRef(props.dataKey);
-  //const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [totalRecords, setTotalRecords] = useState(0);
   const [modalShow, setModalShow] = useState(false);
   const [selectedRadioOption, setSelectedRadioOption] = useState(null);
 
-  const { onCellClickHandler } = props;
+  const {
+    onCellClickHandler,
+    onTableDataUpdateHandler,
+    expandedRowsTemplateHandler,
+  } = props;
+
+  // Table data state subscribers
+  const data = useSelector((state) => state.tableDataSlice.tableData);
 
   // Checkbox state subscribers
-  const data = useSelector((state) => state.tableDataSlice.tableData);
   const checkedRows = useSelector(
     (state) => state.checkboxDataSlice.selectedRows
   );
@@ -84,6 +89,11 @@ export default function SageDataTable(props) {
     loadLazyData();
   }, [lazyState]);
 
+  // Invoke when table data updated
+  useEffect(() => {
+    onTableDataUpdateHandler && onTableDataUpdateHandler();
+  }, [data]);
+
   const loadLazyData = () => {
     setLoading(true);
 
@@ -114,15 +124,15 @@ export default function SageDataTable(props) {
     setlazyStateTemp(event);
   };
 
-  // Expanding row logic
   const onCellClick = (e) => {
     if (!e.column.props.cellClickable) return;
-    onCellClickHandler(e);
+    onCellClickHandler && onCellClickHandler(e);
   };
 
   // Expanding row template
   const rowExpansionTemplate = (data) => {
-    return <td colSpan={6}>{data.summary}</td>;
+    if (!expandedRowsTemplateHandler) return null;
+    return expandedRowsTemplateHandler(data);
   };
 
   const onDataTableKeyDown = (event) => {
