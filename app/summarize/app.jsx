@@ -74,7 +74,7 @@ export default function App() {
           header="Date/Time"
           isSortable={true}
           isFilterable={true}
-          style={{ width: "134px", maxWidth: "134px", textAlign: "left" }}
+          style={{ width: "160px", maxWidth: "160px", textAlign: "left" }}
           cellClickable={true}
         />
         <SageTableColumn
