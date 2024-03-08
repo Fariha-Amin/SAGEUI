@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 import TableActionButton from "./TableActionButton";
+import { useState } from "react";
 
 import NoteRegularLogo from "../icons/noteregular.svg";
 import NoteBlueLogo from "../icons/noteblue.svg";
@@ -11,6 +12,7 @@ import FavYellowLogo from "../icons/favyellow.svg";
 import DeleteLogo from "../icons/delete.svg";
 
 import NotesModal from "../../../libs/shared/data-grid/modals/NotesModal";
+import { Tooltip } from "primereact/tooltip";
 
 const calculateDialogPosition = (posX, posY) => {
   const viewportWidth =
@@ -38,6 +40,7 @@ const TableActionButtons = ({
 }) => {
   const [visible, setVisible] = useState(false);
   const [dialogPosition, setDialogPosition] = useState({ x: 0, y: 0 });
+  const [favorite, setFavorite] = useState(rowData.isfavorite || false);
 
   const onNoteClick = (event) => {
     const { posX, posY } = calculateDialogPosition(
@@ -49,16 +52,41 @@ const TableActionButtons = ({
     setVisible(true);
   };
 
+  const handleFavoriteClick = () => {
+    setFavorite(!favorite);
+    favouriteClickHandler({ ...rowData, IsFavorite: !favorite });
+  };
+
   const noteButton = (
     <TableActionButton className="btn  btn-link" onClick={onNoteClick}>
       {rowData.notes ? <NoteBlueLogo /> : <NoteRegularLogo />}
     </TableActionButton>
   );
+
   const favouriteButton = (
-    <TableActionButton className="btn  btn-link">
-      {rowData.favourite ? <FavYellowLogo /> : <FavRegularLogo />}
-    </TableActionButton>
+    <>
+      <Tooltip
+        target={`#favorite-tooltip-${rowData.recId}`}
+        position="bottom"
+        mouseTrack={true}
+        appendTo={document.body}
+        className="custom-tooltip"
+      >
+        Favorite
+      </Tooltip>
+      <TableActionButton
+        className="btn  btn-link"
+        id={`favorite-tooltip-${rowData.recId}`}
+      >
+        {favorite ? (
+          <FavYellowLogo onClick={handleFavoriteClick} />
+        ) : (
+          <FavRegularLogo onClick={handleFavoriteClick} />
+        )}
+      </TableActionButton>
+    </>
   );
+
   const deleteButton = (
     <TableActionButton
       className={rowData.inprogress ? "btn btn-link disabled" : "btn btn-link"}
@@ -71,6 +99,7 @@ const TableActionButtons = ({
       {noteButton}
       {favouriteButton}
       {deleteButton}
+
       <NotesModal
         dialogPosition={dialogPosition}
         visible={visible}
