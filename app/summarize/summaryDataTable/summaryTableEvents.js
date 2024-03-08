@@ -26,7 +26,6 @@ export const onCellClickHandler = (e) => {
   store.dispatch(
     updateIsAllRowExpanded(isAllRowExist(expandedRows, currentTableData))
   );
-  console.log(store.getState().rowExpansionDataSlice);
 };
 
 export const onTableDataUpdateHandler = () => {
@@ -35,7 +34,6 @@ export const onTableDataUpdateHandler = () => {
   store.dispatch(
     updateIsAllRowExpanded(isAllRowExist(expandedRows, currentTableData))
   );
-  console.log(store.getState().rowExpansionDataSlice);
 };
 
 export const viewAllSummaryClickHandler = (e) => {
