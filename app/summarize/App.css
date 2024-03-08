@@ -205,6 +205,9 @@ table.table-bordered.sageDataTable td:last-child,
 table.table-bordered.sageDataTable td:last-child {
   border-right-width: 1px;
 }
+.sageDataTable thead tr{
+  text-transform : inherit
+}
 
 /* PrimeReact paginator */
 .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
@@ -391,7 +394,7 @@ button{
 
 .p-button.p-button-info.p-button-outlined{
   background-color: transparent;
-  color: #0ea5e9;
+  color: #3B82F6;
   border: 1px solid;
 }
 
@@ -412,10 +415,32 @@ button{
 
 .icon-position{
   position: absolute;
+  top: -20px;
+}
+.header-icon-position{
+  position: absolute;
   top: -15px;
 }
-
-.header-text-wrapper {
+.header-text-wrapper{
   font-family:Helvetica;
   font-weight: 700;
+}
+
+.overlay-help-title {
+font-size: 16px;
+font-weight: 700;
+line-height: 125%;
+}
+
+
+.help-scroll-panel .p-scrollpanel-wrapper {
+  border-right: 10px solid var(--surface-50);
+  border-bottom: 10px solid var(--surface-0);
+}
+
+.help-scroll-panel .p-scrollpanel-bar-y {
+  background-color: var(--surface-300);
+  border-radius: 0;
+  opacity: 1;
+  transition: background-color .3s;
 }

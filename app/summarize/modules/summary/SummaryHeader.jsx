@@ -3,44 +3,47 @@ import { Button } from "primereact/button";
 import { SplitButton } from "primereact/splitbutton";
 import HelpIcon from "../../icons/help.svg";
 import DownloadIcon from "../../icons/download.svg";
-import { OverlayPanel } from "primereact/overlaypanel";
 import HelpIconSm from "../../icons/help_18.svg";
 import ViewAllSummariesButton from "../../components/ViewAllSummariesButton";
+import HelpButton from "../../components/Helpbutton";
+import HelpOverlayPanel from "../../components/HelpOverlayPanel";
 
 const SummaryHeader = () => {
-  const op = useRef(null);
+  const titleHelpButtonPointer = useRef(null);
+  const labelHelpButtonPointer = useRef(null);
 
   return (
     <>
-      <OverlayPanel
-        ref={op}
-        style={{ width: "320px", height: "180px", overflowY: "scroll" }}
-      >
-        <div
-          className="div-wrapper"
-          style={{ width: "280px", height: "180px" }}
-        >
-          <p className="div">
-            Some quick example text to build on the card title and make up the
-            bulk of the card’s content. This is a tool tip that appears when a
-            user hovers over a contextual help icon. You can also scroll to see
-            more information,
-          </p>
-        </div>
-      </OverlayPanel>
+      {titleHelpButtonPointer && (
+        <HelpOverlayPanel
+          title={"neXgenAI Summarize"}
+          objectPointer={titleHelpButtonPointer}
+          style={{ width: "320px", height: "180px" }}
+        />
+      )}
+
+      {labelHelpButtonPointer && (
+        <HelpOverlayPanel
+          title={"List of Summaries"}
+          objectPointer={labelHelpButtonPointer}
+          style={{ width: "320px", height: "180px" }}
+        />
+      )}
       <div className="row">
-        <div className="col d-flex align-items-center">
-          <p className="font-size-header font-weight-bold">
-            neXgenAI Summarize
-            <span>
-              <HelpIcon
-                style={{ verticalAlign: "top" }}
-                onClick={(e) => op.current.toggle(e)}
+        <div className="col">
+          <div className="position-relative">
+            <span className="font-size-header font-weight-bold">
+              neXgenAI Summarize
+            </span>
+            <span className="header-icon-position">
+              <HelpButton
+                onClickHandle={(e) => titleHelpButtonPointer.current.toggle(e)}
+                icon={<HelpIcon />}
               />
             </span>
-          </p>
+          </div>
         </div>
-        <div className="col d-flex justify-content-end">
+        <div className="col d-flex align-items-end justify-content-end">
           <Button
             className="btn-height"
             label="Create new summary"
@@ -58,7 +61,10 @@ const SummaryHeader = () => {
           <div className="position-relative mt-4">
             <span className="header-text-wrapper">List of Summaries </span>
             <span className="icon-position">
-              <HelpIconSm onClick={(e) => op.current.toggle(e)} />
+              <HelpButton
+                onClickHandle={(e) => labelHelpButtonPointer.current.toggle(e)}
+                icon={<HelpIconSm />}
+              />
             </span>
           </div>
         </div>
@@ -69,8 +75,7 @@ const SummaryHeader = () => {
             <DownloadIcon style={{ marginTop: "8px" }} />
           </div>
           <SplitButton
-            className="btn-height ml-4"
-            buttonClassName="p-disabled"
+            className="btn-height ml-4 p-disabled"
             severity="primary"
             label="Action"
           ></SplitButton>
