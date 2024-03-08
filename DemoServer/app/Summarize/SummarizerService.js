@@ -2856,6 +2856,8 @@ const SummarizerService = {
         getLimitQuery(sageDataTableRequest.first, sageDataTableRequest.rows);
 
       const data = [];
+
+      console.log(dbsql);
       // Execute a query to select data from the table
       db.all(dbsql, (err, rows) => {
         if (err) {

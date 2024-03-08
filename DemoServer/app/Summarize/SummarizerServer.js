@@ -1,7 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const service = require("./SummarizerService");
-const seedData = require("./dataSeed");
+const dataSeed = require("./DataSeed");
 
 const https = require("https");
 const fs = require("fs");
@@ -37,5 +37,6 @@ app.get("/api/getTableData", (req, res) => {
 const port = 5000;
 
 https.createServer(options, app).listen(port, () => {
+  dataSeed.seedIntialDataForTesing();
   console.log(`Server running at https://localhost:${port}/`);
 });
