@@ -10,7 +10,7 @@ import FavYellowLogo from "../icons/favyellow.svg";
 
 import DeleteLogo from "../icons/delete.svg";
 
-import { Tooltip } from 'primereact/tooltip';
+import { Tooltip } from "primereact/tooltip";
 const TableActionButtons = ({
   rowData,
   noteClickHandler,
@@ -18,13 +18,11 @@ const TableActionButtons = ({
   deleteClickHandler,
   ...rest
 }) => {
+  const [favorite, setFavorite] = useState(rowData.favorite);
 
-  const [favorite, setFavorite] = useState(rowData.isfavorite || false);
-
-  const handleFavoriteClick = () =>
-  {
+  const handleFavoriteClick = () => {
+    favouriteClickHandler({ ...rowData, favorite: !favorite });
     setFavorite(!favorite);
-    favouriteClickHandler({ ...rowData, IsFavorite: !favorite });
   };
 
   const noteButton = (
@@ -44,13 +42,16 @@ const TableActionButtons = ({
       >
         Favorite
       </Tooltip>
-      <TableActionButton className="btn  btn-link" id={`favorite-tooltip-${rowData.recId}`} >
-        {favorite ? <FavYellowLogo onClick={handleFavoriteClick} /> : <FavRegularLogo onClick={handleFavoriteClick} />}
+      <TableActionButton
+        className="btn  btn-link"
+        id={`favorite-tooltip-${rowData.recId}`}
+        onClickHandler={handleFavoriteClick}
+      >
+        {favorite ? <FavYellowLogo /> : <FavRegularLogo />}
       </TableActionButton>
     </>
   );
- 
-  
+
   const deleteButton = (
     <TableActionButton
       className={rowData.inprogress ? "btn btn-link disabled" : "btn btn-link"}

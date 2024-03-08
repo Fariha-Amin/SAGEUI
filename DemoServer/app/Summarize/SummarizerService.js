@@ -1,4 +1,5 @@
 const sqlite3 = require("sqlite3").verbose();
+const { call } = require("file-loader");
 const path = require("path");
 const db = new sqlite3.Database(path.join(__dirname, "Db", "summarizer.db"));
 
@@ -108,7 +109,7 @@ const SummarizerService = {
         summary:
           "Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem. Integer tincidunt ante vel ipsum. Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat. Praesent blandit. Nam nulla. Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede. Morbi porttitor lorem id ligula. Suspendisse ornare consequat lectus. In est risus, auctor sed, tristique in, tempus sit amet, sem. Fusce consequat. Nulla nisl. Nunc nisl. Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Duis at velit eu est congue elementum. In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo.",
         notes: "Enhanced non-volatile standardization",
-        favourite: true,
+        favorite: true,
       },
       {
         recId: 2,
@@ -2876,7 +2877,7 @@ const SummarizerService = {
             documentId: row.documentId,
             summary: row.summary,
             notes: row.notes,
-            favourite: row.favourite == 1 ? true : false,
+            favorite: row.favourite == 1 ? true : false,
           });
           //console.log(data);
         });
@@ -2893,20 +2894,23 @@ const SummarizerService = {
 
     // Call the callback function with the array of JSON objects
   },
-  updateSummarizeData(sageDataTableupdateRequest) {
-    let dummyData = this.getData();
-    const dataIndex = dummyData.findIndex(
-      (item) => item.recId === sageDataTableupdateRequest.recId
+  markSummaryAsFavorite(sageDataTableupdateRequest, callback) {
+    const updateFavouriteSql = `update nextgensummary set favourite=? where recId=?`;
+    console.log(updateFavouriteSql);
+    db.run(
+      updateFavouriteSql,
+      [sageDataTableupdateRequest.favorite, sageDataTableupdateRequest.recId],
+      function (err) {
+        if (err) {
+          console.error("Error updating data:", err);
+        } else {
+          console.log("Data updated successfully");
+          console.log("Number of rows affected:", this.changes);
+        }
+
+        callback(err);
+      }
     );
-
-    if (dataIndex !== -1) {
-      dummyData[dataIndex].IsFavorite = sageDataTableupdateRequest.IsFavorite;
-    } else {
-      throw new Error("Record not found"); // Throw an error if the record doesn't exist
-    }
-
-    // Return the updated data
-    return dummyData[dataIndex];
   },
   getsummaryData() {
     return Promise.resolve(this.getData());

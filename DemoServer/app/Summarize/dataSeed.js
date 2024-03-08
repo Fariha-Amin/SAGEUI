@@ -31,7 +31,7 @@ const DataSeed = {
               documentId,
               summary,
               notes,
-              favourite ? 1 : 0,
+              favorite ? 1 : 0,
             ],
             (err) => {
               if (err) {
