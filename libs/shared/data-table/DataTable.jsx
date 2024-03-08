@@ -24,13 +24,19 @@ export default function SageDataTable(props) {
 
     let tableProps = {};
     let columnProps = props.children.map(({ props: p }) => { return { ...p }; });
+    for (const columnProp of columnProps) {
+        columnProp.className = columnProp.className ? `sage-table__column ${columnProp.className}` : "sage-table__column";
+        columnProp.headerClassName = columnProp.headerClassName ? `sage-table__header ${columnProp.headerClassName}` : "sage-table__header";
+        columnProp.footerClassName = columnProp.footerClassName ? `sage-table__footer ${columnProp.footerClassName}` : "sage-table__footer";
+        columnProp.bodyClassName = columnProp.bodyClassName ? `sage-table__body ${columnProp.bodyClassName}` : "sage-table__body";
+    }
 
     // Apply passthroughs
     tableProps.id = props.id;
     tableProps.dataKey = props.dataKey;
     tableProps.value = props.data;
     tableProps.style = props.style;
-    tableProps.className = props.className;
+    tableProps.className = props.className ? `sage-table ${props.className}` : "sage-table";
     tableProps.loading = props.loading;
 
     // Apply defaults

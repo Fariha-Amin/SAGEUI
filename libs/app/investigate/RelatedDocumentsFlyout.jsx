@@ -101,7 +101,6 @@ const RelatedDocumentsFlyout = ({ visible, onClose, investigationId, documentId 
                     <DataTable
                         id="relatedDocsTable"
                         dataKey="documentId"
-                        className="sage-table"
                         data={relatedDocs}
                         style={{ width: "100%" }}
                         loading={isLoading}
@@ -113,9 +112,7 @@ const RelatedDocumentsFlyout = ({ visible, onClose, investigationId, documentId 
                         rowExpandedTemplate={rowExpandedTemplate}>
                         {columns.map((col, i) => (
                             <DataColumn
-                                key={col.field}
                                 columnKey={col.field}
-                                className="sage-column"
                                 {...col}
                             />
                         ))}
