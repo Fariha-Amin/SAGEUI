@@ -415,10 +415,32 @@ button{
 
 .icon-position{
   position: absolute;
+  top: -20px;
+}
+.header-icon-position{
+  position: absolute;
   top: -15px;
 }
-
-.header-text-wrapper {
+.header-text-wrapper{
   font-family:Helvetica;
   font-weight: 700;
+}
+
+.overlay-help-title {
+font-size: 16px;
+font-weight: 700;
+line-height: 125%;
+}
+
+
+.help-scroll-panel .p-scrollpanel-wrapper {
+  border-right: 10px solid var(--surface-50);
+  border-bottom: 10px solid var(--surface-0);
+}
+
+.help-scroll-panel .p-scrollpanel-bar-y {
+  background-color: var(--surface-300);
+  border-radius: 0;
+  opacity: 1;
+  transition: background-color .3s;
 }

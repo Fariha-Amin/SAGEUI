@@ -3,6 +3,7 @@ import SummaryHeader from "./modules/summary/SummaryHeader";
 import SageDataTable from "../../libs/shared/data-grid/SageDataTable";
 import SageTableColumn from "../../libs/shared/data-grid/column/SageTableColumn";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { DataService } from "./../../libs/shared/data-grid/utility/DataService";
 
 import TableActionButtons from "./components/TableActionButtons";
 import ViewDocButton from "./components/ViewDocButton";
@@ -32,8 +33,13 @@ export default function App() {
     return result;
   };
 
+  const favouriteClickHandler = (rowData) =>
+  {
+    DataService.updateSummarizeData("http://localhost:5000/api/updateSummarizeData", rowData);
+  };
+
   return (
-    <div className="container-fluid" style={{ padding: "4rem 4rem 0rem 0rem" }}>
+    <div style={{ padding: "4rem 4rem 0rem 0rem" }}>
       <SummaryHeader />
 
       <SageDataTable
@@ -45,7 +51,7 @@ export default function App() {
         style={{ width: "100%", minWidth: "50rem" }}
         cellSelection={true}
         lazy={true}
-        dataUrl="https://localhost:5000/api/getTableData"
+        dataUrl="https://localhost:5002/api/getTableData"
         defaultSortField="summaryGeneratedOn"
         defaultSortOrder={-1}
         onCellClickHandler={onCellClickHandler}
@@ -57,7 +63,7 @@ export default function App() {
           header="View Doc"
           isSortable={false}
           isFilterable={false}
-          style={{ width: "111px", maxWidth: "111px" }}
+          style={{ width: "101px", maxWidth: "101px" }}
         />
         <SageTableColumn
           order={3}
@@ -74,7 +80,7 @@ export default function App() {
           header="Date/Time"
           isSortable={true}
           isFilterable={true}
-          style={{ width: "124px", maxWidth: "124px", textAlign: "left" }}
+          style={{ width: "134px", maxWidth: "134px", textAlign: "left" }}
           cellClickable={true}
         />
         <SageTableColumn
@@ -153,7 +159,7 @@ export default function App() {
         <SageTableColumn
           order={8}
           body={(row) => {
-            return <TableActionButtons rowData={row} />;
+            return <TableActionButtons rowData={row} favouriteClickHandler={favouriteClickHandler} />;
           }}
           field="Actions"
           header=""

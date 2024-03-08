@@ -2792,7 +2792,24 @@ const SummarizerService = {
       totalRecords: filterData.length,
     };
   },
-  getsummaryData() {
+  updateSummarizeData(sageDataTableupdateRequest)
+  {
+    let dummyData = this.getData();
+    const dataIndex = dummyData.findIndex((item) => item.recId === sageDataTableupdateRequest.recId);
+
+    if (dataIndex !== -1)
+    {
+      dummyData[dataIndex].IsFavorite = sageDataTableupdateRequest.IsFavorite;
+    } else
+    {
+      throw new Error("Record not found"); // Throw an error if the record doesn't exist
+    }
+
+    // Return the updated data
+    return dummyData[dataIndex];
+  },
+  getsummaryData()
+  {
     return Promise.resolve(this.getData());
   },
 };
