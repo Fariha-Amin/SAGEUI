@@ -2879,6 +2879,7 @@ const SummarizerService = {
             summary: row.summary,
             notes: row.notes,
             favorite: row.favourite == 1 ? true : false,
+            inprogress: row.inprogress == 1 ? true : false,
           });
           //console.log(data);
         });

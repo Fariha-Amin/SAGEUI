@@ -272,7 +272,7 @@ table.table-bordered.sageDataTable td:last-child {
   --bs-btn-padding-x: 0.35rem;
 }
 
-.abc > .p-tooltip-text {
+.custom-tooltip-style > .p-tooltip-text {
   background: #4b5563;
   color: #ffffff;
   padding: 0.75rem 0.75rem;
@@ -449,7 +449,7 @@ button{
   font-size: 22px;
 }
 
-#sageTable-noteModal-char-count {
+.sageTable-noteModal-char-count {
   font-family: "Inter-Regular", Helvetica;
   font-weight: 400;
   color: #000000;
@@ -460,4 +460,8 @@ button{
 
 .sageTable-note-modal .p-dialog-footer {
   padding: 0.75rem 1.5rem 0.75rem 0rem;
+}
+
+.p-inputtextarea:focus {
+  box-shadow: none;
 }
