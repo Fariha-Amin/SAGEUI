@@ -3,6 +3,7 @@ import React from "react";
 import { useState } from 'react';
 import { DataTable } from "primereact/datatable";
 import DataColumn from "./DataColumn";
+import StateChangedEvent from "./stateChangedEvent";
 
 function getDefaultSort(props) {
     // Pull sort information off the columns like so:
@@ -79,35 +80,15 @@ export default function SageDataTable(props) {
     if (pagingEnabled) {
         tableProps.paginator = true;
         tableProps.rowsPerPageOptions = props.rowsPerPageOptions;
-
-        const customPageEnabled = props.page ? true : false;
-        if (!customPageEnabled) {
-            tableProps.first = first;
-            tableProps.rows = rows;
-        }
+        tableProps.first = first;
+        tableProps.rows = rows;
 
         function onPageDelegate(e) {
-            const stateChangedEvent = {
-                page: {
-                    first: e.first,
-                    rows: e.rows,
-                    page: e.page,
-                    pageCount: e.pageCount,
-                },
-                filter: e.filters,
-                sort: e.multiSortMeta
-            };
+            setFirst(e.first);
+            setRows(e.rows);
 
-            if (customPageEnabled) {
-                // Custom page functionality
-                props.page(stateChangedEvent); 
-            }
-            else {
-                // Default page functionality
-                setFirst(e.first);
-                setRows(e.rows);
-            }
-
+            const stateChangedEvent = new StateChangedEvent(e);
+            props.page && props.page(stateChangedEvent); 
             props.onPage && props.onPage(stateChangedEvent);
         };
         tableProps.onPage = onPageDelegate;
@@ -126,37 +107,17 @@ export default function SageDataTable(props) {
         //  1 - ascending
         tableProps.sortMode = "multiple";
         tableProps.removableSort = true;
-
-        const customSortEnabled = props.sort ? true : false;
-        if (!customSortEnabled) {
-            tableProps.multiSortMeta = multiSortMeta;
-            tableProps.sortField = sortField;
-            tableProps.sortOrder = sortOrder;
-        }
+        tableProps.multiSortMeta = multiSortMeta;
+        tableProps.sortField = sortField;
+        tableProps.sortOrder = sortOrder;
 
         function onSortDelegate(e) {
-            const stateChangedEvent = {
-                page: {
-                    first: e.first,
-                    rows: e.rows,
-                    page: e.page,
-                    pageCount: e.pageCount,
-                },
-                filter: e.filters,
-                sort: e.multiSortMeta
-            };
-
-            if (customSortEnabled) {
-                // Custom sort functionality
-                props.sort(stateChangedEvent); 
-            }
-            else {
-                // Default sort functionality
-                setSortField(e.sortField);
-                setSortOrder(e.sortOrder);
-                setMultiSortMeta(e.multiSortMeta);
-            }
-
+            setSortField(e.sortField);
+            setSortOrder(e.sortOrder);
+            setMultiSortMeta(e.multiSortMeta);
+            
+            const stateChangedEvent = new StateChangedEvent(e);
+            props.sort && props.sort(stateChangedEvent); 
             props.onSort && props.onSort(stateChangedEvent);
         };
         tableProps.onSort = onSortDelegate;
@@ -336,6 +297,14 @@ export default function SageDataTable(props) {
         item.collapseRow = (event, onCollapsed) => {
             collapse(item, onCollapsed);
         };
+    }
+
+    // Apply server-side handling
+    // Example: <DataTable serverSide totalRecords={total}>
+    const serverSide = props.serverSide ? true : false;
+    if (serverSide) {
+        tableProps.lazy = true;
+        tableProps.totalRecords = props.totalRecords;
     }
 
     // Apply state - sort, page, etc. will be remembered across page reloads
