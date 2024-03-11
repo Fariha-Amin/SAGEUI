@@ -27,8 +27,6 @@ app.get("/api/getTableData", (req, res) => {
   service.getFilterAndPaginatedDataNew(
     sageDataTableRequest,
     (err, responseData) => {
-      //console.log("Data found from db", responseData);
-
       res.json(responseData);
     }
   );
@@ -43,31 +41,8 @@ app.put("/api/markAsFavorite", (req, res) => {
       isError: err ? false : true,
     });
   });
-  // try {
-  //   const updatedRecord = service.updateSummarizeData(
-  //     sageDataTableupdateRequest
-  //   );
-
-  //   res.json(updatedRecord);
-  // } catch (error) {
-  //   res.status(400).json({ error: error.message });
-  // }
 });
 
-// app.put('/api/saveOrEditNotes', (req, res) => {
-//   const { recId, notes } = req.query;
-
-//   if (!recId) {
-//     return res.status(400).json({ error: 'Parameters id is required.' });
-//   }
-
-//   // Do something with the parameters, for example, just log them
-//   console.log('id:', id);
-//   console.log('name:', name);
-
-//   // Send a response
-//   res.status(200).json({ message: 'Parameters received successfully.' });
-// });
 
 app.put("/api/saveOrEditNotes", (req, res) => {
   const { recId, notes } = req.body;
