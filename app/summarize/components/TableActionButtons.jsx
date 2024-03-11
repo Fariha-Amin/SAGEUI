@@ -55,7 +55,7 @@ const TableActionButtons = ({
   const noteButton = (
     <TableActionButton
       className={rowData.inprogress ? "btn btn-link disabled" : "btn btn-link"}
-      onClick={onNoteClick}
+      onClickHandler={onNoteClick}
     >
       {rowData.notes ? <NoteBlueLogo /> : <NoteRegularLogo />}
     </TableActionButton>

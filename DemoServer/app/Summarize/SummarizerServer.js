@@ -27,8 +27,6 @@ app.get("/api/getTableData", (req, res) => {
   service.getFilterAndPaginatedDataNew(
     sageDataTableRequest,
     (err, responseData) => {
-      //console.log("Data found from db", responseData);
-
       res.json(responseData);
     }
   );
@@ -43,16 +41,8 @@ app.put("/api/markAsFavorite", (req, res) => {
       isError: err ? false : true,
     });
   });
-  // try {
-  //   const updatedRecord = service.updateSummarizeData(
-  //     sageDataTableupdateRequest
-  //   );
-
-  //   res.json(updatedRecord);
-  // } catch (error) {
-  //   res.status(400).json({ error: error.message });
-  // }
 });
+
 // Start the server
 const port = 5000;
 
