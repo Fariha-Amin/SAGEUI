@@ -413,8 +413,10 @@ button{
   top: -15px;
 }
 .header-text-wrapper{
-  font-family:Helvetica;
+  
   font-weight: 700;
+  font-family: "Open Sans-Regular", Helvetica;
+  font-size: 14px;
 }
 
 .overlay-help-title {

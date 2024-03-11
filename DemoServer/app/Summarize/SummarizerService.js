@@ -2913,7 +2913,7 @@ const SummarizerService = {
       }
     );
   },
-  saveAndUpdateNode(recId, notes){
+  saveAndUpdateNotesbyRecId(recId, notes,callback){
     const sql = `update nextgensummary set notes=? where recId=?`;
     db.run(
       sql,
@@ -2924,6 +2924,7 @@ const SummarizerService = {
         } else {
           console.log("Data updated successfully");
         }
+        callback(err);
       }
     );
   },
