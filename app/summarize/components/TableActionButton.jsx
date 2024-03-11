@@ -1,6 +1,6 @@
 import React from "react";
 
-const TableActionButton = ({ children, onClick, ...rest }) => {
+const TableActionButton = ({ children, onClickHandler, ...rest }) => {
   return (
     <button onClick={onClick} {...rest}>
       {children}

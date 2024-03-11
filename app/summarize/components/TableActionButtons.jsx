@@ -75,7 +75,7 @@ const TableActionButtons = ({
       <TableActionButton
         className="btn  btn-link"
         id={`favorite-tooltip-${rowData.recId}`}
-        onClick={handleFavoriteClick}
+        onClickHandler={handleFavoriteClick}
       >
         {favorite ? <FavYellowLogo /> : <FavRegularLogo />}
       </TableActionButton>
