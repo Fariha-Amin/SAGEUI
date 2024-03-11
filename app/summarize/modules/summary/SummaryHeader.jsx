@@ -29,7 +29,7 @@ const SummaryHeader = () => {
           style={{ width: "320px", height: "180px" }}
         />
       )}
-      <div className="row">
+      <div className="row mb-4">
         <div className="col">
           <div className="position-relative">
             <span className="font-size-header font-weight-bold">

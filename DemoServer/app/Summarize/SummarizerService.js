@@ -2914,6 +2914,21 @@ const SummarizerService = {
       }
     );
   },
+  saveAndUpdateNotesbyRecId(recId, notes,callback){
+    const sql = `update nextgensummary set notes=? where recId=?`;
+    db.run(
+      sql,
+      [notes, recId],
+      function (err) {
+        if (err) {
+          console.error("Error updating data:", err);
+        } else {
+          console.log("Data updated successfully");
+        }
+        callback(err);
+      }
+    );
+  },
   getsummaryData() {
     return Promise.resolve(this.getData());
   },

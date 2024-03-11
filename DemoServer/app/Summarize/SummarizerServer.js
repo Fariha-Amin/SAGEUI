@@ -43,6 +43,18 @@ app.put("/api/markAsFavorite", (req, res) => {
   });
 });
 
+
+app.put("/api/saveOrEditNotes", (req, res) => {
+  const { recId, notes } = req.body;
+  console.log(req.body)
+  if (!recId) {
+    return res.status(400).json({ error: 'Parameters recId is required.' });
+  }
+  service.saveAndUpdateNotesbyRecId(recId,notes, (err) => {
+    res.json({
+      isError: err ?true: false,
+    });
+  });});
 // Start the server
 const port = 5000;
 
