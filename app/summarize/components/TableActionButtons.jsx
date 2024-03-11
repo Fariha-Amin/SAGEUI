@@ -53,12 +53,27 @@ const TableActionButtons = ({
   };
 
   const noteButton = (
-    <TableActionButton
-      className={rowData.inprogress ? "btn btn-link disabled" : "btn btn-link"}
-      onClickHandler={onNoteClick}
-    >
-      {rowData.notes ? <NoteBlueLogo /> : <NoteRegularLogo />}
-    </TableActionButton>
+    <>
+      <Tooltip
+        target={`#inprogress-tooltip-${rowData.recId}`}
+        position="bottom"
+        mouseTrack={true}
+        appendTo={document.body}
+        className="custom-tooltip-style"
+      >
+        Notes
+      </Tooltip>
+
+      <TableActionButton
+        className={
+          rowData.inprogress ? "btn btn-link disabled" : "btn btn-link"
+        }
+        onClickHandler={onNoteClick}
+        id={`inprogress-tooltip-${rowData.recId}`}
+      >
+        {rowData.notes ? <NoteBlueLogo /> : <NoteRegularLogo />}
+      </TableActionButton>
+    </>
   );
 
   const favouriteButton = (
@@ -68,7 +83,7 @@ const TableActionButtons = ({
         position="bottom"
         mouseTrack={true}
         appendTo={document.body}
-        className="custom-tooltip"
+        className="custom-tooltip-style"
       >
         Favorite
       </Tooltip>
@@ -99,6 +114,7 @@ const TableActionButtons = ({
         dialogPosition={dialogPosition}
         visible={visible}
         setVisible={setVisible}
+        rowData={rowData}
       />
     </div>
   );
