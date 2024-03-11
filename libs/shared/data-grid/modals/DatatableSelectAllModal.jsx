@@ -20,6 +20,8 @@ export const SelectAllModal = (props) => {
       footer={footer}
       style={{ width: "32rem" }}
       onHide={onHideHandler}
+      modal
+      blockScroll
     >
       {radioOptions.map((option) => (
         <div className="p-col p-modal-container" key={option.value}>
