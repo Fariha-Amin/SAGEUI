@@ -8,6 +8,7 @@ import ConfirmDialog from '_shared/confirm-dialog/ConfirmDialog';
 import Actions from './Actions';
 import Answer from './Answer';
 import Question from './Question';
+import Note from './Note';
 import sageClient from "_investigate/httpClient";
 
 const expandedHeaderCss = "item-header_expanded";
@@ -35,8 +36,9 @@ export default function Item({ model, onQuery, onDeleteClick }) {
     const [showFeedback, setShowFeedback] = useState(false);
     const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
     const [isDeleting, setIsDeleting] = useState(false);
-  
+    const [showNotes, setShowNotes] = useState(false);  
     model.hasFeedback = (model.response.feedback != "");
+    model.hasNote = (model.response.note != "");
 
     const onQueryItemDelegate = async (e) => {
         onQuery && onQuery({ id: e.id, value: e.value, personalId: e.personalId });
@@ -48,9 +50,13 @@ export default function Item({ model, onQuery, onDeleteClick }) {
     }
 
     const onNoteClickDelegate = async (e) => {
-        // Show note UI
-        // To do
+        setShowNotes(prev => !prev);
         model.hasNote = !model.hasNote;
+    }
+
+    const onNoteSaveDelegate = async (e) => {
+        model.hasNote = (e != "");
+        model.response.note = e;
         await sageClient.updateInvestigation(model);
     }
 
@@ -104,6 +110,7 @@ export default function Item({ model, onQuery, onDeleteClick }) {
     }
 
     const feedback = model.response.feedback;
+    const note = model.response.note;
 
     return (
         <>
@@ -125,6 +132,11 @@ export default function Item({ model, onQuery, onDeleteClick }) {
                         <div className='sage-chat-history__item-body'>
                             <Question model={model} />
                             <Answer model={model} onQuery={onQueryItemDelegate} />
+                            {showNotes && <Note 
+                                note={note}
+                                onCancel={() => setShowNotes(false)}
+                                onSave={onNoteSaveDelegate}
+                                />}
                             <div className='sage-chat-history__item-timestamp'>
                                 {formatDate(model.datetime)}
                             </div>

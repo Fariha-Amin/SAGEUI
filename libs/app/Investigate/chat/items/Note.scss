@@ -1,0 +1,48 @@
+@use "_root/fonts";
+@use "_root/colors";
+
+.note-div {
+    box-shadow: 1px 5px 5px colors.$sage-grey;
+    border: 1px solid colors.$sage-grey;
+    border-radius: .375rem;
+}
+.note-text-area {
+    resize: none;
+    border: 0;
+    width: 100%;
+}
+
+.note-text-area:focus {
+    outline: none;
+    box-shadow: none;
+}
+.note-text-counter {
+    //display: block;
+    text-align: left;
+    padding-left: 0.75rem;
+    padding-bottom: 0.5rem;
+}
+.note-warning-msg{
+    padding-left: 0.75rem;
+    padding-bottom: 0.5rem;
+    //display: block;
+    color:red;
+}
+
+.note-btn-col {
+    padding-left: 0;
+    display: flex;
+    align-items: center;
+}
+
+.note-cancel-button {
+    //padding: .5rem 1.5rem;
+    font-size: 20px;
+    margin: 10px;
+}
+
+.note-save-col{
+    float: right;
+    //padding: .5rem 1.5rem;
+    font-size: 20px;
+}

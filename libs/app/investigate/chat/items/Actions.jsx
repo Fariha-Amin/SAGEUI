@@ -19,7 +19,8 @@ export default function Actions({ model, onFavoriteClick, onNoteClick, onFeedbac
     }
 
     // Notes
-    const notesCss = hasNote ? "item-actions_notes_active" : "";
+    const notesCss = model.hasNote ? "item-actions_notes_active" : "";
+    const noteTitle = model.hasNote ? "Edit note" : "Add note" ;
     const onNoteClickDelegate = (e) => {
         setHasNote(!hasNote);
         onNoteClick && onNoteClick(e);
@@ -44,10 +45,10 @@ export default function Actions({ model, onFavoriteClick, onNoteClick, onFeedbac
             <IconButton icon={favoriteIcon} className={`item-actions_favorite ${favoriteCss}`} title="Favorite" onClick={onFavoriteClickDelegate} />
 
             {/* Notes */}
-            <LayeredIconButton className={`item-actions_notes ${notesCss}`} title="Add notes" onClick={onNoteClickDelegate}>
+            <LayeredIconButton className={`item-actions_notes ${notesCss}`} title={noteTitle} onClick={onNoteClickDelegate}>
                 <Icon icon="fa-regular fa-file-lines" />
                 <Icon icon="circle" transform="shrink-6 down-5 right-5" />
-                <Icon icon="plus" transform="shrink-7 down-5 right-5" inverse />
+                <Icon icon="plus" transform="shrink-7 down-5 right-5" inverse /> 
             </LayeredIconButton>
 
             {/* Bad Response */}
