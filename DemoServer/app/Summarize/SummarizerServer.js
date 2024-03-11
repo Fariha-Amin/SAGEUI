@@ -53,6 +53,33 @@ app.put("/api/markAsFavorite", (req, res) => {
   //   res.status(400).json({ error: error.message });
   // }
 });
+
+// app.put('/api/saveOrEditNotes', (req, res) => {
+//   const { recId, notes } = req.query;
+
+//   if (!recId) {
+//     return res.status(400).json({ error: 'Parameters id is required.' });
+//   }
+
+//   // Do something with the parameters, for example, just log them
+//   console.log('id:', id);
+//   console.log('name:', name);
+
+//   // Send a response
+//   res.status(200).json({ message: 'Parameters received successfully.' });
+// });
+
+app.put("/api/saveOrEditNotes", (req, res) => {
+  const { recId, notes } = req.body;
+  console.log(req.body)
+  if (!recId) {
+    return res.status(400).json({ error: 'Parameters recId is required.' });
+  }
+  service.saveAndUpdateNotesbyRecId(recId,notes, (err) => {
+    res.json({
+      isError: err ?true: false,
+    });
+  });});
 // Start the server
 const port = 5000;
 

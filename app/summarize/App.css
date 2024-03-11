@@ -411,9 +411,11 @@ button{
   position: absolute;
   top: -15px;
 }
-.header-text-wrapper {
-  font-family: Helvetica;
+.header-text-wrapper{
+  
   font-weight: 700;
+  font-family: "Open Sans-Regular", Helvetica;
+  font-size: 14px;
 }
 
 .overlay-help-title {
