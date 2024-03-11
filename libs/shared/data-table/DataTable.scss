@@ -1,0 +1,14 @@
+@use "./colors";
+
+.p-datatable-thead {
+    background-color: colors.$sage-color-grey;
+}
+
+.p-datatable .p-datatable-thead > tr > th {
+    padding: 10px;
+    background: inherit;
+}
+
+.p-datatable .p-datatable-tbody > tr > td {
+    padding: 10px;
+}

@@ -47,3 +47,11 @@ html, body {
 .p-accordion-header {
     display: none;
 }
+
+.p-button.p-button-link:not(:disabled):focus {
+    box-shadow: none;
+}
+
+.p-button.p-button-link {
+    padding: 0px;
+}
