@@ -20,7 +20,7 @@ const FeedbackModal = (props) => {
     const maxTextLength = 400;
     const placeholderText = `Enter your feedback for this question & answer here.`;
     const textCounter = <small className='feedback-modal__text-counter'>{textLength} / {maxTextLength}</small>
-    const maxTextError = <small className='feedback-modal__max-text-error'>You have exceeded the max character limit.</small>
+    const maxTextError = <small className='feedback-modal__text-counter feedback-modal__max-text-error'>You have exceeded the max character limit.</small>
     const headerContent = <div className="flex align-items-center feedback-modal__header">
                                 <b>Report Bad Response</b>
                                 <IconButton className="sage-icon-superscript" icon="circle-question" title={helpText} titlePlacement="bottom" />
@@ -48,11 +48,9 @@ const FeedbackModal = (props) => {
                 {textLength === maxTextLength ? maxTextError : textCounter}
             </div>
             <div className='feedback-modal__buttons'>
-                <Button className='feedback-modal__save' label="Save" raised size="small" onClick={() => props.onSave(text) } />
+                <Button className='feedback-modal__save' label="Save" raised size="small" onClick={() => props.onSave(text) } disabled={textLength > 0 ? false : true} />
                 &nbsp;
                 <Button className='feedback-modal__cancel' label="Cancel" raised outlined size="small" severity="secondary" onClick={() => props.onClose(false) } />
-                
-                
             </div>
         </Dialog>
     );

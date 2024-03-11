@@ -4,6 +4,7 @@ import { SplitButton } from "primereact/splitbutton";
 import HelpIcon from "../../icons/help.svg";
 import DownloadIcon from "../../icons/download.svg";
 import HelpIconSm from "../../icons/help_18.svg";
+import ViewAllSummariesButton from "../../components/ViewAllSummariesButton";
 import HelpButton from "../../components/Helpbutton";
 import HelpOverlayPanel from "../../components/HelpOverlayPanel";
 
@@ -69,12 +70,7 @@ const SummaryHeader = () => {
         </div>
 
         <div className="col d-flex justify-content-end">
-          <Button
-            className="btn-height ml-4"
-            label="View all summaries"
-            severity="info"
-            outlined
-          />
+          <ViewAllSummariesButton />
           <div className="ml-4">
             <DownloadIcon style={{ marginTop: "8px" }} />
           </div>

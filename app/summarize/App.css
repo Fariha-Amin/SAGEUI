@@ -95,10 +95,6 @@
   border-radius: 1px;
 }
 
-.p-column-title {
-  /* width:100%; */
-}
-
 .black-header-table .p-column-filter input {
   padding: 4px;
   margin: 0;
@@ -112,11 +108,6 @@
 .p-datatable .p-column-filter {
   height: 2rem; /* Adjust the height as needed */
 }
-
-/* .p-datatable {
-  font-size: 12px;
-  font-family: "Helvetica";
-} */
 
 .p-datatable tr td {
   white-space: nowrap; /* Prevent text from wrapping */
@@ -443,4 +434,30 @@ line-height: 125%;
   border-radius: 0;
   opacity: 1;
   transition: background-color .3s;
+}
+
+.sageTable-noteModal-header {
+  padding: 0.75rem 1.5rem 0rem 0.75rem;
+  font-family: "Inter-Bold", Helvetica;
+  font-weight: 700;
+  color: #29272b;
+  letter-spacing: 0;
+  line-height: 27.5px;
+}
+
+.sageTable-noteModal-header .p-dialog-title {
+  font-size: 22px;
+}
+
+#sageTable-noteModal-char-count {
+  font-family: "Inter-Regular", Helvetica;
+  font-weight: 400;
+  color: #000000;
+  font-size: 12px;
+  letter-spacing: 0;
+  line-height: 18px;
+}
+
+.sageTable-note-modal .p-dialog-footer {
+  padding: 0.75rem 1.5rem 0.75rem 0rem;
 }
