@@ -2,7 +2,7 @@ import React from "react";
 
 const TableActionButton = ({ children, onClickHandler, ...rest }) => {
   return (
-    <button onClick={onClick} {...rest}>
+    <button onClick={onClickHandler} {...rest}>
       {children}
     </button>
   );
