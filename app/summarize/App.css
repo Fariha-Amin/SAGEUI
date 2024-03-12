@@ -342,8 +342,10 @@ table.table-bordered.sageDataTable td:last-child {
   height: 35px;
   font-size: 14px;
 }
+.p-column-title{
+  font-size: 14px;
+}
 /*  */
-
 .form-check {
   padding-left: 3rem;
   margin-bottom: 0.45rem;

@@ -11,9 +11,17 @@ const tableDataSlice = createSlice({
     updateAllTableData(state, action) {
       state.tableData = action.payload;
     },
+    updateNotesByRecId(state,action){
+      state.tableData=state.tableData.map(row=>{
+        if(row.recId === action.payload.recId){
+          row.notes = action.payload.notes;
+        }
+        return row;
+      })
+    }
   },
 });
 
-export const { updateAllTableData } = tableDataSlice.actions;
+export const { updateAllTableData, updateNotesByRecId } = tableDataSlice.actions;
 
 export default tableDataSlice.reducer;
