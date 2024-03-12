@@ -13,12 +13,12 @@ const NotesModal = ({ dialogPosition, visible, setVisible, rowData }) => {
   const [inputChars, setInputChars] = useState(rowData.notes);
   const dispatch = useDispatch();
   const footerContent = (
-    <div>
+    <div className="footer-button">
       <Button
         label="Cancel"
         severity="secondary"
         outlined
-        style={{ margin: "0rem 0.6rem" }}
+        // style={{ margin: "0rem 0.6rem" }}
         onClick={() => onNotesCancelClick()}
       />
       <Button
@@ -31,12 +31,14 @@ const NotesModal = ({ dialogPosition, visible, setVisible, rowData }) => {
   );
 
   const onNotesSaveClick = (e) => {
+    const updateData = { recId: rowData.recId, notes: inputChars.trim() };
     DataService.updateSummarizeData(
       "https://localhost:5000/api/saveOrEditNotes",
-      { recId: rowData.recId, notes: inputChars }
+      updateData
     );
+    dispatch(updateNotesByRecId(updateData));
     setVisible(false);
-    dispatch(updateNotesByRecId({ recId: rowData.recId, notes: inputChars }));
+    setInputChars(updateData.notes);
   };
 
   const onNotesCancelClick = () => {

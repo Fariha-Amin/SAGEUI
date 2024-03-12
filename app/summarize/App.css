@@ -338,7 +338,7 @@ table.table-bordered.sageDataTable td:last-child {
 }
 
 .footer-button .p-button.p-component {
-  margin: 0rem 0.5rem;
+  margin-left: 0.5rem;
   height: 35px;
   font-size: 14px;
 }
