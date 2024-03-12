@@ -2879,6 +2879,7 @@ const SummarizerService = {
             summary: row.summary,
             notes: row.notes,
             favorite: row.favourite == 1 ? true : false,
+            inprogress: row.inprogress == 1 ? true : false,
           });
           //console.log(data);
         });
@@ -2909,6 +2910,21 @@ const SummarizerService = {
           console.log("Number of rows affected:", this.changes);
         }
 
+        callback(err);
+      }
+    );
+  },
+  saveAndUpdateNotesbyRecId(recId, notes,callback){
+    const sql = `update nextgensummary set notes=? where recId=?`;
+    db.run(
+      sql,
+      [notes, recId],
+      function (err) {
+        if (err) {
+          console.error("Error updating data:", err);
+        } else {
+          console.log("Data updated successfully");
+        }
         callback(err);
       }
     );

@@ -27,8 +27,6 @@ app.get("/api/getTableData", (req, res) => {
   service.getFilterAndPaginatedDataNew(
     sageDataTableRequest,
     (err, responseData) => {
-      //console.log("Data found from db", responseData);
-
       res.json(responseData);
     }
   );
@@ -43,16 +41,20 @@ app.put("/api/markAsFavorite", (req, res) => {
       isError: err ? false : true,
     });
   });
-  // try {
-  //   const updatedRecord = service.updateSummarizeData(
-  //     sageDataTableupdateRequest
-  //   );
-
-  //   res.json(updatedRecord);
-  // } catch (error) {
-  //   res.status(400).json({ error: error.message });
-  // }
 });
+
+
+app.put("/api/saveOrEditNotes", (req, res) => {
+  const { recId, notes } = req.body;
+  console.log(req.body)
+  if (!recId) {
+    return res.status(400).json({ error: 'Parameters recId is required.' });
+  }
+  service.saveAndUpdateNotesbyRecId(recId,notes, (err) => {
+    res.json({
+      isError: err ?true: false,
+    });
+  });});
 // Start the server
 const port = 5000;
 

@@ -11,7 +11,7 @@ function SageDataTableCell({
       target=".tooltipTarget"
       mouseTrack
       mouseTrackLeft={10}
-      className="abc"
+      className="custom-tooltip-style"
     />
   );
 
