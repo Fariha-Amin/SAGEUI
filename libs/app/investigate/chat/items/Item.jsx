@@ -150,15 +150,13 @@ export default function Item({ model, onQuery, onDeleteClick }) {
                 <Accordion activeIndex={activeIndex} onTabChange={(e) => setActiveIndex(e.index)}>
                     <AccordionTab>
                         <div className='sage-chat-history__item-body'>
-                            <Question model={model} />
-                            <Answer model={model} onQuery={onQueryItemDelegate} />
+                            <Question model={model} onRelevantDocsClicked={onRelevantDocsClickedDelegate} />
+                            <Answer model={model} onQuery={onQueryItemDelegate} onDocumentClick={onDocumentClickDelegate} />
                             {showNotes && <Note 
                                 note={note}
                                 onCancel={() => setShowNotes(false)}
                                 onSave={onNoteSaveDelegate}
                                 />}
-                            <Question model={model} onRelevantDocsClicked={onRelevantDocsClickedDelegate} />
-                            <Answer model={model} onQuery={onQueryItemDelegate} onDocumentClick={onDocumentClickDelegate} />
                             <div className='sage-chat-history__item-timestamp'>
                                 {formatDate(model.datetime)}
                             </div>
