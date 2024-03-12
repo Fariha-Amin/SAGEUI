@@ -58,7 +58,7 @@ export default function Note({ onCancel, onSave, note }) {
                         label="Cancel">
                     </Button>
                     <Button
-                        className="note-save-col"
+                        className="note-save-button"
                         severity={!isTouched ? "secondary" : "primary" }
                         onClick= {() => { 
                             onSave(text); 
