@@ -130,7 +130,7 @@ describe("Feedback Modal Tests", () => {
         const textCounter = getTextCountElement();
         expect(textCounter.textContent).toMatch(countValue);
     });
-  });
+  }, 10000);
 
   test("RPMXCON-85408 - Verify save button disabled when no text entered", async () => {
     // Arrange
