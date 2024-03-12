@@ -1,6 +1,6 @@
 import './Item.scss';
 import React from 'react';
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Accordion, AccordionTab } from 'primereact/accordion';
 import FeedbackModal from './FeedbackModal';
 import IconButton from '_shared/icon-button/IconButton';
@@ -11,6 +11,7 @@ import Question from './Question';
 import Note from './Note';
 import sageClient from "_investigate/httpClient";
 import RelatedDocumentsFlyout from "_investigate/RelatedDocumentsFlyout";
+import { Toast } from 'primereact/toast';
 
 const expandedHeaderCss = "item-header_expanded";
 const collapsedHeaderCss = "item-header_collapsed";
@@ -32,6 +33,7 @@ function formatDate(datetime) {
 }
 
 export default function Item({ model, onQuery, onDeleteClick }) {
+    const toast = useRef(null);
     const [activeIndex, setActiveIndex] = useState(0);
     const [itemHeaderCss, setItemHeaderCss] = useState(expandedHeaderCss);
     const [showFeedback, setShowFeedback] = useState(false);
@@ -42,6 +44,7 @@ export default function Item({ model, onQuery, onDeleteClick }) {
     const [flyoutInvestigationId, setFlyoutInvestigationId] = useState(null);
     const [flyoutDocumentId, setFlyoutDocumentId] = useState(null);
     const feedback = model.response.feedback;
+  
 
     model.hasFeedback = (model.response.feedback != "");
     model.hasNote = (model.response.note != "");
@@ -64,6 +67,14 @@ export default function Item({ model, onQuery, onDeleteClick }) {
         model.hasNote = (e != "");
         model.response.note = e;
         await sageClient.updateInvestigation(model);
+        
+        // Show toast message
+        toast.current.show({
+            severity: "success",
+            summary: "Success",
+            detail: "Your note has been saved.",
+            life: 5000
+        });
     }
 
     const onFeedbackClickDelegate = async (e) => {
@@ -161,6 +172,7 @@ export default function Item({ model, onQuery, onDeleteClick }) {
                                 {formatDate(model.datetime)}
                             </div>
                         </div>
+                        <Toast ref={toast} position="bottom-right" />
                     </AccordionTab>
                 </Accordion>
             </div>
