@@ -9,6 +9,7 @@ import Actions from './Actions';
 import Answer from './Answer';
 import Question from './Question';
 import sageClient from "_investigate/httpClient";
+import RelatedDocumentsFlyout from "_investigate/RelatedDocumentsFlyout";
 
 const expandedHeaderCss = "item-header_expanded";
 const collapsedHeaderCss = "item-header_collapsed";
@@ -35,7 +36,11 @@ export default function Item({ model, onQuery, onDeleteClick }) {
     const [showFeedback, setShowFeedback] = useState(false);
     const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
     const [isDeleting, setIsDeleting] = useState(false);
-  
+    const [isFlyoutVisible, setIsFlyoutVisible] = useState(false);
+    const [flyoutInvestigationId, setFlyoutInvestigationId] = useState(null);
+    const [flyoutDocumentId, setFlyoutDocumentId] = useState(null);
+
+    const feedback = model.response.feedback;
     model.hasFeedback = (model.response.feedback != "");
 
     const onQueryItemDelegate = async (e) => {
@@ -92,6 +97,21 @@ export default function Item({ model, onQuery, onDeleteClick }) {
         }
     };
 
+    const onRelevantDocsClickedDelegate = (e) => {
+        setFlyoutInvestigationId(model.id);
+        setIsFlyoutVisible(true);
+    }
+
+    const onCloseDelegate = (e) => {
+        setIsFlyoutVisible(false);
+    }
+
+    const onDocumentClickDelegate = (e) => {
+        setFlyoutInvestigationId(model.id);
+        setFlyoutDocumentId(e);
+        setIsFlyoutVisible(true);
+    }
+
     const onAccordionClickDelegate = async (e) => {
         if (activeIndex === 0) {
             setItemHeaderCss(collapsedHeaderCss);
@@ -102,8 +122,6 @@ export default function Item({ model, onQuery, onDeleteClick }) {
             setActiveIndex(0);
         }
     }
-
-    const feedback = model.response.feedback;
 
     return (
         <>
@@ -123,8 +141,8 @@ export default function Item({ model, onQuery, onDeleteClick }) {
                 <Accordion activeIndex={activeIndex} onTabChange={(e) => setActiveIndex(e.index)}>
                     <AccordionTab>
                         <div className='sage-chat-history__item-body'>
-                            <Question model={model} />
-                            <Answer model={model} onQuery={onQueryItemDelegate} />
+                            <Question model={model} onRelevantDocsClicked={onRelevantDocsClickedDelegate} />
+                            <Answer model={model} onQuery={onQueryItemDelegate} onDocumentClick={onDocumentClickDelegate} />
                             <div className='sage-chat-history__item-timestamp'>
                                 {formatDate(model.datetime)}
                             </div>
@@ -135,6 +153,7 @@ export default function Item({ model, onQuery, onDeleteClick }) {
 
             <FeedbackModal feedback={feedback} shouldShow={showFeedback} onClose={setShowFeedback} onSave={onFeedbackSaveDelegate} />
             <ConfirmDialog {...deleteDialogOptions} />
+            <RelatedDocumentsFlyout visible={isFlyoutVisible} onClose={onCloseDelegate} investigationId={flyoutInvestigationId} documentId={flyoutDocumentId} />
         </>
     );
 }

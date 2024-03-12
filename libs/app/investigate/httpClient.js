@@ -38,6 +38,15 @@ class Prompt {
     type = "";
 }
 
+class ReferenceDocument {
+    documentId = "";
+    filename = "";
+    filetype = "";
+    score = 0.0;
+    included = false;
+    cited = false;
+}
+
 class HttpClient {
     constructor() {
         this._investigations = [];
@@ -308,24 +317,27 @@ class HttpClient {
                     response.answer = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
                         Integer non congue ipsum, ut euismod nulla.
                         Quisque in rutrum neque, Jeff Skilling ut varius odio. 
-                        Sed sed lorem ID000001 nec odio pharetra volutpat vel sit amet orci. 
+                        Sed sed lorem DOC7000000-1 nec odio pharetra volutpat vel sit amet orci. 
                         Maecenas sit amet tristique eros. 
-                        Maecenas sagittis augue ac ID000024 condimentum malesuada. 
+                        Maecenas sagittis augue ac DOC7000000-24 condimentum malesuada. 
                         In rhoncus fermentum malesuada.
-                        Proin sollicitudin enim vitae Harry Proper velit tempus ID000024 pulvinar. 
+                        Proin sollicitudin enim vitae Harry Proper velit tempus DOC7000000-21 pulvinar. 
                         Quisque scelerisque nibh ipsum, non dignissim augue euismod mattis. 
                         Quisque accumsan suscipit scelerisque. 
                         Phasellus et vehicula justo. 
                         Nulla dictum ex nec sem tristique eleifend. 
-                        Etiam a ID000001 leo ultricies, gravida nibh sit amet, at hendrerit erat Wanda Romaine commodo nec. 
+                        Etiam a DOC7000000-3 leo ultricies, gravida nibh sit amet, at hendrerit erat Wanda Romaine commodo nec. 
                         In hac habitasse platea dictumst. 
-                        Donec lectus odio, aliquam a nulla a, ullamcorper ID000024 luctus massa. 
+                        Donec lectus odio, aliquam a nulla a, ullamcorper DOC7000000-15 luctus massa. 
                         Aliquam sem neque, consectetur sit amet sem nec, sodales feugiat lacus.`;
-                    response.documentIds = ["ID000001", "ID000024"];
                     response.personNames = ["Jeff Skilling", "Harry Proper", "Wanda Romaine"];
                     response.feedback = "";
                     response.result.isSuccess = true;
                     response.result.failureReason = "";
+
+                    for (let i = 1; i <= 25; i++) {
+                        response.documentIds.push(`DOC7000000-${i}`);
+                    }
                 }
                 resolve(response);
             }, 3000);
@@ -420,6 +432,46 @@ class HttpClient {
         return mockAsyncTask;
     }
 
+    getReferenceDocumentsAsync(id) {
+        // Get the related documents for this investigation
+        // GET - api/investigations/<id>/documents
+        // header - userId
+        // header - projectId
+        // body - array of ReferenceDocument class from above
+        
+        let documents = [];
+        for (let i = 1; i <= 25; i++) {
+            let document = new ReferenceDocument();
+            document.documentId = `DOC7000000-${i}`;
+            document.filename = this.getRandomData([ "lorem", "ipsum", "dolor" ]);
+            document.filetype = this.getRandomData([ "email", "pdf", "word" ]);
+            document.score = this.getRandomData([ 0.90, 0.91, 0.92, 0.93, 0.94, 0.95, 0.96, 0.97, 0.98, 0.99 ]);
+            document.included = this.getRandomData([ true, false ]);
+            document.cited = this.getRandomData([ true, false ]);
+            documents.push(document);
+        }
+
+        let mockAsyncTask = new Promise(function (resolve, reject) {
+            setTimeout(() => resolve(documents), 3000);
+        });
+
+        return mockAsyncTask;
+    }
+
+    getSummaryAsync(documentId) {
+        // Get the generative AI's summary for this document
+        // GET - api/investigations/<id>/documents/<id>/summary
+        // header - userId
+        // header - projectId
+        // body - maybe just a simple string or maybe a more complex object?
+
+        let mockAsyncTask = new Promise(function (resolve, reject) {
+            setTimeout(() => resolve("Summary placeholder"), 3000);
+        });
+
+        return mockAsyncTask;
+    }
+
     // Mock data helpers
     getInvestigationById(id) {
         return this._investigations.find(i => i.id === id);
@@ -456,6 +508,12 @@ class HttpClient {
             response.answer = `Answer Number ${i}`;
             this._responses.push(response);
         }
+    }
+
+    getRandomData(data) {
+        const multiplier = data.length;
+        let randomIndex = Math.floor(Math.random() * multiplier);
+        return data[randomIndex];
     }
 }
 
