@@ -130,7 +130,6 @@ export default function Item({ model, onQuery, onDeleteClick }) {
         }
     }
 
-    const feedback = model.response.feedback;
     const note = model.response.note;
 
     return (
