@@ -53,14 +53,15 @@ const RelatedDocumentsFlyout = ({ visible, onClose, investigationId, documentId 
     const [relatedDocs, setRelatedDocs] = useState([]);
     const [selectedDocs, setSelectedDocs] = useState(null);
     const [expandedDocs, setExpandedDocs] = useState(null);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoadingTable, setIsLoadingTable] = useState(false);
+    const [isLoadingSummaries, setIsLoadingSummaries] = useState(false);
 
     useEffect(() => {
-        setIsLoading(true);
+        setIsLoadingTable(true);
 
         async function getRelatedDocuments(investigationId) {
             let docs = await client.getReferenceDocumentsAsync(investigationId);
-            
+
             // Sort by most relevant (Score descending)
             docs = docs.toSorted((a, b) => b.score - a.score);
 
@@ -70,13 +71,18 @@ const RelatedDocumentsFlyout = ({ visible, onClose, investigationId, documentId 
             }
 
             setRelatedDocs(docs);
-            setIsLoading(false);
+            setIsLoadingTable(false);
         }
         getRelatedDocuments(investigationId);
     }, [investigationId]);
 
     useEffect(() => {
-        if (!documentId) { return; }
+        if (!documentId) {
+            // If we aren't viewing a specific document make sure none are selected
+            setSelectedDocs(null);
+            setExpandedDocs(null);
+            return;
+        }
 
         // Set selected
         const selectedDoc = relatedDocs.find(i => i.documentId === documentId);
@@ -88,13 +94,27 @@ const RelatedDocumentsFlyout = ({ visible, onClose, investigationId, documentId 
         setExpandedDocs(expandedDoc);
     }, [documentId]);
 
+    const onSummariesClickDelegate = (e) => {
+        
+    };
+
     const content = ({ closeIconRef, hide }) => {
         return (
             <>
-                <div className="sage-flyout__header">
+                <div className="sage-flyout__header mb-2">
                     <div className="header__title">
                         <H3>{header}</H3>
                         <IconButton className="sage-icon-superscript" icon="circle-question" title={helpTooltipText} titlePlacement="bottom" />
+                    </div>
+                    <div className="header__sub-title">
+                        <div class="flex justify-content-between flex-wrap">
+                            <div class="flex">
+                                <Button label="View All Summaries" outlined loading={isLoadingSummaries} onClick={onSummariesClickDelegate} />
+                            </div>
+                            <div class="flex">
+                                {/*Actions button goes here*/}
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div className="sage-flyout__body flex flex-grow-1 mb-2">
@@ -103,7 +123,7 @@ const RelatedDocumentsFlyout = ({ visible, onClose, investigationId, documentId 
                         dataKey="documentId"
                         data={relatedDocs}
                         style={{ width: "100%" }}
-                        loading={isLoading}
+                        loading={isLoadingTable}
                         selectable
                         selectionType="multiple"
                         selectedRows={selectedDocs}
