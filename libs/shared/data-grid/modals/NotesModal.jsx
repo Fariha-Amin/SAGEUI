@@ -25,7 +25,7 @@ const NotesModal = ({ dialogPosition, visible, setVisible, rowData }) => {
         label="Save & Close"
         severity="primary"
         onClick={(e) => onNotesSaveClick(e)}
-        disabled={charCount > charLimit || charCount < 1 ? true : false}
+        disabled={charCount > charLimit ? true : false}
       />
     </div>
   );
@@ -74,7 +74,7 @@ const NotesModal = ({ dialogPosition, visible, setVisible, rowData }) => {
     >
       <InputTextarea
         rows={8}
-        placeholder="Enter a note."
+        placeholder="Enter a note here."
         style={{ resize: "none", width: "100%" }}
         onChange={(e) => handleInputChange(e)}
         className={charCount > charLimit ? "p-invalid" : ""}
