@@ -1,6 +1,6 @@
 import './Item.scss';
 import React from 'react';
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Accordion, AccordionTab } from 'primereact/accordion';
 import FeedbackModal from './FeedbackModal';
 import IconButton from '_shared/icon-button/IconButton';
@@ -8,8 +8,10 @@ import ConfirmDialog from '_shared/confirm-dialog/ConfirmDialog';
 import Actions from './Actions';
 import Answer from './Answer';
 import Question from './Question';
+import Note from './Note';
 import sageClient from "_investigate/httpClient";
 import RelatedDocumentsFlyout from "_investigate/RelatedDocumentsFlyout";
+import { Toast } from 'primereact/toast';
 
 const expandedHeaderCss = "item-header_expanded";
 const collapsedHeaderCss = "item-header_collapsed";
@@ -31,17 +33,21 @@ function formatDate(datetime) {
 }
 
 export default function Item({ model, onQuery, onDeleteClick }) {
+    const toast = useRef(null);
     const [activeIndex, setActiveIndex] = useState(0);
     const [itemHeaderCss, setItemHeaderCss] = useState(expandedHeaderCss);
     const [showFeedback, setShowFeedback] = useState(false);
     const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
     const [isDeleting, setIsDeleting] = useState(false);
+    const [showNotes, setShowNotes] = useState(false);  
     const [isFlyoutVisible, setIsFlyoutVisible] = useState(false);
     const [flyoutInvestigationId, setFlyoutInvestigationId] = useState(null);
     const [flyoutDocumentId, setFlyoutDocumentId] = useState(null);
-
     const feedback = model.response.feedback;
+  
+
     model.hasFeedback = (model.response.feedback != "");
+    model.hasNote = (model.response.note != "");
 
     const onQueryItemDelegate = async (e) => {
         onQuery && onQuery({ id: e.id, value: e.value, personalId: e.personalId });
@@ -53,10 +59,22 @@ export default function Item({ model, onQuery, onDeleteClick }) {
     }
 
     const onNoteClickDelegate = async (e) => {
-        // Show note UI
-        // To do
+        setShowNotes(prev => !prev);
         model.hasNote = !model.hasNote;
+    }
+
+    const onNoteSaveDelegate = async (e) => {
+        model.hasNote = (e != "");
+        model.response.note = e;
         await sageClient.updateInvestigation(model);
+        
+        // Show toast message
+        toast.current.show({
+            severity: "success",
+            summary: "Success",
+            detail: "Your note has been saved.",
+            life: 5000
+        });
     }
 
     const onFeedbackClickDelegate = async (e) => {
@@ -123,6 +141,8 @@ export default function Item({ model, onQuery, onDeleteClick }) {
         }
     }
 
+    const note = model.response.note;
+
     return (
         <>
             <div className='sage-chat-history__item' data-id={model.id}>
@@ -143,10 +163,16 @@ export default function Item({ model, onQuery, onDeleteClick }) {
                         <div className='sage-chat-history__item-body'>
                             <Question model={model} onRelevantDocsClicked={onRelevantDocsClickedDelegate} />
                             <Answer model={model} onQuery={onQueryItemDelegate} onDocumentClick={onDocumentClickDelegate} />
+                            {showNotes && <Note 
+                                note={note}
+                                onCancel={() => setShowNotes(false)}
+                                onSave={onNoteSaveDelegate}
+                                />}
                             <div className='sage-chat-history__item-timestamp'>
                                 {formatDate(model.datetime)}
                             </div>
                         </div>
+                        <Toast ref={toast} position="bottom-right" />
                     </AccordionTab>
                 </Accordion>
             </div>
