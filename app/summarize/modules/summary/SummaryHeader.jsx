@@ -8,7 +8,7 @@ import ViewAllSummariesButton from "../../components/ViewAllSummariesButton";
 import HelpButton from "../../components/Helpbutton";
 import HelpOverlayPanel from "../../components/HelpOverlayPanel";
 
-const SummaryHeader = () => {
+const SummaryHeader = ({onNewSummaryClick}) => {
   const titleHelpButtonPointer = useRef(null);
   const labelHelpButtonPointer = useRef(null);
 
@@ -48,6 +48,7 @@ const SummaryHeader = () => {
             className="btn-height"
             label="Create new summary"
             severity="primary"
+            onClick={() => {onNewSummaryClick()}}
             raised
           />
         </div>
