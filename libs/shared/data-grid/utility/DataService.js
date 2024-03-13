@@ -12,6 +12,8 @@ export const DataService = {
     return fetch(fetchUrl).then((res) => res.json());
   },
   updateSummarizeData(url, data) {
+
+    this.getLoginUserInfo("https://localhost/GenAI/GetLoginuserInfo");
     return fetch(url, {
       method: "PUT",
       headers: {
@@ -20,4 +22,10 @@ export const DataService = {
       body: JSON.stringify(data),
     }).then((res) => res.json());
   },
+  
+  getLoginUserInfo(url){
+    
+    return fetch(url).then((res) => console.log("User info",res.json()));        
+  }
+
 };
