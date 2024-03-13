@@ -12,26 +12,26 @@ const NotesModal = ({ dialogPosition, visible, setVisible, rowData }) => {
   const [charCount, setCharCount] = useState(rowData.notes.length);
   const [inputChars, setInputChars] = useState(rowData.notes);
   const dispatch = useDispatch();
+
   const footerContent = (
     <div className="footer-button">
       <Button
         label="Cancel"
         severity="secondary"
         outlined
-        // style={{ margin: "0rem 0.6rem" }}
         onClick={() => onNotesCancelClick()}
       />
       <Button
         label="Save & Close"
         severity="primary"
         onClick={(e) => onNotesSaveClick(e)}
-        disabled={charCount > charLimit ? true : false}
+        disabled={charCount > charLimit || charCount < 1 ? true : false}
       />
     </div>
   );
 
   const onNotesSaveClick = (e) => {
-    const updateData = { recId: rowData.recId, notes: inputChars.trim() };
+    const updateData = { recId: rowData.recId, notes: inputChars };
     DataService.updateSummarizeData(
       "https://localhost:5000/api/saveOrEditNotes",
       updateData
@@ -59,7 +59,7 @@ const NotesModal = ({ dialogPosition, visible, setVisible, rowData }) => {
       footer={footerContent}
       visible={visible}
       blockScroll={true}
-      modal
+      modal={false}
       closable={false}
       headerClassName="sageTable-noteModal-header"
       contentStyle={{
