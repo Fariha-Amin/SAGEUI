@@ -18,7 +18,7 @@ export const SelectAllModal = (props) => {
       visible={visible}
       header={header}
       footer={footer}
-      style={{ width: "32rem" }}
+      style={{ width: "50rem" }}
       onHide={onHideHandler}
       modal
       blockScroll
