@@ -37,6 +37,8 @@ const TableActionButtons = ({
   const [dialogPosition, setDialogPosition] = useState({ x: 0, y: 0 });
   const [favorite, setFavorite] = useState(rowData.favorite);
 
+  const { loginUserEmail } = rest;
+
   const onNoteClick = (event) => {
     const { posX, posY } = calculateDialogPosition(
       event.clientX,
@@ -115,6 +117,7 @@ const TableActionButtons = ({
         visible={visible}
         setVisible={setVisible}
         rowData={rowData}
+        loginUserEmail={loginUserEmail}
       />
     </div>
   );

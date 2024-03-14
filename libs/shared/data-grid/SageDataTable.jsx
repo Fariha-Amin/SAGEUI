@@ -20,6 +20,7 @@ import { updateAllTableData } from "./features/tableDataSlice";
 
 export default function SageDataTable(props) {
   const dataKey = useRef(props.dataKey);
+  const { loginUserEmail } = props;
   const [loading, setLoading] = useState(true);
   const [totalRecords, setTotalRecords] = useState(0);
   const [modalShow, setModalShow] = useState(false);
@@ -103,6 +104,7 @@ export default function SageDataTable(props) {
 
     DataService.getTableData(dataUrl, {
       dataTableRequest: JSON.stringify(lazyState),
+      userId: loginUserEmail,
     }).then((apiResponse) => {
       setTotalRecords(apiResponse.totalRecords);
       //setData(apiResponse.data);
