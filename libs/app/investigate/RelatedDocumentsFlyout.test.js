@@ -68,7 +68,7 @@ describe("RelatedDocumentsFlyout UI", () => {
 
         // Act
         render(<RelatedDocumentsFlyout visible={true} onClose={handleOnClose} investigationId={1} />);
-        
+
         const headers = document.querySelectorAll("th .p-column-title");
 
         // Assert
@@ -137,6 +137,23 @@ describe("RelatedDocumentsFlyout UI", () => {
         // Assert
         expect(element).toBeNull();
     });
+
+    test("renders 'expand all' button", async () => {
+        // Arrange
+        const handleOnClose = jest.fn();
+        const buttonText = "View All Summaries";
+
+        const mockGetReferenceDocumentsAsync = () => { return Promise.resolve([]); };
+        sageClient.getReferenceDocumentsAsync.mockImplementation(mockGetReferenceDocumentsAsync);
+
+        // Act
+        render(<RelatedDocumentsFlyout visible={true} onClose={handleOnClose} investigationId={1} />);
+        const button = await screen.findByText(buttonText);
+
+        // Assert
+        expect(button).not.toBeNull();
+        expect(button).toBeDefined();
+    });
 });
 
 describe("RelatedDocumentsFlyout UX", () => {
@@ -175,5 +192,39 @@ describe("RelatedDocumentsFlyout UX", () => {
         // Assert
         expect(handleOnClose).toHaveBeenCalled();
         expect(handleOnClose).toHaveBeenCalledTimes(1);
+    });
+
+    test("clicking 'expand all' button expands all rows", async () => {
+        // Arrange
+        const handleOnClose = jest.fn();
+        const buttonText = "View All Summaries";
+        const summaryText = "Test Summary Text";
+        const mockReferenceDocs = [
+            {
+                documentId: "1"
+            },
+            {
+                documentId: "2"
+            },
+            {
+                documentId: "3"
+            }
+        ];
+
+        const mockGetReferenceDocumentsAsync = () => { return Promise.resolve(mockReferenceDocs); };
+        sageClient.getReferenceDocumentsAsync.mockImplementation(mockGetReferenceDocumentsAsync);
+
+        const mockGetSummaryAsync = () => { return Promise.resolve(summaryText); };
+        sageClient.getSummaryAsync.mockImplementation(mockGetSummaryAsync);
+
+        // Act
+        render(<RelatedDocumentsFlyout visible={true} onClose={handleOnClose} investigationId={1} />);
+        const button = await screen.findByText(buttonText);
+        await userEvent.click(button);
+
+        const summaries = await screen.findAllByText(summaryText);
+
+        // Assert
+        expect(summaries).toHaveLength(3);
     });
 });
