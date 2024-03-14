@@ -18,13 +18,13 @@ const NotesModal = ({
   const [charCount, setCharCount] = useState(rowData.notes.length);
   const [inputChars, setInputChars] = useState(rowData.notes);
   const dispatch = useDispatch();
+
   const footerContent = (
     <div className="footer-button">
       <Button
         label="Cancel"
         severity="secondary"
         outlined
-        // style={{ margin: "0rem 0.6rem" }}
         onClick={() => onNotesCancelClick()}
       />
       <Button
@@ -69,7 +69,7 @@ const NotesModal = ({
       footer={footerContent}
       visible={visible}
       blockScroll={true}
-      modal
+      modal={false}
       closable={false}
       headerClassName="sageTable-noteModal-header"
       contentStyle={{
@@ -84,7 +84,7 @@ const NotesModal = ({
     >
       <InputTextarea
         rows={8}
-        placeholder="Enter a note."
+        placeholder="Enter a note here."
         style={{ resize: "none", width: "100%" }}
         onChange={(e) => handleInputChange(e)}
         className={charCount > charLimit ? "p-invalid" : ""}
