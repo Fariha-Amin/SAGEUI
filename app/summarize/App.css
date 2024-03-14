@@ -463,15 +463,9 @@ button{
 .sageTable-note-modal .p-dialog-footer {
   padding: 0.75rem 1.5rem 0.75rem 0rem;
 }
-/* .p-inputtext {
-  
-  color: #4b5563;
-  background: #ffffff;
-  padding: 0.75rem 0.75rem;
-  border: 1px solid #d1d5db;
-  transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
-  appearance: none;
-  border-radius: 6px;
+
+.p-inputtextarea:focus {
+  box-shadow: none;
 }
 
 .p-datatable .p-column-filter {
@@ -550,3 +544,6 @@ button{
     display:flex;
     }
   
+.sageTable-notes-modal-mask {
+  animation: none;
+}

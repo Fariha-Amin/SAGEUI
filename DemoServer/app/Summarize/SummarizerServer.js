@@ -19,13 +19,14 @@ app.use(cors());
 app.use(bodyParser.json());
 
 app.get("/api/getTableData", (req, res) => {
-  const { dataTableRequest } = req.query;
-  console.log("Request From Server", dataTableRequest);
+  const { dataTableRequest, userId } = req.query;
+  console.log("Request From Server", dataTableRequest, userId);
 
   const sageDataTableRequest = JSON.parse(dataTableRequest);
 
   service.getFilterAndPaginatedDataNew(
     sageDataTableRequest,
+    userId,
     (err, responseData) => {
       res.json(responseData);
     }
@@ -34,27 +35,29 @@ app.get("/api/getTableData", (req, res) => {
 
 // POST endpoint to update Summarize data
 app.put("/api/markAsFavorite", (req, res) => {
-  const sageDataTableupdateRequest = req.body;
+  const { recId, isFavorite, userId } = req.body;
 
-  service.markSummaryAsFavorite(sageDataTableupdateRequest, (err) => {
+  console.log(req.body);
+
+  service.markSummaryAsFavorite(recId, isFavorite, userId, (err) => {
     res.json({
       isError: err ? false : true,
     });
   });
 });
 
-
 app.put("/api/saveOrEditNotes", (req, res) => {
-  const { recId, notes } = req.body;
-  console.log(req.body)
+  const { recId, userId, notes } = req.body;
+  console.log(req.body);
   if (!recId) {
-    return res.status(400).json({ error: 'Parameters recId is required.' });
+    return res.status(400).json({ error: "Parameters recId is required." });
   }
-  service.saveAndUpdateNotesbyRecId(recId,notes, (err) => {
+  service.saveAndUpdateNotesbyRecId(recId, notes, userId, (err) => {
     res.json({
-      isError: err ?true: false,
+      isError: err ? true : false,
     });
-  });});
+  });
+});
 // Start the server
 const port = 5000;
 

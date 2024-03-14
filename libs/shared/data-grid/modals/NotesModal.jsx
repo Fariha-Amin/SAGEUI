@@ -3,12 +3,18 @@ import { Dialog } from "primereact/dialog";
 import { InputTextarea } from "primereact/inputtextarea";
 import { Button } from "primereact/button";
 import { DataService } from "../utility/DataService";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { updateNotesByRecId } from "../features/tableDataSlice";
 
 const charLimit = 1000;
 
-const NotesModal = ({ dialogPosition, visible, setVisible, rowData }) => {
+const NotesModal = ({
+  dialogPosition,
+  visible,
+  setVisible,
+  rowData,
+  loginUserEmail,
+}) => {
   const [charCount, setCharCount] = useState(rowData.notes.length);
   const [inputChars, setInputChars] = useState(rowData.notes);
   const dispatch = useDispatch();
@@ -31,7 +37,11 @@ const NotesModal = ({ dialogPosition, visible, setVisible, rowData }) => {
   );
 
   const onNotesSaveClick = (e) => {
-    const updateData = { recId: rowData.recId, notes: inputChars };
+    const updateData = {
+      recId: rowData.recId,
+      notes: inputChars.trim(),
+      userId: loginUserEmail,
+    };
     DataService.updateSummarizeData(
       "https://localhost:5000/api/saveOrEditNotes",
       updateData
@@ -55,13 +65,14 @@ const NotesModal = ({ dialogPosition, visible, setVisible, rowData }) => {
   return (
     <Dialog
       className="sageTable-note-modal"
+      maskClassName="sageTable-notes-modal-mask"
+      headerClassName="sageTable-noteModal-header"
       header="Add note"
       footer={footerContent}
       visible={visible}
       blockScroll={true}
-      modal={false}
+      modal={true}
       closable={false}
-      headerClassName="sageTable-noteModal-header"
       contentStyle={{
         padding: "0.5rem 1.5rem 0rem 0.75rem",
       }}
