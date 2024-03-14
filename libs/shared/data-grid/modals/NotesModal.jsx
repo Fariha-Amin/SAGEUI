@@ -8,7 +8,13 @@ import { updateNotesByRecId } from "../features/tableDataSlice";
 
 const charLimit = 1000;
 
-const NotesModal = ({ dialogPosition, visible, setVisible, rowData }) => {
+const NotesModal = ({
+  dialogPosition,
+  visible,
+  setVisible,
+  rowData,
+  loginUserEmail,
+}) => {
   const [charCount, setCharCount] = useState(rowData.notes.length);
   const [inputChars, setInputChars] = useState(rowData.notes);
   const dispatch = useDispatch();
@@ -31,7 +37,11 @@ const NotesModal = ({ dialogPosition, visible, setVisible, rowData }) => {
   );
 
   const onNotesSaveClick = (e) => {
-    const updateData = { recId: rowData.recId, notes: inputChars };
+    const updateData = {
+      recId: rowData.recId,
+      notes: inputChars.trim(),
+      userId: loginUserEmail,
+    };
     DataService.updateSummarizeData(
       "https://localhost:5000/api/saveOrEditNotes",
       updateData

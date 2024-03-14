@@ -23,6 +23,7 @@ class Response {
     personNames = [];
     datetime = new Date();
     feedback = "";
+    note ="";
 }
 
 class Query {
@@ -332,6 +333,7 @@ class HttpClient {
                         Aliquam sem neque, consectetur sit amet sem nec, sodales feugiat lacus.`;
                     response.personNames = ["Jeff Skilling", "Harry Proper", "Wanda Romaine"];
                     response.feedback = "";
+                    response.note ="";
                     response.result.isSuccess = true;
                     response.result.failureReason = "";
 
@@ -369,6 +371,7 @@ class HttpClient {
                 Email: `+personId.trim().replace(/ /g,"_")+`@company.com
                 Any identified projects: Project Hercules / Project Arnold`;
                 response.feedback = "";
+                response.note = "";
                 response.result.isSuccess = true;
                 response.result.failureReason = "";
                 resolve(response);
@@ -376,7 +379,7 @@ class HttpClient {
         });
         return mockAsyncTask;
     }
-    
+
     getAnswerByInvestigationAsync(id) {
         // Poll the API for an answer to the user's previous question for this project
         // - Key off of "isInProgress" or something similar to know when the answer is ready
