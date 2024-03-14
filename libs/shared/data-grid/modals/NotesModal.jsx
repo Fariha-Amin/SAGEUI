@@ -3,7 +3,7 @@ import { Dialog } from "primereact/dialog";
 import { InputTextarea } from "primereact/inputtextarea";
 import { Button } from "primereact/button";
 import { DataService } from "../utility/DataService";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { updateNotesByRecId } from "../features/tableDataSlice";
 
 const charLimit = 1000;
@@ -55,13 +55,14 @@ const NotesModal = ({ dialogPosition, visible, setVisible, rowData }) => {
   return (
     <Dialog
       className="sageTable-note-modal"
+      maskClassName="sageTable-notes-modal-mask"
+      headerClassName="sageTable-noteModal-header"
       header="Add note"
       footer={footerContent}
       visible={visible}
       blockScroll={true}
-      modal={false}
+      modal={true}
       closable={false}
-      headerClassName="sageTable-noteModal-header"
       contentStyle={{
         padding: "0.5rem 1.5rem 0rem 0.75rem",
       }}
