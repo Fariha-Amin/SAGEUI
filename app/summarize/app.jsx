@@ -21,11 +21,12 @@ export default function App() {
 
   useEffect(() => {
     // Fetch data from the server
-    fetch("https://api.example.com/data")
+    fetch("https://localhost/GenAI/GetLoginuserInfo")
       .then((response) => response.json())
       .then((data) => {
         // Update state with the fetched data
-        setData(data);
+        setUserEmail(data.aaData.email);
+        console.log("sightline email",userEmail)
         setLoadingApp(false);
       })
       .catch((error) => {
