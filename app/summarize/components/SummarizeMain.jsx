@@ -1,19 +1,19 @@
 import React, { useState } from "react";
-import SummaryHeader from "./modules/summary/SummaryHeader";
-import SageDataTable from "../../libs/shared/data-grid/SageDataTable";
-import SageTableColumn from "../../libs/shared/data-grid/column/SageTableColumn";
+import SummaryHeader from "../modules/summary/SummaryHeader";
+import SageDataTable from "../../../libs/shared/data-grid/SageDataTable";
+import SageTableColumn from "../../../libs/shared/data-grid/column/SageTableColumn";
 import "bootstrap/dist/css/bootstrap.css";
-import { DataService } from "../../libs/shared/data-grid/utility/DataService";
+import { DataService } from "../../../libs/shared/data-grid/utility/DataService";
 
-import TableActionButtons from "./components/TableActionButtons";
-import ViewDocButton from "./components/ViewDocButton";
-import "./App.css";
-import SageDataTableCell from "../../libs/shared/data-grid/SageDataTableCell";
-import { onCellClickHandler } from "./summaryDataTable/summaryTableEvents";
+import TableActionButtons from "./TableActionButtons";
+import ViewDocButton from "./ViewDocButton";
+import "../App.css";
+import SageDataTableCell from "../../../libs/shared/data-grid/SageDataTableCell";
+import { onCellClickHandler } from "../summaryDataTable/summaryTableEvents";
 import {
   onTableDataUpdateHandler,
   expandedRowsTemplateHandler,
-} from "./summaryDataTable/summaryTableEvents";
+} from "../summaryDataTable/summaryTableEvents";
 
 const SummarizeMain = ({onNewSummaryClick}) => {
     const docIdsToDisplayInSingleLine = 5;

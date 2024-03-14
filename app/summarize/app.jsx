@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import SummarizeMain from "./SummarizeMain";
-import SummaryWizard from "./SummaryWizard";
+import SummarizeMain from "./components/SummarizeMain";
+import SummaryWizard from "./components/SummaryWizard";
 
 export default function App() {
   const summarizeMainPage = 0;
