@@ -468,12 +468,8 @@ button{
   box-shadow: none;
 }
 
-.p-datatable .p-column-filter {
-  height: 3rem;
-} */
-
-.p-inputtextarea:focus {
-  box-shadow: none;
+.sageTable-notes-modal-mask {
+  animation: none;
 }
 
 .summary-wizard-summary-title{
@@ -540,10 +536,3 @@ button{
   .stepper-title{
     z-index: 2;
   }
-  .outer{
-    display:flex;
-    }
-  
-.sageTable-notes-modal-mask {
-  animation: none;
-}
