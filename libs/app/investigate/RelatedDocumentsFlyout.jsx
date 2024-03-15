@@ -24,6 +24,7 @@ const RelatedDocumentsFlyout = ({ visible, onClose, investigationId, documentId 
     const [expandedDocs, setExpandedDocs] = useState({});
     const [isLoadingTable, setIsLoadingTable] = useState(false);
     const [isLoadingSummaries, setIsLoadingSummaries] = useState(false);
+    const [allRowsExpanded, setAllRowsExpanded] = useState(false);
 
     useEffect(() => {
         setIsLoadingTable(true);
@@ -154,9 +155,16 @@ const RelatedDocumentsFlyout = ({ visible, onClose, investigationId, documentId 
     }
 
     const onSummariesClickDelegate = async (e) => {
-        setIsLoadingSummaries(true);
-        await expandAllRows();
-        setIsLoadingSummaries(false);
+        if (allRowsExpanded) {
+            collapseAllRows();
+            setAllRowsExpanded(false);
+        }
+        else {
+            setIsLoadingSummaries(true);
+            await expandAllRows();
+            setIsLoadingSummaries(false);
+            setAllRowsExpanded(true);
+        }
     };
 
     const onExpansionChangeDelegate = (e) => {
@@ -181,7 +189,7 @@ const RelatedDocumentsFlyout = ({ visible, onClose, investigationId, documentId 
                     <div className="header__sub-title">
                         <div className="flex justify-content-between flex-wrap">
                             <div className="flex">
-                                <Button label="View All Summaries" outlined loading={isLoadingSummaries} onClick={onSummariesClickDelegate} />
+                                <Button label={allRowsExpanded ? "Collapse All Summaries" : "View All Summaries"} outlined loading={isLoadingSummaries} onClick={onSummariesClickDelegate} />
                             </div>
                             <div className="flex">
                                 {/*Actions button goes here*/}

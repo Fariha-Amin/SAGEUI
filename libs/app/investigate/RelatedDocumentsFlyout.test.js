@@ -1,6 +1,6 @@
 import React from 'react';
 import '@testing-library/jest-dom'
-import { screen, render } from "@testing-library/react";
+import { screen, render, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import RelatedDocumentsFlyout from './RelatedDocumentsFlyout';
 import sageClient from "_investigate/httpClient";
@@ -226,5 +226,69 @@ describe("RelatedDocumentsFlyout UX", () => {
 
         // Assert
         expect(summaries).toHaveLength(3);
+    });
+
+    test("clicking 'expand all' button changes button text", async () => {
+        // Arrange
+        const handleOnClose = jest.fn();
+        const expandButtonText = "View All Summaries";
+        const collapseButtonText = "Collapse All Summaries";
+
+        const mockGetReferenceDocumentsAsync = () => { return Promise.resolve([]); };
+        sageClient.getReferenceDocumentsAsync.mockImplementation(mockGetReferenceDocumentsAsync);
+
+        const mockGetSummaryAsync = () => { return Promise.resolve(""); };
+        sageClient.getSummaryAsync.mockImplementation(mockGetSummaryAsync);
+
+        // Act
+        render(<RelatedDocumentsFlyout visible={true} onClose={handleOnClose} investigationId={1} />);
+        const beforeClickButton = await screen.findByText(expandButtonText);
+        await userEvent.click(beforeClickButton);
+
+        const afterClickButton = await screen.findAllByText(collapseButtonText);
+
+        // Assert
+        expect(afterClickButton).not.toBeNull();
+        expect(afterClickButton).toBeDefined();
+    });
+
+    test("clicking 'collapse all' button collapses all rows", async () => {
+        // Arrange
+        const handleOnClose = jest.fn();
+        const expandButtonText = "View All Summaries";
+        const collapseButtonText = "Collapse All Summaries";
+        const summaryText = "Test Summary Text";
+        const mockReferenceDocs = [
+            {
+                documentId: "1"
+            },
+            {
+                documentId: "2"
+            },
+            {
+                documentId: "3"
+            }
+        ];
+
+        const mockGetReferenceDocumentsAsync = () => { return Promise.resolve(mockReferenceDocs); };
+        sageClient.getReferenceDocumentsAsync.mockImplementation(mockGetReferenceDocumentsAsync);
+
+        const mockGetSummaryAsync = () => { return Promise.resolve(summaryText); };
+        sageClient.getSummaryAsync.mockImplementation(mockGetSummaryAsync);
+
+        // Act
+        render(<RelatedDocumentsFlyout visible={true} onClose={handleOnClose} investigationId={1} />);
+        
+        const expandButton = await screen.findByText(expandButtonText);
+        await userEvent.click(expandButton);
+        const expandSummaries = await screen.findAllByText(summaryText);
+
+        const collapseButton = await screen.findByText(collapseButtonText);
+        await userEvent.click(collapseButton);
+        const collapseSummaries =await waitFor(() => screen.queryByText(summaryText));
+        
+        // Assert
+        expect(expandSummaries).toHaveLength(3);
+        expect(collapseSummaries).toBeNull();
     });
 });
