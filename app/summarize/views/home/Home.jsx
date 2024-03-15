@@ -15,6 +15,9 @@ import { expandedRowsTemplateHandler } from "../../summaryDataTable/summaryTable
 const Home = (props) => {
   const [userEmail, setUserEmail] = useState(null);
   const [loadingApp, setLoadingApp] = useState(true);
+
+  const { onNewSummaryClick } = props;
+
   useEffect(() => {
     // Fetch data from the server
     fetch("https://localhost/GenAI/GetLoginuserInfo")
@@ -68,7 +71,7 @@ const Home = (props) => {
   return (
     !loadingApp && (
       <div style={{ padding: "4rem 4rem 0rem 0rem" }}>
-        <SummaryHeader />
+        <SummaryHeader onNewSummaryClick={onNewSummaryClick} />
         <div className="row">
           <div className="col-lg">
             <SageDataTable
