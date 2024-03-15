@@ -3,7 +3,7 @@ import SummaryHeader from "./modules/summary/SummaryHeader";
 import SageDataTable from "../../libs/shared/data-grid/SageDataTable";
 import SageTableColumn from "../../libs/shared/data-grid/column/SageTableColumn";
 import "bootstrap/dist/css/bootstrap.css";
-import { DataService } from "./../../libs/shared/data-grid/utility/DataService";
+import { DataService } from "../../libs/shared/data-grid/utility/DataService";
 
 import TableActionButtons from "./components/TableActionButtons";
 import ViewDocButton from "./components/ViewDocButton";
