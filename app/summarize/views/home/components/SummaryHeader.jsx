@@ -1,14 +1,14 @@
 import React, { useRef } from "react";
 import { Button } from "primereact/button";
 import { SplitButton } from "primereact/splitbutton";
-import HelpIcon from "../../icons/help.svg";
-import DownloadIcon from "../../icons/download.svg";
-import HelpIconSm from "../../icons/help_18.svg";
-import ViewAllSummariesButton from "../../components/ViewAllSummariesButton";
-import HelpButton from "../../components/Helpbutton";
-import HelpOverlayPanel from "../../components/HelpOverlayPanel";
+import HelpIcon from "../../../icons/help.svg";
+import DownloadIcon from "../../../icons/download.svg";
+import HelpIconSm from "../../../icons/help_18.svg";
+import ViewAllSummariesButton from "../../../components/ViewAllSummariesButton";
+import HelpButton from "../../../components/Helpbutton";
+import HelpOverlayPanel from "../../../components/HelpOverlayPanel";
 
-const SummaryHeader = () => {
+const SummaryHeader = ({onNewSummaryClick}) => {
   const titleHelpButtonPointer = useRef(null);
   const labelHelpButtonPointer = useRef(null);
 
@@ -48,6 +48,7 @@ const SummaryHeader = () => {
             className="btn-height"
             label="Create new summary"
             severity="primary"
+            onClick={() => {onNewSummaryClick()}}
             raised
           />
         </div>
