@@ -1932,7 +1932,7 @@ const SummarizerService = {
         summary:
           "Pellentesque eget nunc. Donec quis orci eget orci vehicula condimentum. Curabitur in libero ut massa volutpat convallis. Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo. Maecenas pulvinar lobortis est. Phasellus sit amet erat. Nulla tempus. Vivamus in felis eu sapien cursus vestibulum. Proin eu mi. Nulla ac enim. In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem.",
         notes: "Operative mission-critical migration",
-        inprogress: true
+        inprogress: true,
       },
       {
         recId: 204,
@@ -2831,8 +2831,12 @@ const SummarizerService = {
       totalRecords: filterData.length,
     };
   },
-  getFilterAndPaginatedDataNew(sageDataTableRequest, callback) {
+  getFilterAndPaginatedDataNew(sageDataTableRequest, userId, callback) {
     let dbsql = "SELECT * FROM nextgensummary ";
+    let dbsqlNew = `SELECT ng.recId,ng.summaryGeneratedOn,ng.user,ng.documentId,ng.summary,
+    ng.inprogress,ifnull(ud.favourite,0) favourite,
+    ifnull(ud.notes,'') notes FROM nextgensummary ng left join userData ud 
+    on (ng.recId=ud.recId and ud.userId='${userId}')`;
 
     const filterSql = getFilterSql(sageDataTableRequest.filters);
 
@@ -2843,25 +2847,25 @@ const SummarizerService = {
     db.get(countQuery, (err, row) => {
       const count = row.row_count;
 
-      dbsql = `${dbsql} ${filterSql ?? " "} `;
+      dbsqlNew = `${dbsqlNew} ${filterSql ?? " "} `;
       if (sageDataTableRequest.sortField) {
-        dbsql =
-          dbsql +
+        dbsqlNew =
+          dbsqlNew +
           getOrderSql(
             sageDataTableRequest.sortField,
             sageDataTableRequest.sortOrder
           );
       }
 
-      dbsql =
-        dbsql +
+      dbsqlNew =
+        dbsqlNew +
         getLimitQuery(sageDataTableRequest.first, sageDataTableRequest.rows);
 
       const data = [];
 
-      console.log(dbsql);
+      console.log(dbsqlNew);
       // Execute a query to select data from the table
-      db.all(dbsql, (err, rows) => {
+      db.all(dbsqlNew, (err, rows) => {
         if (err) {
           console.error("Error retrieving data from database:", err);
           //callback(err, null);
@@ -2896,12 +2900,32 @@ const SummarizerService = {
 
     // Call the callback function with the array of JSON objects
   },
-  markSummaryAsFavorite(sageDataTableupdateRequest, callback) {
+  markSummaryAsFavorite(recId, isFavorite, userId, callback) {
     const updateFavouriteSql = `update nextgensummary set favourite=? where recId=?`;
-    console.log(updateFavouriteSql);
+    //const updateFavouriteSqlNew = `INSERT OR REPLACE INTO userData (recId, userId,favourite)  VALUES (?, ?, ?)`;
+
+    const updateFavouriteSqlNew = `INSERT INTO userData (recId, userId,favourite)
+    VALUES (?,?,?)
+    ON CONFLICT(recId,userId) DO UPDATE SET favourite = excluded.favourite`;
+    console.log(updateFavouriteSqlNew);
+    // db.run(
+    //   updateFavouriteSql,
+    //   [sageDataTableupdateRequest.favorite, sageDataTableupdateRequest.recId],
+    //   function (err) {
+    //     if (err) {
+    //       console.error("Error updating data:", err);
+    //     } else {
+    //       console.log("Data updated successfully");
+    //       console.log("Number of rows affected:", this.changes);
+    //     }
+
+    //     //callback(err);
+    //   }
+    // );
+
     db.run(
-      updateFavouriteSql,
-      [sageDataTableupdateRequest.favorite, sageDataTableupdateRequest.recId],
+      updateFavouriteSqlNew,
+      [recId, userId, isFavorite ? 1 : 0],
       function (err) {
         if (err) {
           console.error("Error updating data:", err);
@@ -2914,20 +2938,32 @@ const SummarizerService = {
       }
     );
   },
-  saveAndUpdateNotesbyRecId(recId, notes,callback){
+  saveAndUpdateNotesbyRecId(recId, notes, userId, callback) {
     const sql = `update nextgensummary set notes=? where recId=?`;
-    db.run(
-      sql,
-      [notes, recId],
-      function (err) {
-        if (err) {
-          console.error("Error updating data:", err);
-        } else {
-          console.log("Data updated successfully");
-        }
-        callback(err);
+
+    const sqlNew = `
+    INSERT INTO userData (recId, userId,notes)
+    VALUES (?,?,?)
+    ON CONFLICT(recId,userId) DO UPDATE SET notes = excluded.notes`;
+
+    //const sqlNew = `INSERT OR REPLACE INTO userData (recId, userId,notes)  VALUES (?, ?, ?)`;
+    // db.run(sql, [notes, recId], function (err) {
+    //   if (err) {
+    //     console.error("Error updating data:", err);
+    //   } else {
+    //     console.log("Data updated successfully");
+    //   }
+    //   callback(err);
+    // });
+
+    db.run(sqlNew, [recId, userId, notes], function (err) {
+      if (err) {
+        console.error("Error updating data:", err);
+      } else {
+        console.log("Data updated successfully");
       }
-    );
+      callback(err);
+    });
   },
   getsummaryData() {
     return Promise.resolve(this.getData());

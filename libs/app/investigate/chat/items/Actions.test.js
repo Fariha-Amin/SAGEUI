@@ -66,7 +66,7 @@ describe("'Favorite' action", () => {
 });
 
 describe("'Note' action", () => {
-    test("renders correct icon", async () => {
+    test("renders correct icon for disabled notes state", async () => {
         // Arrange
         const model = getDefaultModel();
         const faIcon = "file-lines";
@@ -79,7 +79,7 @@ describe("'Note' action", () => {
         expect(element.outerHTML).toMatch(`data-icon="${faIcon}"`);
     });
 
-    test("renders correct active icon", async () => {
+    test("RPMXCON-83744 renders correct active icon", async () => {
         // Arrange
         const model = getDefaultModel();
         model.hasNote = true; // <-- active
@@ -92,6 +92,27 @@ describe("'Note' action", () => {
         expect(element).not.toBeNull();
         expect(element).toBeDefined();
     });
+
+    test("icon disable/enamble state changing ", async () => {
+        // Arrange
+        const model = getDefaultModel(); // model.hasNote equal false; // <-- disable
+       
+        // Act
+        render(<Actions model={model} />);
+        const element = document.querySelector("button.item-actions_notes");
+
+        // Assert
+        expect(element).not.toBeNull();
+        expect(element).toBeDefined();
+
+        model.hasNote = true; // <-- enable
+
+        render(<Actions model={model} />);
+        const element2 = document.querySelector("button.item-actions_notes_active");
+        
+        expect(element2).not.toBeNull();
+        expect(element2).toBeDefined();
+    })
 
     test('fires click event', async () => {
         // Arrange
@@ -108,10 +129,10 @@ describe("'Note' action", () => {
         expect(handleOnNote).toHaveBeenCalledTimes(1);
     });
 
-    test('has tooltip that reads "Add notes"', async () => {
+    test('has tooltip that reads "Add note"', async () => {
         // Arrange
         const model = getDefaultModel();
-        const toolTipText = "Add notes";
+        const toolTipText = "Add note";
 
         // Act
         render(<Actions model={model} />);
