@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import DocumentCategorySelector from "./DocumentCategorySelector";
-import HelpIconSm from "../../icons/help_18.svg";
-import HelpButton from "../../components/Helpbutton";
+import HelpIconSm from "../../../icons/help_18.svg";
+import HelpButton from "../../../components/Helpbutton";
 
 const SelectDocuments = () => {
   const documentCategories = [
