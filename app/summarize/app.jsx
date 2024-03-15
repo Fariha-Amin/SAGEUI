@@ -21,7 +21,7 @@ export default function App() {
 
   useEffect(() => {
     // Fetch data from the server
-    fetch("https://localhost/GenAI/GetLoginuserInfo")
+    fetch("/GenAI/GetLoginuserInfo")
       .then((response) => response.json())
       .then((data) => {
         // Update state with the fetched data
