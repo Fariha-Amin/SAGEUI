@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Dialog } from "primereact/dialog";
 import { InputTextarea } from "primereact/inputtextarea";
 import { Button } from "primereact/button";
@@ -19,6 +19,19 @@ const NotesModal = ({
   const [inputChars, setInputChars] = useState(rowData.notes);
   const dispatch = useDispatch();
 
+  const textareaRef = useRef(null);
+
+  const handleKeyDown = (event) => {
+    if (
+      event.key === "ArrowUp" ||
+      event.key === "ArrowDown" ||
+      event.key === "ArrowLeft" ||
+      event.key === "ArrowRight"
+    ) {
+      event.stopPropagation();
+    }
+  };
+
   const footerContent = (
     <div className="footer-button">
       <Button
@@ -30,13 +43,13 @@ const NotesModal = ({
       <Button
         label="Save & Close"
         severity="primary"
-        onClick={(e) => onNotesSaveClick(e)}
+        onClick={() => onNotesSaveClick()}
         disabled={charCount > charLimit ? true : false}
       />
     </div>
   );
 
-  const onNotesSaveClick = (e) => {
+  const onNotesSaveClick = () => {
     const updateData = {
       recId: rowData.recId,
       notes: inputChars.trim(),
@@ -87,9 +100,12 @@ const NotesModal = ({
         rows={8}
         placeholder="Enter a note here."
         style={{ resize: "none", width: "100%" }}
-        onChange={(e) => handleInputChange(e)}
+        onChange={handleInputChange}
         className={charCount > charLimit ? "p-invalid" : ""}
         value={inputChars}
+        ref={textareaRef}
+        onKeyDown={handleKeyDown}
+        autoFocus={true}
       />
       <div
         className="sageTable-noteModal-char-count"
