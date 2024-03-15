@@ -1,6 +1,6 @@
 import React from 'react';
 import '@testing-library/jest-dom'
-import { screen, render, waitFor } from "@testing-library/react";
+import { screen, render, waitFor, act } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import RelatedDocumentsFlyout from './RelatedDocumentsFlyout';
 import sageClient from "_investigate/httpClient";
@@ -8,7 +8,7 @@ import sageClient from "_investigate/httpClient";
 jest.mock("_investigate/httpClient");
 
 describe("RelatedDocumentsFlyout UI", () => {
-    test("RPMXCON-85449 renders expected header text", () => {
+    test("RPMXCON-85449 renders expected header text", async () => {
         // Arrange
         const handleOnClose = jest.fn();
         const expectedText = "Relevant Documents";
@@ -17,7 +17,7 @@ describe("RelatedDocumentsFlyout UI", () => {
         sageClient.getReferenceDocumentsAsync.mockImplementation(mockGetReferenceDocumentsAsync);
 
         // Act
-        render(<RelatedDocumentsFlyout visible={true} onClose={handleOnClose} investigationId={1} />);
+        await act(() => render(<RelatedDocumentsFlyout visible={true} onClose={handleOnClose} investigationId={1} />));
         const element = document.querySelector(".sage-flyout__header h3");
 
         // Assert
@@ -26,7 +26,7 @@ describe("RelatedDocumentsFlyout UI", () => {
         expect(element.innerHTML).toMatch(expectedText);
     });
 
-    test("RPMXCON-85449 renders expected header tooltip icon", () => {
+    test("RPMXCON-85449 renders expected header tooltip icon", async () => {
         // Arrange
         const handleOnClose = jest.fn();
         const expectedIcon = "circle-question";
@@ -35,7 +35,7 @@ describe("RelatedDocumentsFlyout UI", () => {
         sageClient.getReferenceDocumentsAsync.mockImplementation(mockGetReferenceDocumentsAsync);
 
         // Act
-        render(<RelatedDocumentsFlyout visible={true} onClose={handleOnClose} investigationId={1} />);
+        await act(() => render(<RelatedDocumentsFlyout visible={true} onClose={handleOnClose} investigationId={1} />));
         const element = document.querySelector(`.sage-flyout__header [data-icon="${expectedIcon}"]`);
 
         // Assert
@@ -43,7 +43,7 @@ describe("RelatedDocumentsFlyout UI", () => {
         expect(element).toBeDefined();
     });
 
-    test("RPMXCON-85449 renders table", () => {
+    test("RPMXCON-85449 renders table", async () => {
         // Arrange
         const handleOnClose = jest.fn();
 
@@ -51,7 +51,7 @@ describe("RelatedDocumentsFlyout UI", () => {
         sageClient.getReferenceDocumentsAsync.mockImplementation(mockGetReferenceDocumentsAsync);
 
         // Act
-        render(<RelatedDocumentsFlyout visible={true} onClose={handleOnClose} investigationId={1} />);
+        await act(() => render(<RelatedDocumentsFlyout visible={true} onClose={handleOnClose} investigationId={1} />));
         const element = document.querySelector(".sage-flyout__body table");
 
         // Assert
@@ -59,7 +59,7 @@ describe("RelatedDocumentsFlyout UI", () => {
         expect(element).toBeDefined();
     });
 
-    test("RPMXCON-85450 renders expected table headers", () => {
+    test("RPMXCON-85450 renders expected table headers", async () => {
         // Arrange
         const handleOnClose = jest.fn();
 
@@ -67,7 +67,7 @@ describe("RelatedDocumentsFlyout UI", () => {
         sageClient.getReferenceDocumentsAsync.mockImplementation(mockGetReferenceDocumentsAsync);
 
         // Act
-        render(<RelatedDocumentsFlyout visible={true} onClose={handleOnClose} investigationId={1} />);
+        await act(() => render(<RelatedDocumentsFlyout visible={true} onClose={handleOnClose} investigationId={1} />));
 
         const headers = document.querySelectorAll("th .p-column-title");
 
@@ -105,7 +105,7 @@ describe("RelatedDocumentsFlyout UI", () => {
         expect(citedHeader.innerHTML).toMatch("Cited by AI");
     });
 
-    test("RPMXCON-85449 renders footer close button", () => {
+    test("RPMXCON-85449 renders footer close button", async () => {
         // Arrange
         const handleOnClose = jest.fn();
         const expectedText = "Close";
@@ -114,7 +114,7 @@ describe("RelatedDocumentsFlyout UI", () => {
         sageClient.getReferenceDocumentsAsync.mockImplementation(mockGetReferenceDocumentsAsync);
 
         // Act
-        render(<RelatedDocumentsFlyout visible={true} onClose={handleOnClose} investigationId={1} />);
+        await act(() => render(<RelatedDocumentsFlyout visible={true} onClose={handleOnClose} investigationId={1} />));
         const element = document.querySelector(".sage-flyout__footer button");
 
         // Assert
@@ -123,7 +123,7 @@ describe("RelatedDocumentsFlyout UI", () => {
         expect(element.innerHTML).toMatch(expectedText);
     });
 
-    test("RPMXCON-85452 does not render paginator", () => {
+    test("RPMXCON-85452 does not render paginator", async () => {
         // Arrange
         const handleOnClose = jest.fn();
 
@@ -131,14 +131,14 @@ describe("RelatedDocumentsFlyout UI", () => {
         sageClient.getReferenceDocumentsAsync.mockImplementation(mockGetReferenceDocumentsAsync);
 
         // Act
-        render(<RelatedDocumentsFlyout visible={true} onClose={handleOnClose} investigationId={1} />);
+        await act(() => render(<RelatedDocumentsFlyout visible={true} onClose={handleOnClose} investigationId={1} />));
         const element = document.querySelector(".p-paginator");
 
         // Assert
         expect(element).toBeNull();
     });
 
-    test("renders 'expand all' button", async () => {
+    test("RPMXCON-85840 renders 'expand all' button", async () => {
         // Arrange
         const handleOnClose = jest.fn();
         const buttonText = "View All Summaries";
@@ -147,7 +147,7 @@ describe("RelatedDocumentsFlyout UI", () => {
         sageClient.getReferenceDocumentsAsync.mockImplementation(mockGetReferenceDocumentsAsync);
 
         // Act
-        render(<RelatedDocumentsFlyout visible={true} onClose={handleOnClose} investigationId={1} />);
+        await act(() => render(<RelatedDocumentsFlyout visible={true} onClose={handleOnClose} investigationId={1} />));
         const button = await screen.findByText(buttonText);
 
         // Assert
@@ -166,7 +166,7 @@ describe("RelatedDocumentsFlyout UX", () => {
         sageClient.getReferenceDocumentsAsync.mockImplementation(mockGetReferenceDocumentsAsync);
 
         // Act
-        render(<RelatedDocumentsFlyout visible={true} onClose={handleOnClose} investigationId={1} />);
+        await act(() => render(<RelatedDocumentsFlyout visible={true} onClose={handleOnClose} investigationId={1} />));
         const element = document.querySelector(".sage-flyout__header .sage-icon-superscript");
         await userEvent.hover(element);
         const toolTip = document.querySelector('[role="tooltip"]');
@@ -185,7 +185,7 @@ describe("RelatedDocumentsFlyout UX", () => {
         sageClient.getReferenceDocumentsAsync.mockImplementation(mockGetReferenceDocumentsAsync);
 
         // Act
-        render(<RelatedDocumentsFlyout visible={true} onClose={handleOnClose} investigationId={1} />);
+        await act(() => render(<RelatedDocumentsFlyout visible={true} onClose={handleOnClose} investigationId={1} />));
         const element = document.querySelector(".footer__close-button");
         await userEvent.click(element);
 
@@ -218,7 +218,7 @@ describe("RelatedDocumentsFlyout UX", () => {
         sageClient.getSummaryAsync.mockImplementation(mockGetSummaryAsync);
 
         // Act
-        render(<RelatedDocumentsFlyout visible={true} onClose={handleOnClose} investigationId={1} />);
+        await act(() => render(<RelatedDocumentsFlyout visible={true} onClose={handleOnClose} investigationId={1} />));
         const button = await screen.findByText(buttonText);
         await userEvent.click(button);
 
@@ -228,7 +228,7 @@ describe("RelatedDocumentsFlyout UX", () => {
         expect(summaries).toHaveLength(3);
     });
 
-    test("clicking 'expand all' button changes button text", async () => {
+    test("RPMXCON-85841 clicking 'expand all' button changes button text", async () => {
         // Arrange
         const handleOnClose = jest.fn();
         const expandButtonText = "View All Summaries";
@@ -241,7 +241,7 @@ describe("RelatedDocumentsFlyout UX", () => {
         sageClient.getSummaryAsync.mockImplementation(mockGetSummaryAsync);
 
         // Act
-        render(<RelatedDocumentsFlyout visible={true} onClose={handleOnClose} investigationId={1} />);
+        await act(() => render(<RelatedDocumentsFlyout visible={true} onClose={handleOnClose} investigationId={1} />));
         const beforeClickButton = await screen.findByText(expandButtonText);
         await userEvent.click(beforeClickButton);
 
@@ -277,18 +277,57 @@ describe("RelatedDocumentsFlyout UX", () => {
         sageClient.getSummaryAsync.mockImplementation(mockGetSummaryAsync);
 
         // Act
-        render(<RelatedDocumentsFlyout visible={true} onClose={handleOnClose} investigationId={1} />);
-        
+        await act(() => render(<RelatedDocumentsFlyout visible={true} onClose={handleOnClose} investigationId={1} />));
+
         const expandButton = await screen.findByText(expandButtonText);
         await userEvent.click(expandButton);
         const expandSummaries = await screen.findAllByText(summaryText);
 
         const collapseButton = await screen.findByText(collapseButtonText);
         await userEvent.click(collapseButton);
-        const collapseSummaries =await waitFor(() => screen.queryByText(summaryText));
-        
+        const collapseSummaries = await waitFor(() => screen.queryByText(summaryText));
+
         // Assert
         expect(expandSummaries).toHaveLength(3);
         expect(collapseSummaries).toBeNull();
+    });
+
+    test("RPMXCON-85844 clicking 'expand all' button shows loading indicator", async () => {
+        // Arrange
+        const handleOnClose = jest.fn();
+        const buttonText = "View All Summaries";
+        const mockReferenceDocs = [
+            {
+                documentId: "1"
+            },
+            {
+                documentId: "2"
+            },
+            {
+                documentId: "3"
+            }
+        ];
+
+        const mockGetReferenceDocumentsAsync = () => { return Promise.resolve(mockReferenceDocs); };
+        sageClient.getReferenceDocumentsAsync.mockImplementation(mockGetReferenceDocumentsAsync);
+
+        const mockGetSummaryAsync = async () => {
+            // Set a timeout so we can see the loading indicator(s)
+            await new Promise(function (resolve, reject) {
+                setTimeout(() => { resolve("summary"); }, 3000);
+            });
+        };
+        sageClient.getSummaryAsync.mockImplementation(mockGetSummaryAsync);
+
+        // Act
+        await act(() => render(<RelatedDocumentsFlyout visible={true} onClose={handleOnClose} investigationId={1} />));
+
+        const button = await screen.findByText(buttonText);
+        await userEvent.click(button);
+
+        // Assert
+        const loadingIndicators = document.querySelectorAll(".p-skeleton")
+        expect(loadingIndicators).not.toBeNull();
+        expect(loadingIndicators.length).toBeGreaterThan(1);
     });
 });
