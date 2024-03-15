@@ -417,7 +417,7 @@ button{
   
   font-weight: 700;
   font-family: "Open Sans-Regular", Helvetica;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .overlay-help-title {
@@ -466,6 +466,14 @@ button{
 
 .p-inputtextarea:focus {
   box-shadow: none;
+}
+
+.summary-document-category-label{
+  color: #1E1E1E;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 28px;
 }
 
 .sageTable-notes-modal-mask {
