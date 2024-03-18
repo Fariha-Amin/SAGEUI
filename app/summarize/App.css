@@ -475,6 +475,10 @@ button{
   font-weight: 600;
   line-height: 28px;
 }
+.font-style-italics{
+  font-style: italic;
+}
+
 
 .sageTable-notes-modal-mask {
   animation: none;
