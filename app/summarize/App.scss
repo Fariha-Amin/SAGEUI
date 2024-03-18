@@ -472,6 +472,8 @@ button{
   text-align: left;
 }
 .summary-wizard-stepper-summary-type {
+  color: #3C4257;
+  cursor: pointer;
   display: flex;
   align-items: center;
   padding-left: 20px;
@@ -481,6 +483,22 @@ button{
   background: #3387e0;
   clip-path: polygon(93.5% 0%, 97% 50%, 93% 100%, 0% 100%, 0% 0%, 0% 0%);
   border-radius: 4px;
+}
+
+.summary-wizard-stepper-selected{
+  background: #3387e0;
+}
+
+.summary-wizard-stepper-selected:before{
+  background: #dbe4ee;
+}
+
+.summary-wizard-stepper-unselected{
+  background: #C4C4C4;
+}
+
+.summary-wizard-stepper-unselected:before{
+  background:  #F5F5F5;
 }
 
 .summary-wizard-stepper-summary-type:before {
@@ -505,6 +523,7 @@ button{
 }
 
 .summary-wizard-stepper-documents {
+  cursor: pointer;
   display: flex;
   align-items: center;
   padding-left: 34px;
@@ -548,6 +567,10 @@ button{
 .stepper-title {
   z-index: 2;
 }
+.summary-wizard-button {
+  height: 40px;
+  color: #3C4257;
+}
 
 /* Summarize Home Page Top Layout */
 .summarize-home-title {
@@ -572,3 +595,4 @@ button{
   font-weight: $font-weight-400;
   font-family: $font-inter-regular-helvetica;
 }
+
