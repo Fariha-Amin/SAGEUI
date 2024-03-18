@@ -1,16 +1,24 @@
 import React, { useState } from "react";
-import SummarizeMain from "./components/SummarizeMain";
-import SummaryWizard from "./components/SummaryWizard";
+import Home from "./views/home/Home";
+import CreateNewSummary from "./views/createNewSummary/CreateNewSummary";
+
+import "./App.css";
+import "bootstrap/dist/css/bootstrap.css";
 
 export default function App() {
   const summarizeMainPage = 0;
   const summarizeWizardPage = 1;
   const [displayPage, setDisplayPage] = useState(summarizeMainPage);
-  let viewPage = <SummarizeMain onNewSummaryClick={() => {setDisplayPage(summarizeWizardPage)}}/>;
-  if (displayPage === summarizeWizardPage){
-    viewPage = <SummaryWizard/>;
-  }
-  return (
-    viewPage
+
+  let viewPage = (
+    <Home
+      onNewSummaryClick={() => {
+        setDisplayPage(summarizeWizardPage);
+      }}
+    />
   );
+  if (displayPage === summarizeWizardPage) {
+    viewPage = <CreateNewSummary />;
+  }
+  return viewPage;
 }
