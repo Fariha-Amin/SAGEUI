@@ -1,7 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { Tree } from "primereact/tree";
+import store from "../../../store/store";
+
+import { updateSelectedFolders } from "../../../features/createNewSummary/selectDocumentsSlice";
+import { useSelector, useDispatch } from "react-redux";
+
+import styles from "../style.module.scss";
 
 const DocumentFolders = () => {
+  const dispatch = useDispatch();
+  // Table data state subscribers
+  const selectedFolders = useSelector(
+    (state) => state.selectDocumentsDataSlice.selectedFolders
+  );
+
+  const onFolderSelectionChange = (e) => {
+    console.log("before change:", store.getState().selectDocumentsDataSlice);
+    dispatch(updateSelectedFolders(e.value));
+    console.log("after change:", store.getState().selectDocumentsDataSlice);
+  };
+
   const [nodes, setNodes] = useState([
     {
       key: "0",
@@ -47,17 +65,21 @@ const DocumentFolders = () => {
       ],
     },
   ]);
-  const [selectedKeys, setSelectedKeys] = useState(null);
+
   return (
-    <div className="mt-8">
+    <div className="">
       <Tree
         value={nodes}
         selectionMode="checkbox"
-        selectionKeys={selectedKeys}
-        onSelectionChange={(e) => setSelectedKeys(e.value)}
+        selectionKeys={selectedFolders}
+        onSelectionChange={onFolderSelectionChange}
         filter
         filterMode="lenient"
         filterPlaceholder=""
+        className="w-full"
+        pt={{
+          content: { className: `${styles.treeContent}` },
+        }}
       />
     </div>
   );
