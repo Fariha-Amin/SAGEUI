@@ -1,3 +1,5 @@
+@import "./styles/globalStyleVariables.scss";
+
 .p-component {
   font-family: "Open Sans-Regular", Helvetica;
   font-size: 14px;
@@ -50,15 +52,6 @@
   font-size: 30px;
 }
 
-/* Font  */
-/* .font-family {
-  font-family: "Helvetica";
-} */
-
-.font-size-header {
-  font-size: 28px;
-}
-
 .font-size-16 {
   font-size: 16px;
 }
@@ -69,10 +62,6 @@
 
 .margin-height {
   margin: 15px 0;
-}
-
-.font-weight-bold {
-  font-weight: bold;
 }
 
 .font-color {
@@ -342,7 +331,7 @@ table.table-bordered.sageDataTable td:last-child {
   height: 35px;
   font-size: 14px;
 }
-.p-column-title{
+.p-column-title {
   font-size: 14px;
 }
 /*  */
@@ -413,12 +402,6 @@ button{
   position: absolute;
   top: -15px;
 }
-.header-text-wrapper{
-  
-  font-weight: 700;
-  font-family: "Open Sans-Regular", Helvetica;
-  font-size: 16px;
-}
 
 .overlay-help-title {
   font-size: 16px;
@@ -468,8 +451,8 @@ button{
   box-shadow: none;
 }
 
-.summary-document-category-label{
-  color: #1E1E1E;
+.summary-document-category-label {
+  color: #1e1e1e;
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
@@ -487,9 +470,9 @@ button{
   line-height: 20px;
   letter-spacing: 0px;
   text-align: left;
-  color: #3C4257;
 }
 .summary-wizard-stepper-summary-type {
+  color: #3C4257;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -497,6 +480,7 @@ button{
   height: 56px;
   width: 428px;
   position: relative;
+  background: #3387e0;
   clip-path: polygon(93.5% 0%, 97% 50%, 93% 100%, 0% 100%, 0% 0%, 0% 0%);
   border-radius: 4px;
 }
@@ -519,6 +503,7 @@ button{
 
 .summary-wizard-stepper-summary-type:before {
   content: "";
+  background: #dbe4ee;
   height: calc(100% - 2px);
   width: calc(100% - 2px);
   position: absolute;
@@ -545,6 +530,7 @@ button{
   height: 56px;
   width: 428px;
   position: relative;
+  background: rgb(204, 212, 207);
   -webkit-clip-path: polygon(
     100% 0%,
     100% 100%,
@@ -560,6 +546,7 @@ button{
 
 .summary-wizard-stepper-documents:before {
   content: "";
+  background: rgb(239, 239, 239);
   height: calc(100% - 2px);
   width: calc(100% - 3px);
   position: absolute;
@@ -580,8 +567,32 @@ button{
 .stepper-title {
   z-index: 2;
 }
-
 .summary-wizard-button {
   height: 40px;
   color: #3C4257;
 }
+
+/* Summarize Home Page Top Layout */
+.summarize-home-title {
+  font-family: $font-inter-helvetica;
+  color: $summarize-header-title-text;
+  font-weight: $font-weight-700;
+  font-size: $font-size-28px;
+}
+
+.header-text-wrapper {
+  font-weight: $font-weight-700;
+  font-family: $font-inter-bold-helvetica;
+  font-size: $font-size-14px;
+  color: $summarize-header-small-text;
+}
+
+.selected-count {
+  display: flex;
+  align-items: center;
+  color: $summarize-header-small-text;
+  font-size: $font-size-14px;
+  font-weight: $font-weight-400;
+  font-family: $font-inter-regular-helvetica;
+}
+
