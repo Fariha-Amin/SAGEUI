@@ -16,15 +16,17 @@ const SelectDocumentsTab = () => {
   const [selectedDocumentCategory, setSelectedDocumentCategory] = useState(1);
   return (
     <>
-      <div className="row summary_header" style={{ height: "40px" }}></div>
+      <div className="row mb-3">
+        <div className="col p-3">
+          <LabelWithHelpIcon
+            label={"Select your documents"}
+            icon={HelpIconSm}
+          />
+        </div>
+      </div>
+
       <div className="row">
         <div className="col-3">
-          <div className="col mb-4">
-            <LabelWithHelpIcon
-              label={"Select your documents"}
-              icon={HelpIconSm}
-            />
-          </div>
           <div className="col">
             <DocumentCategorySelector
               documentCategories={documentCategories}
@@ -39,9 +41,7 @@ const SelectDocumentsTab = () => {
           {selectedDocumentCategory === 2 && "Tags"}
           {selectedDocumentCategory === 3 && "Saved Searches"}
           {selectedDocumentCategory === 4 && (
-            <div className="mt-8">
-              <DocIDs setDocIds={setDocIds} docIds={docIds} />
-            </div>
+            <DocIDs setDocIds={setDocIds} docIds={docIds} />
           )}
         </div>
       </div>
