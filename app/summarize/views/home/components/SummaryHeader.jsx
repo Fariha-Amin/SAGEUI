@@ -8,7 +8,7 @@ import ViewAllSummariesButton from "../../../components/ViewAllSummariesButton";
 import HelpButton from "../../../components/Helpbutton";
 import HelpOverlayPanel from "../../../components/HelpOverlayPanel";
 
-const SummaryHeader = ({onNewSummaryClick}) => {
+const SummaryHeader = ({ onNewSummaryClick }) => {
   const titleHelpButtonPointer = useRef(null);
   const labelHelpButtonPointer = useRef(null);
 
@@ -16,7 +16,7 @@ const SummaryHeader = ({onNewSummaryClick}) => {
     <>
       {titleHelpButtonPointer && (
         <HelpOverlayPanel
-          title={"neXgenAI Summarize"}
+          title="neXgenAI Summarize"
           objectPointer={titleHelpButtonPointer}
           style={{ width: "320px", height: "180px" }}
         />
@@ -24,17 +24,15 @@ const SummaryHeader = ({onNewSummaryClick}) => {
 
       {labelHelpButtonPointer && (
         <HelpOverlayPanel
-          title={"List of Summaries"}
+          title="List of Summaries"
           objectPointer={labelHelpButtonPointer}
           style={{ width: "320px", height: "180px" }}
         />
       )}
-      <div className="row mb-4">
+      <div className="row mb-3">
         <div className="col">
           <div className="position-relative">
-            <span className="font-size-header font-weight-bold">
-              neXgenAI Summarize
-            </span>
+            <span className="summarize-home-title">neXgenAI Summarize</span>
             <span className="header-icon-position">
               <HelpButton
                 onClickHandle={(e) => titleHelpButtonPointer.current.toggle(e)}
@@ -48,7 +46,9 @@ const SummaryHeader = ({onNewSummaryClick}) => {
             className="btn-height"
             label="Create new summary"
             severity="primary"
-            onClick={() => {onNewSummaryClick()}}
+            onClick={() => {
+              onNewSummaryClick();
+            }}
             raised
           />
         </div>
@@ -71,6 +71,7 @@ const SummaryHeader = ({onNewSummaryClick}) => {
         </div>
 
         <div className="col d-flex justify-content-end">
+          <div className="selected-count">0 out of 100 summaries selected</div>
           <ViewAllSummariesButton />
           <div className="ml-4">
             <DownloadIcon style={{ marginTop: "8px" }} />
