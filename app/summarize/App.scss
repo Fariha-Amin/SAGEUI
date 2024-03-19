@@ -467,14 +467,6 @@ button{
   animation: none;
 }
 
-.summary-wizard-summary-title {
-  font-family: Open Sans;
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 20px;
-  letter-spacing: 0px;
-  text-align: left;
-}
 .summary-wizard-stepper-summary-type {
   color: #3C4257;
   cursor: pointer;
@@ -484,7 +476,6 @@ button{
   height: 56px;
   width: 428px;
   position: relative;
-  background: #3387e0;
   clip-path: polygon(93.5% 0%, 97% 50%, 93% 100%, 0% 100%, 0% 0%, 0% 0%);
   border-radius: 4px;
 }
@@ -507,7 +498,6 @@ button{
 
 .summary-wizard-stepper-summary-type:before {
   content: "";
-  background: #dbe4ee;
   height: calc(100% - 2px);
   width: calc(100% - 2px);
   position: absolute;
@@ -534,7 +524,6 @@ button{
   height: 56px;
   width: 428px;
   position: relative;
-  background: rgb(204, 212, 207);
   -webkit-clip-path: polygon(
     100% 0%,
     100% 100%,
@@ -550,7 +539,6 @@ button{
 
 .summary-wizard-stepper-documents:before {
   content: "";
-  background: rgb(239, 239, 239);
   height: calc(100% - 2px);
   width: calc(100% - 3px);
   position: absolute;
@@ -570,6 +558,13 @@ button{
 }
 .stepper-title {
   z-index: 2;
+
+  font-family: $font-opensans-regular-helvetica;
+  font-size: $font-size-16;
+  font-weight: $font-weight-600;
+  line-height: 20px;
+  letter-spacing: 0px;
+  text-align: left;
 }
 .summary-wizard-button {
   height: 40px;

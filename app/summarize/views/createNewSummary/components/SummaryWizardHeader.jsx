@@ -34,7 +34,7 @@ function SummaryWizardHeader({
       );
     }
   };
-
+  console.log('wizardStep'+wizardStep);
   return (
     <>
       <div
@@ -53,7 +53,7 @@ function SummaryWizardHeader({
                 : "summary-wizard-stepper-unselected"
             }`}
           >
-            <span className="stepper-title summary-wizard-stepper-title">
+            <span className="stepper-title">
               Select Summary Type
             </span>
           </div>

@@ -1,7 +1,7 @@
 import React,{useState} from "react";
 import RadioSelector from "../../../components/RadioSelector";
-import HelpButton from "../../../components/Helpbutton";
 import HelpIconSm from "../../../icons/help_18.svg";
+import LabelWithHelpIcon from "../../../components/LabelWithHelpIcon";
 
 function SelectSummaryTypeTab() {
   const summaryTypes = [
@@ -16,12 +16,10 @@ function SelectSummaryTypeTab() {
       <div className="col-8">
         <div className="col">
           <div className="position-relative">
-            <label className="summary-document-category-label p-component">
-              Select Your Summary Type{" "}
-            </label>
-            <span className="icon-position">
-              <HelpButton icon={<HelpIconSm />} />
-            </span>
+          <LabelWithHelpIcon
+            label={"Select Your Summary Type"}
+            icon={HelpIconSm}
+          />
           </div>
         </div>
         <div className="col">
