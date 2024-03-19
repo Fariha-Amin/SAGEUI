@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import DocumentCategorySelector from "./DocumentCategorySelector";
 import HelpIconSm from "../../../icons/help_18.svg";
-import HelpButton from "../../../components/Helpbutton";
 import DocIDs from "./DocIDs";
+import LabelWithHelpIcon from "../../../components/LabelWithHelpIcon";
 
 const SelectDocumentsTab = () => {
   const documentCategories = [
@@ -16,19 +16,17 @@ const SelectDocumentsTab = () => {
   const [selectedDocumentCategory, setSelectedDocumentCategory] = useState(1);
   return (
     <>
-      <div className="row summary_header" style={{ height: "40px" }}></div>
+      <div className="row mb-3">
+        <div className="col p-3">
+          <LabelWithHelpIcon
+            label={"Select your documents"}
+            icon={HelpIconSm}
+          />
+        </div>
+      </div>
+
       <div className="row">
         <div className="col-3">
-          <div className="col mb-4">
-            <div className="position-relative">
-              <label className="summary-document-category-label p-component">
-                Select your documents{" "}
-              </label>
-              <span className="icon-position">
-                <HelpButton icon={<HelpIconSm />} />
-              </span>
-            </div>
-          </div>
           <div className="col">
             <DocumentCategorySelector
               documentCategories={documentCategories}
@@ -43,11 +41,7 @@ const SelectDocumentsTab = () => {
           {selectedDocumentCategory === 2 && "Tags"}
           {selectedDocumentCategory === 3 && "Saved Searches"}
           {selectedDocumentCategory === 4 && (
-            <>
-              <div className="mt-8">
-                <DocIDs setDocIds={setDocIds} docIds={docIds} />
-              </div>
-            </>
+            <DocIDs setDocIds={setDocIds} docIds={docIds} />
           )}
         </div>
       </div>

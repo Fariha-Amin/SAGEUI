@@ -63,8 +63,7 @@ module.exports = {
     maxAssetSize: 512000
   },
   plugins: [
-    new HtmlWebpackPlugin({title: "Investigate", template: path.join(__dirname, "index.html"),}),
-    new webpack.HotModuleReplacementPlugin()
+    new HtmlWebpackPlugin({title: "Investigate", template: path.join(__dirname, "index.html"),})
   ].concat(devMode ? [] : [new MiniCssExtractPlugin()]),
   optimization: {
     minimize:true,

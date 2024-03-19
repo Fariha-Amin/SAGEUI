@@ -5,8 +5,6 @@ const db = new sqlite3.Database(path.join(__dirname, "Db", "summarizer.db"));
 
 const DataSeed = {
   seedIntialDataForTesing() {
-    //db.run(`DROP TABLE IF EXISTS nextgensummary`);
-
     db.run(
       `CREATE TABLE IF NOT EXISTS "nextgensummary" (
       "recId"	INTEGER,
@@ -47,7 +45,7 @@ const DataSeed = {
                       inprogress,
                     } = data;
                     db.run(
-                      "INSERT INTO nextgensummary (recId, user,summaryGeneratedOn,documentId,summary,notes,favourite,inprogress) VALUES (?,?,?,?, ?,?,?,?)",
+                      "INSERT INTO nextgensummary (recId, user,summaryGeneratedOn,documentId,summary,inprogress) VALUES (?,?,?,?,?,?)",
                       [
                         recId,
                         user,
