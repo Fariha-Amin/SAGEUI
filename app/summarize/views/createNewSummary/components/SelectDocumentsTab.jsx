@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import DocumentCategorySelector from "./DocumentCategorySelector";
 import HelpIconSm from "../../../icons/help_18.svg";
-import HelpButton from "../../../components/Helpbutton";
 import DocIDs from "./DocIDs";
+import LabelWithHelpIcon from "../../../components/LabelWithHelpIcon";
 
 const SelectDocumentsTab = () => {
   const documentCategories = [
@@ -20,14 +20,10 @@ const SelectDocumentsTab = () => {
       <div className="row">
         <div className="col-3">
           <div className="col mb-4">
-            <div className="position-relative">
-              <label className="summary-document-category-label p-component">
-                Select your documents{" "}
-              </label>
-              <span className="icon-position">
-                <HelpButton icon={<HelpIconSm />} />
-              </span>
-            </div>
+            <LabelWithHelpIcon
+              label={"Select your documents"}
+              icon={HelpIconSm}
+            />
           </div>
           <div className="col">
             <DocumentCategorySelector
@@ -43,11 +39,9 @@ const SelectDocumentsTab = () => {
           {selectedDocumentCategory === 2 && "Tags"}
           {selectedDocumentCategory === 3 && "Saved Searches"}
           {selectedDocumentCategory === 4 && (
-            <>
-              <div className="mt-8">
-                <DocIDs setDocIds={setDocIds} docIds={docIds} />
-              </div>
-            </>
+            <div className="mt-8">
+              <DocIDs setDocIds={setDocIds} docIds={docIds} />
+            </div>
           )}
         </div>
       </div>
