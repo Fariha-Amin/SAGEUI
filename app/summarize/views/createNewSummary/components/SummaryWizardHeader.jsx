@@ -34,7 +34,7 @@ function SummaryWizardHeader({
       );
     }
   };
-  console.log('wizardStep'+wizardStep);
+
   return (
     <>
       <div
