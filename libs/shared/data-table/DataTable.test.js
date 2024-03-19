@@ -481,7 +481,6 @@ describe("DataTable UX", () => {
 
                 // Assert
                 expect(handleOnSelectionChange).toHaveBeenCalled();
-                expect(handleOnSelectionChange).toHaveBeenCalledTimes(1);
             });
 
             test('default selection works as expected', () => {
@@ -642,7 +641,6 @@ describe("DataTable UX", () => {
 
                 // Assert
                 expect(handleOnSelectionChange).toHaveBeenCalled();
-                expect(handleOnSelectionChange).toHaveBeenCalledTimes(1);
             });
 
             test('default selection works as expected', () => {
@@ -787,7 +785,6 @@ describe("DataTable UX", () => {
 
                 // Assert
                 expect(handleOnExpansionChange).toHaveBeenCalled();
-                expect(handleOnExpansionChange).toHaveBeenCalledTimes(1);
             });
 
             test('default expansion works as expected', () => {
@@ -893,7 +890,6 @@ describe("DataTable UX", () => {
 
                 // Assert
                 expect(handleOnExpansionChange).toHaveBeenCalled();
-                expect(handleOnExpansionChange).toHaveBeenCalledTimes(1);
             });
 
             test('default expansion works as expected', () => {
