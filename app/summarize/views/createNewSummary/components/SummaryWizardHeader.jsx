@@ -45,7 +45,7 @@ function SummaryWizardHeader({
           color: "color: #3C4257",
         }}
       >
-        <div style={{ display: "flex" }}>
+        <div className="d-flex">
           <div onClick={() => onSummaryTypeClick()}
             className={`summary-wizard-stepper-summary-type ${
               wizardStep === summaryTypePage
@@ -53,7 +53,7 @@ function SummaryWizardHeader({
                 : "summary-wizard-stepper-unselected"
             }`}
           >
-            <span className="stepper-title summary-wizard-stepper-title">
+            <span className="stepper-title">
               Select Summary Type
             </span>
           </div>
@@ -70,7 +70,7 @@ function SummaryWizardHeader({
             </span>
           </div>
         </div>
-        <div style={{ display: "flex" }}>
+        <div className="d-flex">
           <div style={{ marginRight: "10px" }}>
             <Button
               label="Cancel"
