@@ -3,7 +3,7 @@ import { Button } from "primereact/button";
 import { useSelector } from "react-redux";
 import { viewAllSummaryClickHandler } from "../summaryDataTable/summaryTableEvents";
 
-const ViewAllSummariesButton = (props) => {
+const ViewAllSummariesButton = () => {
   const isAllRowExpanded = useSelector(
     (state) => state.rowExpansionDataSlice.isAllRowExpanded
   );

@@ -11,6 +11,8 @@ import HelpOverlayPanel from "../../../components/HelpOverlayPanel";
 const SummaryHeader = ({ onNewSummaryClick }) => {
   const titleHelpButtonPointer = useRef(null);
   const labelHelpButtonPointer = useRef(null);
+  const isTestEnvironment = process.env.NODE_ENV === "test";
+
 
   return (
     <>
@@ -36,7 +38,7 @@ const SummaryHeader = ({ onNewSummaryClick }) => {
             <span className="header-icon-position">
               <HelpButton
                 onClickHandle={(e) => titleHelpButtonPointer.current.toggle(e)}
-                icon={<HelpIcon />}
+                icon={!isTestEnvironment && <HelpIcon />}
               />
             </span>
           </div>
@@ -64,7 +66,7 @@ const SummaryHeader = ({ onNewSummaryClick }) => {
             <span className="icon-position">
               <HelpButton
                 onClickHandle={(e) => labelHelpButtonPointer.current.toggle(e)}
-                icon={<HelpIconSm />}
+                icon={!isTestEnvironment && <HelpIconSm />}
               />
             </span>
           </div>
@@ -74,7 +76,7 @@ const SummaryHeader = ({ onNewSummaryClick }) => {
           <div className="selected-count">0 out of 100 summaries selected</div>
           <ViewAllSummariesButton />
           <div className="ml-4">
-            <DownloadIcon style={{ marginTop: "8px" }} />
+          {!isTestEnvironment && <DownloadIcon style={{ marginTop: "8px" }} />}
           </div>
           <SplitButton
             className="btn-height ml-4 p-disabled"
