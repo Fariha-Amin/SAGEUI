@@ -14,6 +14,29 @@ const SummaryHeader = ({ onNewSummaryClick }) => {
   const isTestEnvironment = process.env.NODE_ENV === "test";
 
 
+  //   const items = [
+  //     {
+  //         label: 'Bulk Tag',
+  //         icon: 'pi pi-refresh',
+  //         command: () => {
+
+  //           console.log("Bulk tag clicked",window.parent);
+
+  //          window.parent.GetBatchPrintSourceSelectionTreeDetails()
+  //          .then((data) => {
+  //            console.log("Fetching Tree Data");
+  //            //setUserEmail(data.aaData.email);
+  //            //setNodes(convertToNestedStructure(data.SourceSelectionSearchList));
+  //            //console.log("Js Tree",convertToNestedStructure(data.SourceSelectionSearchList));
+  //            //setLoadingApp(false);
+  //          });
+
+  //           window.parent.postMessage("Hello from iframe!", "https://localhost");
+  //           //sightlineMiddleWare.showBulkTagModal();
+  //         }
+  //     }
+  // ];
+
   return (
     <>
       {titleHelpButtonPointer && (
@@ -82,6 +105,7 @@ const SummaryHeader = ({ onNewSummaryClick }) => {
             className="btn-height ml-4 p-disabled"
             severity="primary"
             label="Action"
+            model={items}
           ></SplitButton>
         </div>
       </div>
