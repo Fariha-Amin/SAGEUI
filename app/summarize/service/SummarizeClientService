@@ -28,7 +28,7 @@ function MapSightlineTreeToPrimeReactTree(sightlineJsTree) {
   return nestedArray;
 }
 
-const summarizerApiClient = {
+export const summarizerApiClient = {
   async getPrimeReactDocumentMetaTreeList() {
     let data = await window.parent.GetBatchPrintSourceSelectionTreeDetails();
 

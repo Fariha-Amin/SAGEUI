@@ -7,33 +7,33 @@ import HelpIconSm from "../../../icons/help_18.svg";
 import ViewAllSummariesButton from "../../../components/ViewAllSummariesButton";
 import HelpButton from "../../../components/Helpbutton";
 import HelpOverlayPanel from "../../../components/HelpOverlayPanel";
+import { summarizerApiClient } from "../../../service/SummarizeClientService.js";
 
 const SummaryHeader = ({ onNewSummaryClick }) => {
   const titleHelpButtonPointer = useRef(null);
   const labelHelpButtonPointer = useRef(null);
 
-  //   const items = [
-  //     {
-  //         label: 'Bulk Tag',
-  //         icon: 'pi pi-refresh',
-  //         command: () => {
+  const items = [
+    {
+      label: "Bulk Tag",
+      icon: "pi pi-refresh",
+      command: () => {
+        console.log("Bulk tag clicked", window.parent);
 
-  //           console.log("Bulk tag clicked",window.parent);
+        //  window.parent.GetBatchPrintSourceSelectionTreeDetails()
+        //  .then((data) => {
+        //    console.log("Fetching Tree Data");
+        //    //setUserEmail(data.aaData.email);
+        //    //setNodes(convertToNestedStructure(data.SourceSelectionSearchList));
+        //    //console.log("Js Tree",convertToNestedStructure(data.SourceSelectionSearchList));
+        //    //setLoadingApp(false);
+        //  });
 
-  //          window.parent.GetBatchPrintSourceSelectionTreeDetails()
-  //          .then((data) => {
-  //            console.log("Fetching Tree Data");
-  //            //setUserEmail(data.aaData.email);
-  //            //setNodes(convertToNestedStructure(data.SourceSelectionSearchList));
-  //            //console.log("Js Tree",convertToNestedStructure(data.SourceSelectionSearchList));
-  //            //setLoadingApp(false);
-  //          });
-
-  //           window.parent.postMessage("Hello from iframe!", "https://localhost");
-  //           //sightlineMiddleWare.showBulkTagModal();
-  //         }
-  //     }
-  // ];
+        //   window.parent.postMessage("Hello from iframe!", "https://localhost");
+        //sightlineMiddleWare.showBulkTagModal();
+      },
+    },
+  ];
 
   return (
     <>
