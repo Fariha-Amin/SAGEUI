@@ -4,6 +4,7 @@ const DocumentCategorySelector = ({
   documentCategories,
   selectedDocumentCategory,
   setSelectedDocumentCategory,
+  setDocIds,
 }) => {
   return (
     <>
@@ -13,12 +14,13 @@ const DocumentCategorySelector = ({
             inputId={category.key}
             name="category"
             value={category.key}
-            onChange={(e) => setSelectedDocumentCategory(e.value)}
+            onChange={(e) => {
+              setSelectedDocumentCategory(e.value);
+              setDocIds("");
+            }}
             checked={selectedDocumentCategory === category.key}
           />
-          <label style={{ fontSize: "16px" }} htmlFor={category.key}>
-            {category.name}
-          </label>
+          <label htmlFor={category.key}>{category.name}</label>
         </div>
       ))}
     </>

@@ -18,7 +18,7 @@ const getFilterSql = (filters) => {
     filterSql = filterSql + ` and summary like '%${filters.summary.value}%'`;
   }
   if (filters.notes.value) {
-    filterSql = filterSql + ` and notes like '%${filters.notes.value}%'`;
+    filterSql = filterSql + ` and ud.notes like '%${filters.notes.value}%'`;
   }
 
   if (filters.summaryGeneratedOn.value) {
@@ -2832,40 +2832,41 @@ const SummarizerService = {
     };
   },
   getFilterAndPaginatedDataNew(sageDataTableRequest, userId, callback) {
-    let dbsql = "SELECT * FROM nextgensummary ";
-    let dbsqlNew = `SELECT ng.recId,ng.summaryGeneratedOn,ng.user,ng.documentId,ng.summary,
+    let allColumnSelectQuery = `SELECT ng.recId,ng.summaryGeneratedOn,ng.user,ng.documentId,ng.summary,
     ng.inprogress,ifnull(ud.favourite,0) favourite,
-    ifnull(ud.notes,'') notes FROM nextgensummary ng left join userData ud 
+    ifnull(ud.notes,'') notes `;
+
+    let joinQuery = ` FROM nextgensummary ng left join userData ud 
     on (ng.recId=ud.recId and ud.userId='${userId}')`;
 
+    let dbSql = `${allColumnSelectQuery} ${joinQuery}`;
     const filterSql = getFilterSql(sageDataTableRequest.filters);
-
-    const countQuery = `select count(1) as row_count from nextgensummary ${
+    const countQuery = `select count(1) as row_count ${joinQuery} ${
       filterSql ?? ""
     }`;
 
     db.get(countQuery, (err, row) => {
       const count = row.row_count;
 
-      dbsqlNew = `${dbsqlNew} ${filterSql ?? " "} `;
+      dbSql = `${dbSql} ${filterSql ?? " "} `;
       if (sageDataTableRequest.sortField) {
-        dbsqlNew =
-          dbsqlNew +
+        dbSql =
+          dbSql +
           getOrderSql(
             sageDataTableRequest.sortField,
             sageDataTableRequest.sortOrder
           );
       }
 
-      dbsqlNew =
-        dbsqlNew +
+      dbSql =
+        dbSql +
         getLimitQuery(sageDataTableRequest.first, sageDataTableRequest.rows);
 
       const data = [];
 
-      console.log(dbsqlNew);
+      console.log(dbSql);
       // Execute a query to select data from the table
-      db.all(dbsqlNew, (err, rows) => {
+      db.all(dbSql, (err, rows) => {
         if (err) {
           console.error("Error retrieving data from database:", err);
           //callback(err, null);
