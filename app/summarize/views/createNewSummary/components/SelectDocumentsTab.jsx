@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import DocumentCategorySelector from "./RadioCategorySelector";
 import HelpIconSm from "../../../icons/help_18.svg";
 import DocIDs from "./DocIDs";
+import DocumentFolders from "./DocumentFolders";
 import LabelWithHelpIcon from "../../../components/LabelWithHelpIcon";
 
 const SelectDocumentsTab = () => {
@@ -39,8 +40,8 @@ const SelectDocumentsTab = () => {
             />
           </div>
         </div>
-        <div className="col-9">
-          {selectedDocumentCategory === 1 && "Folders"}
+        <div className="col-5">
+          {selectedDocumentCategory === 1 && <DocumentFolders />}
           {selectedDocumentCategory === 2 && "Tags"}
           {selectedDocumentCategory === 3 && "Saved Searches"}
           {selectedDocumentCategory === 4 && (
