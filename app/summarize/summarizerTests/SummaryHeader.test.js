@@ -27,9 +27,12 @@ import { Provider } from 'react-redux';
 //   default: () => <MockedHelpIconSm />
 // }));
 
+
 test('Verify Page Title', async () => {
 
   const mockOnNewSummaryClick = jest.fn();
+
+
   render(
     <Provider store={store}>
       <SummaryHeader onNewSummaryClick={mockOnNewSummaryClick}/>

@@ -105,7 +105,7 @@ const SummaryHeader = ({ onNewSummaryClick }) => {
             className="btn-height ml-4 p-disabled"
             severity="primary"
             label="Action"
-            model={items}
+            // model={items}
           ></SplitButton>
         </div>
       </div>
