@@ -168,8 +168,11 @@ describe("ChatItem UX", () => {
             const model = getDefaultModel();
             model.response.answer = docId;
             model.response.documentIds = [docId];
+            const mockReferenceDoc = {
+                documentId: docId
+            };
 
-            const mockGetReferenceDocumentsAsync = () => { return Promise.resolve([]); };
+            const mockGetReferenceDocumentsAsync = () => { return Promise.resolve([mockReferenceDoc]); };
             sageClient.getReferenceDocumentsAsync.mockImplementation(mockGetReferenceDocumentsAsync);
 
             const mockGetSummaryAsync = () => { return Promise.resolve(summaryText); };
