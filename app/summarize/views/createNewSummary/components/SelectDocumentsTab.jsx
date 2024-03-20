@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import DocumentCategorySelector from "./DocumentCategorySelector";
+import DocumentCategorySelector from "./RadioCategorySelector";
 import HelpIconSm from "../../../icons/help_18.svg";
 import DocIDs from "./DocIDs";
+import DocumentFolders from "./DocumentFolders";
 import LabelWithHelpIcon from "../../../components/LabelWithHelpIcon";
 
 const SelectDocumentsTab = () => {
@@ -29,15 +30,18 @@ const SelectDocumentsTab = () => {
         <div className="col-3">
           <div className="col">
             <DocumentCategorySelector
-              documentCategories={documentCategories}
-              selectedDocumentCategory={selectedDocumentCategory}
-              setSelectedDocumentCategory={setSelectedDocumentCategory}
-              setDocIds={setDocIds}
+              categories={documentCategories}
+              selectedCategory={selectedDocumentCategory}
+              categoryContainer="mb-3"
+              onRadioSelectionChange={(e) => {
+                setSelectedDocumentCategory(e.value);
+                setDocIds("");
+              }}
             />
           </div>
         </div>
-        <div className="col-9">
-          {selectedDocumentCategory === 1 && "Folders"}
+        <div className="col-5">
+          {selectedDocumentCategory === 1 && <DocumentFolders />}
           {selectedDocumentCategory === 2 && "Tags"}
           {selectedDocumentCategory === 3 && "Saved Searches"}
           {selectedDocumentCategory === 4 && (

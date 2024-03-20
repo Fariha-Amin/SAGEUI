@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "primereact/button";
-import HelpIcon from "../icons/help.svg";
+
 
 const HelpButton = ({ onClickHandle, icon, child, ...rest }) => {
   return (

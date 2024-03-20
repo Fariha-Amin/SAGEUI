@@ -3,6 +3,7 @@
  * https://jestjs.io/docs/configuration
  */
 
+
 /** @type {import('jest').Config} */
 const config = {
   // All imported modules in your tests should be mocked automatically
@@ -96,6 +97,7 @@ const config = {
     "_shared/(.*)": "<rootDir>/libs/shared/$1",
     "_investigate/(.*)": "<rootDir>/libs/app/investigate/$1",
     "_root/(.*)": "<rootDir>/$1",
+    "\\.(svg)$": "<rootDir>/__mocks__/svgMock.js"
   },
 
   // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
@@ -153,6 +155,7 @@ setupFiles: ["./jestSetup.js"],
 
   // The test environment that will be used for testing
   testEnvironment: "jsdom",
+ 
 
   // Options that will be passed to the testEnvironment
   // testEnvironmentOptions: {},

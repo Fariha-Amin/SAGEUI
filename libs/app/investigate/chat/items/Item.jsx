@@ -43,9 +43,8 @@ export default function Item({ model, onQuery, onDeleteClick }) {
     const [isFlyoutVisible, setIsFlyoutVisible] = useState(false);
     const [flyoutInvestigationId, setFlyoutInvestigationId] = useState(null);
     const [flyoutDocumentId, setFlyoutDocumentId] = useState(null);
+    
     const feedback = model.response.feedback;
-  
-
     model.hasFeedback = (model.response.feedback != "");
     model.hasNote = (model.response.note != "");
 
@@ -117,6 +116,7 @@ export default function Item({ model, onQuery, onDeleteClick }) {
 
     const onRelevantDocsClickedDelegate = (e) => {
         setFlyoutInvestigationId(model.id);
+        setFlyoutDocumentId(null);
         setIsFlyoutVisible(true);
     }
 
