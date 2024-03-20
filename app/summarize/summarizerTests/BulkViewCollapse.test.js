@@ -2,7 +2,6 @@ import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import store from '../store/store.js';
-import SummaryHeader from '../views/home/components/SummaryHeader.jsx';
 import { Provider ,useSelector } from 'react-redux';
 import ViewAllSummariesButton from '../components/ViewAllSummariesButton.jsx';
 

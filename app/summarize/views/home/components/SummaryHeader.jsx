@@ -9,9 +9,9 @@ import HelpButton from "../../../components/Helpbutton";
 import HelpOverlayPanel from "../../../components/HelpOverlayPanel";
 
 const SummaryHeader = ({ onNewSummaryClick }) => {
-  const titleHelpButtonPointer = useRef(null);
-  const labelHelpButtonPointer = useRef(null);
-  const isTestEnvironment = process.env.NODE_ENV === "test";
+const titleHelpButtonPointer = useRef(null);
+const labelHelpButtonPointer = useRef(null);
+const isTestEnvironment = process.env.NODE_ENV === "test";
 
 
   //   const items = [
