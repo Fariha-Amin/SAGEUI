@@ -1,6 +1,6 @@
 import './DataTable.scss'
 import React from "react";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { DataTable } from "primereact/datatable";
 import DataColumn from "./DataColumn";
 import StateChangedEvent from "./stateChangedEvent";
@@ -37,6 +37,16 @@ export default function SageDataTable(props) {
     const [expandedRows, setExpandedRows] = useState(props.expandedRows);
     const [first, setFirst] = useState(getStartingPage(props));
     const [rows, setRows] = useState(props.rowsPerPage || 25);
+
+    useEffect(() => {
+        setSelectedRows(props.selectedRows);
+        props.onSelectionChange && props.onSelectionChange(props.selectedRows);
+    }, [props.selectedRows]);
+
+    useEffect(() => {
+        setExpandedRows(props.expandedRows);
+        props.onExpansionChange && props.onExpansionChange(props.expandedRows);
+    }, [props.expandedRows]);
 
     let tableProps = {};
     let columnProps = props.children.map((child, i) => { return { key: child.key, ...child.props }; });
@@ -88,7 +98,7 @@ export default function SageDataTable(props) {
             setRows(e.rows);
 
             const stateChangedEvent = new StateChangedEvent(e);
-            props.page && props.page(stateChangedEvent); 
+            props.page && props.page(stateChangedEvent);
             props.onPage && props.onPage(stateChangedEvent);
         };
         tableProps.onPage = onPageDelegate;
@@ -115,9 +125,9 @@ export default function SageDataTable(props) {
             setSortField(e.sortField);
             setSortOrder(e.sortOrder);
             setMultiSortMeta(e.multiSortMeta);
-            
+
             const stateChangedEvent = new StateChangedEvent(e);
-            props.sort && props.sort(stateChangedEvent); 
+            props.sort && props.sort(stateChangedEvent);
             props.onSort && props.onSort(stateChangedEvent);
         };
         tableProps.onSort = onSortDelegate;
