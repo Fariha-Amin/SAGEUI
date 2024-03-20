@@ -14,7 +14,7 @@ function MapSightlineTreeToPrimeReactTree(sightlineJsTree) {
 
   // Traverse the flat array and assign children to their respective parents
   const nestedArray = [];
-  flatArray.forEach((item) => {
+  sightlineJsTree.forEach((item) => {
     if (item.parent !== null && item.parent !== "#") {
       const parent = map[item.parent];
       if (parent) {

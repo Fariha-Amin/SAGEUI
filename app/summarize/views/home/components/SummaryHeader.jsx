@@ -7,33 +7,37 @@ import HelpIconSm from "../../../icons/help_18.svg";
 import ViewAllSummariesButton from "../../../components/ViewAllSummariesButton";
 import HelpButton from "../../../components/Helpbutton";
 import HelpOverlayPanel from "../../../components/HelpOverlayPanel";
-import { summarizerApiClient } from "../../../service/SummarizeClientService.js";
+import { summarizerApiClient } from "../../../service/SummarizeClientService";
 
 const SummaryHeader = ({ onNewSummaryClick }) => {
   const titleHelpButtonPointer = useRef(null);
   const labelHelpButtonPointer = useRef(null);
 
-  const items = [
-    {
-      label: "Bulk Tag",
-      icon: "pi pi-refresh",
-      command: () => {
-        console.log("Bulk tag clicked", window.parent);
+  // const items = [
+  //   {
+  //     label: "Bulk Tag",
+  //     icon: "pi pi-refresh",
+  //     command: () => {
+  //       console.log("Bulk tag clicked", window.parent);
+  //       summarizerApiClient.getPrimeReactDocumentMetaTreeList().then((data) => {
+  //         console.log("TreeData", data);
+  //       });
+  //       //    console.log("Fetching Tree Data");;
 
-        //  window.parent.GetBatchPrintSourceSelectionTreeDetails()
-        //  .then((data) => {
-        //    console.log("Fetching Tree Data");
-        //    //setUserEmail(data.aaData.email);
-        //    //setNodes(convertToNestedStructure(data.SourceSelectionSearchList));
-        //    //console.log("Js Tree",convertToNestedStructure(data.SourceSelectionSearchList));
-        //    //setLoadingApp(false);
-        //  });
+  //       //  window.parent.GetBatchPrintSourceSelectionTreeDetails()
+  //       //  .then((data) => {
+  //       //    console.log("Fetching Tree Data");
+  //       //    //setUserEmail(data.aaData.email);
+  //       //    //setNodes(convertToNestedStructure(data.SourceSelectionSearchList));
+  //       //    //console.log("Js Tree",convertToNestedStructure(data.SourceSelectionSearchList));
+  //       //    //setLoadingApp(false);
+  //       //  });
 
-        //   window.parent.postMessage("Hello from iframe!", "https://localhost");
-        //sightlineMiddleWare.showBulkTagModal();
-      },
-    },
-  ];
+  //       //   window.parent.postMessage("Hello from iframe!", "https://localhost");
+  //       //sightlineMiddleWare.showBulkTagModal();
+  //     },
+  //   },
+  // ];
 
   return (
     <>
@@ -93,17 +97,17 @@ const SummaryHeader = ({ onNewSummaryClick }) => {
           </div>
         </div>
 
-        <div className="col d-flex justify-content-end">
+        <div className="col d-flex justify-content-end p-disabled">
           <div className="selected-count">0 out of 100 summaries selected</div>
           <ViewAllSummariesButton />
           <div className="ml-4">
             <DownloadIcon style={{ marginTop: "8px" }} />
           </div>
           <SplitButton
-            className="btn-height ml-4 p-disabled"
+            className="btn-height ml-4 "
             severity="primary"
             label="Action"
-            model={items}
+            //model={items}
           ></SplitButton>
         </div>
       </div>
