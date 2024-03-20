@@ -7,6 +7,17 @@ function SummaryWizard() {
   const summaryTypeTab = 0;
   const summaryDocumentTab = 1;
   const [wizardStep, setWizardStep] = useState(summaryTypeTab);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const validateDocIds = () => {
+    const regex = /^[a-zA-Z0-9\s\n_-]+$/;
+    if (!regex.test(docIds)) {
+      errorMessage("Invalid syntax. Special characters not allowed.");
+      return false;
+    }
+    return true;
+  };
+
   let selectedTab = <SelectSummaryTypeTab />;
   if (wizardStep == summaryDocumentTab) {
     selectedTab = <SelectDocumentsTab />;
@@ -23,7 +34,6 @@ function SummaryWizard() {
   const onSummaryDocumentClick = () => {
     setWizardStep(summaryDocumentTab);
   };
-
 
   const onSubmitButtonClick = () => {};
 
