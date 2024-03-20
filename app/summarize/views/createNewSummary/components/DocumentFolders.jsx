@@ -2,29 +2,39 @@ import React, { useState, useEffect } from "react";
 import { Tree } from "primereact/tree";
 import store from "../../../store/store";
 
-import { updateSelectedFolders } from "../../../features/createNewSummary/selectDocumentsSlice";
+import {
+  updateSelectedFolders,
+  updateExpandFolders,
+} from "../../../features/createNewSummary/selectDocumentsSlice";
 import { useSelector, useDispatch } from "react-redux";
 
 import styles from "../style.module.scss";
 
 const DocumentFolders = () => {
   const dispatch = useDispatch();
-  // Table data state subscribers
+
+  // Subscribers
   const selectedFolders = useSelector(
     (state) => state.selectDocumentsDataSlice.selectedFolders
   );
+  const expandedFolders = useSelector(
+    (state) => state.selectDocumentsDataSlice.expandedFolders
+  );
+
+  // Expand and collapse event
+  const onFolderToggleHandler = (e) => {
+    dispatch(updateExpandFolders(e.value));
+  };
 
   const onFolderSelectionChange = (e) => {
-    console.log("before change:", store.getState().selectDocumentsDataSlice);
     dispatch(updateSelectedFolders(e.value));
-    console.log("after change:", store.getState().selectDocumentsDataSlice);
   };
 
   const [nodes, setNodes] = useState([
     {
       key: "0",
       label:
-        "Documentsghfghfghfghfghfghfghfghfghfghfghfghfghfghfghfghfghfghfghfghfghfghfghfghf",
+        "Documentsghfghfghfghfghfghgkghkhfghfghfghfghfghfghfghfghfghfghfghfghfghfghfghfghfghfghf",
       data: "Documents Folder",
       icon: "pi pi-fw pi-inbox",
       children: [
@@ -59,6 +69,38 @@ const DocumentFolders = () => {
               label: "Invoices.txt",
               icon: "pi pi-fw pi-file",
               data: "Invoices for this month",
+              children: [
+                {
+                  key: "0-1-0-0",
+                  label: "Invoices.txt",
+                  icon: "pi pi-fw pi-file",
+                  data: "Invoices for this month",
+                },
+                {
+                  key: "0-1-0-1",
+                  label: "Invoices.txt",
+                  icon: "pi pi-fw pi-file",
+                  data: "Invoices for this month",
+                },
+                {
+                  key: "0-1-0-2",
+                  label: "Invoices.txt",
+                  icon: "pi pi-fw pi-file",
+                  data: "Invoices for this month",
+                },
+                {
+                  key: "0-1-0-3",
+                  label: "Invoices.txt",
+                  icon: "pi pi-fw pi-file",
+                  data: "Invoices for this month",
+                },
+                {
+                  key: "0-1-0-4",
+                  label: "Invoices.txt",
+                  icon: "pi pi-fw pi-file",
+                  data: "Invoices for this month",
+                },
+              ],
             },
           ],
         },
@@ -70,15 +112,18 @@ const DocumentFolders = () => {
     <div className="">
       <Tree
         value={nodes}
+        expandedKeys={expandedFolders}
         selectionMode="checkbox"
         selectionKeys={selectedFolders}
         onSelectionChange={onFolderSelectionChange}
         filter
         filterMode="lenient"
         filterPlaceholder=""
-        className="w-full"
+        onToggle={onFolderToggleHandler}
         pt={{
           content: { className: `${styles.treeContent}` },
+          container: { className: `${styles.treeContainer}` },
+          root: { className: `${styles.treeRootContainer}` },
         }}
       />
     </div>

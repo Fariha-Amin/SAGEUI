@@ -1,4 +1,13 @@
 .treeContent {
   display: inline-flex;
-  min-width: 20px;
+  min-width: 400px;
+}
+.treeContainer {
+  width: 700px;
+  height: 360px;
+  overflow: auto;
+}
+.treeRootContainer {
+  border: 0px;
+  padding: 0px;
 }

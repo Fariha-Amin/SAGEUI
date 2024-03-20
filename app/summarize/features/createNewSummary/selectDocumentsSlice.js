@@ -3,7 +3,9 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   selectedCategory: 1,
   selectedFolders: {},
+  expandedFolders: {},
   selectedTags: {},
+  expandedTags: {},
   docIDs: "",
 };
 
@@ -23,6 +25,10 @@ const selectDocumentsSlice = createSlice({
     updateDocIDs(state, action) {
       state.docIDs = action.payload;
     },
+    updateExpandFolders(state, action) {
+      state.expandedFolders = action.payload;
+    },
+
     resetSelectedFolders(state, action) {
       state.selectedFolders = {};
     },
@@ -32,39 +38,29 @@ const selectDocumentsSlice = createSlice({
     resetDocIDs(state, action) {
       state.docIDs = "";
     },
+    resetexpandedFolders(state, action) {
+      state.expandedFolders = {};
+    },
+    resetexpandedTags(state, action) {
+      state.expandedTags = {};
+    },
+
     resetAll(state, action) {
       state = initialState;
     },
-    // expandRow(state, action) {
-    //   state.expandedRows.push(action.payload);
-    // },
-    // collapseRow(state, action) {
-    //   state.expandedRows = state.expandedRows.filter(
-    //     (row) => row.recId !== action.payload.recId
-    //   );
-    // },
-    // expandAllRows(state, action) {
-    //   state.expandedRows = [...state.expandedRows, ...action.payload];
-    // },
-    // collapseAllRows(state, action) {
-    //   state.expandedRows = state.expandedRows.filter(
-    //     (row) => !action.payload.find((_) => _.recId === row.recId)
-    //   );
-    // },
-    // updateIsAllRowExpanded(state, action) {
-    //   state.isAllRowExpanded = action.payload;
-    // },
   },
 });
 
 export const {
   updateSelectedCategory,
   updateSelectedFolders,
+  updateExpandFolders,
   updateSelectedTags,
   updateDocIDs,
   resetSelectedFolders,
   resetSelectedTags,
   resetDocIDs,
+  resetexpandedFolders,
   resetAll,
 } = selectDocumentsSlice.actions;
 
