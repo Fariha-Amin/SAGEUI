@@ -99,14 +99,14 @@ const isTestEnvironment = process.env.NODE_ENV === "test";
           </div>
         </div>
 
-        <div className="col d-flex justify-content-end p-disabled">
+        <div className="col d-flex justify-content-end">
           <div className="selected-count">0 out of 100 summaries selected</div>
           <ViewAllSummariesButton />
           <div className="ml-4">
           {!isTestEnvironment && <DownloadIcon style={{ marginTop: "8px" }} />}
           </div>
           <SplitButton
-            className="btn-height ml-4 "
+            className="btn-height ml-4 p-disabled"
             severity="primary"
             label="Action"
             //model={items}

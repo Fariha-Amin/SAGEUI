@@ -72,6 +72,7 @@ const TableActionButtons = ({
         }
         onClickHandler={onNoteClick}
         id={`inprogress-tooltip-${rowData.recId}`}
+        name="notes-button"
       >
         {rowData.notes ? <NoteBlueLogo /> : <NoteRegularLogo />}
       </TableActionButton>
@@ -102,6 +103,7 @@ const TableActionButtons = ({
   const deleteButton = (
     <TableActionButton
       className={rowData.inprogress ? "btn btn-link disabled" : "btn btn-link"}
+      name = 'delete-button'
     >
       <DeleteLogo />
     </TableActionButton>
